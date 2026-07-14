@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Morton Register — Palmer Lake, Colorado</title>
+<meta name="description" content="A one-page broadsheet indexing the active work of Andrew Morton — Morkat Coffee LLC, Pikes Perk Coffee Roasters, Morton Millworks.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,400..900,50..100;1,9..144,400..900,50..100&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=IBM+Plex+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+/* ================================================================
+   THE MORTON REGISTER
+   A single-page broadsheet. Modern editorial typography, colored
+   section codes, tight multi-column body. Fraunces (masthead) +
+   Source Serif 4 (body) + IBM Plex Mono (labels/datelines).
+   ================================================================ */
+:root{
+  --paper:#faf7f0;
+  --paper-2:#f2ede1;
+  --ink:#181614;
+  --ink-2:#2a2620;
+  --muted:#6c665c;
+  --rule:#d8d1c1;
+  --rule-hair:#e4dfcf;
+  --red:#b62d24;
+  --blue:#1d4d75;
+  --green:#3d6f4a;
+  --amber:#a17318;
+  --plum:#6d3868;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:'Source Serif 4',Georgia,serif;
+  font-size:16px;line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+  font-optical-sizing:auto;
+}
+.paper{max-width:1080px;margin:0 auto;padding:0 22px 80px}
+
+/* ---------- FLAG (thin top strip with edition info) ---------- */
+.flag{
+  display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;
+  font-family:'IBM Plex Mono',monospace;
+  font-size:11px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--muted);
+  padding:12px 0 10px;
+  border-bottom:1px solid var(--rule-hair);
+}
+.flag .center{color:var(--red);font-weight:500}
+
+/* ---------- NAMEPLATE (masthead) ---------- */
+.nameplate{
+  text-align:center;
+  padding:26px 0 18px;
+  border-bottom:3px double var(--ink);
+}
+.nameplate .badge{
+  display:inline-block;
+  background:var(--red);color:var(--paper);
+  font-family:'IBM Plex Mono',monospace;
+  font-size:10.5px;letter-spacing:.24em;text-transform:uppercase;
+  padding:3px 10px;margin-bottom:14px;font-weight:700;
+}
+.nameplate h1{
+  font-family:'Fraunces',Georgia,serif;
+  font-variation-settings:"opsz" 144, "SOFT" 100, "wght" 800;
+  font-weight:800;
+  font-size:clamp(48px, 8.4vw, 92px);
+  line-height:.92;letter-spacing:-.005em;
+  color:var(--ink);
+}
+.nameplate .strap{
+  margin-top:14px;
+  font-family:'Fraunces',Georgia,serif;
+  font-style:italic;
+  font-variation-settings:"opsz" 24, "SOFT" 100, "wght" 400;
+  font-size:18px;
+  color:var(--ink-2);
+}
+.nameplate .subflag{
+  margin-top:16px;padding-top:12px;
+  border-top:1px solid var(--rule);
+  display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;
+  font-family:'IBM Plex Mono',monospace;
+  font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--muted);
+}
+
+/* ---------- LEAD PANEL (above the fold) ---------- */
+.lead{
+  padding:28px 0 24px;
+  border-bottom:1px solid var(--rule);
+  position:relative;
+}
+.lead .eyebrow{
+  display:flex;align-items:center;gap:10px;
+  font-family:'IBM Plex Mono',monospace;
+  font-size:11.5px;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--red);font-weight:700;
+  margin-bottom:14px;
+}
+.lead .eyebrow::before,.lead .eyebrow::after{
+  content:"";flex:1;height:1px;background:var(--red);opacity:.35;
+}
+.lead-body{display:grid;grid-template-columns:1.4fr 1fr;gap:36px;align-items:start}
+.lead h2{
+  font-family:'Fraunces',Georgia,serif;
+  font-variation-settings:"opsz" 120, "SOFT" 60, "wght" 700;
+  font-weight:700;
+  font-size:clamp(30px, 4.2vw, 46px);
+  line-height:1.02;letter-spacing:-.005em;
+  color:var(--ink);
+  margin-bottom:12px;
+}
+.lead .deck{
+  font-family:'Fraunces',Georgia,serif;
+  font-style:italic;
+  font-variation-settings:"opsz" 32, "SOFT" 80, "wght" 400;
+  font-size:20px;line-height:1.4;
+  color:var(--ink-2);
+  margin-bottom:16px;
+}
+.lead .lede{font-size:17px;line-height:1.6;color:var(--ink-2)}
+.lead .lede p+p{margin-top:10px}
+.lead .lede .drop{
+  float:left;
+  font-family:'Fraunces',Georgia,serif;
+  font-variation-settings:"opsz" 144,"SOFT" 60,"wght" 700;
+  font-size:58px;line-height:.9;
+  color:var(--red);
+  padding:6px 8px 0 0;
+}
+.lead .dateline{
+  margin-top:16px;
+  font-family:'IBM Plex Mono',monospace;
+  font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--muted);
+}
+.lead .cta{
+  display:inline-block;margin-top:12px;
+  font-family:'IBM Plex Mono',monospace;
+  font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--red);border-bottom:1px solid var(--red);padding-bottom:1px;
+  text-decoration:none;
+}
+
+/* confidential veil on the lead */
+.lead.confidential .lead-body{filter:blur(6.5px);opacity:.72;transition:filter .3s ease, opacity .3s ease}
+.lead.confidential:hover .lead-body{filter:blur(3.5px);opacity:.86}
+.lead.confidential{overflow:hidden}
+.lead .conf-stamp{
+  position:absolute;top:56%;left:50%;
+  transform:translate(-50%,-50%) rotate(-6deg);
+  font-family:'IBM Plex Mono',monospace;
+  font-weight:700;font-size:54px;letter-spacing:.16em;
+  color:var(--red);
+  background:rgba(250,247,240,.62);
+  border:5px double var(--red);
+  padding:11px 34px;
+  pointer-events:none;
+  text-transform:uppercase;white-space:nowrap;
+  z-index:3;
+  box-shadow:0 0 0 3px rgba(250,247,240,.62);
+}
+
+/* ---------- SECTION BAR (between fold and columns) ---------- */
+.section-bar{
+  display:flex;align-items:center;gap:14px;
+  padding:22px 0 12px;
+}
+.section-bar h3{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:12px;letter-spacing:.28em;text-transform:uppercase;
+  color:var(--ink);font-weight:700;
+}
+.section-bar .rule{flex:1;height:1px;background:var(--ink)}
+.section-bar .kicker{
+  font-family:'Fraunces',Georgia,serif;
+  font-style:italic;
+  font-variation-settings:"opsz" 18,"SOFT" 80,"wght" 400;
+  font-size:14px;color:var(--muted);
+}
+
+/* ---------- MULTI-COLUMN PANEL GRID ---------- */
+.grid{
+  display:grid;grid-template-columns:repeat(3, 1fr);gap:0;
+  border-top:1px solid var(--rule);
+}
+.panel{
+  padding:20px 20px 22px;
+  border-right:1px solid var(--rule);
+  border-bottom:1px solid var(--rule);
+  display:flex;flex-direction:column;
+  text-decoration:none;color:inherit;
+  transition:background .15s ease;
+}
+.panel:hover{background:var(--paper-2)}
+.panel:nth-child(3n){border-right:0}
+.panel .eyebrow{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;
+  font-weight:700;margin-bottom:10px;
+}
+.panel h4{
+  font-family:'Fraunces',Georgia,serif;
+  font-variation-settings:"opsz" 60,"SOFT" 40,"wght" 700;
+  font-weight:700;
+  font-size:22px;line-height:1.08;letter-spacing:-.003em;
+  color:var(--ink);
+  margin-bottom:8px;
+}
+.panel .deck{
+  font-family:'Fraunces',Georgia,serif;
+  font-style:italic;
+  font-variation-settings:"opsz" 20,"SOFT" 80,"wght" 400;
+  font-size:15px;line-height:1.35;
+  color:var(--ink-2);
+  margin-bottom:12px;
+}
+.panel .lede{
+  font-size:14.5px;line-height:1.55;color:var(--ink-2);
+  margin-bottom:14px;
+}
+.panel .foot{
+  margin-top:auto;padding-top:10px;
+  display:flex;justify-content:space-between;align-items:baseline;gap:10px;
+  font-family:'IBM Plex Mono',monospace;
+  font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--muted);
+  border-top:1px solid var(--rule-hair);
+}
+.panel .foot .cta{color:inherit;text-decoration:none;border-bottom:1px solid currentColor;padding-bottom:1px}
+
+/* section-color coding for panel eyebrows and CTA */
+.panel.sec-workshop .eyebrow, .panel.sec-workshop .foot .cta{color:var(--green)}
+.panel.sec-engineering .eyebrow, .panel.sec-engineering .foot .cta{color:var(--blue)}
+.panel.sec-essay .eyebrow, .panel.sec-essay .foot .cta{color:var(--amber)}
+.panel.sec-spec .eyebrow, .panel.sec-spec .foot .cta{color:var(--red)}
+.panel.sec-workshop:hover{background:#f1efe1}
+.panel.sec-engineering:hover{background:#eef1f2}
+.panel.sec-essay:hover{background:#f4ede0}
+
+/* -------- OSF sub-doc panel — samples the OSF family aesthetic
+   (cream paper, oxide banner, brass, Barlow Condensed / Source
+   Serif / Plex Mono). Small rotated DRAFT stamp signals hold
+   status without obscuring identity. */
+.panel.tile-osf-mini{
+  background:#f7f5f0;color:#20262b;
+  font-family:'Source Serif 4',Georgia,serif;
+  padding:0;position:relative;
+}
+.panel.tile-osf-mini:hover{background:#f2ede1}
+.panel.tile-osf-mini .osf-holdbar{
+  background:#9d3226;color:#f7f5f0;
+  font-family:'IBM Plex Mono',monospace;
+  font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;
+  text-align:center;padding:5px 10px;font-weight:500;
+}
+.panel.tile-osf-mini .osf-body{padding:16px 18px 18px;display:flex;flex-direction:column;flex:1}
+.panel.tile-osf-mini .eyebrow{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:10px;letter-spacing:.18em;text-transform:uppercase;
+  color:#55636e;margin-bottom:8px;font-weight:500;
+}
+.panel.tile-osf-mini h4{
+  font-family:'Barlow Condensed',sans-serif;font-weight:700;
+  font-size:26px;line-height:.98;letter-spacing:.01em;
+  text-transform:uppercase;margin-bottom:6px;
+  color:#20262b;
+}
+.panel.tile-osf-mini h4 .gold{color:#b98a2f}
+.panel.tile-osf-mini .deck{
+  font-family:'Source Serif 4',serif;font-style:italic;
+  font-size:14.5px;line-height:1.35;color:#3a4046;margin-bottom:10px;
+}
+.panel.tile-osf-mini .lede{
+  font-size:14px;line-height:1.55;color:#3a4046;margin-bottom:12px;
+}
+.panel.tile-osf-mini .foot{
+  margin-top:auto;padding-top:10px;
+  display:flex;justify-content:space-between;align-items:baseline;gap:10px;
+  font-family:'IBM Plex Mono',monospace;
+  font-size:10px;letter-spacing:.12em;text-transform:uppercase;
+  color:#55636e;
+  border-top:1px dashed #d9d4c8;
+}
+.panel.tile-osf-mini .foot .cta{color:#9d3226;text-decoration:none;border-bottom:1px solid #9d3226;padding-bottom:1px}
+.panel.tile-osf-mini .draft-stamp{
+  position:absolute;top:38px;right:14px;
+  transform:rotate(-6deg);
+  font-family:'IBM Plex Mono',monospace;
+  font-weight:700;font-size:13px;letter-spacing:.18em;
+  color:#9d3226;
+  border:2px double #9d3226;
+  padding:3px 9px;
+  pointer-events:none;
+  text-transform:uppercase;
+  background:rgba(247,245,240,.7);
+  z-index:2;
+}
+
+/* ---------- WIRE (RSS placeholder) ---------- */
+.wire{
+  border-top:2px solid var(--ink);border-bottom:1px solid var(--rule);
+  padding:20px 0 24px;margin-top:20px;
+}
+.wire-head{
+  display:flex;align-items:baseline;gap:14px;margin-bottom:14px;
+}
+.wire-head h3{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:12px;letter-spacing:.28em;text-transform:uppercase;
+  color:var(--red);font-weight:700;
+}
+.wire-head .note{
+  font-family:'Fraunces',Georgia,serif;
+  font-style:italic;
+  font-variation-settings:"opsz" 18,"SOFT" 80,"wght" 400;
+  font-size:14px;color:var(--muted);
+}
+.wire-empty{
+  display:grid;grid-template-columns:repeat(4, 1fr);gap:12px;
+  margin-top:8px;
+}
+.wire-slot{
+  border:1px dashed var(--rule);
+  padding:14px 12px;min-height:96px;
+  display:flex;flex-direction:column;justify-content:center;
+  text-align:center;
+}
+.wire-slot .k{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:9px;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--muted);
+}
+.wire-slot .v{
+  font-family:'Fraunces',Georgia,serif;
+  font-style:italic;
+  font-variation-settings:"opsz" 20,"SOFT" 80,"wght" 400;
+  font-size:14px;color:var(--ink-2);margin-top:5px;
+}
+
+/* ---------- COLOPHON (foot) ---------- */
+.colophon{
+  margin-top:28px;padding-top:18px;
+  border-top:1px solid var(--rule);
+  display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:24px;
+  font-size:13px;line-height:1.5;
+}
+.colophon h5{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--red);font-weight:700;margin-bottom:6px;
+}
+.colophon .about{color:var(--ink-2)}
+.colophon .about em{font-family:'Fraunces',serif;font-style:italic;font-weight:500}
+.colophon .col a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--rule)}
+.colophon .col p+p{margin-top:4px}
+.footline{
+  margin-top:20px;padding-top:14px;border-top:1px solid var(--rule-hair);
+  font-family:'IBM Plex Mono',monospace;
+  font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--muted);
+  display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;
+}
+
+/* ---------- responsive ---------- */
+@media (max-width:840px){
+  .lead-body{grid-template-columns:1fr;gap:20px}
+  .grid{grid-template-columns:1fr 1fr}
+  .panel:nth-child(3n){border-right:1px solid var(--rule)}
+  .panel:nth-child(2n){border-right:0}
+  .wire-empty{grid-template-columns:1fr 1fr}
+  .colophon{grid-template-columns:1fr}
+}
+@media (max-width:520px){
+  .paper{padding:0 16px 60px}
+  .nameplate h1{font-size:52px}
+  .grid{grid-template-columns:1fr}
+  .panel{border-right:0!important}
+  .wire-empty{grid-template-columns:1fr}
+  .lead .conf-stamp{font-size:34px;padding:8px 22px;letter-spacing:.12em}
+}
+</style>
+</head>
+<body>
+<div class="paper">
+
+  <!-- ============================================================
+       FLAG — thin top strip
+       ============================================================ -->
+  <div class="flag">
+    <span>Palmer Lake, Colorado &middot; 80133</span>
+    <span class="center">Vol. I &middot; No. 1</span>
+    <span>Monday, July 13, 2026</span>
+  </div>
+
+  <!-- ============================================================
+       NAMEPLATE — the masthead
+       ============================================================ -->
+  <header class="nameplate">
+    <div class="badge">One-Page Broadsheet</div>
+    <h1>The Morton Register</h1>
+    <div class="strap">Coffee, machines, frameworks, and other work &mdash; filed as it lands.</div>
+    <div class="subflag">
+      <span>Editor &middot; Andrew Morton</span>
+      <span>Elevation 7,247 ft</span>
+      <span>Independent &middot; No advertising</span>
+    </div>
+  </header>
+
+  <!-- ============================================================
+       LEAD PANEL — above the fold
+       OSF, currently confidential. Remove class="lead confidential"
+       (leave just class="lead") to release it publicly.
+       ============================================================ -->
+  <section class="lead confidential" aria-label="Lead story — Open Source Firefighter, confidential draft">
+    <div class="eyebrow">Above the Fold &middot; Confidential Draft</div>
+    <div class="lead-body">
+      <div>
+        <h2>An Open Standard for Coordinated Ember &amp; Terrain Defense.</h2>
+        <div class="deck">A sixteen-document specification family in first review.</div>
+        <div class="dateline">Palmer Lake &middot; Filed July 2026 &middot; Not for public distribution</div>
+        <a class="cta" href="osf/osf_site.html">Access on release &rarr;</a>
+      </div>
+      <div class="lede">
+        <p><span class="drop">A</span>&nbsp;stamped specification family &mdash; doctrine, hardware, protocol, tactics, strategy &mdash; for neighborhood-scale ember defense. Speaks ICS on the front end. Speaks Meshtastic and MANET on the back.</p>
+        <p>Companion site to the sixteen-document set. First review packages currently circulating with operational reviewers under distribution hold.</p>
+      </div>
+    </div>
+    <div class="conf-stamp">Confidential</div>
+  </section>
+
+  <!-- ============================================================
+       SECTION HEADER
+       ============================================================ -->
+  <div class="section-bar">
+    <h3>Of Record</h3>
+    <div class="rule"></div>
+    <div class="kicker">Standing work, filed by section</div>
+  </div>
+
+  <!-- ============================================================
+       PANEL GRID — the columns of the paper
+       Each panel is a link into its own doc.
+       ============================================================ -->
+  <div class="grid">
+
+    <a class="panel tile-osf-mini" href="osf/osf_design_philosophy.html" aria-label="OSF-0 Design Philosophy — draft">
+      <div class="osf-holdbar">OSF-0 &middot; Draft &middot; Hold in effect</div>
+      <div class="osf-body">
+        <div class="eyebrow">The OSF Family &middot; OSF-0</div>
+        <h4>Design <span class="gold">Philosophy</span></h4>
+        <div class="deck">The rules the box obeys &mdash; fifteen of them, made explicit.</div>
+        <div class="lede">Not requirements for the equipment; those live in the specification. These are the rules the specification was written by, so future contributors apply the same filter.</div>
+        <div class="foot">
+          <span>OSF-0 &middot; v4 &middot; July 2026</span>
+          <span class="cta">Read the fifteen &rarr;</span>
+        </div>
+      </div>
+      <div class="draft-stamp">Draft</div>
+    </a>
+
+    <a class="panel sec-workshop" href="eddie/eddie-portal.html">
+      <div class="eyebrow">Workshop</div>
+      <h4>The Eddie File</h4>
+      <div class="deck">A qualification-table apprenticeship on the bench.</div>
+      <div class="lede">Dry, blank, live, qual &mdash; a military qualification skeleton wrapped around a PRIMM pedagogy. Real machines at every rung. Capstone: a turntable for the Vintage Book Shoppe.</div>
+      <div class="foot">
+        <span>Morton Millworks</span>
+        <span class="cta">Read &rarr;</span>
+      </div>
+    </a>
+
+    <a class="panel sec-engineering" href="cdpr/cdpr-construction-system.html">
+      <div class="eyebrow">Engineering</div>
+      <h4>Hybrid Site Construction</h4>
+      <div class="deck">Cable-driven parallel robot &mdash; concept brief.</div>
+      <div class="lede">A cable-driven parallel manipulator applied to hybrid site construction. Cable geometry, load envelope, and an acoustic curiosity that surfaced when tensioned survey strings retuned as a four-string instrument.</div>
+      <div class="foot">
+        <span>Concept &middot; MM-CDPR-01</span>
+        <span class="cta">Read &rarr;</span>
+      </div>
+    </a>
+
+    <a class="panel sec-essay" href="unlimited-run/the-unlimited-run.html">
+      <div class="eyebrow">Essay</div>
+      <h4>The Unlimited Run</h4>
+      <div class="deck">A machinery-first reading of monumental construction.</div>
+      <div class="lede">Reconstructed from heavy rigging, timber work, and the balanced funicular. Pikes Peak and the Manitou Incline stand as live proof-of-concept anchors; internal passages read as fossilized rig stages.</div>
+      <div class="foot">
+        <span>Three movements</span>
+        <span class="cta">Read &rarr;</span>
+      </div>
+    </a>
+
+  </div>
+
+  <!-- ============================================================
+       WIRE — placeholder for future RSS feeds
+       ============================================================ -->
+  <section class="wire" aria-label="Wire — standing feeds">
+    <div class="wire-head">
+      <h3>Wire</h3>
+      <div class="note">Standing feeds &mdash; coming online</div>
+    </div>
+    <div class="wire-empty">
+      <div class="wire-slot">
+        <div class="k">Feed 01</div>
+        <div class="v">Shop log</div>
+      </div>
+      <div class="wire-slot">
+        <div class="k">Feed 02</div>
+        <div class="v">OSF review notes</div>
+      </div>
+      <div class="wire-slot">
+        <div class="k">Feed 03</div>
+        <div class="v">Weather &amp; fire watch</div>
+      </div>
+      <div class="wire-slot">
+        <div class="k">Feed 04</div>
+        <div class="v">Field dispatch</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       COLOPHON
+       ============================================================ -->
+  <div class="colophon">
+    <div class="col about">
+      <h5>About</h5>
+      <p><em>The Morton Register</em> is a one-page broadsheet indexing the active work of Andrew Morton &mdash; coffee roasting, CNC millwork, wildland fire policy, apprenticeship, and occasional essay.</p>
+      <p>New tiles are added as new work lands. Older items retire down the column.</p>
+    </div>
+    <div class="col">
+      <h5>Enterprises</h5>
+      <p>Morkat Coffee LLC</p>
+      <p>Pikes Perk Coffee Roasters</p>
+      <p>Morton Millworks</p>
+    </div>
+    <div class="col">
+      <h5>Correspondence</h5>
+      <p><a href="https://github.com/pikesperkcoffee">GitHub</a></p>
+      <p><a href="https://pikesperkcoffee.com">Pikes Perk</a></p>
+      <p>Palmer Lake, Colorado</p>
+    </div>
+  </div>
+
+  <div class="footline">
+    <div>&copy; Andrew Morton &middot; Morkat Coffee LLC</div>
+    <div>Set in Fraunces &amp; Source Serif &middot; No advertising</div>
+  </div>
+
+</div>
+</body>
+</html>
