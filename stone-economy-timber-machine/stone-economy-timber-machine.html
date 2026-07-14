@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stone Economy, Timber Machine</title>
+<style>
+  :root{
+    --paper:#efe8d6; --paper-2:#f6f1e3; --paper-plate:#f7f3e7;
+    --line:#d8cdb2; --line-soft:#e3dac4;
+    --ink:#262219; --ink-soft:#4c4638; --ink-faint:#726b59;
+    --blue:#2b4a6b; --blue-dk:#1e3550; --blue-soft:#5c7590;
+    --oxblood:#9c3a22; --oxblood-dk:#7d2d18;
+    --brass:#8a6d3b; --rose:#b0736e; --rose-dk:#8f5f5b;
+    --serif:"Iowan Old Style","Palatino Linotype",Palatino,"Book Antiqua",Georgia,"Times New Roman",serif;
+    --mono:ui-monospace,"SF Mono","Cascadia Code","Roboto Mono",Menlo,Consolas,monospace;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0;background-color:var(--paper);color:var(--ink);
+    background-image:linear-gradient(rgba(43,74,107,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(43,74,107,.035) 1px,transparent 1px);
+    background-size:26px 26px;
+    font-family:var(--serif);font-size:19px;line-height:1.66;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:750px;margin:0 auto;padding:0 20px 110px;
+    background:linear-gradient(var(--paper),var(--paper));background-color:var(--paper);
+    box-shadow:0 0 0 1px var(--line), 0 0 60px rgba(43,74,107,.05)}
+  @media(min-width:800px){.wrap{margin-top:0}}
+
+  /* labels / chrome: engraved plate caption feel — letterspaced serif caps, blue */
+  .eyebrow{font-family:var(--serif);font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--blue);font-weight:700}
+  .rule{height:0;border:0;border-top:1px solid var(--blue);opacity:.5;margin:0}
+
+  header{padding:46px 0 32px;text-align:center;border-bottom:1px solid var(--line);position:relative}
+  header .eyebrow{margin-bottom:22px}
+  .glyph-row{display:flex;justify-content:center;gap:16px;margin-bottom:24px}
+  .glyph-row svg path,.glyph-row svg circle,.glyph-row svg line{stroke:var(--blue)!important}
+  h1{font-family:var(--serif);font-weight:700;font-size:clamp(34px,8.5vw,60px);line-height:1.02;margin:8px 0 16px;color:var(--ink);letter-spacing:.005em}
+  h1 .l2{display:block;color:var(--blue)}
+  .dek{font-size:clamp(18px,4.2vw,22px);color:var(--ink-soft);max-width:36ch;margin:0 auto;font-style:italic}
+  .sub-note{font-family:var(--serif);font-style:italic;font-size:14.5px;color:var(--ink-faint);margin-top:18px;max-width:44ch;margin-left:auto;margin-right:auto}
+  .tocline{font-family:var(--serif);font-size:12px;letter-spacing:.14em;color:var(--blue-soft);margin-top:22px;text-transform:uppercase;line-height:1.9}
+  .byline{font-family:var(--serif);font-size:13px;letter-spacing:.06em;color:var(--brass);margin-top:18px;font-variant:small-caps}
+
+  .movement{padding:40px 0 6px}
+  .mv-head{display:flex;align-items:baseline;gap:14px;margin-bottom:4px;border-bottom:1px solid var(--line-soft);padding-bottom:8px}
+  .mv-no{font-family:var(--serif);font-size:15px;color:var(--oxblood);font-weight:700;letter-spacing:.05em}
+  .mv-title{font-family:var(--serif);font-size:clamp(25px,5.6vw,36px);font-weight:700;color:var(--ink);margin:0;line-height:1.08}
+  .mv-sub{font-family:var(--serif);font-style:italic;font-size:15px;color:var(--blue);margin:10px 0 20px}
+  .movement p{margin:0 0 17px;color:var(--ink)}
+  .movement p.first{font-size:20.5px;color:var(--ink)}
+  .movement p.first::first-letter{font-size:1em}
+  .movement em{color:var(--blue-dk);font-style:italic}
+  .movement strong{color:var(--oxblood-dk);font-weight:700}
+
+  /* figure plate */
+  .codex{background:var(--paper-plate);color:var(--ink);border-radius:2px;margin:24px 0;padding:22px 20px;
+    background-image:linear-gradient(rgba(43,74,107,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(43,74,107,.06) 1px,transparent 1px);
+    background-size:20px 20px;
+    border:1px solid var(--blue);
+    box-shadow:inset 0 0 0 3px var(--paper-plate), inset 0 0 0 4px rgba(43,74,107,.35), 0 2px 10px rgba(43,74,107,.08)}
+  .codex .kicker{font-family:var(--serif);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--blue);font-weight:700;margin-bottom:10px;border-bottom:1px solid rgba(43,74,107,.25);padding-bottom:6px}
+  .codex h3{font-family:var(--serif);font-size:clamp(21px,5vw,27px);font-weight:700;color:var(--ink);margin:0 0 6px}
+  .codex .lead{color:var(--ink-soft);font-family:var(--serif);font-style:italic;font-size:14.5px;margin:0 0 18px}
+  .codex p{color:var(--ink);margin:0 0 15px}
+  .codex p strong{color:var(--oxblood-dk);font-weight:700}
+  .codex em{color:var(--blue-dk);font-style:italic}
+  .codex p:last-child{margin-bottom:0}
+
+  .diagram{background:#fbf8ef;border:1px solid var(--blue-soft);border-radius:2px;overflow:hidden;margin-bottom:8px}
+  .diagram svg{display:block;width:100%;height:auto}
+  .diag-cap{font-family:var(--serif);font-style:italic;font-size:14px;color:var(--ink-soft);padding:12px 14px 4px;min-height:2.4em;line-height:1.5}
+  .diag-cap b{color:var(--oxblood-dk);font-style:normal;font-weight:700}
+  .diag-bar{display:flex;gap:10px;padding:8px 2px 2px;flex-wrap:wrap}
+  button.act{font-family:var(--serif);font-size:14px;letter-spacing:.04em;font-variant:small-caps;background:var(--blue);color:var(--paper-2);border:0;border-radius:2px;padding:9px 16px;cursor:pointer;font-weight:600}
+  button.act.ghost{background:transparent;color:var(--blue-dk);border:1px solid var(--blue-soft)}
+  button.act:active{transform:translateY(1px)}
+  .stagebar{display:flex;gap:6px;padding:8px 2px 2px;flex-wrap:wrap}
+  .stagebar button{font-family:var(--serif);font-size:13.5px;font-variant:small-caps;letter-spacing:.03em;background:transparent;color:var(--blue-dk);border:1px solid var(--blue-soft);border-radius:2px;padding:7px 12px;cursor:pointer}
+  .stagebar button.on{background:var(--blue);color:var(--paper-2);border-color:var(--blue);font-weight:600}
+
+  .parts{display:grid;grid-template-columns:1fr;gap:11px;margin-top:4px}
+  .part{border:1px solid var(--line);border-radius:2px;padding:13px;background:rgba(255,255,255,.35)}
+  .part h4{font-family:var(--serif);font-size:15px;font-weight:700;margin:0 0 4px;color:var(--ink)}
+  .part h4 .tag{color:var(--blue);font-style:italic;font-weight:400}
+  .part p{margin:0;font-size:14.5px;color:var(--ink-soft)}
+
+  .lineage{display:flex;flex-wrap:wrap;align-items:center;gap:8px 10px;font-family:var(--serif);font-size:15px;color:var(--ink-soft);margin:8px 0 16px;padding:15px;border:1px solid var(--line);border-radius:2px;background:var(--paper-2)}
+  .lineage span{color:var(--oxblood)}
+  .lineage b{color:var(--blue-dk);font-weight:700}
+
+  .locks{display:grid;grid-template-columns:1fr;gap:10px;margin:8px 0}
+  .lock{border-left:3px solid var(--blue);padding:6px 0 6px 15px}
+  .lock h4{font-family:var(--serif);font-size:14px;font-variant:small-caps;letter-spacing:.04em;color:var(--oxblood);margin:0 0 3px}
+  .lock p{margin:0;color:var(--ink);font-size:16px}
+
+  /* marginal note / errata */
+  .frontier{border:1px dashed var(--oxblood);border-radius:2px;padding:22px;margin:24px 0;background:rgba(156,58,34,.05)}
+  .frontier .flag{display:inline-block;font-family:var(--serif);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--paper-2);background:var(--oxblood-dk);padding:4px 11px;border-radius:2px;font-weight:700;margin-bottom:14px}
+  .frontier p{margin:0 0 14px;color:var(--ink)}
+  .frontier p:last-child{margin-bottom:0}
+  .frontier em{color:var(--blue-dk);font-style:italic}
+  .frontier strong{color:var(--oxblood-dk);font-weight:700}
+
+  .pull{border-left:3px solid var(--blue);padding:6px 0 6px 20px;margin:24px 0;font-size:21px;font-style:italic;color:var(--ink)}
+  .pull b{color:var(--oxblood-dk);font-style:normal;font-weight:700}
+
+  .ledger{border-top:1px solid var(--blue);padding-top:20px;margin-top:26px}
+  .ledger h4{font-family:var(--serif);font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:var(--blue);margin:0 0 14px;font-weight:700}
+  .ledger .row{font-family:var(--serif);font-size:15.5px;line-height:1.6;color:var(--ink-soft);margin-bottom:13px;padding-left:16px;border-left:2px solid var(--blue-soft)}
+  .ledger .row b{color:var(--oxblood-dk);font-weight:700}
+  .ledger .row em{color:var(--blue-dk);font-style:italic}
+
+  .chartwrap{background:#fbf8ef;border:1px solid var(--blue-soft);border-radius:2px;padding:8px 6px 4px;margin-top:6px}
+  .chartwrap svg{display:block;width:100%;height:auto}
+  .chart-note{font-family:var(--serif);font-style:italic;font-size:13.5px;color:var(--ink-soft);padding:6px 10px 4px;line-height:1.55}
+
+  .summit{margin-top:52px;padding:44px 24px 24px;border:1px solid var(--line);border-top:2px solid var(--blue);background:var(--paper-2);border-radius:2px}
+  .summit .eyebrow{color:var(--blue);text-align:center;display:block;margin-bottom:18px}
+  .summit h2{font-family:var(--serif);font-weight:700;font-size:clamp(28px,7vw,44px);text-align:center;margin:0 0 26px;line-height:1.06;color:var(--ink)}
+  .summit h2 span{display:block;color:var(--blue);font-style:italic;font-size:.56em;margin-top:8px;font-weight:400}
+  .summit p{font-size:20px;margin:0 0 18px;color:var(--ink)}
+  .summit em{color:var(--blue-dk);font-style:italic}
+  .summit p.close{text-align:center;font-style:italic;font-size:22px;margin-top:28px;color:var(--ink)}
+  .summit p.close b{color:var(--oxblood-dk);font-weight:700;font-style:normal}
+  .starcap{text-align:center;font-size:22px;color:var(--blue);letter-spacing:.5em;margin:22px 0}
+
+  .touch{margin-top:48px;padding-top:20px;border-top:1px solid var(--line)}
+  .touch h4{font-family:var(--serif);font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:var(--blue);margin:0 0 14px;font-weight:700}
+  .touch p{font-family:var(--serif);font-size:14.5px;line-height:1.75;color:var(--ink-soft);margin:0}
+  .touch b{color:var(--ink);font-weight:700}
+  footer{margin-top:42px;text-align:center}
+  footer .m{font-family:var(--serif);font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--brass)}
+
+  @media (max-width:560px){ body{font-size:18px} .summit p{font-size:19px} .summit{padding:36px 16px 20px} }
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- ===== HERO ===== -->
+  <header>
+    <div class="eyebrow">A field reconstruction · by a timber framer, from inside the trade</div>
+    <div class="glyph-row" aria-hidden="true">
+      <svg width="38" height="38" viewBox="0 0 40 40"><path d="M6 34 L14 34 L14 26 L20 26 L20 18 L26 18 L26 10 L34 10" fill="none" stroke="#c9a24a" stroke-width="2.4"/></svg>
+      <svg width="38" height="38" viewBox="0 0 40 40"><circle cx="20" cy="20" r="8.5" fill="none" stroke="#3f8f7d" stroke-width="2.4"/><path d="M20 5 L20 11 M20 29 L20 35 M5 20 L11 20 M29 20 L35 20" stroke="#3f8f7d" stroke-width="2.4"/></svg>
+      <svg width="38" height="38" viewBox="0 0 40 40"><path d="M34 34 L26 34 L26 26 L20 26 L20 18 L14 18 L14 10 L6 10" fill="none" stroke="#c9a24a" stroke-width="2.4"/></svg>
+    </div>
+    <h1>Stone Economy,<span class="l2">Timber Machine</span></h1>
+    <p class="dek">The stone is what lasted. The wood did the work — and when the wood ran out, so did they.</p>
+    <p class="sub-note">a wood-and-rope industry that moved stone, ran once with the limiter off, and used up the forest that made it</p>
+    <p class="tocline">mechanism → the machine, staged → site &amp; economy → the boom that ended → the mountain that proves it → the archive under the sand</p>
+    <p class="byline">Andrew Morton · Palmer Lake, Colorado · July 2026</p>
+  </header>
+
+  <hr class="rule">
+
+  <!-- ===== I. RAMPS WRONG ===== -->
+  <div class="movement">
+    <div class="mv-head"><span class="mv-no">I</span><h2 class="mv-title">Ramps are wrong</h2></div>
+    <p class="mv-sub">start with the thing that never fit</p>
+    <p class="first">A ramp gentle enough to drag a sledge up would run more than a kilometer and hold more fill than the pyramid itself — and then it would have to vanish without a trace. It didn't happen. There was no mountain of dirt, because there was never a ramp.</p>
+    <p>There was a stair. There is <em>always</em> a stair. We stopped seeing it because it's too plain to be the answer — and because the thing it hides isn't a secret. It's a machine so ordinary we walk on its descendants every day, built by people whose trade I happen to share.</p>
+  </div>
+
+  <!-- ===== II. THE MECHANISM ===== -->
+  <div class="movement">
+    <div class="mv-head"><span class="mv-no">II</span><h2 class="mv-title">The machine is a staircase</h2></div>
+    <p class="mv-sub">balanced rope-drum + timber cog-stone + cog-track stair</p>
+
+    <div class="codex">
+      <div class="kicker">Run the balance</div>
+      <div class="diagram">
+        <svg id="mech" viewBox="0 0 800 500" role="img" aria-label="A stepped temple-pyramid: a timber cog-stone rolls up a cog-track stair, hauled by a balanced rope-drum at the top and counterweighted by a descending crew car, with a stone friction brake on the drum."></svg>
+        <div class="diag-cap" id="mcap"><b>Balanced.</b> The crew car on one side of the drum nearly counterweighs the cog-stone on the other. Muscle only supplies the difference. Tap to run it.</div>
+      </div>
+      <div class="diag-bar">
+        <button class="act" id="mrun">▸ Run the balance</button>
+        <button class="act ghost" id="mreset">Reset</button>
+      </div>
+    </div>
+
+    <div class="codex">
+      <div class="kicker">Five ordinary things</div>
+      <div class="parts">
+        <div class="part"><h4>Timber cog-stone <span class="tag">/ the roller</span></h4><p>A rough block with logs lashed around it as teeth — the quarry lumps are the anchors, a stone heart in a ring of wood. It rolls up the track and the teeth catch so it can't slip back.</p></div>
+        <div class="part"><h4>Balanced rope-drum <span class="tag">/ the drive</span></h4><p>A log turning between bearings, rope wrapped a few turns. The descending mass lifts the ascending one. This is the funicular, in wood — the real name for what you're looking at.</p></div>
+        <div class="part"><h4>Stone-on-drum brake <span class="tag">/ and the lathe</span></h4><p>Press a hard stone to the spinning drum and it slows — and the same motion <em>grinds</em>. The brake is a lathe; the lathe is a stone-cutter. The machine that hauls teaches you to turn.</p></div>
+        <div class="part"><h4>The crew <span class="tag">/ counterweight with legs</span></h4><p>The only counterweight that resets itself. It rides down to lift the stone, then walks back up the same steps. Sand can't climb. People can.</p></div>
+        <div class="part"><h4>The cog-track stair <span class="tag">/ the frame</span></h4><p>Steps are older than any monument. Drag a square stone up them and it <em>catches</em> on every edge. The snag is the tooth. That was the whole invention, handed over by accident.</p></div>
+      </div>
+    </div>
+
+    <p>The control is the real problem, and it's the part nobody asks. Tons of mass moving is a runaway waiting to happen — so the descending weight is the hazard and the <em>rising stone is the governor</em>: the load can only fall as fast as it can raise the rock through the cog. Stack a leaky water box for a counterweight (feed it by bucket-brigade to throttle it, cut the water and it drains itself light and <strong>stops</strong>), multiple eased brake-drums, and a crew that can jump off the ballast to kill a runaway, and you have four independent brakes and a brakeman's gut. You don't design a way to lift the stone. You design a way to lift it ten thousand times without a funeral.</p>
+  </div>
+
+  <!-- ===== III. THE MACHINE, STAGED ===== -->
+  <div class="movement">
+    <div class="mv-head"><span class="mv-no">III</span><h2 class="mv-title">The machine, staged</h2></div>
+    <p class="mv-sub">one rig, re-plumbed as the mountain grows — over the real cross-section</p>
+
+    <div class="codex">
+      <div class="kicker">Great Pyramid cutaway · real proportions</div>
+      <div class="diagram">
+        <svg id="cut" viewBox="0 0 820 560" role="img" aria-label="Cross-section of the Great Pyramid at true slope, showing the descending passage to the subterranean pit, the ascending passage, the Grand Gallery to the King's Chamber, the Queen's Chamber, and the working rig positioned at successive build heights."></svg>
+        <div class="diag-cap" id="ccap"><b>The fossil.</b> Everything inside lies in one vertical plane on the centerline — project it to the face and it's a stripe down the middle. That's what a single-plane haul-way, grown in stages, leaves behind. Step through the build.</div>
+      </div>
+      <div class="stagebar" id="stagebar">
+        <button data-s="0">0 · The pit</button>
+        <button data-s="1">1 · Mid-rise</button>
+        <button data-s="2">2 · Gallery</button>
+        <button data-s="3">3 · Topping out</button>
+        <button data-s="4" class="on">The fossil</button>
+      </div>
+    </div>
+
+    <p>Early on there's no height to drop from — so they dug <em>down</em>. The deep subterranean pit is the first power stroke: a leaky water box falls into it, the rock rises onto the low courses. As the mountain climbs, the rig <strong>leapfrogs</strong> — counterweight down the outer face, drums re-planted at each working top, the internal incline pressed into service as a granite counterweight-chute. When it tops out, the rigs seal into the mass as fossils. The passages aren't a floor plan. They're the sealed-in ghosts of where the machine stood at each stage.</p>
+  </div>
+
+  <!-- ===== IV. BUILT THE MOUNTAIN + SITE ===== -->
+  <div class="movement">
+    <div class="mv-head"><span class="mv-no">IV</span><h2 class="mv-title">They built the mountain — on the one right spot</h2></div>
+    <p class="mv-sub">not the best rock — the best confluence</p>
+    <p class="first">Almost everyone else used a hill already there — the ziggurats, the temple-mounts, Mesoamerica, where the great stair runs up a stepped mountain with <em>no wheel and no draft animals.</em> Egypt had no mountain. A floodplain, flat to the horizon. So they <strong>cast one</strong>, geometry standing free on the sand.</p>
+    <p>But not just anywhere. The site is where <em>every requirement the machine had intersects at a single point</em> — and no single factor picks it. Surface water to float stone pulls you low; a high dry drop for the power pit pulls you high; the plateau edge resolves both. Add quarry stone, transport, labor, food to feed the labor, fiber to spin into rope, and reachable timber — eight vectors, and they cross at one place. Everything built after sat on a <em>lesser overlap.</em> Not worse builders. Second-best confluence — because the best one exists in exactly one spot, and you only get to be first on it once.</p>
+    <p>And build by <em>rolling</em> and the famous numbers arrive uninvited. Measure a base by rolling a drum and counting turns while measuring height in stacked courses, and <strong>π walks into your proportions</strong> — which is why the ratio sits in the Great Pyramid and not cleanly in the others: only it was laid out by rolling. You don't claim they encoded the golden ratio. You claim something sturdier — <em>it falls out of the method for free.</em></p>
+    <div class="lineage"><b>stairs</b> <span>→</span> <b>cog-stone</b> <span>→</span> <b>lever</b> <span>→</span> <b>balanced rope-drum</b> <span>→</span> <b>the cog railway</b></div>
+  </div>
+
+  <!-- ===== V. THE TIMBER MACHINE ===== -->
+  <div class="movement">
+    <div class="mv-head"><span class="mv-no">V</span><h2 class="mv-title">The timber machine</h2></div>
+    <p class="mv-sub">the stone is the receipt for a forest that's gone</p>
+    <p class="first">Here is the thing every desert-and-rocks picture leaves out. A working Old Kingdom site was a <strong>timber-and-rope operation dressing stone</strong> — the stone is the product; the wood and cordage are the machine. The barges, the sledges, the rollers, the levers, the scaffolds, the drums: all timber. And the pictures under-draw every bit of it, because wood rots and stone lasts, so the surviving record is stone-heavy and the reconstructions inherited the bias. The desert kept the rocks and ate the rigging.</p>
+    <p>So you don't prove the timber with a surviving artifact — <em>you prove it with the stone itself.</em> Every block a hundred miles from its quarry, floated and hauled and lifted and set, is a receipt for an industrial timber machine that had to exist to place it. The wood is gone; its work is the entire monument. They're not standing on evidence of stonemasons. They're standing on the greatest timber-rigging operation of the ancient world, and calling it a pile of rocks.</p>
+    <p>And these were master timber engineers, not primitives — the joinery was the equal of anyone's, because <em>wood dictates the joints</em> and they'd mastered what wood dictates. The disassembled cedar boat found at the pyramid's own foot, jointed to hold its geometry for four and a half thousand years, is the proof that survived. Picture the workforce like a barn-raising the size of a mountain: distributed skill, raised fast and well by crews who each built and took pride in their own rig — jingle-truck pride, not a stamped fleet — competing outfit against outfit, which <em>is</em> how the technology climbed. The rig was married to the men who built it. That is exactly why it couldn't be inherited cold, and why it walked off when they did.</p>
+    <div class="pull">They didn't have tools. They had <b>equipment</b> — and a lever the size of a telephone pole will multiply a child into a crane. It's just never drawn at the size the physics demands.</div>
+  </div>
+
+  <!-- ===== VI. TODAY IT'S MY SHOP ===== -->
+  <div class="movement">
+    <div class="mv-head"><span class="mv-no">VI</span><h2 class="mv-title">Today it's my shop</h2></div>
+    <p class="mv-sub">a worksite that grew workshops</p>
+    <p class="first">For twenty years it wasn't a monument — it was the biggest worksite on Earth, with rope power running through it. Think of it less like a tomb and more like a working mine: a mountain threaded with drifts, a workshop cut into the rock wherever the power line ran. Mines grow shops around their power the way water finds a crack.</p>
+    <div class="frontier">
+      <span class="flag">⚑ Here's where I'm speculating</span>
+      <p>Sure, it can be a tomb for some king I'll never meet. But <em>today</em> it's my shop, and I've got stone to cut. A rope hauling a counterweight outside moves in <strong>strokes</strong> — pull, reset, pull — and that reciprocating line is a <strong>bow-lathe drive</strong>, the oldest powered tool there is. A man in the cool, stable galleries with that rope sawing past his bench has a drill, a lathe, a grinder, for free. Nobody designed a factory. The shop built itself where the power and the shade met. Outside is sun and shifting fill; inside is solid rock and a moving rope. I'll take the shade and the belt.</p>
+      <p style="margin-bottom:0"><em>The landmine, named on purpose:</em> "pyramid = machine, not tomb" is Christopher Dunn's <em>Giza Power Plant</em> — filed under pseudoarchaeology. But Dunn claims the building <em>generated energy</em>: resonance, microwaves, exotic physics with no evidence. This is the opposite — <strong>mechanical power transmission</strong>, rope and drums, the dullest machinery there is, and only during construction. Grounded, not mystical. Wrong in a way you can actually test.</p>
+    </div>
+    <p>And the interior obeys the machine, not a burial. Everything — descending passage, ascending passage, gallery, chambers — lies in one vertical plane on the centerline. A tomb needn't be coplanar. A <em>power train</em> must, because straight-line rope power hates leaving its plane. The one set of features that <em>breaks</em> the plane are the small angled shafts — which is exactly why they're probably <em>not</em> the machine: too small to run a working line, they read as sightlines or vents, the not-machine poking out of the flat slab that is.</p>
+  </div>
+
+  <!-- ===== VII. THE SELF-FUNDING FACTORY ===== -->
+  <div class="movement">
+    <div class="mv-head"><span class="mv-no">VII</span><h2 class="mv-title">A factory that funded itself</h2></div>
+    <p class="mv-sub">stone-based economics</p>
+    <p class="first">This is the question every "more than a tomb" theory dies on: <em>who paid for it?</em> A machine that only lifts rocks for one dead king is a pure cost sink, and cost sinks don't run twenty years. But a worksite whose surplus power spins off <strong>product</strong> is a factory that partly funds itself. The lift is the mission; the craft shop is the revenue.</p>
+    <p>Idle power gets used — a sawmill runs the planer off the same wheel that's already turning. So the craftsmen tapped the haul line, timing their cuts to the cycle: too early and they stall the machine, so they run power to the last second. That's how you get hard-stone vessels that are <em>round and uniform but not lathe-perfect</em> — the fingerprint of a rough, powerful rotary rig with the cutting tool braced against a heavy mass, spun off the construction power. Not machined, not lost technology — <em>turned on a beast.</em> And never cleanly repeated, because the beast retired.</p>
+    <p>Step back and the whole thing resolves into a <strong>stone economy</strong>: a civilization's surplus, stored in the one form that outlasts grain and holds against theft — worked stone. Inputs, a production system, a revenue stream, a labor market, a resource base, a lifecycle. The divine-kingship story isn't the purpose; it's the <em>mobilizing narrative</em> — the thing that staffed and funded the industry, the way manifest destiny mobilized the railroads. Underneath the theology, it was an industry running its resource. Nobody asks why an economy exists. It exists to run.</p>
+  </div>
+
+  <!-- ===== VIII. THE UNCORKED RUN ===== -->
+  <div class="movement">
+    <div class="mv-head"><span class="mv-no">VIII</span><h2 class="mv-title">The one uncorked run</h2></div>
+    <p class="mv-sub">why there's one that confuses everyone</p>
+    <p class="first">The Great Pyramid isn't a peak that implies decline, and it isn't an anomaly that implies a secret. It's the one time the platform ran with the <strong>limiter off</strong> — not the best pyramid that could exist, but <em>their</em> best, the version circumstance allowed to run. Pull the rulebook off a racing series for two seasons and every trick the teams were hoarding comes out at once. That's why the Great Pyramid is <em>lumpy</em>-brilliant — maxed-out in a dozen unrelated directions at once, which is not a smooth technological peak. It's a whole hidden inventory cashed in on one program.</p>
+    <p>And afterward the knowledge wasn't lost. It was <strong>re-shelved.</strong> The rules came back on. The later pyramids are the regulated seasons — same platform, limiter reinstalled — which is why they look smaller and why that's not decline. The window that lets you empty the entire drawer into one mountain is, by nature, brief. It self-closes. It opened once, at the scale of a mountain.</p>
+    <div class="locks">
+      <div class="lock"><h4>Lock 1 · the crew</h4><p>The A-team assembled once. Skill is transmissible; that specific convergence of people is not.</p></div>
+      <div class="lock"><h4>Lock 2 · capital &amp; will</h4><p>A unified treasury and stable politics held long enough to spend a civilization's full capacity on one object.</p></div>
+      <div class="lock"><h4>Lock 3 · the footprint</h4><p>The widest base was committed at course zero. You can't retrofit a wider base — the height ceiling was poured on day one.</p></div>
+      <div class="lock"><h4>Lock 4 · the site</h4><p>The confluence — best stone, drop, drainage, water, labor, fiber, timber — was taken first and spent. You cannot rebuild a confluence, or move a machine to where the map already used its best square. This is the lock that can never reopen.</p></div>
+    </div>
+  </div>
+
+  <!-- ===== IX. THE BOOM THAT ENDED ===== -->
+  <div class="movement">
+    <div class="mv-head"><span class="mv-no">IX</span><h2 class="mv-title">The boom that ended</h2></div>
+    <p class="mv-sub">a dredge that ate its deposit — and used up the trees</p>
+    <p class="first">Stop thinking of the complex as monuments and see it as one <strong>dredge</strong>: a stone-moving machine with a lifecycle, high-grading the best of the site and walking down through lower grade with each successive build until the deposit doesn't justify the machine and it strands. The "repeats" aren't separate projects — they're the same dredge working itself out. The waning quality across generations isn't lost skill; skill doesn't slowly fade. A <em>resource</em> does, and the output tracks it down.</p>
+    <p>They found their Cripple Creek. Not a lost race of master builders — <em>skilled craftsmen who walked onto the richest build-site on Earth</em>, and the strike made them into what the world remembers. The early stumbles — the collapsed and bent pyramids — are a boom camp learning its own seam. And the ambition that fired it all arrived when the surplus did: a land that unified, for the first time, into a treasury big enough to <em>want</em> a mountain and gather the crews to build it. The talent didn't land from somewhere. It <em>assembled.</em></p>
+    <p>And here is how it really ended. You will never see a 20-inch-timber warehouse built again — not because the skill died, but because the <strong>trees are gone</strong>, and the old warehouse itself is the proof the forest was there. The pyramid is Egypt's warehouse. The stone is the receipt for the timber. Both say "never again" for the same reason: <em>spent resource, not lost knowledge.</em> The West Coast was logged just as hard and stayed green because it was wet — so we believe it was forested. Egypt was drying, and deforestation on a drying land is a one-way door to desert. Same boom, same vanished wood. One landscape lived to testify and one didn't. The desert isn't proof they had no wood. It's proof they <em>used it all.</em></p>
+    <div class="pull">It's an old man's dozer. Worth millions, and firewood without the roughnecks who can run it. He dies, and the family is in the firewood business.</div>
+  </div>
+
+  <!-- ===== X. THE MOUNTAIN THAT PROVES IT ===== -->
+  <div class="movement">
+    <div class="mv-head"><span class="mv-no">X</span><h2 class="mv-title">The mountain that proves it</h2></div>
+    <p class="mv-sub">the whole lineage, on one Colorado hillside</p>
+    <p class="first">You don't have to believe a word about Egypt, because the argument is still running twenty miles from my door — and the whole lineage is stacked on one mountain. The <strong>Manitou Incline</strong> was built in 1907 as a <em>cog railway</em>, a funicular hauling load toward Pikes Peak: balanced cars, cable over a drum at the crest, the descending one lifting the ascending one — the exact machine, in steel. In 1990 a rockslide tore out the rails. They left the <strong>ties.</strong> And a cog railway stripped to its ties is a staircase — which is what people climb it as now, calling it the Stairway to Heaven without hearing themselves.</p>
+    <p>It doesn't sit there alone. The <strong>Pikes Peak Cog Railway</strong> still runs beside it. And both stand at the foot of the <strong>Hill Climb</strong> — the open venue where the uncorked run is happening <em>now.</em></p>
+    <div class="codex">
+      <div class="kicker">The window, closing — Pikes Peak overall record</div>
+      <div class="chartwrap">
+        <svg id="chart" viewBox="0 0 720 360" role="img" aria-label="Chart of the fastest overall time up Pikes Peak falling from about 20 minutes in 1916 to 7 minutes 57 seconds in 2018, when an electric car first broke eight minutes."></svg>
+        <div class="chart-note" id="cnote">The mountain gave up its defenses inside a lifetime. Fully paved in 2011 — the gravel gone. In 2018 an all-electric car ran 7:57, the first sub-eight-minute climb in a century, and altitude — the last governor, which chokes a gas engine a third dead at the summit — means nothing to an electric motor. The venue still says "bring anything." That door is still open. You can see the limiter coming.</div>
+      </div>
+    </div>
+    <p>So you're standing between two versions of the same window — one that closed forty centuries ago and froze so completely we called it a mystery, and one still warm, still open, still climbing, right before someone bolts the limiter back on for safety and it becomes the thing the <em>next</em> people can't believe was allowed to happen. Same machine. Same process. You can see it because you happen to live at the foot of the mountain where it still runs.</p>
+  </div>
+
+  <!-- ===== LEDGER ===== -->
+  <div class="movement">
+    <div class="ledger">
+      <h4>The honest ledger</h4>
+      <div class="row"><b>Status:</b> best-built candidate, not proof. The transport machine and the timber-economy are strong; the worksite-workshops is a flagged guess and should never be quoted at mechanism-confidence.</div>
+      <div class="row"><b>Materials, honestly:</b> stone pins in <em>compression</em> only — they shear and crack in tension; rope and timber carry the pull. The water box stays full for the power stroke and drains only to reset. Every claim is past-tense and construction-scoped — the <em>worksite</em> was a factory, never the finished building.</div>
+      <div class="row"><b>Fenced twice:</b> Dunn's power-plant (energy generation) is not this (mechanical transmission); and the turned vessels are "consistent with a rough rotary rig," never "obviously machined."</div>
+      <div class="row"><b>Go find it:</b> rope-groove wear <em>only</em> at the drum stations, not along the straight runs (the runs were rigid trunk-linkage, tugboat soft-links only at the turns — so the marks concentrate at a few nodes, which is the pattern we actually see); a block dropped mid-haul still wearing its lashing knobs; the 27 unexplained Gallery slots as tooth-catches; tool-marks and spindle sockets in the interior passages.</div>
+      <div class="row"><b>The scalpel:</b> where heavy stone was stacked on a height, the great stair is the strongest candidate for how it got up. Not every sacred stair is a haul road. And this is <em>not</em> Atlantis — no lost advanced people, just a known drying continent whose emptied homelands are buried, not hidden.</div>
+    </div>
+  </div>
+
+  <!-- ===== SUMMIT / BURIED ARCHIVE CLOSE ===== -->
+  <div class="summit">
+    <div class="eyebrow">The archive under the sand</div>
+    <h2>We lost the angle<span>the mystery is a matter of where we're standing</span></h2>
+    <p>The whole object was built to be read from a distance, across the approach, by someone walking toward it — a gilded cap catching the sun for the traveler on the horizon, saying <em>this is the place, you made it.</em> That was the design viewpoint, and we lost it completely. We see it stripped of its casing, up close, from the side, in a desert — every condition the opposite of what it was built to be seen as. Of course it reads as a mystery. We're looking at the back of a lighthouse with the lamp removed and wondering what it was for.</p>
+    <p>And the storyline isn't missing — it's <em>buried.</em> The pyramid is the one piece that stuck up far enough to survive being seen. The worksites, the timber yards, the rope-walks, the abandoned rigs, the settlements — and further out, the emptied homelands of the Green Sahara the drying pushed east — are under the sand. The same desiccation that <em>created</em> the labor also <em>sealed</em> the archive. The desert made the pyramid necessary and then buried everything that would explain it.</p>
+    <p>So the honest last word isn't triumph. It's earned humility, pointing at a real place. The reconstruction stands: a drying continent, a river gravity-well, a stone-and-timber industry, a boom that ran with the limiter off until the wood gave out. The confirmation is out there — west of the river, under the sand, where the people came from — and we haven't been able to walk back out and read it.</p>
+    <div class="starcap">✦</div>
+    <p class="close">The floor was the answer. <b>The stairway was the machine.</b> The forest was the engine. And the desert is only the tailings pile of a boom that used up its own trees.</p>
+    <p class="close"><em>The prototype question comes before all of it — Saqqara, the Serapeum, older than Giza, with the deep pit again. That's the next thread.</em></p>
+  </div>
+
+  <div class="touch">
+    <h4>Touchstones</h4>
+    <p><b>The balance:</b> Houdin's counterweight reading of the Grand Gallery. <b>The numbers for free:</b> Connolly's rolling-drum explanation for π; Herz-Fischler on shape-by-constructability. <b>The old track:</b> the Sweet Track, ~3800 BCE. <b>The surviving joinery:</b> the Khufu ship — 43 m of cedar, mortise-and-tenon, no metal. <b>The climate:</b> the African Humid Period and the drying that funneled people to the Nile. <b>The living lineage:</b> the Manitou Incline — 1907 cog railway, ties climbed today; the Pikes Peak Cog Railway still running beside it. <b>The open window:</b> Pikes Peak Hill Climb — paved 2011, electric 7:57 in 2018. <b>The undressed proof:</b> Menkaure's rough bosses — set first, dressed in place. <b>The flagged neighbor:</b> Christopher Dunn's <em>Giza Power Plant</em>, the fringe "machine" claim this piece stands apart from.</p>
+  </div>
+
+  <footer>
+    <div class="m">Cut the joint · raise the frame · balance the drum · walk back up · send it</div>
+  </footer>
+
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var reduce=window.matchMedia&&window.matchMedia("(prefers-reduced-motion:reduce)").matches;
+  var NS="http://www.w3.org/2000/svg";
+  function mk(p,n,a){var e=document.createElementNS(NS,n);for(var k in a)e.setAttribute(k,a[k]);p.appendChild(e);return e;}
+
+  /* ============ MECHANISM DIAGRAM (reused, approved) ============ */
+  (function(){
+    var svg=document.getElementById("mech");
+    var C={stone:"#cdbf9c",stoneEdge:"#8a7f5f",dark:"#2c6857",jade:"#3f8f7d",cinnabar:"#c0492c",gold:"#a8842f",log:"#8a6a3a",logEdge:"#5e4523",ink:"#3a382e"};
+    var GX=560,GY=430,TOPY=150,N=6,H=(GY-TOPY)/N;
+    function hw(i){return 190-i*26;}
+    for(var i=0;i<N;i++){var yT=GY-(i+1)*H,w=hw(i);mk(svg,"rect",{x:GX-w,y:yT,width:w,height:H+1,fill:(i%2?"#d8c9a4":"#cfbf98"),stroke:C.stoneEdge,"stroke-width":1});}
+    mk(svg,"rect",{x:GX-40,y:TOPY-30,width:80,height:30,fill:"#c9ba93",stroke:C.stoneEdge,"stroke-width":1.4});
+    for(var c=-2;c<=2;c++)mk(svg,"rect",{x:GX+c*15-2.5,y:TOPY-26,width:5,height:26,fill:"#b09b6b"});
+    mk(svg,"path",{d:"M"+(GX-44)+" "+(TOPY-30)+" L"+GX+" "+(TOPY-46)+" L"+(GX+44)+" "+(TOPY-30)+" Z",fill:"#b8a679",stroke:C.stoneEdge,"stroke-width":1.2});
+    var bx=GX-190,by=GY,tx=GX-hw(N-1),ty=TOPY,dx=tx-bx,dy=ty-by,L=Math.sqrt(dx*dx+dy*dy),ux=dx/L,uy=dy/L,nx=-uy,ny=ux;
+    function lane(t,off){return {x:bx+ux*t*L+nx*off,y:by+uy*t*L+ny*off};}
+    var r1a=lane(0.06,-13),r1b=lane(0.96,-13),r2a=lane(0.06,13),r2b=lane(0.96,13);
+    mk(svg,"line",{x1:r1a.x,y1:r1a.y,x2:r1b.x,y2:r1b.y,stroke:C.log,"stroke-width":2.4});
+    mk(svg,"line",{x1:r2a.x,y1:r2a.y,x2:r2b.x,y2:r2b.y,stroke:C.log,"stroke-width":2.4});
+    var INSET=26;
+    for(var st=0;st<N;st++){var yT2=GY-(st+1)*H;mk(svg,"rect",{x:GX-hw(st)+INSET/2,y:yT2-H/2,width:INSET/2,height:H/2+0.5,fill:"#b98a86",stroke:"#8f5f5b","stroke-width":1});}
+    var drum=lane(1.0,0);drum.x+=6;drum.y-=6;
+    var drumG=mk(svg,"g",{}),drumSpin=mk(drumG,"g",{});
+    mk(drumSpin,"circle",{cx:drum.x,cy:drum.y,r:16,fill:C.log,stroke:C.logEdge,"stroke-width":2});
+    mk(drumSpin,"line",{x1:drum.x-11,y1:drum.y,x2:drum.x+11,y2:drum.y,stroke:C.logEdge,"stroke-width":1.4});
+    mk(drumSpin,"line",{x1:drum.x,y1:drum.y-11,x2:drum.x,y2:drum.y+11,stroke:C.logEdge,"stroke-width":1.4});
+    var cogG=mk(svg,"g",{}),cogWheel=mk(cogG,"g",{});
+    function drawCog(){cogWheel.innerHTML="";for(var t=0;t<8;t++){var an=t*Math.PI/4;mk(cogWheel,"circle",{cx:(Math.cos(an)*15.75).toFixed(1),cy:(Math.sin(an)*15.75).toFixed(1),r:4.4,fill:C.log,stroke:C.logEdge,"stroke-width":1});}mk(cogWheel,"circle",{cx:0,cy:0,r:11.5,fill:"none",stroke:C.logEdge,"stroke-width":1.4,opacity:"0.75"});mk(cogWheel,"rect",{x:-5.8,y:-5.8,width:11.6,height:11.6,fill:C.stone,stroke:C.stoneEdge,"stroke-width":1,transform:"rotate(20)"});}
+    drawCog();
+    var cogT={v:0.20},COGOFF=-16;function placeCog(){var p=lane(cogT.v,COGOFF);cogG.setAttribute("transform","translate("+p.x+","+p.y+")");}placeCog();
+    var rtx=GX+hw(N-1),rty=TOPY,rbx=GX+190,rby=GY,rdx=rbx-rtx,rdy=rby-rty,rL=Math.sqrt(rdx*rdx+rdy*rdy),rux=rdx/rL,ruy=rdy/rL;
+    function rface(t){return {x:rtx+rux*t*rL,y:rty+ruy*t*rL};}
+    var carT={v:0.28},carG=mk(svg,"g",{});
+    function placeCar(){var p=rface(carT.v);carG.setAttribute("transform","translate("+p.x+","+p.y+")");carG.innerHTML="";
+      mk(carG,"path",{d:"M-16 9 L15 9 q6 0 6 -5",fill:"none",stroke:"#3a2a18","stroke-width":2.6,"stroke-linecap":"round"});
+      mk(carG,"line",{x1:-12,y1:9,x2:-12,y2:5,stroke:"#3a2a18","stroke-width":2,"stroke-linecap":"round"});
+      mk(carG,"line",{x1:8,y1:9,x2:8,y2:4,stroke:"#3a2a18","stroke-width":2,"stroke-linecap":"round"});
+      mk(carG,"path",{d:"M-16 -13 L16 -13 L11 5 L-11 5 Z",fill:C.cinnabar,stroke:"#7f2f1c","stroke-width":1.6});
+      mk(carG,"line",{x1:-16,y1:-13,x2:16,y2:-13,stroke:"#e6cdb2","stroke-width":1.6});
+      for(var m=-1;m<=1;m++){mk(carG,"circle",{cx:m*8,cy:-8,r:2.2,fill:"#f0e2cf"});}}
+    placeCar();
+    var rope1=mk(svg,"line",{stroke:C.cinnabar,"stroke-width":1.8,opacity:"0.9"}),rope2=mk(svg,"line",{stroke:C.cinnabar,"stroke-width":1.8,opacity:"0.9"});
+    function drawRope(){var pc=lane(cogT.v,COGOFF),pcar=rface(carT.v);rope1.setAttribute("x1",pc.x);rope1.setAttribute("y1",pc.y-14);rope1.setAttribute("x2",drum.x);rope1.setAttribute("y2",drum.y);rope2.setAttribute("x1",drum.x);rope2.setAttribute("y1",drum.y);rope2.setAttribute("x2",pcar.x);rope2.setAttribute("y2",pcar.y-14);}
+    drawRope();
+    var brakeG=mk(svg,"g",{});mk(brakeG,"rect",{x:drum.x+16,y:drum.y-6,width:12,height:11,rx:1.5,fill:C.stone,stroke:C.stoneEdge,"stroke-width":1.4});mk(brakeG,"line",{x1:drum.x+28,y1:drum.y,x2:drum.x+46,y2:drum.y-6,stroke:C.ink,"stroke-width":2,"stroke-linecap":"round"});
+    function label(x,y,tx2,ty2,text,anchor){mk(svg,"line",{x1:x,y1:y,x2:tx2,y2:ty2,stroke:C.gold,"stroke-width":1});mk(svg,"circle",{cx:x,cy:y,r:2.2,fill:C.gold});var t=mk(svg,"text",{x:tx2,y:ty2,"font-family":"ui-monospace,monospace","font-size":"12","font-weight":"700",fill:C.dark});if(anchor)t.setAttribute("text-anchor",anchor);t.textContent=text;}
+    label(drum.x,drum.y-14,drum.x-40,58,"BALANCED ROPE-DRUM");
+    label(drum.x+22,drum.y-2,drum.x+40,88,"STONE BRAKE = LATHE");
+    var lc=lane(0.20,COGOFF);label(lc.x,lc.y,40,300,"TIMBER COG-STONE");
+    var lcar=rface(0.28);label(lcar.x,lcar.y,760,300,"CREW · COUNTERWEIGHT",'end');
+    var lst=lane(0.6,13);label(lst.x,lst.y,150,470,"COG-TRACK STAIR");
+    var cap=document.getElementById("mcap"),busy=false;
+    function run(){
+      if(busy)return;
+      if(cogT.v>=0.78){cogT.v=0.20;carT.v=0.28;placeCog();placeCar();drawRope();}
+      busy=true;
+      if(reduce){cogT.v+=0.16;carT.v+=0.16;placeCog();placeCar();drawRope();cap.innerHTML="<b>One pull.</b> Car down, stone up one tooth, drum turned, brake ready.";busy=false;return;}
+      var c0=cogT.v,k0=carT.v,t0=null,dur=1100;
+      function ease(x){return x<.5?2*x*x:1-Math.pow(-2*x+2,2)/2;}
+      function fr(ts){if(!t0)t0=ts;var k=Math.min((ts-t0)/dur,1),e=ease(k);cogT.v=c0+0.16*e;carT.v=k0+0.16*e;placeCog();placeCar();drawRope();cogWheel.setAttribute("transform","rotate("+(90*e)+")");drumSpin.setAttribute("transform","rotate("+(70*e)+" "+drum.x+" "+drum.y+")");if(k<0.4)cap.innerHTML="<b>The crew rides down.</b> Their weight turns the drum.";else if(k<0.85)cap.innerHTML="<b>The stone rolls up</b> — the cog teeth catch, so it can never run back.";else cap.innerHTML="<b>Park.</b> Held on the tooth; the crew climbs back up to do it again.";if(k<1)requestAnimationFrame(fr);else{cogWheel.setAttribute("transform","rotate(0)");drumSpin.setAttribute("transform","rotate(0)");busy=false;}}
+      requestAnimationFrame(fr);
+    }
+    document.getElementById("mrun").addEventListener("click",run);
+    document.getElementById("mreset").addEventListener("click",function(){cogT.v=0.20;carT.v=0.28;placeCog();placeCar();drawRope();cap.innerHTML="<b>Balanced.</b> The crew car nearly counterweighs the cog-stone. Muscle only supplies the difference. Tap to run it.";});
+  })();
+
+  /* ============ STAGED CUTAWAY · real Giza proportions ============ */
+  (function(){
+    var svg=document.getElementById("cut");
+    if(!svg)return;
+    // --- coordinate frame: metres -> px. Base 230.4m, height 146.6m, slope 51.84deg ---
+    var cx=430, groundY=430, pxPerM=2.66;           // base 230.4m -> ~613px
+    function X(m){return cx+m*pxPerM;}               // m east of centre
+    function Y(m){return groundY-m*pxPerM;}          // m above base
+    var HB=115.2, HT=146.6;                          // half-base, height (m)
+    // pyramid outline
+    mk(svg,"path",{d:"M"+X(0)+" "+Y(HT)+" L"+X(-HB)+" "+Y(0)+" L"+X(HB)+" "+Y(0)+" Z",
+      fill:"#c9bd9a",stroke:"#8a7f5f","stroke-width":1.5,"stroke-linejoin":"round"});
+    // faint course lines
+    for(var h=20;h<HT;h+=20){var half=HB*(1-h/HT);mk(svg,"line",{x1:X(-half),y1:Y(h),x2:X(half),y2:Y(h),stroke:"#b7ab86","stroke-width":0.7,opacity:"0.55"});}
+    // bedrock / ground
+    mk(svg,"rect",{x:0,y:groundY,width:820,height:560-groundY,fill:"#b39b74",opacity:"0.5"});
+    mk(svg,"line",{x1:0,y1:groundY,x2:820,y2:groundY,stroke:"#8a6a3a","stroke-width":1.4});
+    // --- passages (metres). entrance on right/north face ~17m up ---
+    function seg(x1,y1,x2,y2,w,col){mk(svg,"line",{x1:X(x1),y1:Y(y1),x2:X(x2),y2:Y(y2),stroke:col||"#efe7d2","stroke-width":w||6,"stroke-linecap":"round"});}
+    // descending: entrance face (17m up, right) down to subterranean pit (~ -30m)
+    var Ex=101, Ey=17, Sx=6, Sy=-30;
+    seg(Ex,Ey,Sx,Sy,5,"#efe7d2");
+    // junction on descending where ascending branches (~ near base level)
+    var Jx=62, Jy=-3.5;
+    // ascending: junction up-left to gallery bottom (~21m)
+    var GBx=12, GBy=21;
+    seg(Jx,Jy,GBx,GBy,5,"#efe7d2");
+    // grand gallery: gallery bottom up-left to king's chamber level (~43m)
+    var GTx=-34, GTy=43;
+    seg(GBx,GBy,GTx,GTy,9,"#e4d8ba");
+    // king's chamber
+    mk(svg,"rect",{x:X(GTx)-16,y:Y(GTy)-9,width:26,height:15,fill:"#d8c9a4",stroke:"#8a7f5f","stroke-width":1});
+    // relieving-chamber stripe above king's (the banded section)
+    for(var s=0;s<5;s++)mk(svg,"line",{x1:X(GTx)-14,y1:Y(GTy)-12-s*4,x2:X(GTx)+8,y2:Y(GTy)-12-s*4,stroke:(s%2?"#b98a86":"#e4d8ba"),"stroke-width":2.4});
+    // queen's chamber: horizontal from near gallery bottom to centre (~21m up)
+    var QCx=-14;
+    seg(GBx-1,GBy-1.5,QCx,GBy-1.5,4,"#efe7d2");
+    mk(svg,"rect",{x:X(QCx)-9,y:Y(GBy-1.5)-7,width:16,height:12,fill:"#d8c9a4",stroke:"#8a7f5f","stroke-width":1});
+    // subterranean chamber
+    mk(svg,"rect",{x:X(Sx)-14,y:Y(Sy)-6,width:30,height:14,fill:"#d8c9a4",stroke:"#8a7f5f","stroke-width":1});
+    // centre plane (the "stripe")
+    mk(svg,"line",{x1:X(0),y1:Y(HT),x2:X(0),y2:Y(Sy-4),stroke:"#3f8f7d","stroke-width":0.8,"stroke-dasharray":"3 5",opacity:"0.55"});
+    // labels (static)
+    function tlabel(mx,my,tx,ty,text,anchor){mk(svg,"line",{x1:X(mx),y1:Y(my),x2:tx,y2:ty,stroke:"#a8842f","stroke-width":0.8});var t=mk(svg,"text",{x:tx,y:ty,"font-family":"ui-monospace,monospace","font-size":"11","font-weight":"700",fill:"#2c6857"});if(anchor)t.setAttribute("text-anchor",anchor);t.textContent=text;return t;}
+    tlabel(-34,43,150,150,"KING'S CH.");
+    tlabel(-14,19.5,120,205,"QUEEN'S");
+    tlabel((GBx+GTx)/2,(GBy+GTy)/2,150,300,"GRAND GALLERY");
+    tlabel(80,9,700,215,"DESCENDING",'end');
+    tlabel((Jx+GBx)/2,(Jy+GBy)/2,150,360,"ASCENDING");
+    tlabel(6,-30,220,510,"SUBTERRANEAN PIT");
+    tlabel(101,17,730,120,"ENTRANCE",'end');
+
+    // --- rig layer (stage-dependent) ---
+    var rigG=mk(svg,"g",{});
+    var stageCap=[
+      "<b>Stage 0 · the pit.</b> No height to drop from yet — so they dug down. A leaky water box falls into the subterranean pit; the rock rises onto the first courses.",
+      "<b>Stage 1 · mid-rise.</b> The pit is sealing below. Power shifts to a counterweight dropping the outer face; the first redirect drums leapfrog up with the build.",
+      "<b>Stage 2 · the gallery.</b> The internal incline runs as a granite counterweight-chute, drum at its crest — an up-run and a down-run in one plane, a V inside, not a mirror across the apex.",
+      "<b>Stage 3 · topping out.</b> A gin pole finishes the last courses near the apex. The interior rigs are sealing into the mass as fossils.",
+      "<b>The fossil.</b> Everything inside lies in one vertical plane on the centerline — project it to the face and it's a stripe down the middle. That's what a single-plane haul-way, grown in stages, leaves behind. Step through the build."
+    ];
+    // a small schematic rig at a point, sloped along the face
+    function miniRig(faceH, ghost){
+      var op=ghost?0.28:1;
+      var half=HB*(1-faceH/HT);               // face x at this height
+      // working-surface dashed line across the build at faceH
+      mk(rigG,"line",{x1:X(-half),y1:Y(faceH),x2:X(half),y2:Y(faceH),stroke:"#c0492c","stroke-width":1.2,"stroke-dasharray":"5 4",opacity:(ghost?0.3:0.75)});
+      // drum at the working edge (left face)
+      var dxp=X(-half), dyp=Y(faceH);
+      mk(rigG,"circle",{cx:dxp,cy:dyp-7,r:7,fill:"#8a6a3a",stroke:"#5e4523","stroke-width":1.4,opacity:op});
+      // cog on the outer stair just below the edge
+      mk(rigG,"circle",{cx:dxp-14,cy:dyp+16,r:8,fill:"none",stroke:"#8a6a3a","stroke-width":2.4,opacity:op});
+      mk(rigG,"rect",{x:dxp-18,y:dyp+12,width:8,height:8,fill:"#b98a86",stroke:"#8f5f5b","stroke-width":1,opacity:op});
+      // counterweight mine-cart lower on the face
+      mk(rigG,"path",{d:"M"+(dxp-40)+" "+(dyp+46)+" l22 0 l-3 11 l-16 0 z",fill:"#c0492c",stroke:"#7f2f1c","stroke-width":1.3,opacity:op});
+      // ropes
+      mk(rigG,"line",{x1:dxp-14,y1:dyp+16,x2:dxp,y2:dyp-7,stroke:"#c0492c","stroke-width":1.4,opacity:op});
+      mk(rigG,"line",{x1:dxp,y1:dyp-7,x2:dxp-31,y2:dyp+46,stroke:"#c0492c","stroke-width":1.4,opacity:op});
+    }
+    function waterBox(ghost){
+      var op=ghost?0.3:1;
+      // box dropping into the subterranean pit
+      mk(rigG,"rect",{x:X(Sx)-6,y:Y(-14),width:13,height:12,fill:"#3f8f7d",stroke:"#245049","stroke-width":1.3,opacity:op});
+      mk(rigG,"line",{x1:X(Sx),y1:Y(-14),x2:X(Sx),y2:Y(2),stroke:"#c0492c","stroke-width":1.3,opacity:op});
+      // a couple of drips
+      mk(rigG,"circle",{cx:X(Sx)-2,cy:Y(-20),r:1.3,fill:"#3f8f7d",opacity:op});
+    }
+    var buildLine={0:14,1:52,2:78,3:128};
+    function setStage(s){
+      rigG.innerHTML="";
+      document.getElementById("ccap").innerHTML=stageCap[s];
+      if(s===4){return;}                       // fossil: no rig
+      // ghost earlier stages
+      for(var g=0;g<s;g++){ if(g===0) waterBox(true); else miniRig(buildLine[g],true); }
+      if(s===0){ waterBox(false); miniRig(14,false); }
+      else { miniRig(buildLine[s],false); }
+    }
+    var btns=document.querySelectorAll("#stagebar button");
+    for(var b=0;b<btns.length;b++){(function(btn){btn.addEventListener("click",function(){
+      for(var i=0;i<btns.length;i++)btns[i].classList.remove("on");
+      btn.classList.add("on"); setStage(parseInt(btn.getAttribute("data-s"),10));
+    });})(btns[b]);}
+    setStage(4);
+  })();
+
+  /* ============ RECORD CHART (reused) ============ */
+  (function(){
+    var svg=document.getElementById("chart");
+    if(!svg)return;
+    var W=720,Hh=360,padL=64,padR=24,padT=26,padB=54;
+    var data=[{y:1916,t:20.93,l:""},{y:1934,t:15.98,l:""},{y:1956,t:14.9,l:""},{y:1968,t:12.72,l:""},{y:1994,t:10.68,l:""},{y:2007,t:10.01,l:""},{y:2013,t:8.23,l:"Loeb"},{y:2018,t:7.952,l:"I.D. R · electric · 7:57"}];
+    var x0=1910,x1=2026,y0=6,y1=22;
+    function X(y){return padL+(y-x0)/(x1-x0)*(W-padL-padR);}
+    function Y(t){return padT+(t-y0)/(y1-y0)*(Hh-padT-padB);}
+    for(var m=8;m<=20;m+=4){var yy=Y(m);mk(svg,"line",{x1:padL,y1:yy,x2:W-padR,y2:yy,stroke:"#d9cfb0","stroke-width":1});var tl=mk(svg,"text",{x:padL-10,y:yy+4,"font-family":"ui-monospace,monospace","font-size":"11",fill:"#8a7f5f","text-anchor":"end"});tl.textContent=m+" min";}
+    [1916,1950,1980,2010].forEach(function(yr){var xx=X(yr);var tl=mk(svg,"text",{x:xx,y:Hh-padB+22,"font-family":"ui-monospace,monospace","font-size":"11",fill:"#8a7f5f","text-anchor":"middle"});tl.textContent=yr;});
+    var xp=X(2011);mk(svg,"line",{x1:xp,y1:padT,x2:xp,y2:Hh-padB,stroke:"#3f8f7d","stroke-width":1,"stroke-dasharray":"4 4",opacity:"0.7"});
+    var pv=mk(svg,"text",{x:xp-4,y:padT+12,"font-family":"ui-monospace,monospace","font-size":"10",fill:"#2c6857","text-anchor":"end"});pv.textContent="paved 2011";
+    var d="";data.forEach(function(p,i){d+=(i?" L":"M")+X(p.y).toFixed(1)+" "+Y(p.t).toFixed(1);});
+    var path=mk(svg,"path",{d:d,fill:"none",stroke:"#c0492c","stroke-width":2.6,"stroke-linecap":"round","stroke-linejoin":"round"});
+    if(!reduce&&path.getTotalLength){var Ln=path.getTotalLength();path.setAttribute("stroke-dasharray",Ln);path.setAttribute("stroke-dashoffset",Ln);path.animate?path.animate([{strokeDashoffset:Ln},{strokeDashoffset:0}],{duration:1600,easing:"ease-out",fill:"forwards"}):path.setAttribute("stroke-dashoffset",0);}
+    data.forEach(function(p){mk(svg,"circle",{cx:X(p.y),cy:Y(p.t),r:4,fill:"#c0492c"});if(p.l){var t=mk(svg,"text",{x:X(p.y)+(p.y>2015?-8:8),y:Y(p.t)+(p.y>2015?18:-10),"font-family":"ui-monospace,monospace","font-size":"11","font-weight":"700",fill:"#9c3a22","text-anchor":p.y>2015?"end":"start"});t.textContent=p.l;}});
+    var ti=mk(svg,"text",{x:padL,y:16,"font-family":"ui-monospace,monospace","font-size":"11","letter-spacing":"0.5",fill:"#5a5442"});ti.textContent="FASTEST TIME UP THE MOUNTAIN · 1916 \u2192 today";
+  })();
+})();
+</script>
+</body>
+</html>

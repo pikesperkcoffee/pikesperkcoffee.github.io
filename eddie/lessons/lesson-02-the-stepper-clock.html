@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lesson 02 — The Stepper Clock</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600&family=Public+Sans:wght@400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --mat:#2F6B5E; --mat-deep:#1E4A40;
+    --paper:#F7F6F2; --ink:#1D2321;
+    --blaze:#DE5A12; --steel:#5C6660;
+    --code-bg:#132621; --code-ink:#D9EAE2;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{background:var(--paper); color:var(--ink);
+    font-family:'Public Sans',system-ui,sans-serif; font-size:16px; line-height:1.55;}
+  .wrap{max-width:720px; margin:0 auto; padding:16px 16px 80px;}
+  header.card{background:var(--mat-deep); color:#fff; border-radius:10px; padding:20px; margin-bottom:20px;}
+  .eyebrow{font-family:'Oswald',Arial Narrow,sans-serif; letter-spacing:.18em; text-transform:uppercase;
+    font-size:12px; color:var(--blaze); font-weight:600;}
+  h1{font-family:'Oswald',Arial Narrow,sans-serif; font-weight:600; font-size:30px; line-height:1.15; margin:6px 0 14px; text-transform:uppercase;}
+  .tcs{display:grid; gap:8px; font-size:14px;}
+  .tcs b{color:var(--blaze); font-family:'Oswald',sans-serif; letter-spacing:.08em; font-weight:500;}
+  .rail{display:flex; gap:6px; margin:22px 0 6px;}
+  .rail span{flex:1; text-align:center; font-family:'Oswald',sans-serif; font-size:12px; letter-spacing:.14em;
+    padding:6px 0; border:2px solid var(--steel); color:var(--steel); border-radius:6px;}
+  .rail span.on{background:var(--blaze); border-color:var(--blaze); color:#fff;}
+  h2.table-head{font-family:'Oswald',sans-serif; font-weight:600; text-transform:uppercase; letter-spacing:.06em;
+    font-size:22px; margin:34px 0 4px; padding-left:12px; border-left:6px solid var(--blaze); color:var(--mat-deep);}
+  .table-sub{font-size:13px; color:var(--steel); margin-bottom:14px; padding-left:18px;}
+  h3{font-family:'Oswald',sans-serif; font-weight:500; font-size:17px; margin:20px 0 8px; color:var(--mat-deep);}
+  p{margin-bottom:12px;}
+  ul,ol{margin:0 0 12px 22px;}
+  li{margin-bottom:6px;}
+  .safety{border:3px solid var(--blaze); border-radius:10px; padding:16px; margin:18px 0; background:#fff;}
+  .safety h3{margin-top:0; color:var(--blaze);}
+  table{width:100%; border-collapse:collapse; font-size:13.5px; margin:12px 0; background:#fff;}
+  th{background:var(--mat); color:#fff; font-family:'Oswald',sans-serif; font-weight:500; letter-spacing:.05em;
+    text-align:left; padding:8px;}
+  td{border:1px solid #cfd4cf; padding:8px; vertical-align:top;}
+  .w-red{color:#B42318; font-weight:700;} .w-blk{font-weight:700;}
+  .w-grn{color:var(--mat); font-weight:700;} .w-blu{color:#1F4FA0; font-weight:700;}
+  .ai{background:#fff; border:2px dashed var(--mat); border-radius:10px; padding:14px 16px; margin:16px 0;}
+  .ai .tag{font-family:'Oswald',sans-serif; font-size:12px; letter-spacing:.16em; color:var(--mat-deep);
+    text-transform:uppercase; margin-bottom:8px;}
+  .ai .prompt{background:var(--paper); border-radius:8px; padding:10px 12px; font-size:14.5px; font-style:italic;
+    border-left:4px solid var(--blaze); margin-top:6px;}
+  .chk{background:#EAF1EC; border-left:6px solid var(--mat); border-radius:0 8px 8px 0; padding:12px 14px; margin:14px 0; font-size:14.5px;}
+  .chk b{font-family:'Oswald',sans-serif; letter-spacing:.08em; color:var(--mat-deep); font-weight:600;}
+  .big-idea{background:var(--mat-deep); color:#fff; border-radius:10px; padding:18px; margin:18px 0; font-size:15.5px;}
+  .big-idea b{color:var(--blaze);}
+  .codewrap{position:relative; margin:14px 0;}
+  pre{background:var(--code-bg); color:var(--code-ink); border-radius:10px; padding:16px 14px;
+    overflow-x:auto; font-family:ui-monospace,'Cascadia Mono',Menlo,monospace; font-size:13px; line-height:1.5;}
+  .copy{position:absolute; top:8px; right:8px; background:var(--blaze); color:#fff; border:none;
+    font-family:'Oswald',sans-serif; letter-spacing:.1em; font-size:11px; padding:6px 12px; border-radius:6px;}
+  .copy:active{background:var(--mat);}
+  .qual-box{background:var(--mat-deep); color:#fff; border-radius:10px; padding:18px; margin:16px 0;}
+  .qual-box h3{color:var(--blaze); margin-top:0;}
+  .qual-box table{background:transparent; color:#fff;}
+  .qual-box td{border-color:#4a6a60;}
+  footer{margin-top:40px; font-size:12px; color:var(--steel); text-align:center;
+    font-family:'Oswald',sans-serif; letter-spacing:.12em; text-transform:uppercase;}
+
+  /* site nav — fixed top-right, honest filesystem labels.
+     Lesson-02 sits two levels deep, so the two buttons diverge:
+       ../  = the parent doc (eddie-portal.html)
+       /    = the site index (root) */
+  .sitenav{position:fixed; top:14px; right:14px; z-index:100;
+    display:flex; gap:6px;
+    font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.14em;}
+  .sitenav a{display:inline-block; padding:6px 10px;
+    background:rgba(247,246,242,.92); backdrop-filter:blur(6px);
+    color:var(--steel); text-decoration:none;
+    border:1px solid #d5d1c4; border-radius:4px;
+    transition:color .12s, border-color .12s;}
+  .sitenav a:hover{color:var(--blaze); border-color:var(--blaze);}
+  @media (max-width:600px){.sitenav{top:10px; right:10px;} .sitenav a{padding:5px 8px; font-size:10px;}}
+</style>
+</head>
+<body>
+<nav class="sitenav" aria-label="Site navigation">
+  <a href="../eddie-portal.html" title="Back one page (up one directory)">../</a>
+  <a href="../../index.html" title="Site index (root)">/</a>
+</nav>
+<div class="wrap">
+
+<header class="card">
+  <div class="eyebrow">Morton Millworks · Bench Qualification</div>
+  <h1>Lesson 02<br>The Stepper Clock</h1>
+  <div class="tcs">
+    <div><b>TASK</b> — Command the stepper to any angle, direction, and speed the instructor calls out — and explain what it teaches you about how a processor works.</div>
+    <div><b>CONDITIONS</b> — NEMA 17 + TB6600 driver per wiring table. Driver set to full step (200 steps/rev). Thonny on the laptop, AI tutor on your phone.</div>
+    <div><b>STANDARD</b> — Hit three called angles within ±2 steps (±3.6°), correct direction, at the called speed. Explain the clock analogy in your own words at debrief.</div>
+  </div>
+</header>
+
+<div class="ai">
+  <div class="tag">⚡ First move — set up your AI tutor</div>
+  <p style="font-size:14px">Same deal as Lesson 01. Paste this into your Claude first:</p>
+  <div class="prompt">You're my electronics shop tutor today. Rules: never write complete code for me — the lesson doc has the code. Before I run anything, make me predict what it will do, then question my prediction. When I show a photo or an error, ask me diagnostic questions one at a time instead of answering. Keep replies short. If I try to get you to just solve it, remind me of this deal.</div>
+</div>
+
+<div class="big-idea">
+  <b>The big idea:</b> a stepper motor doesn't rotate. It <b>jumps</b> — one fixed tooth at a time, 1.8° per jump, 200 jumps per revolution. It only <i>looks</i> like rotation when the jumps come fast. Hold that thought: by the end of this lesson it explains how every computer you've ever touched actually works.
+</div>
+
+<div class="safety">
+  <h3>⚠ Safety Brief</h3>
+  <ul>
+    <li><b>NEVER unplug the motor while the driver is powered.</b> The coils kick back and kill the driver instantly. This is the one mistake on this bench with no fix. Power down first, every time.</li>
+    <li><b>Power-up order:</b> USB + Pico first, then driver supply. Shutdown in reverse.</li>
+    <li>Motor gets warm at idle — that's normal, it's holding position. Hot enough you can't keep a finger on it = tell the instructor.</li>
+    <li>Clamp the motor. Put a tape flag on the shaft so you can see position.</li>
+  </ul>
+</div>
+
+<h3>Driver setup — DIP switches BEFORE power</h3>
+<ul>
+  <li><b>Microstep switches: full step — 200 pulses per revolution.</b> This lesson depends on it.</li>
+  <li><b>Current switches: match the motor's rated amps</b> (instructor confirms). Too high quietly cooks the motor.</li>
+</ul>
+
+<h3>Wiring table</h3>
+<table>
+  <tr><th>Terminal</th><th>Goes to</th><th>Why</th></tr>
+  <tr><td class="w-grn">PUL+</td><td>Pico <b>3V3 pin</b></td><td>Feeds the driver's signal input its reference voltage</td></tr>
+  <tr><td class="w-grn">PUL−</td><td>Pico <b>GP2</b></td><td>The step wire. Pico pulls it LOW to fire one step</td></tr>
+  <tr><td class="w-blu">DIR+</td><td>Pico <b>3V3 pin</b></td><td>Same reference for the direction input</td></tr>
+  <tr><td class="w-blu">DIR−</td><td>Pico <b>GP3</b></td><td>The direction wire. LOW = one way, HIGH = the other</td></tr>
+  <tr><td>ENA+ / ENA−</td><td><b>Nothing</b></td><td>Unconnected = driver always enabled. Fine for us</td></tr>
+  <tr><td class="w-red">VCC / GND</td><td>Supply + / −</td><td>Muscle power for the coils</td></tr>
+  <tr><td class="w-blk">A+ A− B+ B−</td><td>Motor's two coil pairs</td><td>Each pair is one coil. Instructor confirms the pairing</td></tr>
+</table>
+<p style="font-size:14px"><b>Heads up — the logic is upside down.</b> Because of how we wired it, the Pico fires a step by pulling the pin <i>LOW</i>, not high. The code handles it; you just need to not be surprised. Why it's wired this way is a debrief question.</p>
+
+<div class="ai">
+  <div class="tag">📸 Ask your AI</div>
+  <div class="prompt">Here's a photo of my TB6600 stepper driver wiring to a Pico. Don't tell me if it's right — ask me questions one at a time to check it against my wiring table. Start with the DIP switches.</div>
+</div>
+
+<!-- ============ TABLE I ============ -->
+<div class="rail"><span class="on">I · DRY</span><span>II · BLANK</span><span>III · LIVE</span><span>IV · QUAL</span></div>
+<h2 class="table-head">Table I — Dry</h2>
+<div class="table-sub">No power. Read Chunk 1 and Chunk 2. Predict before anything moves.</div>
+<ol>
+  <li>Chunk 1 runs once. How far does the shaft move, in degrees?</li>
+  <li>Chunk 2: how many times does the shaft physically move, and how do you know from the code?</li>
+  <li>What would you change to make Chunk 2 do exactly half a revolution?</li>
+</ol>
+<div class="ai">
+  <div class="tag">📸 Ask your AI</div>
+  <div class="prompt">This code steps a motor (I'll paste it). My prediction: [prediction]. Ask me questions that test whether my prediction accounts for every line in the loop.</div>
+</div>
+
+<!-- ============ TABLE II ============ -->
+<div class="rail"><span>I · DRY</span><span class="on">II · BLANK</span><span>III · LIVE</span><span>IV · QUAL</span></div>
+<h2 class="table-head">Table II — Blank</h2>
+<div class="table-sub">Sanctioned copy-paste. Power up in order: USB first, driver supply second.</div>
+
+<h3>Chunk 1 — One tooth</h3>
+<div class="codewrap">
+<button class="copy" onclick="cp(this)">COPY</button>
+<pre># Chunk 1: fire exactly ONE step. One run = one click of the shaft.
+
+from machine import Pin
+import time
+
+# Our wiring makes these pins "active low": resting state is HIGH,
+# and pulling LOW is what fires. value=1 means "start at rest".
+step_pin = Pin(2, Pin.OUT, value=1)
+dir_pin  = Pin(3, Pin.OUT, value=1)
+
+def one_step():
+    # A step is a quick blink: LOW, tiny pause, back to HIGH.
+    # The driver moves the motor one tooth on that blink.
+    step_pin.value(0)
+    time.sleep_us(10)      # 10 millionths of a second - plenty
+    step_pin.value(1)
+    time.sleep_us(10)
+
+one_step()
+print("One step fired. That was 1.8 degrees. Watch the flag.")</pre>
+</div>
+<div class="chk"><b>CHECKPOINT</b> — Run it five times. Five distinct clicks of the flag. Each run of the program = one physical event in the world. Sit with that for a second.</div>
+
+<h3>Chunk 2 — The visible loop</h3>
+<div class="codewrap">
+<button class="copy" onclick="cp(this)">COPY</button>
+<pre># Chunk 2: a loop you can WATCH. Twenty steps, one per half second.
+# Each pass through the loop = one click of the shaft. The loop
+# isn't an idea anymore. It's a ratchet.
+
+from machine import Pin
+import time
+
+step_pin = Pin(2, Pin.OUT, value=1)
+dir_pin  = Pin(3, Pin.OUT, value=1)
+
+def one_step():
+    step_pin.value(0)
+    time.sleep_us(10)
+    step_pin.value(1)
+
+for count in range(20):          # do the indented lines 20 times
+    one_step()
+    print("loop pass", count + 1, "- shaft moved one tooth")
+    time.sleep(0.5)              # half a second of NOTHING.
+                                 # The Pico just stands there.
+                                 # That's what sleep means.
+
+print("Done. 20 teeth = 36 degrees.")</pre>
+</div>
+<div class="chk"><b>CHECKPOINT</b> — The Shell counts, the flag clicks, in lockstep. Point at the line that causes the click. Point at the line that causes the waiting.</div>
+
+<h3>Chunk 3 — The illusion of motion</h3>
+<div class="codewrap">
+<button class="copy" onclick="cp(this)">COPY</button>
+<pre># Chunk 3: the same loop at five different speeds.
+# Somewhere in this ladder, clicking becomes motion.
+# Nothing about the code changes except the waiting.
+
+from machine import Pin
+import time
+
+step_pin = Pin(2, Pin.OUT, value=1)
+dir_pin  = Pin(3, Pin.OUT, value=1)
+
+def one_step():
+    step_pin.value(0)
+    time.sleep_us(10)
+    step_pin.value(1)
+
+# Each pair is (steps per second, how many steps to do).
+ladder = [(2, 10), (10, 30), (50, 100), (200, 200), (800, 400)]
+
+for speed, steps in ladder:
+    print("Now at", speed, "steps per second. Watch AND listen.")
+    pause = 1 / speed            # seconds of waiting between steps
+    for i in range(steps):
+        one_step()
+        time.sleep(pause)
+    time.sleep(1)                # a breath between rungs
+
+print("Same jumps the whole way. Only the gaps got shorter.")</pre>
+</div>
+<div class="chk"><b>CHECKPOINT</b> — Name the rung where clicks turned into a hum, and the rung where hum turned into smooth rotation. Write those two numbers down. That boundary is where your eyes stop keeping up with discrete events.</div>
+
+<div class="big-idea">
+  <b>Now the landing:</b> that smooth rotation was never smooth. It was 800 separate jumps per second, faster than your senses sample. Your Pico's processor does the exact same thing — one instruction, then the next, then the next — at <b>133 million per second</b>. Every "smooth" thing a computer does is the last rung of this ladder. The processor is a stepper with 133 million teeth per second, and <code>time.sleep()</code> is you commanding it to spin the gaps out longer. You just watched a clock cycle with your own eyes.
+</div>
+
+<div class="ai">
+  <div class="tag">📸 Ask your AI</div>
+  <div class="prompt">I just watched a stepper motor go from clicking to smooth motion as the loop sped up, and the lesson says this is how a processor works too. Quiz me on the analogy — ask me what corresponds to what, one question at a time, and tell me only whether my answer holds up.</div>
+</div>
+
+<!-- ============ TABLE III ============ -->
+<div class="rail"><span>I · DRY</span><span>II · BLANK</span><span class="on">III · LIVE</span><span>IV · QUAL</span></div>
+<h2 class="table-head">Table III — Live</h2>
+<div class="table-sub">Pasted code can't pass this table. Author the changes, prove them with the flag.</div>
+
+<h3>Chunk 4 — Steps become geometry</h3>
+<div class="codewrap">
+<button class="copy" onclick="cp(this)">COPY</button>
+<pre># Chunk 4: command ANGLES instead of steps.
+# 200 steps = 360 degrees, so degrees-to-steps is just division.
+
+from machine import Pin
+import time
+
+step_pin = Pin(2, Pin.OUT, value=1)
+dir_pin  = Pin(3, Pin.OUT, value=1)
+
+STEPS_PER_REV = 200              # full-step mode, from the DIP switches
+
+def one_step():
+    step_pin.value(0)
+    time.sleep_us(10)
+    step_pin.value(1)
+
+def turn(degrees, speed):
+    # Convert an angle to a whole number of steps.
+    steps = int(degrees * STEPS_PER_REV / 360)
+    pause = 1 / speed
+    print("That angle is", steps, "steps.")
+    for i in range(steps):
+        one_step()
+        time.sleep(pause)
+
+turn(90, 100)     # a quarter turn at 100 steps per second
+print("Check the flag: did it land a quarter turn from start?")</pre>
+</div>
+
+<p><b>Live modifications — all four, verified by the flag:</b></p>
+<ol>
+  <li>Command 45°, then 180°, then 720°. Verify each with the flag before the next.</li>
+  <li>Direction: <code>dir_pin</code> is set once and never touched. Make <code>turn()</code> accept a direction and use it. (LOW is one way, HIGH the other — discover which is which and label it in a comment.)</li>
+  <li>Make <code>turn()</code> print how long the move <i>should</i> take before it starts. You know steps and pause — the math is yours.</li>
+  <li>Command 1°. Something's off. What did the flag do, and why? (Look at what <code>int()</code> did to your step count.)</li>
+</ol>
+
+<div class="ai">
+  <div class="tag">📸 Ask your AI</div>
+  <div class="prompt">I commanded my stepper to turn 1 degree and it didn't move. I think the reason is [your theory]. Ask me questions until my explanation is airtight — don't hand me the answer.</div>
+</div>
+
+<!-- ============ TABLE IV ============ -->
+<div class="rail"><span>I · DRY</span><span>II · BLANK</span><span>III · LIVE</span><span class="on">IV · QUAL</span></div>
+<h2 class="table-head">Table IV — Qual</h2>
+<div class="table-sub">Book open. Phone closed. Instructor calls the shots.</div>
+
+<div class="qual-box">
+  <h3>The mission</h3>
+  <ol>
+    <li>Instructor calls: an <b>angle</b>, a <b>direction</b>, a <b>speed</b>.</li>
+    <li>You command it using your modified <code>turn()</code>. Flag proves it.</li>
+    <li>Standard: within ±2 steps (±3.6°), right direction, at the called speed. Three for three.</li>
+  </ol>
+  <table>
+    <tr><th>Called</th><th>Commanded steps</th><th>Flag result</th><th>Pass?</th></tr>
+    <tr><td>&nbsp;</td><td></td><td></td><td></td></tr>
+    <tr><td>&nbsp;</td><td></td><td></td><td></td></tr>
+    <tr><td>&nbsp;</td><td></td><td></td><td></td></tr>
+  </table>
+</div>
+
+<h3>Debrief — out loud, AI closed</h3>
+<ol>
+  <li>The clock analogy, your words: what does one loop pass correspond to in a real processor? What does <code>time.sleep()</code> correspond to?</li>
+  <li>Why did smooth motion appear even though nothing about the jumps changed?</li>
+  <li>Why does the driver fire on LOW instead of HIGH in our wiring?</li>
+  <li>The 1° problem: what happened, and what does it tell you about machines that count in whole steps?</li>
+  <li>The CNC router in the shop runs on drivers just like this one. What do you now know about what's happening inside it when it cuts a curve?</li>
+</ol>
+<p><b>Bonus for next time:</b> the DIP switches can make the driver take 1600 pulses per revolution instead of 200. Same motor, finer teeth. What would that do to your <code>turn()</code> function — and what's the equivalent move in a processor?</p>
+
+<footer>Lesson 02 · The Stepper Clock · Qual tables I–IV</footer>
+</div>
+<script>
+function cp(btn){
+  var t = btn.parentElement.querySelector('pre').innerText;
+  if(navigator.clipboard){ navigator.clipboard.writeText(t); }
+  else{ var ta=document.createElement('textarea'); ta.value=t; document.body.appendChild(ta);
+        ta.select(); document.execCommand('copy'); document.body.removeChild(ta); }
+  btn.textContent='COPIED'; setTimeout(function(){btn.textContent='COPY';},1500);
+}
+</script>
+</body>
+</html>

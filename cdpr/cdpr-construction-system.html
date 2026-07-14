@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hybrid Site Construction — Concept Brief</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Public+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F3EBDA; --panel:#EDE3CD; --panel2:#E7DBC1; --code:#EEE4CE;
+    --ink:#332F28; --dim:#7A6E58; --faint:#A99B80;
+    --rust:#B0531E; --rust2:#C9713B; --ochre:#C29433; --steel:#4F6B78;
+    --timber:#9A5A2B; --earth:#95764F; --line:#D6CAAF; --sky:#D3E1E2;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{background:var(--paper); color:var(--ink);
+    font-family:'Public Sans',system-ui,sans-serif; line-height:1.62; font-size:16px;
+    background-image:linear-gradient(rgba(149,118,79,.045) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(149,118,79,.045) 1px, transparent 1px);
+    background-size:26px 26px;}
+  .wrap{max-width:880px; margin:0 auto; padding:0 18px 100px;}
+  header.plate{border:1.5px solid var(--ink); border-top:6px solid var(--rust); background:var(--panel);
+    margin:26px 0 22px; padding:26px 26px 22px; position:relative; box-shadow:3px 3px 0 rgba(51,47,40,.08);}
+  .filecode{font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--rust); letter-spacing:.18em; font-weight:500;}
+  h1{font-family:'Oswald',sans-serif; font-weight:700; text-transform:uppercase; letter-spacing:.01em;
+     font-size:32px; line-height:1.06; margin:9px 0 6px; color:var(--ink);}
+  h1 .sub{display:block; font-size:15px; font-weight:500; color:var(--rust2); letter-spacing:.05em; margin-top:9px;}
+  .byline{font-family:'JetBrains Mono',monospace; font-size:11.5px; color:var(--dim); margin-top:15px; line-height:1.95;}
+  .byline b{color:var(--steel); font-weight:500;}
+  .rivets{position:absolute; top:10px; right:14px; font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--faint);}
+  section{border:1px solid var(--line); background:var(--panel); margin:18px 0; box-shadow:2px 2px 0 rgba(51,47,40,.05);}
+  .sec-head{display:flex; align-items:center; gap:12px; padding:12px 16px; border-bottom:1px solid var(--line);
+    background:var(--panel2); cursor:pointer; user-select:none;}
+  .sec-head .no{font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--paper);
+    background:var(--rust); padding:3px 9px; font-weight:700; letter-spacing:.05em;}
+  .sec-head h2{font-family:'Oswald',sans-serif; text-transform:uppercase; letter-spacing:.07em;
+    font-size:16px; font-weight:600; color:var(--ink); flex:1;}
+  .sec-head .tog{font-family:'JetBrains Mono',monospace; font-size:16px; color:var(--rust); transition:transform .2s;}
+  .sec-head.collapsed .tog{transform:rotate(-90deg);}
+  .sec-body{padding:20px 22px 24px;}
+  .sec-body.hidden{display:none;}
+  p{margin:0 0 13px;}
+  p.dim{color:var(--dim); font-size:14.5px;}
+  .lead{font-size:17px; border-left:3px solid var(--rust); padding-left:15px; color:#4A4335;}
+  strong{color:var(--rust); font-weight:600;}
+  em{color:var(--steel); font-style:italic;}
+  h3{font-family:'Oswald',sans-serif; text-transform:uppercase; letter-spacing:.06em; font-weight:500;
+     font-size:14px; color:var(--steel); margin:22px 0 10px; padding-bottom:5px; border-bottom:1px dashed var(--line);}
+  ol,ul{margin:0 0 14px 4px; padding-left:20px;}
+  li{margin-bottom:7px;}
+  li::marker{color:var(--rust);}
+  figure{margin:16px 0; border:1px solid var(--line); background:var(--paper);}
+  figure svg{display:block; width:100%; height:auto;}
+  figcaption{font-family:'JetBrains Mono',monospace; font-size:10.5px; color:var(--dim);
+    letter-spacing:.06em; text-transform:uppercase; padding:8px 12px; border-top:1px solid var(--line); background:var(--panel2);}
+  table{width:100%; border-collapse:collapse; margin:12px 0; font-size:13.5px;}
+  th{font-family:'Oswald',sans-serif; text-transform:uppercase; letter-spacing:.05em; font-weight:500;
+     text-align:left; padding:8px 10px; background:var(--panel2); color:var(--rust); border:1px solid var(--line);}
+  td{padding:8px 10px; border:1px solid var(--line); color:var(--ink); vertical-align:top;}
+  td:first-child{color:var(--steel); font-family:'JetBrains Mono',monospace; font-size:12px;}
+  pre.code{font-family:'JetBrains Mono',monospace; font-size:12.5px; line-height:1.55; color:var(--ink);
+    background:var(--code); border:1px solid var(--line); border-left:3px solid var(--rust);
+    padding:14px; overflow-x:auto; margin:12px 0;}
+  .code .k{color:var(--rust); font-weight:500;} .code .c{color:var(--faint); font-style:italic;}
+  .code .n{color:var(--ochre); font-weight:500;} .code .f{color:var(--steel);}
+  code.inl{font-family:'JetBrains Mono',monospace; font-size:12.5px; background:var(--panel2); color:var(--rust); padding:1px 5px; border:1px solid var(--line);}
+  .calc{border:1.5px solid var(--steel); background:var(--panel2); margin:16px 0;}
+  .calc-h{font-family:'Oswald',sans-serif; text-transform:uppercase; letter-spacing:.1em; font-size:13px;
+    color:var(--paper); background:var(--steel); padding:9px 14px; font-weight:600; display:flex; justify-content:space-between; align-items:center;}
+  .calc-h span{font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.05em; opacity:.85;}
+  .calc-body{padding:16px;}
+  .posts{display:grid; grid-template-columns:repeat(2,1fr); gap:8px; margin-bottom:14px;}
+  .postbox{border:1px solid var(--line); padding:8px 10px; background:var(--paper);}
+  .postbox label{font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--dim); text-transform:uppercase; letter-spacing:.1em;}
+  .postbox .val{font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--steel); margin-top:3px;}
+  .sliders{display:grid; gap:12px; margin:8px 0 16px;}
+  .srow{display:grid; grid-template-columns:34px 1fr 66px; align-items:center; gap:10px;}
+  .srow label{font-family:'Oswald',sans-serif; font-size:15px; color:var(--rust); letter-spacing:.05em;}
+  .srow input[type=range]{width:100%; accent-color:var(--rust); height:4px;}
+  .srow output{font-family:'JetBrains Mono',monospace; font-size:13px; color:var(--steel); text-align:right;}
+  .readout{display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin-top:8px;}
+  .cable{border:1px solid var(--line); background:var(--paper); padding:10px 8px; text-align:center; position:relative; overflow:hidden;}
+  .cable .lab{font-family:'Oswald',sans-serif; font-size:13px; color:var(--rust); letter-spacing:.1em;}
+  .cable .len{font-family:'JetBrains Mono',monospace; font-size:17px; color:var(--ink); margin-top:4px; font-weight:700;}
+  .cable .unit{font-family:'JetBrains Mono',monospace; font-size:9px; color:var(--faint);}
+  .cable .bar{position:absolute; bottom:0; left:0; height:3px; background:var(--steel); transition:width .12s;}
+  .viz{border:1px solid var(--line); background:var(--code); margin-top:14px;}
+  canvas{display:block; width:100%; height:auto;}
+  .vizcap{font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--dim); padding:6px 10px; letter-spacing:.06em;}
+  .callout{border:1px dashed var(--ochre); background:rgba(194,148,51,.08); padding:13px 15px; margin:14px 0; font-size:14px; color:#4A4335;}
+  .callout b{color:var(--rust);}
+  .callout.info{border-color:var(--steel); background:rgba(79,107,120,.07);}
+  .callout.key{border-style:solid; border-width:1.5px; border-color:var(--rust); background:rgba(176,83,30,.06);}
+  footer{margin-top:30px; border-top:1px solid var(--line); padding-top:16px;
+    font-family:'JetBrains Mono',monospace; font-size:10.5px; color:var(--dim); line-height:1.95; letter-spacing:.05em;}
+  .stamp{display:inline-block; border:2px solid var(--rust); color:var(--rust); font-family:'Oswald',sans-serif;
+    text-transform:uppercase; letter-spacing:.18em; font-size:12px; padding:5px 13px; transform:rotate(-2.5deg); margin-top:12px; opacity:.8;}
+  a.top{color:var(--steel); text-decoration:none; font-family:'JetBrains Mono',monospace; font-size:11px;}
+  .svg-t{font-family:'JetBrains Mono',monospace;} .svg-h{font-family:'Oswald',sans-serif;}
+
+  /* site nav — fixed top-right, honest filesystem labels */
+  .sitenav{position:fixed; top:14px; right:14px; z-index:100;
+    display:flex; gap:6px;
+    font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.14em;}
+  .sitenav a{display:inline-block; padding:6px 10px;
+    background:rgba(243,235,218,.92); backdrop-filter:blur(6px);
+    color:var(--dim); text-decoration:none;
+    border:1px solid var(--line);
+    transition:color .12s, border-color .12s;}
+  .sitenav a:hover{color:var(--rust); border-color:var(--rust);}
+  @media (max-width:640px){.sitenav{top:10px; right:10px;} .sitenav a{padding:5px 8px; font-size:10px;}}
+</style>
+</head>
+<body>
+<nav class="sitenav" aria-label="Site navigation">
+  <a href="../index.html" title="Back one page (up one directory)">../</a>
+  <a href="../index.html" title="Site index (root)">/</a>
+</nav>
+<div class="wrap">
+
+<header class="plate">
+  <div class="rivets">&#9702; &#9702; &#9702; &#9702;</div>
+  <div class="filecode">CONCEPT BRIEF &middot; HYBRID CABLE CONSTRUCTION &middot; FOR DISCUSSION</div>
+  <h1>Hybrid Site Construction
+    <span class="sub">A Ground-Rigged Cable System &mdash; Print the Shell, Lift the Roof</span>
+  </h1>
+  <div class="byline">
+    PREMISE &nbsp;&nbsp;<b>Today&rsquo;s large-format printers are also cranes. This separates the two jobs.</b><br>
+    METHOD &nbsp;&nbsp;&nbsp;<b>Cut-and-cover earth-sheltered shell, printed. Timber-truss roof, craned. One rig, both.</b><br>
+    STATUS &nbsp;&nbsp;&nbsp;<b>Concept brief &middot; positioning core demonstrated (tabletop)</b>
+  </div>
+</header>
+
+<p class="lead">Large-format 3D concrete printing has a structural problem hiding in plain sight: <strong>the printer is also the crane.</strong> A gantry big enough to print a house must span the whole structure and reach every point at full height &mdash; so it is, unavoidably, a large-format positioning machine first and a nozzle second. That dual mandate is what drives the mass, the transport cost, the flat-pad requirement, and the slow setup. This brief proposes separating the jobs: print what printing is good at, lift what lifting is good at, and do both from a single ground-rigged, packable cable system.</p>
+
+<div class="callout key"><b>The core move.</b> Stop asking one machine to be a precision extruder <em>and</em> a heavy positioner across a giant rigid frame. A cable-driven rig reconfigures between two modes: an over-constrained <strong>print mode</strong> that extrudes the earth-sheltered shell, and a <strong>crane mode</strong> that lifts a pre-fabricated roof onto it. The rig that prints the walls also flies the roof &mdash; and, set up wide, unloads its own truck. Less new material science, more a new way to deploy on site.</div>
+
+<div class="callout info"><b>The method is not new &mdash; the deployment is.</b> The building is <strong>cut-and-cover, earth-sheltered</strong>: excavate, build in the open cut, backfill. Subways, root cellars, and bermed homes are built this way; every building department already understands and permits it. Nothing here asks anyone to trust a novel structural system. The only new element is the tool that executes it.</div>
+
+<!-- ============ POSITIONING CORE ============ -->
+<section id="calc">
+  <div class="sec-head" onclick="toggle(this)">
+    <span class="no">IK</span><h2>The Positioning Core &mdash; Live</h2><span class="tog">&#9662;</span>
+  </div>
+  <div class="sec-body">
+    <p class="dim">The head&rsquo;s position is set purely by four cable lengths. Each length is the 3D Euclidean distance from an anchor post to the target point &mdash; drag the sliders and watch the four solve in real time. This is the exact math the rig runs; it is shown here to make clear the control problem is understood, not hand-waved. The over-constrained tension distribution that keeps the print head rigid is the harder problem, addressed in the math section below.</p>
+
+    <div class="calc">
+      <div class="calc-h">Tool-Head Position &rarr; Cable Lengths <span>DEMONSTRATED ON TABLETOP RIG</span></div>
+      <div class="calc-body">
+        <div class="posts">
+          <div class="postbox"><label>Anchor A (apex)</label><div class="val">[ 0, 0, 700 ]</div></div>
+          <div class="postbox"><label>Anchor B (apex)</label><div class="val">[ 0, 914, 700 ]</div></div>
+          <div class="postbox"><label>Anchor C (apex)</label><div class="val">[ 760, 914, 700 ]</div></div>
+          <div class="postbox"><label>Anchor D (apex)</label><div class="val">[ 760, 0, 700 ]</div></div>
+        </div>
+        <div class="sliders">
+          <div class="srow"><label>X</label><input type="range" id="sx" min="0" max="760" value="380"><output id="ox">380</output></div>
+          <div class="srow"><label>Y</label><input type="range" id="sy" min="0" max="914" value="457"><output id="oy">457</output></div>
+          <div class="srow"><label>Z</label><input type="range" id="sz" min="0" max="700" value="350"><output id="oz">350</output></div>
+        </div>
+        <div class="readout">
+          <div class="cable"><div class="lab">A</div><div class="len" id="la">0</div><div class="unit">MM</div><div class="bar" id="ba"></div></div>
+          <div class="cable"><div class="lab">B</div><div class="len" id="lb">0</div><div class="unit">MM</div><div class="bar" id="bb"></div></div>
+          <div class="cable"><div class="lab">C</div><div class="len" id="lc">0</div><div class="unit">MM</div><div class="bar" id="bc"></div></div>
+          <div class="cable"><div class="lab">D</div><div class="len" id="ld">0</div><div class="unit">MM</div><div class="bar" id="bd"></div></div>
+        </div>
+        <div class="viz">
+          <canvas id="cv" width="820" height="360"></canvas>
+          <div class="vizcap">TOP-DOWN VIEW &middot; workspace 760 &times; 914 mm &middot; line weight &prop; cable length &middot; marker scales with Z height</div>
+        </div>
+      </div>
+    </div>
+
+    <pre class="code"><span class="c"># positioning core -- one line per cable, flat Euclidean distance</span>
+anchor_A = [<span class="n">0.0</span>, <span class="n">0.0</span>, <span class="n">700.0</span>]      <span class="c"># apex pulley, pillar A</span>
+target   = [<span class="n">380.0</span>, <span class="n">457.0</span>, <span class="n">350.0</span>]  <span class="c"># commanded tool coordinate</span>
+
+cable_A = ((target[<span class="n">0</span>] - anchor_A[<span class="n">0</span>])**<span class="n">2</span> +
+           (target[<span class="n">1</span>] - anchor_A[<span class="n">1</span>])**<span class="n">2</span> +
+           (target[<span class="n">2</span>] - anchor_A[<span class="n">2</span>])**<span class="n">2</span>) ** <span class="n">0.5</span></pre>
+    <p class="dim">Four posts, four of these, coordinated on one clock. The whole positioning problem reduces to keeping four motors arriving together &mdash; and that coordination has been demonstrated on a working tabletop rig.</p>
+  </div>
+</section>
+
+<!-- ============ THE PROBLEM ============ -->
+<section>
+  <div class="sec-head" onclick="toggle(this)">
+    <span class="no">01</span><h2>The Problem With One-Machine Printing</h2><span class="tog">&#9662;</span>
+  </div>
+  <div class="sec-body">
+    <p>A gantry sized to print a whole house has to reach every point of the structure at full height. That forces it to be a <strong>large-format positioning machine first</strong> and a nozzle second &mdash; and positioning machines that big are heavy, expensive to move, slow to set up, and want a flat prepared pad. The extrusion head is a small part bolted to a very large crane. The crane is the cost.</p>
+    <p>Worse, the one thing extrusion does <em>badly</em> is exactly the thing a house needs most: a <strong>roof</strong>. No concrete-printing process spans a long horizontal opening in mid-air gracefully; printed roofs mean corbelling, formwork, or awkward geometry gymnastics. So the single machine is asked to be a precision extruder, a full-height crane, <em>and</em> a solution to the span problem it is worst suited to solve. Three mandates, one frame.</p>
+    <div class="callout"><b>Separate the jobs and each gets simpler.</b> Print the parts printing is good at. Lift the parts lifting is good at. Build the roof the proven way and set it with a crane. The insight is not a better printer &mdash; it is refusing to make the printer do three jobs.</div>
+  </div>
+</section>
+
+<!-- ============ TWO MODES ONE RIG ============ -->
+<section>
+  <div class="sec-head" onclick="toggle(this)">
+    <span class="no">02</span><h2>Two Jobs, One Rig</h2><span class="tog">&#9662;</span>
+  </div>
+  <div class="sec-body">
+    <p>Four steel pillars at the excavation corners; sealed sheaves at the apex; <strong>winches at ground level</strong>, not on high rails. Cables run up each pillar, over the sheave, and down to the tool head. The mass stays on the dirt; only cable moves in the air. The same four posts serve both working modes.</p>
+
+    <figure>
+      <svg viewBox="0 0 860 400" role="img" aria-label="Print mode versus crane mode on the same rig">
+        <defs>
+          <marker id="arrB" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="#4F6B78"/></marker>
+          <pattern id="concM" width="6" height="6" patternUnits="userSpaceOnUse"><rect width="6" height="6" fill="#E7DBC1"/><circle cx="3" cy="3" r="0.7" fill="#A99B80"/></pattern>
+        </defs>
+        <!-- divider -->
+        <line x1="430" y1="20" x2="430" y2="380" stroke="#D6CAAF" stroke-width="1.5" stroke-dasharray="5 5"/>
+        <text x="215" y="34" class="svg-h" font-size="14" fill="#B0531E" text-anchor="middle">PRINT MODE &mdash; 8 cable</text>
+        <text x="645" y="34" class="svg-h" font-size="14" fill="#4F6B78" text-anchor="middle">CRANE MODE &mdash; 4 cable</text>
+
+        <!-- PRINT MODE (left) -->
+        <circle cx="70" cy="70" r="9" fill="#F3EBDA" stroke="#4F6B78" stroke-width="2"/>
+        <circle cx="360" cy="70" r="9" fill="#F3EBDA" stroke="#4F6B78" stroke-width="2"/>
+        <rect x="56" y="330" width="28" height="18" fill="#E7DBC1" stroke="#33302A" stroke-width="1.3"/>
+        <rect x="346" y="330" width="28" height="18" fill="#E7DBC1" stroke="#33302A" stroke-width="1.3"/>
+        <rect x="188" y="180" width="60" height="34" rx="3" fill="#F3EBDA" stroke="#B0531E" stroke-width="2.2"/>
+        <text x="218" y="201" class="svg-t" font-size="10" fill="#B0531E" text-anchor="middle">HEAD</text>
+        <path d="M210,214 L226,214 L222,226 L214,226 z" fill="#B0531E"/>
+        <!-- upper -->
+        <line x1="78" y1="76" x2="192" y2="184" stroke="#B0531E" stroke-width="1.6"/>
+        <line x1="352" y1="76" x2="244" y2="184" stroke="#B0531E" stroke-width="1.6"/>
+        <!-- lower -->
+        <line x1="192" y1="212" x2="72" y2="332" stroke="#C29433" stroke-width="1.6"/>
+        <line x1="244" y1="212" x2="358" y2="332" stroke="#C29433" stroke-width="1.6"/>
+        <!-- preload arrows -->
+        <line x1="218" y1="180" x2="218" y2="150" stroke="#4F6B78" stroke-width="1.4" marker-end="url(#arrB)"/>
+        <line x1="218" y1="214" x2="218" y2="244" stroke="#4F6B78" stroke-width="1.4" marker-end="url(#arrB)"/>
+        <text x="218" y="300" class="svg-t" font-size="10" fill="#7A6E58" text-anchor="middle">opposed preload &rarr; rigid vise</text>
+        <text x="218" y="314" class="svg-t" font-size="10" fill="#7A6E58" text-anchor="middle">absorbs pump kick</text>
+
+        <!-- CRANE MODE (right) -->
+        <circle cx="500" cy="70" r="9" fill="#F3EBDA" stroke="#4F6B78" stroke-width="2"/>
+        <circle cx="790" cy="70" r="9" fill="#F3EBDA" stroke="#4F6B78" stroke-width="2"/>
+        <circle cx="645" cy="150" r="7" fill="#4F6B78"/>
+        <line x1="508" y1="76" x2="640" y2="146" stroke="#4F6B78" stroke-width="1.6"/>
+        <line x1="782" y1="76" x2="650" y2="146" stroke="#4F6B78" stroke-width="1.6"/>
+        <line x1="645" y1="157" x2="645" y2="192" stroke="#33302A" stroke-width="1.4"/>
+        <!-- timber truss being lifted -->
+        <g stroke="#9A5A2B" stroke-width="2" fill="none">
+          <path d="M585,235 L645,196 L705,235"/>
+          <line x1="585" y1="235" x2="705" y2="235"/>
+          <line x1="645" y1="196" x2="645" y2="235"/>
+          <line x1="615" y1="217" x2="645" y2="235"/>
+          <line x1="675" y1="217" x2="645" y2="235"/>
+        </g>
+        <text x="645" y="262" class="svg-t" font-size="10" fill="#9A5A2B" text-anchor="middle">pre-fab timber truss</text>
+        <line x1="645" y1="272" x2="645" y2="300" stroke="#4F6B78" stroke-width="1.4" marker-end="url(#arrB)"/>
+        <text x="645" y="316" class="svg-t" font-size="10" fill="#7A6E58" text-anchor="middle">gravity-assisted lift</text>
+      </svg>
+      <figcaption>Fig. 1 &mdash; One rig, two modes. Left: 8-cable over-constrained vise extrudes the shell. Right: 4-cable gravity lift sets the roof truss.</figcaption>
+    </figure>
+
+    <p><strong>Print mode</strong> traps the head in an over-constrained 8-cable vise &mdash; four lines pull up-and-out from the apex, four pull down-and-out to floor anchors, and constant preload cancels sway and absorbs the pump&rsquo;s kinetic kick. <strong>Crane mode</strong> releases the lower lines, mounts a hook to the central junction, and becomes a 4-cable suspended crane on gravity-assisted lines. Same posts, same winches, reconfigured in minutes.</p>
+  </div>
+</section>
+
+<!-- ============ HYBRID SEQUENCE (SECTION GRAPHIC) ============ -->
+<section>
+  <div class="sec-head" onclick="toggle(this)">
+    <span class="no">03</span><h2>The Hybrid Building &mdash; Printed Shell, Craned Roof</h2><span class="tog">&#9662;</span>
+  </div>
+  <div class="sec-body">
+    <p>Print what prints well: the floor slab and the walls, cast directly against the earth cut, up past grade to a short <strong>stub wall</strong>. Then stop printing. Build the roof the proven way &mdash; a <strong>pre-fabricated timber-frame truss</strong>, assembled flat, lifted onto the stub walls by the same rig in crane mode. Earth is bermed back against the printed walls as thermal mass; the timber roof stays conventional, inspectable, and dry.</p>
+
+    <figure>
+      <svg viewBox="0 0 860 520" role="img" aria-label="Hybrid earth-sheltered section: printed concrete shell with craned timber truss roof">
+        <defs>
+          <pattern id="earthH" width="13" height="13" patternTransform="rotate(45)" patternUnits="userSpaceOnUse"><line x1="0" y1="0" x2="0" y2="13" stroke="#95764F" stroke-width="1" opacity="0.5"/></pattern>
+          <pattern id="concH" width="6" height="6" patternUnits="userSpaceOnUse"><rect width="6" height="6" fill="#E7DBC1"/><circle cx="3" cy="3" r="0.7" fill="#A99B80"/></pattern>
+          <marker id="arrH" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#7A6E58"/></marker>
+          <marker id="arrSun" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="#C29433"/></marker>
+        </defs>
+        <!-- sky -->
+        <rect x="0" y="0" width="860" height="250" fill="#D3E1E2" opacity="0.4"/>
+        <!-- undisturbed earth both sides -->
+        <rect x="0" y="250" width="250" height="270" fill="url(#earthH)"/>
+        <rect x="700" y="250" width="160" height="270" fill="url(#earthH)"/>
+        <rect x="250" y="440" width="450" height="80" fill="url(#earthH)"/>
+        <!-- grade -->
+        <line x1="0" y1="250" x2="250" y2="250" stroke="#33302A" stroke-width="1.5"/>
+        <line x1="700" y1="250" x2="860" y2="250" stroke="#33302A" stroke-width="1.5"/>
+        <text x="12" y="243" class="svg-t" font-size="10.5" fill="#7A6E58">GRADE</text>
+
+        <!-- printed shell: floor + walls up to stub -->
+        <!-- left wall -->
+        <rect x="256" y="205" width="16" height="235" fill="url(#concH)" stroke="#33302A" stroke-width="1.2"/>
+        <!-- right wall (with glazing to court) -->
+        <rect x="568" y="205" width="16" height="235" fill="url(#concH)" stroke="#33302A" stroke-width="1.2"/>
+        <rect x="568" y="300" width="16" height="110" fill="#D3E1E2" stroke="#4F6B78" stroke-width="1.3" opacity="0.9"/>
+        <line x1="568" y1="337" x2="584" y2="337" stroke="#4F6B78" stroke-width="0.7"/>
+        <line x1="568" y1="374" x2="584" y2="374" stroke="#4F6B78" stroke-width="0.7"/>
+        <!-- floor slab -->
+        <rect x="256" y="428" width="328" height="12" fill="url(#concH)" stroke="#33302A" stroke-width="1.2"/>
+
+        <!-- earth berm against outer walls, up to grade -->
+        <path d="M250,250 L256,250 L256,205 L240,215 L228,250 Z" fill="url(#earthH)" opacity="0.9"/>
+
+        <!-- stub wall tops labelled -->
+        <text x="330" y="198" class="svg-t" font-size="9.5" fill="#7A6E58">stub wall (above grade)</text>
+
+        <!-- craned timber truss on stub walls -->
+        <g stroke="#9A5A2B" stroke-width="2.4" fill="none">
+          <path d="M250,205 L420,120 L590,205"/>       <!-- top chords -->
+          <line x1="250" y1="205" x2="590" y2="205"/>   <!-- bottom chord -->
+          <line x1="420" y1="120" x2="420" y2="205"/>   <!-- king post -->
+          <line x1="335" y1="162" x2="420" y2="205"/>   <!-- web -->
+          <line x1="505" y1="162" x2="420" y2="205"/>   <!-- web -->
+        </g>
+        <!-- roof overhang line -->
+        <path d="M232,214 L420,110 L608,214" stroke="#6B4A2B" stroke-width="2" fill="none"/>
+
+        <!-- sunken court (south) -->
+        <rect x="584" y="205" width="116" height="235" fill="#F3EBDA"/>
+        <rect x="584" y="428" width="116" height="12" fill="url(#concH)" stroke="#33302A" stroke-width="1"/>
+        <line x1="700" y1="250" x2="700" y2="428" stroke="#33302A" stroke-width="1.3"/>
+        <text x="642" y="345" class="svg-h" font-size="11" fill="#7A6E58" text-anchor="middle">SUNKEN</text>
+        <text x="642" y="359" class="svg-h" font-size="11" fill="#7A6E58" text-anchor="middle">COURT (S)</text>
+
+        <!-- winter sun into court/glazing -->
+        <line x1="852" y1="150" x2="590" y2="330" stroke="#C29433" stroke-width="2" marker-end="url(#arrSun)"/>
+        <line x1="590" y1="330" x2="300" y2="390" stroke="#C29433" stroke-width="1.3" stroke-dasharray="4 3"/>
+        <text x="720" y="140" class="svg-t" font-size="10.5" fill="#C29433">low winter sun &mdash; enters</text>
+        <!-- summer sun blocked by overhang -->
+        <line x1="640" y1="30" x2="612" y2="200" stroke="#B0531E" stroke-width="2" marker-end="url(#arrSun)"/>
+        <text x="648" y="58" class="svg-t" font-size="10.5" fill="#B0531E">high summer sun &mdash; shaded</text>
+
+        <!-- material labels -->
+        <text x="120" y="330" class="svg-t" font-size="11" fill="#9A5A2B" transform="rotate(-90 120 330)" text-anchor="middle">CRANED &mdash; pre-fab timber truss</text>
+        <text x="150" y="470" class="svg-t" font-size="11" fill="#B0531E" text-anchor="middle">PRINTED &mdash; shell cast vs earth</text>
+
+        <!-- leaders -->
+        <line x1="264" y1="360" x2="228" y2="360" stroke="#7A6E58" stroke-width="0.8" marker-end="url(#arrH)"/>
+        <text x="150" y="380" class="svg-t" font-size="9.5" fill="#33302A">printed wall</text>
+        <line x1="420" y1="434" x2="420" y2="460" stroke="#7A6E58" stroke-width="0.8" marker-end="url(#arrH)"/>
+        <text x="420" y="476" class="svg-t" font-size="9.5" fill="#33302A" text-anchor="middle">printed floor slab</text>
+        <line x1="420" y1="150" x2="420" y2="176" stroke="#7A6E58" stroke-width="0.8" marker-end="url(#arrH)"/>
+        <text x="300" y="146" class="svg-t" font-size="9.5" fill="#9A5A2B">timber truss set by rig (crane mode)</text>
+
+        <!-- 2/3 below grade dim -->
+        <line x1="244" y1="250" x2="244" y2="440" stroke="#7A6E58" stroke-width="1" marker-start="url(#arrH)" marker-end="url(#arrH)"/>
+        <text x="234" y="350" class="svg-t" font-size="9.5" fill="#7A6E58" transform="rotate(-90 234 350)" text-anchor="middle">~2/3 below grade</text>
+      </svg>
+      <figcaption>Fig. 2 &mdash; Hybrid section. Lower shell PRINTED against the earth cut; roof CRANED as a pre-fab timber truss. Two methods, each doing what it does best. Earth berm on the walls, conventional roof above.</figcaption>
+    </figure>
+
+    <div class="callout"><b>Why this is the honest division of labor.</b> Concrete extrusion is excellent at complex vertical geometry cast against a face, and poor at horizontal spans. Timber framing is excellent at roofs and terrible below grade. So print the below-grade shell, frame-and-lift the roof. The result is a recognizable, permittable, earth-sheltered building &mdash; not a novelty &mdash; assembled by one rig doing each job in the mode suited to it.</div>
+  </div>
+</section>
+
+<!-- ============ DEPLOYMENT / SELF-UNLOAD ============ -->
+<section>
+  <div class="sec-head" onclick="toggle(this)">
+    <span class="no">04</span><h2>Deployment &mdash; Wide Span, Self-Unloading</h2><span class="tog">&#9662;</span>
+  </div>
+  <div class="sec-body">
+    <p>Because coverage is set by <strong>post spacing, not by a frame spanning every inch</strong>, the working envelope is cheap to extend &mdash; just set the posts wide. Set them wide enough and the same rig reaches beyond the pit to the <strong>truck that delivered the kit</strong>: it lifts the timber truss, the pump, and the cased components off the bed, then repositions over the cut to build. The rig that builds the house also unloads the truck that brought it. No separate crane, no forklift, no crane-truck day rate.</p>
+
+    <figure>
+      <svg viewBox="0 0 860 400" role="img" aria-label="Wide-span deployment: rig unloads the truck and repositions over the pit">
+        <defs>
+          <pattern id="earthD" width="13" height="13" patternTransform="rotate(45)" patternUnits="userSpaceOnUse"><line x1="0" y1="0" x2="0" y2="13" stroke="#95764F" stroke-width="1" opacity="0.45"/></pattern>
+          <marker id="arrPath" markerWidth="10" markerHeight="10" refX="7" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#B0531E"/></marker>
+          <marker id="arrDim" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#7A6E58"/></marker>
+        </defs>
+        <!-- sky -->
+        <rect x="0" y="0" width="860" height="300" fill="#D3E1E2" opacity="0.3"/>
+        <!-- ground -->
+        <rect x="0" y="300" width="860" height="100" fill="url(#earthD)"/>
+        <line x1="0" y1="300" x2="860" y2="300" stroke="#33302A" stroke-width="1.5"/>
+        <text x="12" y="293" class="svg-t" font-size="10.5" fill="#7A6E58">GRADE</text>
+
+        <!-- wide-set posts -->
+        <rect x="70" y="55" width="16" height="245" fill="#E7DBC1" stroke="#33302A" stroke-width="1.4"/>
+        <rect x="774" y="55" width="16" height="245" fill="#E7DBC1" stroke="#33302A" stroke-width="1.4"/>
+        <circle cx="78" cy="55" r="10" fill="#F3EBDA" stroke="#4F6B78" stroke-width="2"/>
+        <circle cx="782" cy="55" r="10" fill="#F3EBDA" stroke="#4F6B78" stroke-width="2"/>
+        <rect x="60" y="300" width="36" height="0" /> <!-- spacer -->
+
+        <!-- pit on the right-center -->
+        <path d="M470,300 L470,372 L700,372 L700,300" fill="#F3EBDA" stroke="#33302A" stroke-width="1.4" stroke-dasharray="5 4"/>
+        <text x="585" y="352" class="svg-t" font-size="10.5" fill="#7A6E58" text-anchor="middle">PIT (build here)</text>
+
+        <!-- pickup truck on the left -->
+        <g stroke="#33302A" stroke-width="1.5" fill="#E7DBC1">
+          <rect x="150" y="256" width="70" height="30"/>            <!-- bed -->
+          <rect x="220" y="240" width="42" height="46"/>            <!-- cab -->
+        </g>
+        <circle cx="175" cy="292" r="12" fill="#33302A"/>
+        <circle cx="240" cy="292" r="12" fill="#33302A"/>
+        <circle cx="175" cy="292" r="4.5" fill="#E7DBC1"/>
+        <circle cx="240" cy="292" r="4.5" fill="#E7DBC1"/>
+        <text x="205" y="310" class="svg-t" font-size="10" fill="#7A6E58" text-anchor="middle">delivery truck</text>
+        <!-- truss on the bed (source) -->
+        <g stroke="#9A5A2B" stroke-width="1.8" fill="none" opacity="0.85">
+          <path d="M158,254 L185,236 L212,254"/>
+          <line x1="158" y1="254" x2="212" y2="254"/>
+          <line x1="185" y1="236" x2="185" y2="254"/>
+        </g>
+
+        <!-- head position 1: over truck (dashed, picking up) -->
+        <circle cx="185" cy="150" r="7" fill="none" stroke="#B0531E" stroke-width="1.6" stroke-dasharray="3 2"/>
+        <line x1="86" y1="60" x2="180" y2="146" stroke="#B0531E" stroke-width="1.1" stroke-dasharray="3 3"/>
+        <line x1="774" y1="60" x2="190" y2="146" stroke="#B0531E" stroke-width="1.1" stroke-dasharray="3 3"/>
+        <text x="185" y="135" class="svg-t" font-size="9.5" fill="#B0531E" text-anchor="middle">1 &middot; pick</text>
+
+        <!-- head position 2: over pit (solid, placing) -->
+        <circle cx="585" cy="150" r="8" fill="rgba(176,83,30,.15)" stroke="#B0531E" stroke-width="2"/>
+        <line x1="86" y1="60" x2="579" y2="146" stroke="#B0531E" stroke-width="1.6"/>
+        <line x1="782" y1="60" x2="591" y2="146" stroke="#B0531E" stroke-width="1.6"/>
+        <line x1="585" y1="158" x2="585" y2="190" stroke="#33302A" stroke-width="1.3"/>
+        <g stroke="#9A5A2B" stroke-width="1.8" fill="none">
+          <path d="M558,215 L585,194 L612,215"/>
+          <line x1="558" y1="215" x2="612" y2="215"/>
+          <line x1="585" y1="194" x2="585" y2="215"/>
+        </g>
+        <text x="585" y="135" class="svg-t" font-size="9.5" fill="#B0531E" text-anchor="middle">2 &middot; place</text>
+
+        <!-- motion path arrow -->
+        <path d="M210,120 Q400,70 560,118" fill="none" stroke="#B0531E" stroke-width="1.6" stroke-dasharray="6 4" marker-end="url(#arrPath)"/>
+        <text x="390" y="80" class="svg-t" font-size="10.5" fill="#B0531E" text-anchor="middle">reposition along span</text>
+
+        <!-- span dimension -->
+        <line x1="78" y1="335" x2="782" y2="335" stroke="#7A6E58" stroke-width="1" marker-start="url(#arrDim)" marker-end="url(#arrDim)"/>
+        <text x="430" y="330" class="svg-t" font-size="10" fill="#7A6E58" text-anchor="middle">post span set wide &mdash; envelope covers truck AND pit</text>
+      </svg>
+      <figcaption>Fig. 3 &mdash; Wide-span deployment. One envelope reaches the delivery truck and the pit, so the rig unloads itself and repositions to build. No separate crane on site.</figcaption>
+    </figure>
+
+    <p><strong>Demobilization.</strong> Torches cut the four pillars at grade; cables reel in; winches unbolt; the whole automation kit loads back onto the truck it unloaded. The site is left with a finished building and no sacrificial scaffolding.</p>
+  </div>
+</section>
+
+<!-- ============ MATH / TENSION ============ -->
+<section>
+  <div class="sec-head" onclick="toggle(this)">
+    <span class="no">05</span><h2>Positioning Math &amp; Tension Solving</h2><span class="tog">&#9662;</span>
+  </div>
+  <div class="sec-body">
+    <p>Positioning is the flat Euclidean core shown live above &mdash; portable, no heavy dependencies, coordinated so all four cables arrive together (the same interpolation discipline CNC firmware uses). The harder engineering is the <strong>over-constrained tension distribution</strong> in print mode: keeping the head rigid under the pump&rsquo;s kick without exceeding line limits. That rides on mature, established robotics tooling &mdash; this is a solved class of problem, not a research risk:</p>
+    <table>
+      <tr><th>Concern</th><th>Established tool</th></tr>
+      <tr><td>Static workspace &amp; preload tensors</td><td>cable-robot toolbox (e.g. cdpyr) &mdash; preload that keeps winches rigid within shear limits</td></tr>
+      <tr><td>Force / pulse response</td><td>Jacobian conversions (e.g. Corke Robotics Toolbox) &mdash; pump pulse &rarr; instant counter-tension</td></tr>
+      <tr><td>Collision / path safety</td><td>IKPy + PyBullet &mdash; a lower cable never clips a freshly extruded, uncured wall</td></tr>
+    </table>
+    <div class="callout info"><b>Division of labor in the software, too.</b> The command dialect and flat positioning are light and portable &mdash; a lightweight block format streams moves to the controller. The heavy statics ride on proven libraries. Commodity math at the edges, small purpose-built logic at the center. The point is that none of the hard parts are unsolved; they are assembled, not invented.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ HARDWARE ============ -->
+<section>
+  <div class="sec-head" onclick="toggle(this)">
+    <span class="no">06</span><h2>Hardware &mdash; All Off-the-Shelf</h2><span class="tog">&#9662;</span>
+  </div>
+  <div class="sec-body">
+    <p class="dim">Every component from a mature parallel industry. Nothing exotic; nothing single-source.</p>
+    <table>
+      <tr><th>Component</th><th>Sector</th><th>Note</th></tr>
+      <tr><td>Zero-fleet yo-yo winches</td><td>Theatre stage automation</td><td>Helical single-layer drums; absolute linear output, no wrap-diameter drift.</td></tr>
+      <tr><td>AC brushless servos</td><td>Heavy CNC / paper mills</td><td>Absolute encoders; smart drives in real-time torque-control mode.</td></tr>
+      <tr><td>High-tensile line</td><td>Marine rigging / defense</td><td>Braided Dyneema or aircraft steel cable; near-zero stretch.</td></tr>
+      <tr><td>Concrete pump &amp; mix</td><td>Commercial civil supply</td><td>Standard trailer shotcrete / grout pump and mix; an existing, mature supply chain.</td></tr>
+      <tr><td>Timber trusses</td><td>Standard fabrication</td><td>Pre-fab to local snow/wind load; a solved supply chain.</td></tr>
+    </table>
+    <div class="callout"><b>Scope of the system.</b> The rig is a motion platform &mdash; it does not touch mix chemistry or extruder design, which remain standard commercial concrete-printing practice. What it adds is what a fixed gantry cannot: a light, packable, ground-rigged machine that prints the shell, then lifts the roof, and unloads its own truck. It addresses transport friction and the roof-span problem in one move.</div>
+  </div>
+</section>
+
+<!-- ============ WHERE IT WORKS ============ -->
+<section>
+  <div class="sec-head" onclick="toggle(this)">
+    <span class="no">07</span><h2>Where This Works &mdash; and Where It Doesn&rsquo;t</h2><span class="tog">&#9662;</span>
+  </div>
+  <div class="sec-body">
+    <p>Stated plainly, because the honesty is the point. This is a site-and-terrain-dependent method with real bounds:</p>
+    <ul>
+      <li><b>Wants:</b> a site that can be excavated (cut-and-cover); ground and climate that suit earth-sheltering; and room for the post footprint set wide enough to cover staging and pit.</li>
+      <li><b>Does not suit:</b> rock sites that resist excavation; high water tables; dense infill lots with no post room; clients who reject a partially-buried form.</li>
+    </ul>
+    <div class="callout key"><b>It does not work everywhere &mdash; but it very nearly does.</b> A large share of rural and suburban lots meet all three conditions. The method trades universality for radical simplicity of equipment: where the site allows it, one packable rig replaces a gantry, a crane, and a formwork crew &mdash; and leaves nothing behind.</div>
+  </div>
+</section>
+
+<footer>
+  CONCEPT BRIEF &middot; HYBRID CABLE CONSTRUCTION &middot; FOR DISCUSSION<br>
+  PREMISE &middot; SEPARATE THE PRINT JOB FROM THE CRANE JOB; DO BOTH FROM ONE GROUND-RIGGED CABLE SYSTEM<br>
+  POSITIONING CORE &middot; DEMONSTRATED (TABLETOP) &middot; CONSTRUCTION PHASES &middot; CONCEPTUAL<br>
+  <a class="top" href="#calc">&uarr; RETURN TO POSITIONING CORE</a>
+  <div class="stamp">Concept Brief &mdash; For Discussion</div>
+</footer>
+
+</div>
+
+<script>
+function toggle(h){
+  h.classList.toggle('collapsed');
+  var body = h.nextElementSibling;
+  body.classList.toggle('hidden');
+  h.querySelector('.tog').innerHTML = body.classList.contains('hidden') ? '&#9656;' : '&#9662;';
+}
+var posts = { A:[0,0,700], B:[0,914,700], C:[760,914,700], D:[760,0,700] };
+var sx=document.getElementById('sx'), sy=document.getElementById('sy'), sz=document.getElementById('sz');
+var ox=document.getElementById('ox'), oy=document.getElementById('oy'), oz=document.getElementById('oz');
+var outEl={A:document.getElementById('la'),B:document.getElementById('lb'),C:document.getElementById('lc'),D:document.getElementById('ld')};
+var barEl={A:document.getElementById('ba'),B:document.getElementById('bb'),C:document.getElementById('bc'),D:document.getElementById('bd')};
+var cv=document.getElementById('cv'), ctx=cv.getContext('2d');
+var MAXLEN = Math.sqrt(760*760 + 914*914 + 700*700);
+function len(p,t){ return Math.sqrt((t[0]-p[0])**2 + (t[1]-p[1])**2 + (t[2]-p[2])**2); }
+function draw(t){
+  var W=cv.width, H=cv.height, pad=46;
+  ctx.clearRect(0,0,W,H);
+  function px(x){ return pad + (x/760)*(W-2*pad); }
+  function py(y){ return pad + (y/914)*(H-2*pad); }
+  ctx.strokeStyle='rgba(79,107,120,.12)'; ctx.lineWidth=1;
+  for(var gx=0; gx<=760; gx+=95){ ctx.beginPath(); ctx.moveTo(px(gx),py(0)); ctx.lineTo(px(gx),py(914)); ctx.stroke(); }
+  for(var gy=0; gy<=914; gy+=114){ ctx.beginPath(); ctx.moveTo(px(0),py(gy)); ctx.lineTo(px(760),py(gy)); ctx.stroke(); }
+  ctx.strokeStyle='#C9BDA0'; ctx.lineWidth=1.5;
+  ctx.strokeRect(px(0),py(0),px(760)-px(0),py(914)-py(0));
+  var tx=px(t[0]), ty=py(t[1]);
+  var corners={A:[px(0),py(0)],B:[px(0),py(914)],C:[px(760),py(914)],D:[px(760),py(0)]};
+  var cols={A:'#B0531E',B:'#C29433',C:'#4F6B78',D:'#8A6D4B'};
+  for(var k in corners){
+    var L=len(posts[k],t);
+    var w=1 + 4*(L/MAXLEN);
+    ctx.strokeStyle=cols[k]; ctx.lineWidth=w; ctx.globalAlpha=.9;
+    ctx.beginPath(); ctx.moveTo(corners[k][0],corners[k][1]); ctx.lineTo(tx,ty); ctx.stroke();
+    ctx.globalAlpha=1;
+    ctx.fillStyle=cols[k]; ctx.fillRect(corners[k][0]-5,corners[k][1]-5,10,10);
+    ctx.font='11px JetBrains Mono, monospace'; ctx.fillStyle=cols[k];
+    var lx=corners[k][0], ly=corners[k][1];
+    ctx.textAlign = (lx<W/2)?'left':'right';
+    ctx.fillText(k, lx + (lx<W/2?8:-8), ly + (ly<H/2?-8:16));
+  }
+  var r = 6 + 10*(t[2]/700);
+  ctx.beginPath(); ctx.arc(tx,ty,r,0,7);
+  ctx.fillStyle='rgba(176,83,30,.16)'; ctx.fill();
+  ctx.strokeStyle='#B0531E'; ctx.lineWidth=2; ctx.stroke();
+  ctx.beginPath(); ctx.arc(tx,ty,2.5,0,7); ctx.fillStyle='#332F28'; ctx.fill();
+  ctx.font='10px JetBrains Mono, monospace'; ctx.fillStyle='#7A6E58'; ctx.textAlign='center';
+  ctx.fillText('Z='+t[2], tx, ty+r+14);
+}
+function update(){
+  var t=[+sx.value, +sy.value, +sz.value];
+  ox.textContent=t[0]; oy.textContent=t[1]; oz.textContent=t[2];
+  for(var k in posts){
+    var L=len(posts[k],t);
+    outEl[k].textContent = L.toFixed(0);
+    barEl[k].style.width = (100*L/MAXLEN)+'%';
+  }
+  draw(t);
+}
+[sx,sy,sz].forEach(function(s){ s.addEventListener('input',update); });
+update();
+</script>
+</body>
+</html>
