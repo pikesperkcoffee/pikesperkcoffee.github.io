@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Lesson 02 — The Stepper Clock</title>
-<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600&family=Public+Sans:wght@400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600&family=Public+Sans:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
     --mat:#2F6B5E; --mat-deep:#1E4A40;
@@ -62,28 +62,9 @@
   .qual-box td{border-color:#4a6a60;}
   footer{margin-top:40px; font-size:12px; color:var(--steel); text-align:center;
     font-family:'Oswald',sans-serif; letter-spacing:.12em; text-transform:uppercase;}
-
-  /* site nav — fixed top-right, honest filesystem labels.
-     Lesson-02 sits two levels deep, so the two buttons diverge:
-       ../  = the parent doc (eddie-portal.html)
-       /    = the site index (root) */
-  .sitenav{position:fixed; top:14px; right:14px; z-index:100;
-    display:flex; gap:6px;
-    font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.14em;}
-  .sitenav a{display:inline-block; padding:6px 10px;
-    background:rgba(247,246,242,.92); backdrop-filter:blur(6px);
-    color:var(--steel); text-decoration:none;
-    border:1px solid #d5d1c4; border-radius:4px;
-    transition:color .12s, border-color .12s;}
-  .sitenav a:hover{color:var(--blaze); border-color:var(--blaze);}
-  @media (max-width:600px){.sitenav{top:10px; right:10px;} .sitenav a{padding:5px 8px; font-size:10px;}}
 </style>
 </head>
 <body>
-<nav class="sitenav" aria-label="Site navigation">
-  <a href="../eddie-portal.html" title="Back one page (up one directory)">../</a>
-  <a href="../../index.html" title="Site index (root)">/</a>
-</nav>
 <div class="wrap">
 
 <header class="card">
