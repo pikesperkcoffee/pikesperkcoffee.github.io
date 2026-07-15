@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Stone Machine Cycle</title>
+<meta name="description" content="A reframing of Egyptian construction as an integrated abrasive-processing system rather than as separate operations of quarrying, transport, and finishing. Companion to Stone Economy, Timber Machine. Andrew Morton, Palmer Lake, Colorado.">
+<style>
+  :root{
+    /* Twin palette — same family as Stone Economy, a few shades darker,
+       grid pulled toward brass rather than blue to differentiate the pair. */
+    --paper:#ddd1b6; --paper-2:#e8dfc5; --paper-plate:#d8ccae;
+    --line:#b8a680; --line-soft:#c8b993;
+    --ink:#1e1912; --ink-soft:#3d3120; --ink-faint:#6b5940;
+    --brass:#8a5a1e; --brass-dk:#6a4315; --brass-soft:#a67a3c;
+    --rust:#5c1e0f; --rust-dk:#3d1408;
+    --patina:#5c6a48;
+    --serif:"Iowan Old Style","Palatino Linotype",Palatino,"Book Antiqua",Georgia,"Times New Roman",serif;
+    --mono:ui-monospace,"SF Mono","Cascadia Code","Roboto Mono",Menlo,Consolas,monospace;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0;background-color:var(--paper);color:var(--ink);
+    background-image:
+      linear-gradient(rgba(74,50,20,.055) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(74,50,20,.055) 1px, transparent 1px);
+    background-size:26px 26px;
+    font-family:var(--serif);font-size:19px;line-height:1.66;
+    -webkit-font-smoothing:antialiased
+  }
+  .wrap{max-width:750px;margin:0 auto;padding:0 20px 110px;
+    background-color:var(--paper);
+    box-shadow:0 0 0 1px var(--line), 0 0 60px rgba(74,50,20,.06)}
+
+  /* labels / chrome — engraved plate caption feel, brass */
+  .eyebrow{font-family:var(--serif);font-size:12px;letter-spacing:.22em;
+    text-transform:uppercase;color:var(--brass);font-weight:700}
+  .rule{height:0;border:0;border-top:1px solid var(--brass);opacity:.5;margin:0}
+
+  header{padding:46px 0 32px;text-align:center;
+    border-bottom:1px solid var(--line);position:relative}
+  header .eyebrow{margin-bottom:22px}
+  h1{font-family:var(--serif);font-weight:700;font-size:clamp(34px,8.5vw,58px);
+    line-height:1.02;margin:8px 0 16px;color:var(--ink);letter-spacing:.005em}
+  h1 .l2{display:block;color:var(--brass)}
+  .dek{font-size:clamp(18px,4.2vw,22px);color:var(--ink-soft);
+    max-width:38ch;margin:0 auto;font-style:italic}
+  .sub-note{font-family:var(--serif);font-style:italic;font-size:14.5px;
+    color:var(--ink-faint);margin-top:18px;max-width:48ch;
+    margin-left:auto;margin-right:auto}
+  .tocline{font-family:var(--serif);font-size:12px;letter-spacing:.14em;
+    color:var(--brass-soft);margin-top:22px;text-transform:uppercase;line-height:1.9}
+  .byline{font-family:var(--serif);font-size:13px;letter-spacing:.06em;
+    color:var(--brass);margin-top:18px;font-variant:small-caps}
+
+  /* twin-doc banner */
+  .twin-banner{
+    margin:20px auto 0;max-width:44ch;
+    padding:10px 16px;border:1px dashed var(--brass);
+    background:rgba(138,90,30,.05);
+    font-family:var(--mono);font-size:11.5px;letter-spacing:.10em;
+    text-transform:uppercase;color:var(--brass-dk);text-align:center}
+  .twin-banner a{color:var(--rust);text-decoration:none;border-bottom:1px solid var(--rust)}
+  .twin-banner a:hover{color:var(--rust-dk);border-bottom-color:var(--rust-dk)}
+
+  /* stage sections */
+  .stage{padding:40px 0 6px}
+  .stage-head{display:flex;align-items:baseline;gap:14px;margin-bottom:4px;
+    border-bottom:1px solid var(--line-soft);padding-bottom:8px}
+  .stage-no{font-family:var(--serif);font-size:15px;color:var(--rust);
+    font-weight:700;letter-spacing:.05em}
+  .stage-title{font-family:var(--serif);font-size:clamp(25px,5.6vw,34px);
+    font-weight:700;color:var(--ink);margin:0;line-height:1.08}
+  .stage-sub{font-family:var(--serif);font-style:italic;font-size:15px;
+    color:var(--brass-dk);margin:10px 0 20px}
+  .stage p{margin:0 0 17px;color:var(--ink)}
+  .stage p.first{font-size:20.5px;color:var(--ink)}
+  .stage em{color:var(--brass-dk);font-style:italic}
+  .stage strong{color:var(--rust-dk);font-weight:700}
+
+  /* figure plate — engraved codex look */
+  .codex{background:var(--paper-plate);color:var(--ink);border-radius:2px;
+    margin:24px 0;padding:22px 20px;
+    background-image:
+      linear-gradient(rgba(74,50,20,.08) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(74,50,20,.08) 1px, transparent 1px);
+    background-size:20px 20px;
+    border:1px solid var(--brass);
+    box-shadow:inset 0 0 0 3px var(--paper-plate),
+               inset 0 0 0 4px rgba(74,50,20,.28),
+               0 2px 10px rgba(74,50,20,.08)}
+  .codex .kicker{font-family:var(--serif);font-size:12px;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--brass);font-weight:700;
+    margin-bottom:10px;border-bottom:1px solid rgba(74,50,20,.28);padding-bottom:6px}
+  .codex h3{font-family:var(--serif);font-size:clamp(21px,5vw,26px);
+    font-weight:700;color:var(--ink);margin:0 0 6px}
+  .codex .lead{color:var(--ink-soft);font-family:var(--serif);font-style:italic;
+    font-size:14.5px;margin:0 0 18px}
+  .codex p{color:var(--ink);margin:0 0 15px;font-size:16.5px;line-height:1.6}
+  .codex p strong{color:var(--rust-dk);font-weight:700}
+  .codex em{color:var(--brass-dk);font-style:italic}
+  .codex p:last-child{margin-bottom:0}
+
+  .diagram{background:#e6dcc0;border:1px solid var(--brass-soft);border-radius:2px;
+    overflow:hidden;margin-bottom:8px}
+  .diagram svg{display:block;width:100%;height:auto}
+  .diag-cap{font-family:var(--serif);font-style:italic;font-size:14px;
+    color:var(--ink-soft);padding:12px 14px 12px;line-height:1.5}
+  .diag-cap b{color:var(--rust-dk);font-style:normal;font-weight:700}
+
+  /* prediction list */
+  .predictions{margin:14px 0 6px;padding:18px 20px;
+    border-left:3px solid var(--brass);background:var(--paper-2)}
+  .predictions h4{font-family:var(--serif);font-size:14px;letter-spacing:.15em;
+    text-transform:uppercase;color:var(--brass);font-weight:700;margin:0 0 12px}
+  .predictions ol{margin:0;padding-left:20px}
+  .predictions li{margin-bottom:12px;font-size:16.5px;line-height:1.55;color:var(--ink)}
+  .predictions li strong{color:var(--rust-dk)}
+  .predictions li:last-child{margin-bottom:0}
+
+  /* summit / closing */
+  .summit{padding:44px 20px 20px;text-align:center;margin-top:30px;
+    border-top:1px solid var(--line)}
+  .summit .eyebrow{margin-bottom:14px}
+  .summit p{font-size:19px;font-style:italic;color:var(--ink-soft);
+    max-width:52ch;margin:0 auto 14px}
+  .summit .close-mark{margin:22px auto 6px;width:44px;height:1px;
+    background:var(--brass)}
+  .summit .sig{font-family:var(--serif);font-style:italic;font-size:14px;
+    color:var(--brass-dk);margin-top:12px}
+  .summit .sig-name{color:var(--ink);font-style:normal;
+    font-variant:small-caps;letter-spacing:.05em}
+
+  /* see also — footer cross-link */
+  .see-also{margin:34px 0 0;padding:18px 20px;
+    border-top:1px dashed var(--brass);
+    display:flex;flex-direction:column;gap:6px;align-items:flex-start}
+  .see-also .label{font-family:var(--mono);font-size:11px;letter-spacing:.18em;
+    text-transform:uppercase;color:var(--brass)}
+  .see-also a{font-family:var(--serif);font-size:19px;font-weight:700;
+    color:var(--rust);text-decoration:none;
+    border-bottom:1px solid var(--rust);padding-bottom:2px}
+  .see-also a:hover{color:var(--rust-dk);border-bottom-color:var(--rust-dk)}
+  .see-also .note{font-family:var(--serif);font-style:italic;font-size:14px;
+    color:var(--ink-faint);margin-top:4px}
+
+  @media(max-width:560px){
+    body{font-size:18px}
+    .summit p{font-size:19px}
+    .summit{padding:36px 16px 20px}
+  }
+  @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+  /* site nav — fixed top-right, matching brass palette */
+  .sitenav{position:fixed;top:14px;right:14px;z-index:100;
+    display:flex;gap:6px;
+    font-family:var(--mono);font-size:11px;letter-spacing:.14em}
+  .sitenav a{display:inline-block;padding:6px 10px;
+    background:rgba(221,209,182,.92);backdrop-filter:blur(6px);
+    color:var(--ink-faint);text-decoration:none;
+    border:1px solid var(--line);
+    transition:color .12s, border-color .12s}
+  .sitenav a:hover{color:var(--rust);border-color:var(--rust)}
+  @media (max-width:640px){.sitenav{top:10px;right:10px}.sitenav a{padding:5px 8px;font-size:10px}}
+</style>
+</head>
+<body>
+<nav class="sitenav" aria-label="Site navigation">
+  <a href="../index.html" title="Back one page (up one directory)">../</a>
+  <a href="../index.html" title="Site index (root)">/</a>
+</nav>
+
+<div class="wrap">
+
+  <header>
+    <div class="eyebrow">A working note &middot; hypothesis in the field</div>
+    <h1>The Stone Machine<span class="l2">Cycle</span></h1>
+    <p class="dek">Egyptian construction as an integrated abrasive-processing system.</p>
+    <p class="sub-note">Not three sequential operations. One continuous cycle in which dolerite is the working medium throughout &mdash; migrating in decreasing size from percussive tool to bearing medium to finishing abrasive.</p>
+    <p class="tocline">reframing &rarr; percussive stage &rarr; transport as machining &rarr; finishing pads &rarr; bosses &amp; outer face &rarr; predictions</p>
+    <p class="byline">Andrew Morton &middot; Palmer Lake, Colorado &middot; July 2026</p>
+    <div class="twin-banner">
+      Twin &middot; companion to <a href="../stone-economy-timber-machine/stone-economy-timber-machine.html">Stone Economy, Timber Machine</a>
+    </div>
+  </header>
+
+  <!-- ============================================================
+       INTRODUCTION — THE REFRAMING
+       ============================================================ -->
+  <section class="stage">
+    <div class="stage-head">
+      <span class="stage-no">I.</span>
+      <h2 class="stage-title">The reframing</h2>
+    </div>
+    <p class="stage-sub">What if the three operations weren&rsquo;t three operations?</p>
+
+    <p class="first">Standard archaeology treats Egyptian stone construction as three separate operations performed sequentially. Workers quarry blocks at the source using dolerite pounding stones. The blocks are then transported to the site on sledges. At the destination, masons hand-finish and polish the surfaces. Each stage requires substantial labor that the standard narrative absorbs into the general explanation of organized labor at large scale.</p>
+
+    <p>This document proposes a different reading. The three operations were not separate. They were three stages of one continuous <em>abrasive-processing system</em> in which dolerite was the working medium throughout, progressively migrating through the system in decreasing size as it shifted from percussive tool to bearing medium to finishing abrasive. The system used the necessary transport work to perform the bulk of finishing <strong>as a byproduct</strong>, and used the depleted dolerite from earlier stages as the abrasive for later stages. The integrated system explains the production scale and surface quality of Egyptian construction with a labor budget far smaller than the standard model requires.</p>
+  </section>
+
+  <!-- ============================================================
+       DIAGRAM 1 — DOLERITE LIFECYCLE CASCADE
+       ============================================================ -->
+  <div class="codex">
+    <div class="kicker">Figure I &middot; the dolerite cascade</div>
+    <h3>One medium, three sizes, three functions</h3>
+    <p class="lead">Dolerite is not consumed. It is <em>graded</em> &mdash; and each grade does the next job.</p>
+
+    <div class="diagram">
+      <svg viewBox="0 0 680 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="fig1title fig1desc">
+        <title id="fig1title">The dolerite cascade</title>
+        <desc id="fig1desc">Three columns showing dolerite as large percussive stones on the left, medium ellipsoidal bearings in the middle, and small chips plus sand slurry on the right, with flow arrows between.</desc>
+
+        <!-- background stage strips -->
+        <rect x="10" y="20" width="200" height="220" fill="#d5c8a9" stroke="#8a5a1e" stroke-width="0.6"/>
+        <rect x="240" y="20" width="200" height="220" fill="#d0c19f" stroke="#8a5a1e" stroke-width="0.6"/>
+        <rect x="470" y="20" width="200" height="220" fill="#c8b993" stroke="#8a5a1e" stroke-width="0.6"/>
+
+        <!-- stage labels -->
+        <text x="110" y="42" text-anchor="middle" font-family="serif" font-size="12" font-weight="700" letter-spacing="2" fill="#8a5a1e">STAGE ONE</text>
+        <text x="340" y="42" text-anchor="middle" font-family="serif" font-size="12" font-weight="700" letter-spacing="2" fill="#8a5a1e">STAGE TWO</text>
+        <text x="570" y="42" text-anchor="middle" font-family="serif" font-size="12" font-weight="700" letter-spacing="2" fill="#8a5a1e">STAGE THREE</text>
+
+        <!-- stage 1: large angular chunks -->
+        <g fill="#5c4a2c" stroke="#3d3120" stroke-width="1">
+          <polygon points="55,110 90,90 120,110 130,150 105,175 65,170 45,140"/>
+          <polygon points="150,130 175,115 195,135 190,165 165,180 140,165"/>
+          <polygon points="70,180 95,175 118,190 110,215 80,220 58,205"/>
+          <polygon points="140,200 168,195 185,215 172,230 150,235 130,220"/>
+        </g>
+        <text x="110" y="255" text-anchor="middle" font-family="serif" font-style="italic" font-size="11" fill="#3d3120">large &mdash; percussive tool</text>
+
+        <!-- stage 2: medium ellipsoidal bearings -->
+        <g fill="#6a5535" stroke="#3d3120" stroke-width="0.9">
+          <ellipse cx="290" cy="115" rx="22" ry="18"/>
+          <ellipse cx="340" cy="105" rx="18" ry="14"/>
+          <ellipse cx="390" cy="120" rx="20" ry="16"/>
+          <ellipse cx="310" cy="160" rx="17" ry="13"/>
+          <ellipse cx="360" cy="155" rx="20" ry="15"/>
+          <ellipse cx="400" cy="170" rx="15" ry="12"/>
+          <ellipse cx="285" cy="200" rx="19" ry="15"/>
+          <ellipse cx="335" cy="205" rx="17" ry="14"/>
+          <ellipse cx="380" cy="210" rx="16" ry="13"/>
+        </g>
+        <text x="340" y="255" text-anchor="middle" font-family="serif" font-style="italic" font-size="11" fill="#3d3120">medium &mdash; bearing &amp; abrasive</text>
+
+        <!-- stage 3: small chips + sand -->
+        <g fill="#786142" stroke="#3d3120" stroke-width="0.6">
+          <circle cx="500" cy="100" r="6"/><circle cx="516" cy="110" r="4"/>
+          <circle cx="530" cy="98" r="5"/><circle cx="548" cy="108" r="3"/>
+          <circle cx="562" cy="102" r="4"/><circle cx="580" cy="112" r="5"/>
+          <circle cx="600" cy="100" r="3"/><circle cx="615" cy="107" r="4"/>
+          <circle cx="635" cy="103" r="3"/><circle cx="650" cy="110" r="4"/>
+        </g>
+        <g fill="#8a7355">
+          <circle cx="490" cy="140" r="1.5"/><circle cx="503" cy="145" r="1.5"/>
+          <circle cx="514" cy="141" r="1.3"/><circle cx="527" cy="148" r="1.5"/>
+          <circle cx="540" cy="143" r="1.3"/><circle cx="555" cy="147" r="1.3"/>
+          <circle cx="570" cy="141" r="1.5"/><circle cx="585" cy="148" r="1.4"/>
+          <circle cx="598" cy="142" r="1.3"/><circle cx="613" cy="149" r="1.5"/>
+          <circle cx="627" cy="144" r="1.3"/><circle cx="640" cy="146" r="1.4"/>
+          <circle cx="655" cy="143" r="1.5"/>
+        </g>
+        <!-- fine slurry indicator -->
+        <path d="M480 175 Q570 165 660 178" stroke="#8a5a1e" stroke-width="1" fill="none" opacity="0.6"/>
+        <path d="M480 195 Q570 185 660 198" stroke="#8a5a1e" stroke-width="1" fill="none" opacity="0.4"/>
+        <path d="M480 215 Q570 205 660 218" stroke="#8a5a1e" stroke-width="1" fill="none" opacity="0.25"/>
+        <text x="570" y="255" text-anchor="middle" font-family="serif" font-style="italic" font-size="11" fill="#3d3120">fine &mdash; polishing grit &amp; slurry</text>
+
+        <!-- flow arrows between stages -->
+        <g stroke="#5c1e0f" stroke-width="1.6" fill="none" marker-end="url(#arr)">
+          <path d="M215 130 L 235 130"/>
+          <path d="M445 130 L 465 130"/>
+        </g>
+        <defs>
+          <marker id="arr" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M 0 0 L 10 5 L 0 10 z" fill="#5c1e0f"/>
+          </marker>
+        </defs>
+      </svg>
+    </div>
+    <div class="diag-cap">Dolerite migrates through the system as it wears down. <b>Coarse to fine</b> is not a supply problem &mdash; it is the system&rsquo;s natural output. Each stage produces the abrasive the next stage needs.</div>
+  </div>
+
+  <!-- ============================================================
+       STAGE ONE — PERCUSSIVE QUARRYING
+       ============================================================ -->
+  <section class="stage">
+    <div class="stage-head">
+      <span class="stage-no">II.</span>
+      <h2 class="stage-title">Percussive quarrying</h2>
+    </div>
+    <p class="stage-sub">The dolerite is not consumed. It is <em>graded</em>.</p>
+
+    <p>The standard interpretation of the dolerite pounding stones is accepted here. Workers use hand-sized dolerite balls to pound granite quarry faces, gradually crushing the granite matrix into powder and cutting trenches around blocks to free them from bedrock. The dolerite is harder than the granite, so the granite yields while the dolerite survives.</p>
+
+    <p>The detail worth noting is what happens to the dolerite <em>during</em> this stage. Stones are heavily used but not consumed at uniform rate. Some break. Some develop facets. Some get rounded through repeated impact. By the time a stone is no longer optimal as a primary percussive tool, it has developed a roughly spherical or ellipsoidal shape and a size somewhat smaller than its original dimensions. <strong>These secondary-condition stones are the input to stage two.</strong></p>
+  </section>
+
+  <!-- ============================================================
+       STAGE TWO — TRANSPORT WITH ABRASIVE MACHINING
+       ============================================================ -->
+  <section class="stage">
+    <div class="stage-head">
+      <span class="stage-no">III.</span>
+      <h2 class="stage-title">Transport with abrasive machining</h2>
+    </div>
+    <p class="stage-sub">The transport was the machining. The bearings were the abrasive.</p>
+
+    <p>The standard interpretation treats transport as a separate operation that moves blocks from quarry to site with no significant change to the block during transit. This document proposes that transport was <em>itself a machining operation</em>. The block was dragged across a prepared bed of hard stone, with dolerite stones of varied sizes between the block and the bed serving as both bearing media and abrasive media. The pressure of the block on the dolerite stones produced controlled abrasion of the block&rsquo;s lower face against the bed. By the time the block reached the destination, that face was substantially flat, dimensionally close to specification, and reasonably smooth.</p>
+
+    <p>The causeway materials support this reading. The oldest preserved paved quarry road in the world &mdash; the Widan el-Faras causeway connecting basalt quarries to Lake Moeris &mdash; is constructed of <em>basalt and petrified wood</em>. Basalt is a hard volcanic stone in the same family as dolerite. The mainstream characterization of this road as a sledge-track underestimates what its surface composition implies. A hard-stone road combined with dolerite bearings between block and road produces a working machining surface. The Egyptians built infrastructure that was both transport and tool.</p>
+
+    <p>The mainstream literature has already moved partway toward this reading on the bearing question. Recent archaeological discussion accepts that the spherical dolerite stones found across Egypt were likely used as bearings during obelisk transport, not solely as percussive tools. <strong>The additional move proposed here is that the bearing function and the machining function were the same function.</strong> The bearings were also the abrasive. The transport energy was simultaneously moving the block and shaping the block.</p>
+
+    <p>Variation in bearing size becomes a feature rather than a problem. Different sizes do different work in the same operation. Larger stones carry more load and do coarser material removal. Smaller stones handle finer abrasion. The naturally-graded dolerite supply produced by the percussive stage becomes a graded abrasive supply ideally suited to the machining stage. <em>The size distribution is not random scatter. It is functional differentiation across the operation.</em></p>
+  </section>
+
+  <!-- ============================================================
+       DIAGRAM 2 — INTEGRATED SYSTEM CUT-THROUGH
+       ============================================================ -->
+  <div class="codex">
+    <div class="kicker">Figure II &middot; cut-through of the machining bed</div>
+    <h3>Transport is machining. Machining is transport.</h3>
+    <p class="lead">Cross-section of the causeway operation. The block moves right. The bearings between block and bed shape the block&rsquo;s bottom face as the block travels.</p>
+
+    <div class="diagram">
+      <svg viewBox="0 0 680 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="fig2title fig2desc">
+        <title id="fig2title">Cut-through of transport-as-machining</title>
+        <desc id="fig2desc">Side view of a granite block being dragged across a prepared hard-stone causeway with dolerite bearings of varied sizes between them, showing motion arrows and abrasion contact points.</desc>
+
+        <!-- causeway bed -->
+        <rect x="20" y="220" width="640" height="55" fill="#4a3d28" stroke="#3d3120" stroke-width="1"/>
+        <text x="340" y="255" text-anchor="middle" font-family="serif" font-style="italic" font-size="12" fill="#e8dfc5" letter-spacing="1">HARD-STONE PREPARED BED (basalt / petrified wood)</text>
+
+        <!-- ground beneath causeway -->
+        <path d="M0 275 Q 340 285 680 275 L 680 300 L 0 300 Z" fill="#a89370" stroke="#8a5a1e" stroke-width="0.5"/>
+
+        <!-- dolerite bearings — varied sizes -->
+        <g fill="#6a5535" stroke="#3d3120" stroke-width="0.9">
+          <ellipse cx="120" cy="205" rx="14" ry="12"/>
+          <ellipse cx="165" cy="207" rx="10" ry="9"/>
+          <ellipse cx="200" cy="204" rx="16" ry="13"/>
+          <ellipse cx="245" cy="208" rx="11" ry="10"/>
+          <ellipse cx="285" cy="205" rx="13" ry="12"/>
+          <ellipse cx="325" cy="207" rx="9" ry="8"/>
+          <ellipse cx="360" cy="204" rx="15" ry="13"/>
+          <ellipse cx="400" cy="207" rx="10" ry="9"/>
+          <ellipse cx="435" cy="205" rx="13" ry="12"/>
+          <ellipse cx="475" cy="207" rx="9" ry="9"/>
+          <ellipse cx="512" cy="204" rx="14" ry="12"/>
+          <ellipse cx="552" cy="207" rx="10" ry="10"/>
+          <ellipse cx="590" cy="205" rx="12" ry="11"/>
+        </g>
+
+        <!-- granite block on top -->
+        <rect x="110" y="115" width="500" height="80" fill="#c8b993" stroke="#5c4a2c" stroke-width="1.5"/>
+        <!-- top face texture — rough (with a boss) -->
+        <path d="M110 115 Q 200 108 340 118 Q 480 108 610 115" stroke="#5c4a2c" stroke-width="0.8" fill="none"/>
+        <polygon points="380,115 395,102 410,115" fill="#c8b993" stroke="#5c4a2c" stroke-width="0.9"/>
+        <text x="404" y="99" font-family="serif" font-style="italic" font-size="10" fill="#3d3120">boss (survives)</text>
+        <!-- bottom face — cleanly machining -->
+        <line x1="110" y1="196" x2="610" y2="196" stroke="#3d1408" stroke-width="1.4"/>
+        <text x="360" y="152" text-anchor="middle" font-family="serif" font-size="14" font-weight="700" fill="#1e1912" letter-spacing="1">GRANITE BLOCK</text>
+        <text x="360" y="172" text-anchor="middle" font-family="serif" font-style="italic" font-size="11" fill="#3d3120">bottom face becomes the joint surface</text>
+
+        <!-- direction arrow -->
+        <g stroke="#5c1e0f" stroke-width="2" fill="none">
+          <path d="M620 155 L 660 155" marker-end="url(#arr2)"/>
+        </g>
+        <defs>
+          <marker id="arr2" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M 0 0 L 10 5 L 0 10 z" fill="#5c1e0f"/>
+          </marker>
+        </defs>
+        <text x="640" y="145" text-anchor="middle" font-family="serif" font-style="italic" font-size="11" fill="#5c1e0f">motion</text>
+
+        <!-- abrasion indicator arrows (small down arrows) between bearings and bed -->
+        <g stroke="#5c1e0f" stroke-width="0.8" fill="none" opacity="0.75">
+          <path d="M120 218 l 0 4"/><path d="M200 218 l 0 4"/><path d="M285 218 l 0 4"/>
+          <path d="M360 218 l 0 4"/><path d="M435 218 l 0 4"/><path d="M512 218 l 0 4"/>
+          <path d="M590 218 l 0 4"/>
+        </g>
+
+        <!-- granite slurry marks (small dust puffs) -->
+        <g fill="#a89370" opacity="0.7">
+          <circle cx="45" cy="215" r="1.5"/><circle cx="55" cy="218" r="1.2"/>
+          <circle cx="65" cy="213" r="1.3"/><circle cx="75" cy="217" r="1"/>
+          <circle cx="85" cy="215" r="1.2"/><circle cx="95" cy="218" r="1"/>
+        </g>
+        <text x="55" y="203" text-anchor="middle" font-family="serif" font-style="italic" font-size="10" fill="#5c1e0f">granite slurry (byproduct)</text>
+
+        <!-- legend for bearings -->
+        <text x="360" y="245" text-anchor="middle" font-family="serif" font-style="italic" font-size="11" fill="#e8dfc5">dolerite bearings &mdash; varied sizes, load-graded, both bearing and abrasive</text>
+      </svg>
+    </div>
+    <div class="diag-cap">The block travels. Bearings roll and slide. Bottom face wears flat against the prepared bed. What arrives at the site is <b>an ~80% finished block</b> that captured transport energy and converted it to machining work.</div>
+  </div>
+
+  <!-- ============================================================
+       STAGE THREE — FINISHING PADS
+       ============================================================ -->
+  <section class="stage">
+    <div class="stage-head">
+      <span class="stage-no">IV.</span>
+      <h2 class="stage-title">Finishing pads</h2>
+    </div>
+    <p class="stage-sub">Progressive grit refinement happens naturally.</p>
+
+    <p>Standard archaeology treats final surface finishing as hand work performed at the construction site after transport. Workers polishing stone surfaces on hands and knees, producing the polished finish through accumulated labor. The labor budget for this stage is enormous under the standard model and largely unexamined.</p>
+
+    <p>The integrated-system reading produces final finishing as the third stage of the same operation. The block arrives at the construction site roughly finished from transport. Move it onto a prepared finishing pad, smaller than the causeway but constructed on the same principle: hard-stone surface designed for abrasive operations. Apply dolerite media from earlier stages of the cycle &mdash; the smaller and finer stones, chips, and sand produced as the bearings wore down through transit. Flood with water to suspend the abrasive and carry away the granite slurry. Drag or rotate the block across the pad until the surface reaches finishing specification.</p>
+
+    <p>The earlier-stage transport had used coarser stones for rough machining; what remains as fine dolerite sand and chips is <em>ideal for polishing-grade abrasion</em>. The whole system produces wear-graded media that flows from coarse to fine as the cycle proceeds. <strong>By the time a block reaches the finishing pad, the available abrasive media at the destination is at exactly the grit level needed for surface polish.</strong></p>
+  </section>
+
+  <!-- ============================================================
+       THE HARD PADS — REDEPLOYED
+       ============================================================ -->
+  <section class="stage">
+    <div class="stage-head">
+      <span class="stage-no">V.</span>
+      <h2 class="stage-title">The hard pads as a separate product</h2>
+    </div>
+    <p class="stage-sub">Polish quality records operational history, not intended prestige.</p>
+
+    <p>A consequence of this reading that deserves separate attention: the finishing-pad surfaces themselves become polished through use. Hard stone bearing against hard stone with abrasive media in between produces polish on both surfaces over time. Sections of causeway and finishing pad that saw the most traffic develop highly polished surfaces as a natural byproduct of the operation.</p>
+
+    <p>When a major project ends, this polished hard-stone surface material is itself valuable. Pulled-up causeway segments and disused finishing pads can be redeployed architecturally. Polished hard-stone slabs suitable for temple flooring, ceremonial platforms, outdoor pavements, and prestige cladding are <em>essentially free</em> if you have a system that produces them as the byproduct of necessary transport. Polished surfaces appearing in unexpected locations across Egyptian sites may be redeployed bed material rather than separately-produced finishing work.</p>
+  </section>
+
+  <!-- ============================================================
+       THE BOSS PROBLEM
+       ============================================================ -->
+  <section class="stage">
+    <div class="stage-head">
+      <span class="stage-no">VI.</span>
+      <h2 class="stage-title">The boss problem</h2>
+    </div>
+    <p class="stage-sub">Bosses are predicted features, not lifting attachments.</p>
+
+    <p>Surviving bosses or knobs on Egyptian stone blocks have been variously explained as lifting attachments, alignment markers, or incomplete finishing. None of these explanations fully accounts for the distribution of bosses across faces or for why they survive on some blocks and not others.</p>
+
+    <p>Under the integrated-system reading, bosses are predicted features of the transport-machining process. The block sits on the causeway with one face down getting machined against the bed. The other faces are not in abrasive contact. <em>High points on the down face get ground off automatically. High points on the up and side faces are not touched.</em> Bosses survive on the non-machined faces but not on the machining face. The boss distribution should be systematically asymmetric: one face free of bosses (the machining face, which becomes the joint surface in the final structure), other faces retaining bosses where the original rough block had local hard points.</p>
+
+    <p>The retained bosses are then useful during final placement. Lifting equipment can attach to them. Levers can fulcrum against them. Alignment teams can use them as reference points. The bosses <strong>cost nothing to produce</strong> because they are simply remnants of the rough block, and they happen to be located where pull points are needed.</p>
+  </section>
+
+  <!-- ============================================================
+       DIAGRAM 3 — CONVENTIONAL VS PROPOSED
+       ============================================================ -->
+  <div class="codex">
+    <div class="kicker">Figure III &middot; two readings compared</div>
+    <h3>Ramps versus the machining bed</h3>
+    <p class="lead">Two ways to explain the same evidence. The conventional model pays for the finish twice. The integrated model captures it as a byproduct.</p>
+
+    <div class="diagram">
+      <svg viewBox="0 0 680 340" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="fig3title fig3desc">
+        <title id="fig3title">Conventional versus proposed</title>
+        <desc id="fig3desc">Two side-by-side panels comparing the conventional ramp-and-hand-polish model with the proposed causeway-with-bearings integrated model.</desc>
+
+        <!-- divider -->
+        <line x1="340" y1="20" x2="340" y2="330" stroke="#8a5a1e" stroke-width="0.6" stroke-dasharray="4 4"/>
+
+        <!-- LEFT: CONVENTIONAL -->
+        <text x="170" y="42" text-anchor="middle" font-family="serif" font-size="13" font-weight="700" letter-spacing="2" fill="#5c1e0f">CONVENTIONAL</text>
+        <text x="170" y="58" text-anchor="middle" font-family="serif" font-style="italic" font-size="11" fill="#3d3120">ramps &amp; hand-finish</text>
+
+        <!-- ramp -->
+        <polygon points="30,240 300,240 300,120" fill="#a89370" stroke="#5c4a2c" stroke-width="1"/>
+        <!-- rough block on ramp -->
+        <g>
+          <rect x="180" y="152" width="45" height="35" fill="#c8b993" stroke="#5c4a2c" stroke-width="1"/>
+          <polygon points="180,152 192,142 205,152" fill="#c8b993" stroke="#5c4a2c" stroke-width="1"/>
+          <polygon points="200,152 213,148 225,152" fill="#c8b993" stroke="#5c4a2c" stroke-width="1"/>
+        </g>
+        <text x="202" y="140" text-anchor="middle" font-family="serif" font-style="italic" font-size="9" fill="#3d3120">rough block</text>
+
+        <!-- ground below ramp -->
+        <rect x="20" y="240" width="290" height="10" fill="#8a7355" stroke="#5c4a2c" stroke-width="0.5"/>
+
+        <!-- masons hand-polishing at destination -->
+        <g transform="translate(80 270)">
+          <rect x="0" y="0" width="140" height="20" fill="#c8b993" stroke="#5c4a2c" stroke-width="1"/>
+          <!-- figures -->
+          <circle cx="20" cy="-8" r="4" fill="#3d3120"/>
+          <rect x="17" y="-4" width="6" height="10" fill="#5c1e0f"/>
+          <circle cx="70" cy="-8" r="4" fill="#3d3120"/>
+          <rect x="67" y="-4" width="6" height="10" fill="#5c1e0f"/>
+          <circle cx="120" cy="-8" r="4" fill="#3d3120"/>
+          <rect x="117" y="-4" width="6" height="10" fill="#5c1e0f"/>
+        </g>
+        <text x="150" y="315" text-anchor="middle" font-family="serif" font-style="italic" font-size="11" fill="#5c1e0f">enormous labor budget, unexamined</text>
+
+        <!-- RIGHT: PROPOSED -->
+        <text x="510" y="42" text-anchor="middle" font-family="serif" font-size="13" font-weight="700" letter-spacing="2" fill="#5c1e0f">PROPOSED</text>
+        <text x="510" y="58" text-anchor="middle" font-family="serif" font-style="italic" font-size="11" fill="#3d3120">causeway &amp; abrasive bearings</text>
+
+        <!-- prepared causeway (flat) -->
+        <rect x="360" y="200" width="310" height="30" fill="#4a3d28" stroke="#3d3120" stroke-width="0.8"/>
+        <!-- bearings on causeway -->
+        <g fill="#6a5535" stroke="#3d3120" stroke-width="0.6">
+          <ellipse cx="380" cy="195" rx="8" ry="7"/>
+          <ellipse cx="405" cy="197" rx="6" ry="5"/>
+          <ellipse cx="430" cy="195" rx="9" ry="7"/>
+          <ellipse cx="455" cy="197" rx="7" ry="6"/>
+          <ellipse cx="480" cy="195" rx="8" ry="7"/>
+          <ellipse cx="505" cy="197" rx="6" ry="5"/>
+          <ellipse cx="530" cy="195" rx="9" ry="7"/>
+          <ellipse cx="555" cy="197" rx="7" ry="6"/>
+          <ellipse cx="580" cy="195" rx="8" ry="7"/>
+          <ellipse cx="605" cy="197" rx="6" ry="5"/>
+          <ellipse cx="630" cy="195" rx="8" ry="7"/>
+        </g>
+        <!-- block being machined during transport -->
+        <rect x="440" y="140" width="180" height="45" fill="#c8b993" stroke="#5c4a2c" stroke-width="1"/>
+        <!-- boss on top face -->
+        <polygon points="500,140 510,130 520,140" fill="#c8b993" stroke="#5c4a2c" stroke-width="0.8"/>
+        <text x="510" y="128" text-anchor="middle" font-family="serif" font-style="italic" font-size="9" fill="#3d3120">boss</text>
+        <text x="530" y="167" text-anchor="middle" font-family="serif" font-size="10" font-weight="700" fill="#1e1912" letter-spacing="1">BLOCK</text>
+        <!-- clean bottom face indicator -->
+        <line x1="440" y1="185" x2="620" y2="185" stroke="#3d1408" stroke-width="1.4"/>
+        <!-- motion arrow -->
+        <path d="M628 160 L 655 160" stroke="#5c1e0f" stroke-width="2" fill="none" marker-end="url(#arr3)"/>
+        <defs>
+          <marker id="arr3" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M 0 0 L 10 5 L 0 10 z" fill="#5c1e0f"/>
+          </marker>
+        </defs>
+
+        <!-- ground below causeway -->
+        <rect x="360" y="230" width="310" height="8" fill="#8a7355" stroke="#5c4a2c" stroke-width="0.4"/>
+
+        <!-- arrives at site nearly finished -->
+        <rect x="440" y="265" width="140" height="20" fill="#c8b993" stroke="#5c4a2c" stroke-width="1"/>
+        <line x1="440" y1="284" x2="580" y2="284" stroke="#3d1408" stroke-width="1"/>
+        <text x="510" y="277" text-anchor="middle" font-family="serif" font-style="italic" font-size="10" fill="#3d3120">arrives ~80% finished</text>
+        <text x="510" y="315" text-anchor="middle" font-family="serif" font-style="italic" font-size="11" fill="#5c1e0f">transport energy = machining work</text>
+      </svg>
+    </div>
+    <div class="diag-cap"><b>Conventional:</b> wheels absent because sand. Finish paid for twice. Enormous unexplained labor budget. &nbsp; <b>Proposed:</b> wheels absent because <em>they would have broken the operation</em>. The system arrives with the finish already applied.</div>
+  </div>
+
+  <!-- ============================================================
+       THE OUTER FACE, THE WHEEL, THE MISSING WOOD
+       ============================================================ -->
+  <section class="stage">
+    <div class="stage-head">
+      <span class="stage-no">VII.</span>
+      <h2 class="stage-title">Three implications</h2>
+    </div>
+    <p class="stage-sub">The outer face was not the goal. The wheel question dissolves. The missing wood is the missing muscle.</p>
+
+    <p><strong>The outer face was not the goal.</strong> The load-bearing surfaces in Egyptian construction were the joints between blocks, not the outer faces. Tight precise joints with no mortar are what makes the structure stable across millennia. Under the integrated-system reading, the priority makes sense. The machining operation produced precise joint-faces because those were the down-faces during transport. The outer faces did not require the same treatment because they were going to be covered or because they carried cultural significance that smoothing would have erased. Retained bosses on visible faces may signify the stubborn portion of the original quarry block, the part that did not yield to the process &mdash; an emblem of persistence preserved deliberately rather than left through carelessness.</p>
+
+    <p><strong>The wheel question dissolves.</strong> Egyptian construction&rsquo;s notable absence of wheeled transport for stone is usually explained by reference to sand. Under the integrated-system reading, the question dissolves. Wheels would have eliminated <em>exactly the friction the operation depended on</em>. A wheeled transport delivers an unchanged rough block to the destination, requiring all finishing labor to be performed at the construction site. A dragging transport on a prepared bed with dolerite bearings delivers an ~80% finished block. The civilization did not fail to discover wheels for construction. They discovered that for their primary use case, wheels were the wrong tool.</p>
+
+    <p><strong>The missing wood is the missing muscle.</strong> This hypothesis depends on substantial wooden equipment that does not survive archaeologically: sledge frames for carrying blocks at controlled angles, wooden guide systems for tracking the block on the bed, harness rigs for distributing pulling force, support structures for managing direction changes, water management systems. The wooden machine that integrated the stone components is gone. What we have left is the stone, the metal, the fired ceramic. <em>The integrated-system reading is partially invisible in the archaeological record because the integrating components have decayed.</em></p>
+  </section>
+
+  <!-- ============================================================
+       TESTABLE PREDICTIONS
+       ============================================================ -->
+  <div class="predictions">
+    <h4>Testable predictions</h4>
+    <ol>
+      <li><strong>Causeway surface composition.</strong> Prepared transport routes should show hard-stone construction with abrasion-resistant surfaces. Dolerite particles or granite dust embedded in causeway substrate would be direct evidence.</li>
+      <li><strong>Granite sand distribution along causeway routes.</strong> Soil samples along known causeway paths should show elevated granite particulate concentrations relative to baseline.</li>
+      <li><strong>Dolerite stone size grading at intermediate causeway points.</strong> If the bearings progressively wear down during use, smaller dolerite stones should appear at intermediate points as bearings reach end-of-life.</li>
+      <li><strong>Finished block dimensional consistency.</strong> Blocks produced by machining-to-reference should show dimensional consistency that hand-work would not produce. Forensic dimensional analysis could distinguish the two.</li>
+      <li><strong>Boss face-distribution patterns.</strong> Bosses should appear asymmetrically across block faces, with the machining face (joint surface) free of bosses and other faces retaining them.</li>
+      <li><strong>Polish quality correlated with operational history.</strong> Polished surfaces in unexpected locations should be checkable for evidence of prior service as causeway or finishing-pad bed material. Wear patterns should be directional rather than random, consistent with bed service rather than with hand polishing.</li>
+    </ol>
+  </div>
+
+  <!-- ============================================================
+       CLOSING
+       ============================================================ -->
+  <section class="summit">
+    <div class="eyebrow">Status of this hypothesis</div>
+    <p>This document presents a hypothesis, not a conclusion. Parts of it overlap with positions already gaining acceptance in mainstream archaeology &mdash; specifically the bearing function of dolerite stones during transport. Parts of it appear to be new framing &mdash; specifically the integration of transport with abrasive machining as a single operation, and the cascading use of dolerite media from coarse percussive work through bearing-machining to fine polishing.</p>
+    <p>The hypothesis explains multiple separate puzzles in Egyptian construction simultaneously and produces empirically testable predictions. That is the signature of a structurally promising reading, though not proof of correctness.</p>
+    <div class="close-mark"></div>
+    <p class="sig">End of working note.</p>
+    <p class="sig sig-name">Andrew Morton</p>
+    <p class="sig">July 2026 &mdash; Palmer Lake, Colorado</p>
+  </section>
+
+  <!-- ============================================================
+       SEE ALSO — TWIN CROSS-LINK
+       ============================================================ -->
+  <div class="see-also">
+    <div class="label">See also &middot; twin document</div>
+    <a href="../stone-economy-timber-machine/stone-economy-timber-machine.html">Stone Economy, Timber Machine &rarr;</a>
+    <div class="note">The companion working note. Same subject, different angle: the wood-and-rope industry that moved the stone, and what running the limiter off did to the forest.</div>
+  </div>
+
+</div>
+</body>
+</html>
