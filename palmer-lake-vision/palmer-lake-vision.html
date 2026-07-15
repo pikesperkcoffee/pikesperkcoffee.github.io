@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Palmer Lake — A Place Worth Coming Back To</title>
+<meta name="description" content="A vision for Palmer Lake, Colorado — creek, fire, flood, trails, and the civic function of the natural feature. Andrew Morton, Palmer Lake, Colorado.">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;1,8..60,300&family=Space+Mono:wght@400&display=swap');
+
+:root {
+  --page:       #f6f3ee;
+  --paper:      #efeae0;
+  --ink:        #1e1c18;
+  --ink-soft:   #3a3730;
+  --ink-mid:    #6b6455;
+  --rule:       #ccc4b0;
+  --rule-light: #e2ddd2;
+  --water:      #3a6b7e;
+  --water-mid:  #568ea2;
+  --water-light:#a0c4d2;
+  --sage:       #567554;
+  --sage-light: #84a482;
+  --gold:       #b08830;
+  --gold-light: #cca850;
+  --track:      #8a7860;
+  --track-light:#b0a080;
+  --ember:      #b05030;
+}
+
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+
+body {
+  background: var(--page);
+  color: var(--ink);
+  font-family: 'Source Serif 4', Georgia, serif;
+  font-size: 17px;
+  line-height: 1.82;
+  font-weight: 300;
+}
+
+/* TOPO */
+body::before {
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opacity:0.05;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='800'%3E%3Cg fill='none' stroke='%23567554' stroke-width='0.9'%3E%3Cellipse cx='400' cy='400' rx='380' ry='180'/%3E%3Cellipse cx='400' cy='400' rx='330' ry='150'/%3E%3Cellipse cx='400' cy='400' rx='280' ry='122'/%3E%3Cellipse cx='400' cy='400' rx='230' ry='96'/%3E%3Cellipse cx='400' cy='400' rx='180' ry='72'/%3E%3Cellipse cx='400' cy='400' rx='130' ry='50'/%3E%3Cellipse cx='400' cy='400' rx='80' ry='30'/%3E%3Cellipse cx='150' cy='160' rx='140' ry='70'/%3E%3Cellipse cx='150' cy='160' rx='100' ry='48'/%3E%3Cellipse cx='150' cy='160' rx='60' ry='28'/%3E%3Cellipse cx='660' cy='620' rx='140' ry='68'/%3E%3Cellipse cx='660' cy='620' rx='96' ry='46'/%3E%3Cellipse cx='660' cy='620' rx='52' ry='26'/%3E%3Cpath d='M0,300 Q200,270 400,310 Q600,350 800,290'/%3E%3Cpath d='M0,360 Q200,330 400,370 Q600,410 800,350'/%3E%3Cpath d='M0,420 Q200,395 400,430 Q600,468 800,412'/%3E%3C/g%3E%3C/svg%3E");
+  background-size:800px 800px;
+}
+
+.page-wrap {
+  position:relative;max-width:820px;margin:0 auto;
+  padding:0 2rem 0 5rem;z-index:1;
+}
+
+/* RAIL TRACKS */
+.page-wrap::before {
+  content:'';position:fixed;
+  left:calc(50% - 410px - 20px);
+  top:0;bottom:0;width:14px;
+  background:
+    linear-gradient(var(--rule) 0%,var(--rule) 100%) 1px 0/1.5px 100% no-repeat,
+    linear-gradient(var(--rule) 0%,var(--rule) 100%) 11px 0/1.5px 100% no-repeat,
+    repeating-linear-gradient(to bottom,transparent 0,transparent 16px,var(--track-light) 16px,var(--track-light) 19px);
+  opacity:0.35;pointer-events:none;
+}
+
+/* RIVER */
+.river-line {
+  position:fixed;right:calc(50% - 410px - 22px);
+  top:0;bottom:0;width:16px;pointer-events:none;z-index:0;opacity:0.22;
+}
+.river-line svg{width:16px;height:100%;}
+
+/* PRINT */
+@media print {
+  body::before{opacity:0.035;background-attachment:scroll;}
+  .page-wrap::before,.river-line,.scroll-hint{display:none;}
+  .page-wrap{padding:0 1.5rem;max-width:100%;}
+  .hero{min-height:unset;padding:2.5rem 0 2rem;page-break-after:always;}
+  section{padding:2rem 0;}
+  .divider{padding:1.5rem 2rem;margin:1rem 0;}
+  .timeline{padding:1.5rem 0;}
+  .timeline-phase::before{display:none;}
+  .pillar{break-inside:avoid;}
+  @page{margin:0.85in 0.8in;size:letter;}
+}
+
+/* HERO */
+.hero {
+  min-height:90vh;display:flex;flex-direction:column;justify-content:center;
+  padding:5rem 0 4rem;border-bottom:1px solid var(--rule);position:relative;
+}
+.hero::after {
+  content:'';position:absolute;bottom:-1px;left:0;right:0;height:3px;
+  background:linear-gradient(to right,var(--water-mid),var(--sage-light),transparent);
+}
+.elevation-tag {
+  font-family:'Space Mono',monospace;font-size:0.62rem;letter-spacing:0.28em;
+  color:var(--ink-mid);text-transform:uppercase;margin-bottom:2.5rem;
+  opacity:0;animation:fadeUp 0.7s 0.2s forwards;
+}
+.hero-title {
+  font-family:'Playfair Display',Georgia,serif;
+  font-size:clamp(2.6rem,6.5vw,5rem);font-weight:700;
+  line-height:1.1;color:var(--ink);margin-bottom:0.5rem;
+  opacity:0;animation:fadeUp 0.7s 0.4s forwards;
+}
+.hero-subtitle {
+  font-family:'Playfair Display',serif;font-size:clamp(1rem,2vw,1.3rem);
+  font-style:italic;color:var(--water);margin-bottom:2.2rem;
+  opacity:0;animation:fadeUp 0.7s 0.55s forwards;
+}
+.hero-rule {
+  width:70px;height:2px;background:linear-gradient(to right,var(--gold),transparent);
+  margin-bottom:1.8rem;opacity:0;animation:fadeUp 0.7s 0.65s forwards;
+}
+.hero-lede {
+  max-width:580px;font-size:1.08rem;font-style:italic;font-weight:300;
+  color:var(--ink-soft);line-height:1.72;
+  opacity:0;animation:fadeUp 0.7s 0.8s forwards;
+}
+.scroll-hint {
+  margin-top:3rem;font-family:'Space Mono',monospace;
+  font-size:0.58rem;letter-spacing:0.22em;
+  color:var(--sage-light);text-transform:uppercase;
+  opacity:0;animation:fadeUp 0.7s 1.1s forwards;
+}
+
+/* SECTIONS */
+section{padding:4.5rem 0;border-bottom:1px solid var(--rule-light);}
+section:last-of-type{border-bottom:none;}
+
+/* CHAPTER */
+.chapter{display:flex;align-items:center;gap:1rem;margin-bottom:1.8rem;}
+.chapter-num{font-family:'Space Mono',monospace;font-size:0.6rem;letter-spacing:0.18em;color:var(--gold);white-space:nowrap;}
+.chapter-line{flex:1;height:1px;max-width:50px;background:linear-gradient(to right,var(--gold-light),var(--rule-light));}
+.chapter-title{font-family:'Playfair Display',serif;font-size:clamp(1.65rem,3.2vw,2.4rem);font-weight:700;color:var(--ink);line-height:1.2;margin-bottom:1.3rem;}
+.chapter-title em{color:var(--water);font-style:italic;}
+
+/* BODY */
+p{margin-bottom:1.25rem;color:var(--ink-soft);font-weight:300;}
+p strong{color:var(--ink);font-weight:400;}
+.lede{font-size:1.12rem;font-style:italic;color:var(--ink-soft);margin-bottom:1.8rem;line-height:1.7;padding-left:1.1rem;border-left:2.5px solid var(--water-light);}
+
+/* DIVIDER */
+.divider{background:linear-gradient(135deg,rgba(58,107,126,0.06),rgba(86,117,84,0.05));border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);padding:2.8rem 3rem;margin:0;position:relative;overflow:hidden;}
+.divider::before{content:'';position:absolute;inset:0;pointer-events:none;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='700' height='70'%3E%3Cpath d='M0,35 Q175,15 350,35 Q525,55 700,35' fill='none' stroke='%23567554' stroke-width='0.7' opacity='0.2'/%3E%3Cpath d='M0,45 Q175,25 350,45 Q525,65 700,45' fill='none' stroke='%233a6b7e' stroke-width='0.5' opacity='0.15'/%3E%3C/svg%3E") center/700px 70px no-repeat;}
+.divider-text{font-family:'Playfair Display',serif;font-style:italic;font-size:clamp(1rem,1.9vw,1.3rem);color:var(--ink-soft);max-width:660px;margin:0 auto;line-height:1.65;text-align:center;position:relative;}
+.divider-text em{color:var(--water);}
+
+/* TIMELINE */
+.timeline{padding:3rem 0;}
+.timeline-phase{display:grid;grid-template-columns:88px 1fr;gap:0 2rem;margin-bottom:2.8rem;position:relative;}
+.timeline-phase::before{content:'';position:absolute;left:88px;top:14px;bottom:-2.8rem;width:1px;background:linear-gradient(to bottom,var(--sage-light),var(--rule-light));transform:translateX(-50%);}
+.timeline-phase:last-child::before{display:none;}
+.phase-year{font-family:'Space Mono',monospace;font-size:0.62rem;color:var(--gold);letter-spacing:0.08em;padding-top:0.2rem;text-align:right;line-height:1.4;}
+.phase-dot{position:absolute;left:88px;top:0.38rem;width:9px;height:9px;border-radius:50%;background:var(--sage);transform:translateX(-50%);border:2px solid var(--page);box-shadow:0 0 0 1.5px var(--sage);}
+.phase-content h3{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:var(--ink);margin-bottom:0.5rem;line-height:1.3;}
+.phase-content p{font-size:0.92rem;line-height:1.7;}
+.phase-tag{display:inline-block;font-family:'Space Mono',monospace;font-size:0.53rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--water);border:1px solid var(--water-light);padding:0.12rem 0.45rem;border-radius:2px;margin-bottom:0.45rem;}
+
+/* PILLARS */
+.pillars{display:grid;grid-template-columns:repeat(auto-fit,minmax(205px,1fr));gap:1.1rem;margin:2.2rem 0;}
+.pillar{background:#fff;border:1px solid var(--rule);border-top:2.5px solid var(--sage);padding:1.4rem 1.2rem;border-radius:2px;box-shadow:0 1px 4px rgba(0,0,0,0.05);}
+.pillar-icon{font-size:1.4rem;margin-bottom:0.5rem;display:block;}
+.pillar h4{font-family:'Playfair Display',serif;font-size:0.95rem;font-weight:700;color:var(--ink);margin-bottom:0.45rem;}
+.pillar p{font-size:0.86rem;color:var(--ink-mid);margin:0;line-height:1.58;}
+
+/* PULLQUOTE */
+.pullquote{border-left:3px solid var(--gold);padding:1.1rem 1.6rem;margin:2.2rem 0;background:rgba(176,136,48,0.05);}
+.pullquote p{font-family:'Playfair Display',serif;font-style:italic;font-size:1.15rem;color:var(--ink-soft);margin:0;line-height:1.55;}
+
+/* HIGHLIGHT */
+.highlight{background:rgba(58,107,126,0.06);border:1px solid var(--water-light);border-left:3px solid var(--water);border-radius:2px;padding:1.4rem 1.6rem;margin:1.8rem 0;}
+.highlight h4{font-family:'Playfair Display',serif;font-size:0.98rem;color:var(--water);font-weight:700;margin-bottom:0.5rem;}
+.highlight p{font-size:0.91rem;color:var(--ink-soft);}
+
+/* HIGHLIGHT EMBER (fire/alert tone) */
+.highlight-ember{background:rgba(176,80,48,0.05);border:1px solid rgba(176,80,48,0.25);border-left:3px solid var(--ember);border-radius:2px;padding:1.4rem 1.6rem;margin:1.8rem 0;}
+.highlight-ember h4{font-family:'Playfair Display',serif;font-size:0.98rem;color:var(--ember);font-weight:700;margin-bottom:0.5rem;}
+.highlight-ember p{font-size:0.91rem;color:var(--ink-soft);}
+
+/* FUNDING GRID */
+.funding-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.85rem;margin:1.8rem 0;}
+.funding-item{background:#fff;border:1px solid var(--rule);padding:0.95rem 1.1rem;border-radius:2px;}
+.funding-item .label{font-family:'Space Mono',monospace;font-size:0.55rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--sage);margin-bottom:0.28rem;}
+.funding-item .value{font-size:0.93rem;color:var(--ink-soft);line-height:1.4;}
+
+/* SCENE BREAK */
+.scene-break{text-align:center;color:var(--rule);margin:2.2rem 0;font-size:1.1rem;letter-spacing:0.5em;}
+
+/* FOOTER */
+footer{border-top:1px solid var(--rule);padding:2.8rem 0 3.2rem;text-align:center;position:relative;}
+footer::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(to right,transparent,var(--water-light),transparent);}
+footer .wordmark{font-family:'Playfair Display',serif;font-size:1.45rem;font-weight:700;color:var(--ink);margin-bottom:0.28rem;}
+footer .tagline{font-style:italic;color:var(--ink-mid);font-size:0.93rem;margin-bottom:1.3rem;}
+footer .meta{font-family:'Space Mono',monospace;font-size:0.56rem;letter-spacing:0.18em;color:var(--track-light);text-transform:uppercase;}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:translateY(0);}}
+
+@media(max-width:660px){
+  .page-wrap{padding:0 1.4rem;}
+  .page-wrap::before{display:none;}
+  .timeline-phase{grid-template-columns:60px 1fr;}
+  .timeline-phase::before{left:60px;}
+  .phase-dot{left:60px;}
+  .funding-grid{grid-template-columns:1fr;}
+  .pillars{grid-template-columns:1fr;}
+}
+
+/* site nav — fixed top-right, honest filesystem labels.
+   Uses Space Mono to match the doc's typographic system. */
+.sitenav{position:fixed;top:14px;right:14px;z-index:100;
+  display:flex;gap:6px;
+  font-family:'Space Mono',ui-monospace,"SF Mono",Menlo,monospace;
+  font-size:11px;letter-spacing:.14em}
+.sitenav a{display:inline-block;padding:6px 10px;
+  background:rgba(246,243,238,.92);backdrop-filter:blur(6px);
+  color:var(--ink-mid);text-decoration:none;
+  border:1px solid var(--rule);
+  transition:color .12s, border-color .12s}
+.sitenav a:hover{color:var(--water);border-color:var(--water)}
+@media (max-width:640px){.sitenav{top:10px;right:10px}.sitenav a{padding:5px 8px;font-size:10px}}
+</style>
+</head>
+<body>
+<nav class="sitenav" aria-label="Site navigation">
+  <a href="../index.html" title="Back one page (up one directory)">../</a>
+  <a href="../index.html" title="Site index (root)">/</a>
+</nav>
+
+<div class="river-line" aria-hidden="true">
+  <svg viewBox="0 0 16 1200" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M8,0 Q12,55 6,110 Q2,170 10,230 Q14,290 6,350 Q2,410 10,470 Q14,530 6,590 Q2,650 11,710 Q14,770 6,830 Q2,890 11,950 Q14,1010 6,1070 Q2,1130 8,1200" fill="none" stroke="#3a6b7e" stroke-width="1.6"/>
+    <path d="M8,0 Q5,70 11,140 Q15,210 7,280 Q3,350 11,420 Q15,490 7,560 Q3,630 12,700 Q15,770 7,840 Q3,910 11,980 Q15,1050 7,1120 Q4,1165 8,1200" fill="none" stroke="#568ea2" stroke-width="0.7"/>
+  </svg>
+</div>
+
+<div class="page-wrap">
+
+<!-- HERO -->
+<div class="hero">
+  <div class="elevation-tag">Palmer Lake, Colorado &nbsp;·&nbsp; El. 7,240 ft &nbsp;·&nbsp; Tri-Lakes Region</div>
+  <h1 class="hero-title">A Place Worth<br>Coming Back To</h1>
+  <p class="hero-subtitle">What ten years of patient work looks like</p>
+  <div class="hero-rule"></div>
+  <p class="hero-lede">This is not a master plan. It is a picture of what Palmer Lake could become if the people who love it keep showing up — and what it might feel like to arrive here a decade from now, when the pieces have found each other.</p>
+  <div class="scroll-hint">↓ &nbsp; continue reading</div>
+</div>
+
+
+<!-- 01 — THE CREEK -->
+<section>
+  <div class="chapter"><span class="chapter-num">01</span><div class="chapter-line"></div></div>
+  <h2 class="chapter-title">The Creek Is <em>Still Running</em></h2>
+
+  <p class="lede">Palmer Lake is a small town inside a bowl. The mountains hold it on three sides, the railroad on a fourth. Monument Creek feeds the lake. The star on the hillside watches everything.</p>
+
+  <p>It has always been more than a municipality. The railroad came in 1883 because someone understood what this geography was worth. The Chautauqua followed in 1887 because the same thing people wanted then — a place to gather in the mountains, to think clearly, to hear music and watch their children run — is exactly what people want now. The land held camp meetings and faith revivals long after the Chautauqua era ended. Pilgrims still come, drawn by something they may not be able to name, some quiet in the bowl of the mountains that no amount of activity has ever fully displaced. It is still there. It always was.</p>
+
+  <p>For a long time, the civic promise of the place sat unresolved on 28 town-owned acres at the foot of the hill. The amphitheater was finally finished. The creek was still running. The property waited.</p>
+
+  <p>What follows is a picture of the decade in which Palmer Lake stopped waiting.</p>
+
+  <div class="pullquote">
+    <p>"The beaver went downstream. The creek is still running. What was taken gets returned, what was broken gets fixed, what was forgotten gets remembered."</p>
+  </div>
+</section>
+
+<div class="divider">
+  <p class="divider-text">This is not a story about a park. It is a story about a town that realized it had always been one — and decided to act like it.</p>
+</div>
+
+
+<!-- 02 — WHAT IT FEELS LIKE -->
+<section>
+  <div class="chapter"><span class="chapter-num">02</span><div class="chapter-line"></div></div>
+  <h2 class="chapter-title">What It <em>Feels Like</em> Now</h2>
+
+  <p class="lede">Imagine arriving on a Saturday in July. You charged your e-bike in Castle Rock and cruised south on the trail that threads the corridor between the developments and the highway, dipping under the overpass and climbing into the Tri-Lakes basin. The pass above town is different than it used to be — trees coming back on the slopes, and if you look at the right angle you can just make out the wildlife viaduct that arcs over the highway into the protected greenspace to the north. The accident rate on that stretch has been falling steadily for years.</p>
+
+  <p>You lock the bike at one of the charging stations placed along the creek path — there are several throughout town now, near the trailheads, near the garden, near the amphitheater entrance. The Palmer Lake VFD community station sits where the old Lodge used to be. The Lodge came down — it wasn't old enough to save and the site was too good to waste — and what replaced it is set back from the road, close to the creek, close to the big trees. This is the operational station now, the replacement. The old fire station is still standing across town, preserved the way things get preserved in a place that pays attention — not a museum, not a monument, just a building that stayed because nobody had a good reason to take it down and eventually that became a reason in itself. To the north, the Hilltop station anchors the former development corridor — hazmat, crash response, high-clearance rigs for the I-25 corridor. Together they cover the ground neither could hold alone.</p>
+
+  <p>You can smell smoke from a training burn somewhere up on the range. A couple of firefighters are setting up chairs in the green space behind the building. Someone has a speaker playing something low and easy. The concert starts at six. It always does.</p>
+
+  <p>You walk the creek path down toward the main property — the dual-tread trail that runs the length of it, hard surface on one side for the e-bikes and strollers, soft track on the other for the boots and the mountain bikes, lifting onto the raised boardwalk where the ground gets soft near the willows. A community garden runs along the lower flat — someone's been growing sunflowers taller than the fence, and there are raised beds near the water that belong to nobody and everybody. The big lodgepole pines throw long morning shadows across the granite boulders. Up the hill, the old meeting hall — its bones as solid as they always were — now does the work the Town Hall used to do and more. It is not a museum. People have meetings there on Tuesday nights. The amphitheater is already filling — the one with the stone-faced pylons and the roofline cut to echo the mountain profile behind the stage, the cedar benches set in gravel with the Rockies framed directly through the opening. The stonework matches the granite character of the place, the same pink and rust tones as the elephant rock that gave the property its name. Families from Monument, from Colorado Springs, from Castle Rock — they drove or rode and they are here, and they know where to park, and they know where the ice cream is, and they know that if they walk two minutes past the fence line there are miniature donkeys who will eat an apple out of a child's hand.</p>
+
+  <p>Near the amphitheater, the smell of something cooking over fire has been drifting across the property since mid-afternoon. A traveling kitchen has been set up at the edge of the event space — not a food truck exactly, more of a field operation, the kind of setup that goes where the people are and cooks in the open air. The chef moves between stations, fire going, cast iron hot, menu written on a chalkboard that leans against the fence. This has become part of the concert experience. People come early for the food the way they stay late for the music. On certain nights, when the stars cooperate, you can eat something remarkable within earshot of the creek and within sight of the mountains.</p>
+
+  <p>The Palmer Lake Volunteer Fire Department is still exactly that — volunteer, local, trusted, the elite feeder into the greater Tri-Lakes district. Nature-minded. The ones who maintain the Star. They have not been replaced by anything. They have been given the infrastructure to do their jobs at full capacity, and that has made all the difference.</p>
+
+  <div class="scene-break">· · ·</div>
+
+  <p>People still complain. Palmer Lake is not perfect — it never was and that was never the point. The kids with ice cream still honk at the cars passing the rock house. The parking still fills too fast on summer Saturdays. Someone is always unhappy about something at the Board meeting. The lake level is still a conversation. The dams are still on people's minds.</p>
+
+  <p>But the place got better. And the thing that made it possible was not a single decision or a single person — it was ten years of showing up, building the next piece, and trusting that the pieces would eventually find each other.</p>
+
+  <p><strong>The fire station brought people out of their homes to listen to music with the firefighters on the weekends.</strong> That is not a small thing. That is the whole thing.</p>
+</section>
+
+
+<!-- 03 — THE FIRE -->
+<section>
+  <div class="chapter"><span class="chapter-num">03</span><div class="chapter-line"></div></div>
+  <h2 class="chapter-title">The Fire, <em>and What It Proved</em></h2>
+
+  <p class="lede">Two summers ago the range burned. Not the kind of fire that passes through in a week — the kind that settles in, probes for weaknesses in the terrain, and requires a sustained ground operation to contain. Forestry set up a command center on the property and stayed for a month.</p>
+
+  <p>The new station proved everything its proponents had argued. The tender could move. The response geometry worked. Crews rotating off the mountain had somewhere to stage, somewhere to rest, somewhere close enough to the front that turnaround didn't eat up the shift. The two stations — upper and lower, Palmer Lake and Monument — coordinated the way they always should have, covering the corridor, sharing resources, keeping the line.</p>
+
+  <div class="highlight-ember">
+    <h4>When the Spa Opened Its Doors</h4>
+    <p>The wellness property on the hill shut down its regular operations within the first week of the incident and redirected everything it had toward the crews coming off the mountain. Sore legs, smoke-dried skin, the accumulated weight of days at elevation running on inadequate sleep — the staff knew what to do. They offered complimentary sessions to every firefighter and EMS worker cycling through. No forms, no appointments, no charge. Word spread to the adjacent agencies. Personnel who had never set foot in a place like that found themselves sitting in a steam room at nine in the morning because someone handed them a towel and pointed them through a door. It was not a press release. It was a neighbor doing what neighbors do.</p>
+  </div>
+
+  <p>The Red Cross stationed a trailer on the property for the duration, coordinating the community response while the operational command ran out of the station area. Every emergency route in the region pointed here. The site did exactly what the stewardship framework had envisioned: it became the resilience node for the bowl, the place everything funneled toward when the situation demanded it.</p>
+
+  <p>The mop-up took weeks after containment. When forestry finally cleared out, the property reset in days. The community garden was still producing. The amphitheater was undamaged. The creek was running. The chili cook-off happened on schedule three weeks later, in the shade of the big lodgepole pines, the granite boulders still warm from the afternoon sun, with the fire department present in the way they always are on an evening like that — not as officials, just as neighbors who showed up.</p>
+
+  <p>The tender shuttle from the station may have made the difference. Nobody says that with certainty. But the people who were there say it quietly to each other, and that is close enough.</p>
+</section>
+
+
+<!-- 04 — THE FLOOD QUESTION -->
+<section>
+  <div class="chapter"><span class="chapter-num">04</span><div class="chapter-line"></div></div>
+  <h2 class="chapter-title">The Flood That <em>Hasn't Come Yet</em></h2>
+
+  <p class="lede">Anyone who knows what the 1965 flood did to this valley understands why the dams still come up in conversation. That event reshaped the creek bed, moved the road, and left a mark on the collective memory of the Tri-Lakes area that does not fade. People who weren't alive for it know the story. People who were alive for it don't forget it.</p>
+
+  <p>The question has never been whether another flood is possible. The question is whether Palmer Lake would be ready when it comes. The honest answer now, ten years on, is: as ready as a small town can be. The work has been done. The station is positioned where it can actually respond — not across a flooded intersection, not behind a compromised access point, but on the high ground near the creek where the geometry works in the community's favor when water rises.</p>
+
+  <p>The Red Cross keeps a designated presence here now, not only during incidents but as standing infrastructure — a pre-positioned capacity that activates faster because the relationship was built before anything went wrong. The emergency routes are mapped, marked, and understood. Every path points to the station. The community has rehearsed, in the quiet way communities rehearse, without anyone calling it a rehearsal.</p>
+
+  <div class="highlight">
+    <h4>Water Infrastructure — A New Kind of Redundancy</h4>
+    <p>A new city well near the convergence zone has given Palmer Lake something most Front Range communities of its size do not have: genuine independence in its water supply. Clean, deep, renewable — one of the most naturally sound municipal water systems on the corridor. Combined with the multiple tanks and the water system connections that came out of the Buc-ee's dispute resolution, redundancy now runs in both directions. If one source is compromised, the others hold. The soil that was at the center of a development fight is now serving the public in the most literal sense: clean water moving through it to homes that need it.</p>
+  </div>
+
+  <p>The flood hasn't come. People are still thinking about it. That is the appropriate posture. The creek is still running.</p>
+</section>
+
+
+<!-- 05 — THE SYSTEM -->
+<section>
+  <div class="chapter"><span class="chapter-num">05</span><div class="chapter-line"></div></div>
+  <h2 class="chapter-title">The <em>System</em> Behind It</h2>
+
+  <p class="lede">Palmer Lake is not competing with Monument for the resort dollar. It is offering something Monument cannot — a place where the natural feature and the civic function are the same thing.</p>
+
+  <p>The Tri-Lakes region runs from Castle Rock to Colorado Springs. It has lodging, commerce, the infrastructure of a corridor. What it was missing was a recreational destination — a place people would travel toward rather than through. Palmer Lake became that place by recognizing that the 28-acre civic property was the node where everything converged. Each piece enabled the next.</p>
+
+  <div class="pillars">
+    <div class="pillar">
+      <span class="pillar-icon">🔥</span>
+      <h4>Fire Station as Keystone</h4>
+      <p>The station relocation was not fire department infrastructure. It was civic infrastructure. Solving the location problem unlocked the event ceiling, which funded operations.</p>
+    </div>
+    <div class="pillar">
+      <span class="pillar-icon">🎵</span>
+      <h4>Concert Series as Engine</h4>
+      <p>Business and lodging sponsors from Palmer Lake and Monument support the summer series. Guests with nowhere to stay in PL spend nights in Monument and return in the morning.</p>
+    </div>
+    <div class="pillar">
+      <span class="pillar-icon">🚴</span>
+      <h4>Trail Network as Funnel</h4>
+      <p>E-bike and electric corridors move people from Castle Rock to Colorado Springs through Palmer Lake. The property is where they stop, charge, and stay for the day.</p>
+    </div>
+    <div class="pillar">
+      <span class="pillar-icon">🌿</span>
+      <h4>Stewardship as Identity</h4>
+      <p>The VFD maintains the Star. Forestry maintains the upper trails. The Trails Association manages the connecting routes. Each stewards what it knows best.</p>
+    </div>
+    <div class="pillar">
+      <span class="pillar-icon">🫏</span>
+      <h4>Adjacent Partners</h4>
+      <p>The miniature donkey farm next door requires nothing from the project — just a path between properties and a neighbor who stays exactly what they are.</p>
+    </div>
+    <div class="pillar">
+      <span class="pillar-icon">🌾</span>
+      <h4>Community Garden</h4>
+      <p>The lower flat produces food and community. Low capital, high daily use. Something that brings people back on a Tuesday.</p>
+    </div>
+    <div class="pillar">
+      <span class="pillar-icon">🍳</span>
+      <h4>Field Kitchen</h4>
+      <p>A traveling open-air kitchen operation has made the concert grounds a culinary destination in its own right. Fire, cast iron, local sourcing — food as performance alongside the music.</p>
+    </div>
+    <div class="pillar">
+      <span class="pillar-icon">💧</span>
+      <h4>Water Independence</h4>
+      <p>A city well near the convergence zone, combined with multiple tanks and adjacent system connections, gives Palmer Lake one of the cleanest and most redundant natural water systems on the Front Range.</p>
+    </div>
+  </div>
+
+  <div class="highlight">
+    <h4>The Historic Estate — The Long Game</h4>
+    <p>The estate eventually found its role: elite meetings, occasionally a guest who donates their stay. The miniature carousel restored for special occasions — it runs on summer Saturdays when the right kind of crowd is on the property, and children who have never seen one stand in front of it like they've found something they didn't know they were looking for. The old meeting hall converted into the civic center the town hall always wanted to be. Good bones, after all. Faith revivals and quiet retreats still happen there too, as they always did. Everyone is welcome. The quiet that drew the first pilgrims to this land never went away — it just learned to coexist with the music from the amphitheater below.</p>
+  </div>
+</section>
+
+<div class="divider">
+  <p class="divider-text">Palmer Lake stayed small. It grew alongside Monument. <em>The 28-acre property was the key that made it all possible.</em></p>
+</div>
+
+
+<!-- 06 — THE LAND THAT ALMOST BECAME A TRUCK STOP -->
+<section>
+  <div class="chapter"><span class="chapter-num">06</span><div class="chapter-line"></div></div>
+  <h2 class="chapter-title">The Land That <em>Stayed</em></h2>
+
+  <p class="lede">There was a fight, and the Tri-Lakes communities won it. The proposed development on the northern approach — the one that would have changed the character of the corridor in ways that couldn't be undone — ended differently than its backers expected.</p>
+
+  <p>The region came together, acquired the land, and took control of the wells and the water line extensions that came with it. At the time it felt like a defensive move. Ten years later it looks like one of the best infrastructure decisions the area ever made. Multiple tanks. Adjacent system connections. Redundancy running in both directions along the corridor.</p>
+
+  <p>The soil is in public use now. The development that was proposed moved south, where it found a location better suited to what it was always trying to be. And the land that almost became a large-format commercial intrusion on the gateway to Palmer Lake is instead part of the water and open space network that makes the whole system work.</p>
+
+  <p>The Hilltop station that anchors the northern end of the district — on the site where the big-box development was proposed — became the heavy response node for the corridor: crash, hazmat, the command infrastructure for serious incidents on I-25. Palmer Lake VFD at Elephant Rock holds the community end. Together, the two stations do something neither could do alone. The solution was always two stations working in coordination. It just took time and a development dispute to make the case clearly enough that everyone could see it.</p>
+</section>
+
+
+<!-- 07 — TRAILS AND WILDLIFE -->
+<section>
+  <div class="chapter"><span class="chapter-num">07</span><div class="chapter-line"></div></div>
+  <h2 class="chapter-title">The Trails That <em>Connected Everything</em></h2>
+
+  <p class="lede">The trail system was never just recreation infrastructure. It was the physical argument that Palmer Lake is the recreational center of the Tri-Lakes corridor — and increasingly, it is an argument the landscape itself is making.</p>
+
+  <p>The signature route crosses Ben Lomand, crosses the railroad right-of-way, ducks under Highway 105 at the same point where it connects directly into the Santa Fe Trail open space system — then climbs up and over the existing single track that threads through the newer developments on the east slope and reconnects with the advanced mountain bike loops above town. Multiple loops at multiple skill levels throughout the town, managed by a Trails Association mature enough to hold insurance and keep volunteers organized and accountable.</p>
+
+  <p>The creek-side trail is its own thing — a dual-tread path that runs the full length of the creek corridor, from Glen Park at the upper end of town all the way down through the Elephant Rock property and continuing to the neighborhoods below. One tread is soft surface single track for foot traffic and mountain bikes. The other is a compacted hard surface for e-bikes, strollers, and mixed use. Where the creek bank is too wet or too sensitive to disturb — which is often, and in the right places — the trail lifts onto a raised boardwalk that runs the length of the corridor. The same cedar construction as the bridge that crosses the creek near the amphitheater, the one that was already there when all of this started. The boardwalk threads between the lodgepole pines and the granite boulders, over the soft ground where the willows hold the bank, past the back fences of the homes that have always been the creek's nearest neighbors, and comes back to earth at the connection points where the neighborhoods meet the trail. It is how people get to the property from below without a car. It is how the kids from the south end of town arrive at the concert. It is the quietest part of the whole system and the most used — walked in the early morning before anyone else is up, run in the evening when the light comes sideways through the pines, and rolled slowly by people who just want to be near the water for a few minutes before they go back inside.</p>
+
+  <p>The wildlife corridor that runs alongside portions of the trail system has done something that took years to become visible: it has reduced the accident rate on the highway approaches to the Tri-Lakes area, steadily, year over year. The viaduct over the highway connects into the protected greenspace to the north, and the animals have found it. Trees are coming back on the pass. It is not dramatic. It is slow and incremental and real, the kind of environmental recovery that happens when you stop fighting the landscape and start working with it.</p>
+
+  <div class="highlight">
+    <h4>The Corridor Play</h4>
+    <p>Castle Rock to Colorado Springs is a forty-mile corridor with significant e-bike and electric vehicle infrastructure investment underway along the Front Range. Palmer Lake sits at the midpoint — the natural stopping place. The trail connection is not just recreation. It is economic positioning: Palmer Lake becomes the place you stop, not the place you pass through. People arrive charged and leave with a reason to come back.</p>
+  </div>
+</section>
+
+
+<!-- 08 — BIG BOY -->
+<section>
+  <div class="chapter"><span class="chapter-num">08</span><div class="chapter-line"></div></div>
+  <h2 class="chapter-title">A New <em>Tradition</em></h2>
+
+  <p class="lede">The Big Boy makes a full stop in Palmer Lake now. Once a year, on a date that gets announced a few weeks in advance and draws people from across the Front Range, Union Pacific's locomotive rolls through the Tri-Lakes corridor and pauses at Palmer Lake long enough for a crowd to form along the tracks.</p>
+
+  <p>When the locomotive stops, the fire department runs the fountain. Not a new fountain — the original eighty-foot fountain was built by the Denver and Rio Grande Railroad in the late 1800s, fed by an artesian cistern from a mountain spring. It went quiet over time, the way things do. The Palmer Divide History Society reconstructed and reinstalled it in 1998 to replicate the original. There is a W.H. Jackson photograph, number 1134, that captures the whole picture as it was: Palmer Lake full to its banks, the train sitting along the far shore, the mountains rising behind it, a group at the water's edge in a canoe, and the fountain rising from the center of the lake. The railroad built it. The history society brought it back. The fire department honors it once a year when the locomotive stops — running it at full height while the crowd stands along the shore the way crowds have always stood along that shore.</p>
+
+  <p>Children who have never seen a steam locomotive stand at the edge of the tracks and feel something move through them that they don't have words for yet. That is fine. The words come later. The feeling is the thing.</p>
+
+  <div class="pullquote">
+    <p>"It is not a new tradition. It is the oldest one they have."</p>
+  </div>
+</section>
+
+
+<!-- 09 — TEN-YEAR ARC -->
+<section>
+  <div class="chapter"><span class="chapter-num">09</span><div class="chapter-line"></div></div>
+  <h2 class="chapter-title">The <em>Ten-Year Arc</em></h2>
+
+  <div class="timeline">
+    <div class="timeline-phase">
+      <div class="phase-year">Year 1–2</div>
+      <div class="phase-dot"></div>
+      <div class="phase-content">
+        <span class="phase-tag">Foundation</span>
+        <h3>Relationships, Planning, and the First Events</h3>
+        <p>Planning Commission seat secured. Adjacent landowner relationships established — every parcel, every neighbor. Fire station site analysis completed. First concert series season on the property, field kitchen operational alongside it. Trail planning initiated with the Trails Association. Stewardship framework documented. Star continuity with the VFD formalized in writing. Land dispute on the northern approach enters community negotiation.</p>
+      </div>
+    </div>
+    <div class="timeline-phase">
+      <div class="phase-year">Year 2–4</div>
+      <div class="phase-dot"></div>
+      <div class="phase-content">
+        <span class="phase-tag">Infrastructure</span>
+        <h3>Station Relocation, Trail Phase One, and the Land Settlement</h3>
+        <p>Lodge comes down — not old enough to save, site too useful to leave idle. New Palmer Lake VFD community station built in its place, set back from the road, near the creek, near the big trees — the operational replacement for the old station, which is preserved in place as part of the town's built history. Event ceiling on the property immediately expands. Trail phase one complete. E-bike charging stations installed throughout the community. Community garden established on the lower flat. Tri-Lakes land acquisition completed; wells and water line extensions come into public control. Hilltop station construction begins to the north on the former development site.</p>
+      </div>
+    </div>
+    <div class="timeline-phase">
+      <div class="phase-year">Year 4–6</div>
+      <div class="phase-dot"></div>
+      <div class="phase-content">
+        <span class="phase-tag">Programming</span>
+        <h3>The Concert Series Matures. The Estate Finds Its Role.</h3>
+        <p>Concert series reaches consistent summer attendance with field kitchen as anchor amenity. Tri-Lakes e-bike trail connection complete. Historic estate engagement begins — carousel restored, meeting hall renovation underway. Donkey farm path connection established. City well drilled near convergence zone; water independence achieved. Hilltop station opens to the north. First Big Boy stop in Palmer Lake — the fountain tradition begins.</p>
+      </div>
+    </div>
+    <div class="timeline-phase">
+      <div class="phase-year">Year 6–8</div>
+      <div class="phase-dot"></div>
+      <div class="phase-content">
+        <span class="phase-tag">Resilience</span>
+        <h3>The Big Fire. And What It Proved.</h3>
+        <p>Range fire requires month-long forestry command presence on the property. Spa closes regular operations and opens its doors to crews coming off the mountain — complimentary services for every firefighter and EMS worker cycling through. Red Cross trailer stationed on site. Emergency routes from across the region converge here. The two-station coordination model proves itself under real conditions. Normal programming resumes within weeks of containment.</p>
+      </div>
+    </div>
+    <div class="timeline-phase">
+      <div class="phase-year">Year 8–10</div>
+      <div class="phase-dot"></div>
+      <div class="phase-content">
+        <span class="phase-tag">Maturity</span>
+        <h3>Palmer Lake as the Recreational Center of the Tri-Lakes</h3>
+        <p>Advanced trail system complete, wildlife corridor measurably reducing highway accident rates, trees returning on the pass. Historic estate civic function active, carousel running seasonally, meeting hall as primary civic center, faith and retreat gatherings continuing alongside public programming. Palmer Lake VFD the elite feeder into the Tri-Lakes district, maintaining the Star, firing the annual fountain from the lake. Big Boy stop a confirmed annual tradition. Water system among the cleanest and most redundant on the Front Range. The property is Palmer Lake's living room and the region's recreational anchor.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- 10 — FUNDING -->
+<section>
+  <div class="chapter"><span class="chapter-num">10</span><div class="chapter-line"></div></div>
+  <h2 class="chapter-title">How It Gets <em>Funded</em></h2>
+
+  <p class="lede">No single source carries this. The architecture is layered — each revenue stream independent enough to survive the others, together strong enough to fund the whole.</p>
+
+  <div class="funding-grid">
+    <div class="funding-item">
+      <div class="label">Concert Series</div>
+      <div class="value">Business & lodging sponsors, Palmer Lake + Monument</div>
+    </div>
+    <div class="funding-item">
+      <div class="label">Capital Infrastructure</div>
+      <div class="value">LWCF, GOCO, BRIC/FEMA flood mitigation, state grants</div>
+    </div>
+    <div class="funding-item">
+      <div class="label">Trail Network</div>
+      <div class="value">Colorado Trails Foundation, GOCO, Trails Association operations</div>
+    </div>
+    <div class="funding-item">
+      <div class="label">Fire Station</div>
+      <div class="value">SAFER Act, FEMA station construction, USDA Community Facilities</div>
+    </div>
+    <div class="funding-item">
+      <div class="label">Programming Operations</div>
+      <div class="value">Event fees, gate passes on major event days, civic nonprofit structure</div>
+    </div>
+    <div class="funding-item">
+      <div class="label">Historic Preservation</div>
+      <div class="value">Colorado State Historical Fund, National Trust grants, private philanthropy</div>
+    </div>
+    <div class="funding-item">
+      <div class="label">Water Infrastructure</div>
+      <div class="value">USDA Rural Development, CWCB, DOLA infrastructure grants</div>
+    </div>
+    <div class="funding-item">
+      <div class="label">Wildlife Corridor</div>
+      <div class="value">CDOT wildlife mitigation funds, CPW habitat grants, federal highway safety programs</div>
+    </div>
+  </div>
+
+  <p>The concert series is the flywheel. Sponsors fund programming. Programming generates visitors. Visitors generate tax revenue and return visits. Return visits build the case for capital grants. Capital grants build the infrastructure that raises the event ceiling. The ceiling rises, the series grows, the sponsors renew.</p>
+</section>
+
+<div class="divider">
+  <p class="divider-text">The fire station brought people out of their homes to listen to music with the firefighters on summer weekends. <em>That is not a small thing. That is the whole thing.</em></p>
+</div>
+
+
+<!-- 11 — CLOSING -->
+<section>
+  <div class="chapter"><span class="chapter-num">11</span><div class="chapter-line"></div></div>
+  <h2 class="chapter-title">For the People Who <em>Showed Up</em></h2>
+
+  <p class="lede">Every place like this has a version of the same story. Someone — or a small group of someones — kept showing up when the Board had their heads down, when the meeting ran long, when the proposal got tabled for the fourth time.</p>
+
+  <p>Palmer Lake has had those people. They proposed things that didn't move. They built things over resistance. They alienated people by being persistent and turned the town toward something real by being right. They came from everywhere — some grew up here, some arrived later and recognized something worth fighting for, some had seen what a place like this could become because they had been somewhere that had already become it.</p>
+
+  <p>This picture — the concert series, the station, the trails, the garden, the creek path, the donkeys next door, the chili cook-off under the big lodgepoles with the boulders glowing in the late light, the fountain arcing eighty feet above the lake while the Big Boy idles at the platform — is not inevitable. It requires the people who showed up before continuing to show up, and the next generation of those people finding their way into rooms where decisions get made.</p>
+
+  <p>That is what the Planning Commission is for. That is what the open house is for. That is what the conversation over coffee in the morning is for.</p>
+
+  <p>The quiet place feeling never went away. It just learned to share the property with a summer concert series and an eighty-foot fountain and a traveling kitchen and a Red Cross trailer and a community garden and a miniature donkey farm and a steam locomotive once a year and all the rest of it. The pilgrims still come. Everyone is welcome.</p>
+
+  <p>The creek is still running. The rest is work.</p>
+
+  <div class="scene-break">· · ·</div>
+
+  <div class="pullquote">
+    <p>"Palmer Lake stayed small. It grew alongside Monument. This property was the key that made it all possible — ten years ago, when someone decided to close the circle."</p>
+  </div>
+</section>
+
+<footer>
+  <div class="wordmark">Palmer Lake, Colorado</div>
+  <div class="tagline">The recreational center of the Tri-Lakes region</div>
+  <div class="meta">Elephant Rock Experience &nbsp;·&nbsp; 350 State Highway 105 &nbsp;·&nbsp; 28 Acres, Town-Owned</div>
+</footer>
+
+</div>
+</body>
+</html>
