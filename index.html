@@ -1,725 +1,236 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The Morton — Palmer Lake, Colorado</title>
-<meta name="description" content="A one-page broadsheet indexing the active work of Andrew Morton — Morkat Coffee LLC, Pikes Perk Coffee Roasters, Morton Millworks.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,400..900,50..100;1,9..144,400..900,50..100&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=IBM+Plex+Mono:wght@400;500;700&family=Cinzel:wght@500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Oswald:wght@400;500;600;700&family=Public+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-<style>
-/* ================================================================
-   THE MORTON REGISTER
-   A single-page broadsheet. Modern editorial typography, colored
-   section codes, tight multi-column body. Fraunces (masthead) +
-   Source Serif 4 (body) + IBM Plex Mono (labels/datelines).
-   ================================================================ */
-:root{
-  --paper:#faf7f0;
-  --paper-2:#f2ede1;
-  --ink:#181614;
-  --ink-2:#2a2620;
-  --muted:#6c665c;
-  --rule:#d8d1c1;
-  --rule-hair:#e4dfcf;
-  --red:#b62d24;
-  --blue:#1d4d75;
-  --green:#3d6f4a;
-  --amber:#a17318;
-  --plum:#6d3868;
-}
-*{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
-@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
-body{
-  background:var(--paper);
-  color:var(--ink);
-  font-family:'Source Serif 4',Georgia,serif;
-  font-size:16px;line-height:1.55;
-  -webkit-font-smoothing:antialiased;
-  font-optical-sizing:auto;
-}
-.paper{max-width:1080px;margin:0 auto;padding:0 22px 80px}
-
-/* ---------- FLAG (thin top strip with edition info) ---------- */
-.flag{
-  display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;
-  font-family:'IBM Plex Mono',monospace;
-  font-size:11px;letter-spacing:.16em;text-transform:uppercase;
-  color:var(--muted);
-  padding:12px 0 10px;
-  border-bottom:1px solid var(--rule-hair);
-}
-.flag .center{color:var(--red);font-weight:500}
-
-/* ---------- NAMEPLATE (masthead) ---------- */
-.nameplate{
-  text-align:center;
-  padding:26px 0 18px;
-  border-bottom:3px double var(--ink);
-}
-.nameplate .badge{
-  display:inline-block;
-  background:var(--red);color:var(--paper);
-  font-family:'IBM Plex Mono',monospace;
-  font-size:10.5px;letter-spacing:.24em;text-transform:uppercase;
-  padding:3px 10px;margin-bottom:14px;font-weight:700;
-}
-.nameplate h1{
-  font-family:'Cinzel',Georgia,serif;
-  font-weight:700;
-  font-size:clamp(46px, 8vw, 84px);
-  line-height:1;letter-spacing:.02em;
-  color:var(--ink);
-}
-.nameplate .strap{
-  margin-top:14px;
-  font-family:'Fraunces',Georgia,serif;
-  font-style:italic;
-  font-variation-settings:"opsz" 24, "SOFT" 100, "wght" 400;
-  font-size:18px;
-  color:var(--ink-2);
-}
-.nameplate .subflag{
-  margin-top:16px;padding-top:12px;
-  border-top:1px solid var(--rule);
-  display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;
-  font-family:'IBM Plex Mono',monospace;
-  font-size:11px;letter-spacing:.14em;text-transform:uppercase;
-  color:var(--muted);
-}
-
-/* ---------- LEAD PANEL (above the fold) ---------- */
-.lead{
-  padding:28px 0 24px;
-  border-bottom:1px solid var(--rule);
-  position:relative;
-}
-.lead .eyebrow{
-  display:flex;align-items:center;gap:10px;
-  font-family:'IBM Plex Mono',monospace;
-  font-size:11.5px;letter-spacing:.22em;text-transform:uppercase;
-  color:var(--red);font-weight:700;
-  margin-bottom:14px;
-}
-.lead .eyebrow::before,.lead .eyebrow::after{
-  content:"";flex:1;height:1px;background:var(--red);opacity:.35;
-}
-.lead-body{display:grid;grid-template-columns:1.4fr 1fr;gap:36px;align-items:start}
-.lead h2{
-  font-family:'Fraunces',Georgia,serif;
-  font-variation-settings:"opsz" 120, "SOFT" 60, "wght" 700;
-  font-weight:700;
-  font-size:clamp(30px, 4.2vw, 46px);
-  line-height:1.02;letter-spacing:-.005em;
-  color:var(--ink);
-  margin-bottom:12px;
-}
-.lead .deck{
-  font-family:'Fraunces',Georgia,serif;
-  font-style:italic;
-  font-variation-settings:"opsz" 32, "SOFT" 80, "wght" 400;
-  font-size:20px;line-height:1.4;
-  color:var(--ink-2);
-  margin-bottom:16px;
-}
-.lead .lede{font-size:17px;line-height:1.6;color:var(--ink-2)}
-.lead .lede p+p{margin-top:10px}
-.lead .lede .drop{
-  float:left;
-  font-family:'Fraunces',Georgia,serif;
-  font-variation-settings:"opsz" 144,"SOFT" 60,"wght" 700;
-  font-size:58px;line-height:.9;
-  color:var(--red);
-  padding:6px 8px 0 0;
-}
-.lead .dateline{
-  margin-top:16px;
-  font-family:'IBM Plex Mono',monospace;
-  font-size:11px;letter-spacing:.14em;text-transform:uppercase;
-  color:var(--muted);
-}
-.lead .cta{
-  display:inline-block;margin-top:12px;
-  font-family:'IBM Plex Mono',monospace;
-  font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;
-  color:var(--red);border-bottom:1px solid var(--red);padding-bottom:1px;
-  text-decoration:none;
-}
-
-/* work-in-progress cover on the lead — full opaque veil with a
-   diagonal caution-tape pattern, heavy blur underneath. No hover
-   reveal; the lead is fully sealed until you remove class="wip". */
-.lead.wip{position:relative;overflow:hidden;min-height:300px}
-.lead.wip .lead-body{
-  filter:blur(18px);
-  opacity:.2;
-  pointer-events:none;
-}
-.lead.wip::before{
-  content:'';
-  position:absolute;inset:0;
-  background:repeating-linear-gradient(
-    135deg,
-    rgba(250,247,240,0.88) 0,
-    rgba(250,247,240,0.88) 22px,
-    rgba(182,45,36,0.10) 22px,
-    rgba(182,45,36,0.10) 42px
-  );
-  z-index:2;
-  pointer-events:none;
-}
-.lead .wip-stamp{
-  position:absolute;top:50%;left:50%;
-  transform:translate(-50%,-50%) rotate(-5deg);
-  font-family:'IBM Plex Mono',monospace;
-  font-weight:700;font-size:34px;letter-spacing:.14em;
-  color:var(--red);
-  background:rgba(250,247,240,.96);
-  border:5px double var(--red);
-  padding:12px 30px;
-  pointer-events:none;
-  text-transform:uppercase;white-space:nowrap;
-  z-index:3;
-  box-shadow:0 0 0 4px rgba(250,247,240,.96);
-}
-
-/* ---------- SECTION BAR (between fold and columns) ---------- */
-.section-bar{
-  display:flex;align-items:center;gap:14px;
-  padding:22px 0 12px;
-}
-.section-bar h3{
-  font-family:'IBM Plex Mono',monospace;
-  font-size:12px;letter-spacing:.28em;text-transform:uppercase;
-  color:var(--ink);font-weight:700;
-}
-.section-bar .rule{flex:1;height:1px;background:var(--ink)}
-.section-bar .kicker{
-  font-family:'Fraunces',Georgia,serif;
-  font-style:italic;
-  font-variation-settings:"opsz" 18,"SOFT" 80,"wght" 400;
-  font-size:14px;color:var(--muted);
-}
-
-/* ---------- MULTI-COLUMN PANEL GRID ---------- */
-.grid{
-  display:grid;grid-template-columns:repeat(3, 1fr);gap:14px;
-  border-top:1px solid var(--rule);
-  padding-top:16px;
-}
-.panel{
-  padding:20px 20px 22px;
-  border:1px solid var(--rule);
-  display:flex;flex-direction:column;
-  text-decoration:none;color:inherit;
-  transition:background .15s ease;
-}
-.panel:hover{background:var(--paper-2)}
-.panel .eyebrow{
-  font-family:'IBM Plex Mono',monospace;
-  font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;
-  font-weight:700;margin-bottom:10px;
-}
-.panel h4{
-  font-family:'Fraunces',Georgia,serif;
-  font-variation-settings:"opsz" 60,"SOFT" 40,"wght" 700;
-  font-weight:700;
-  font-size:22px;line-height:1.08;letter-spacing:-.003em;
-  color:var(--ink);
-  margin-bottom:8px;
-}
-.panel .deck{
-  font-family:'Fraunces',Georgia,serif;
-  font-style:italic;
-  font-variation-settings:"opsz" 20,"SOFT" 80,"wght" 400;
-  font-size:15px;line-height:1.35;
-  color:var(--ink-2);
-  margin-bottom:12px;
-}
-.panel .lede{
-  font-size:14.5px;line-height:1.55;color:var(--ink-2);
-  margin-bottom:14px;
-}
-.panel .foot{
-  margin-top:auto;padding-top:10px;
-  display:flex;justify-content:space-between;align-items:baseline;gap:10px;
-  font-family:'IBM Plex Mono',monospace;
-  font-size:10px;letter-spacing:.14em;text-transform:uppercase;
-  color:var(--muted);
-  border-top:1px solid var(--rule-hair);
-}
-.panel .foot .cta{color:inherit;text-decoration:none;border-bottom:1px solid currentColor;padding-bottom:1px}
-
-/* section-color coding for panel eyebrows and CTA */
-.panel.sec-workshop .eyebrow, .panel.sec-workshop .foot .cta{color:var(--green)}
-.panel.sec-engineering .eyebrow, .panel.sec-engineering .foot .cta{color:var(--blue)}
-.panel.sec-essay .eyebrow, .panel.sec-essay .foot .cta{color:var(--amber)}
-.panel.sec-spec .eyebrow, .panel.sec-spec .foot .cta{color:var(--red)}
-.panel.sec-workshop:hover{background:#f1efe1}
-.panel.sec-engineering:hover{background:#eef1f2}
-.panel.sec-essay:hover{background:#f4ede0}
-
-/* -------- Stone Economy sub-doc panel — samples the essay's own
-   aesthetic (aged paper with blue grid overlay, blue + oxblood +
-   brass, Iowan Old Style serif + SF Mono). Engineering-plate. */
-.panel.tile-stone-mini{
-  background:#efe8d6;color:#262219;
-  background-image:
-    linear-gradient(rgba(43,74,107,.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(43,74,107,.05) 1px, transparent 1px);
-  background-size:20px 20px;
-  border-top:3px solid #2b4a6b;
-  font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
-  padding:20px 20px 22px;
-}
-.panel.tile-stone-mini:hover{background:#eae2c9}
-.panel.tile-stone-mini .eyebrow{
-  font-family:ui-monospace,"SF Mono","Cascadia Code",Menlo,monospace;
-  font-size:10px;letter-spacing:.22em;text-transform:uppercase;
-  color:#2b4a6b;font-weight:700;margin-bottom:10px;
-}
-.panel.tile-stone-mini h4{
-  font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
-  font-weight:700;font-size:23px;line-height:1.05;letter-spacing:.003em;
-  color:#262219;margin-bottom:6px;
-}
-.panel.tile-stone-mini h4 .l2{display:block;color:#2b4a6b;font-size:.72em;margin-top:3px}
-.panel.tile-stone-mini .deck{
-  font-family:"Iowan Old Style",serif;font-style:italic;
-  font-size:14.5px;line-height:1.35;color:#4c4638;margin-bottom:10px;
-}
-.panel.tile-stone-mini .lede{
-  font-size:14px;line-height:1.55;color:#4c4638;margin-bottom:12px;
-}
-.panel.tile-stone-mini .lede em{color:#1e3550;font-style:italic}
-.panel.tile-stone-mini .lede strong{color:#7d2d18;font-weight:700}
-.panel.tile-stone-mini .foot{
-  margin-top:auto;padding-top:10px;
-  display:flex;justify-content:space-between;align-items:baseline;gap:10px;
-  font-family:ui-monospace,"SF Mono",monospace;
-  font-size:10px;letter-spacing:.12em;text-transform:uppercase;
-  color:#726b59;
-  border-top:1px dashed #d8cdb2;
-}
-.panel.tile-stone-mini .foot .cta{color:#9c3a22;text-decoration:none;border-bottom:1px solid #9c3a22;padding-bottom:1px}
-
-/* -------- Joker & Thief essay panel — samples the essay's own
-   aesthetic (warm parchment #f4ecdc with wine + gold, Cinzel display
-   with Cormorant/EB Garamond bodies). Occult renaissance register. */
-.panel.tile-joker-mini{
-  background:#f4ecdc;color:#2a1f17;
-  background-image:
-    radial-gradient(ellipse at top left, rgba(110,31,42,0.05) 0%, transparent 55%),
-    radial-gradient(ellipse at bottom right, rgba(138,106,44,0.06) 0%, transparent 55%);
-  border-top:3px solid #6e1f2a;
-  font-family:'EB Garamond',Georgia,serif;
-  padding:20px 22px 22px;
-  position:relative;
-}
-.panel.tile-joker-mini:hover{background:#f0e5ce}
-.panel.tile-joker-mini .eyebrow{
-  font-family:'Cinzel',serif;font-weight:600;
-  font-size:10.5px;letter-spacing:.28em;text-transform:uppercase;
-  color:#6e1f2a;margin-bottom:10px;
-}
-.panel.tile-joker-mini h4{
-  font-family:'Cinzel',serif;font-weight:600;
-  font-size:22px;line-height:1.12;letter-spacing:.02em;
-  color:#2a1f17;margin-bottom:8px;
-}
-.panel.tile-joker-mini h4 .amp{color:#8a6a2c;font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:500}
-.panel.tile-joker-mini .deck{
-  font-family:'Cormorant Garamond',serif;font-style:italic;
-  font-size:16px;line-height:1.35;color:#4a3a2c;margin-bottom:10px;
-}
-.panel.tile-joker-mini .lede{
-  font-size:14.5px;line-height:1.55;color:#4a3a2c;margin-bottom:12px;
-}
-.panel.tile-joker-mini .lede em{color:#6e1f2a;font-style:italic}
-.panel.tile-joker-mini .foot{
-  margin-top:auto;padding-top:10px;
-  display:flex;justify-content:space-between;align-items:baseline;gap:10px;
-  font-family:'Cinzel',serif;
-  font-size:9.5px;letter-spacing:.22em;text-transform:uppercase;
-  color:#7a6a55;font-weight:500;
-  border-top:1px solid #c9b88f;
-}
-.panel.tile-joker-mini .foot .cta{color:#6e1f2a;text-decoration:none;border-bottom:1px solid #6e1f2a;padding-bottom:1px}
-
-/* -------- North Sea working-notes panel — samples the doc's own
-   aesthetic (dark peat #15120e with parchment text, amber accents,
-   Cinzel display + EB Garamond body). Pre-king tribal register. */
-.panel.tile-northsea-mini{
-  background:#15120e;color:#e9dfc4;
-  background-image:
-    radial-gradient(ellipse at 20% -10%, rgba(184,130,58,0.10), transparent 45%),
-    radial-gradient(ellipse at 90% 10%, rgba(92,106,72,0.09), transparent 40%);
-  border-top:3px solid #b8823a;
-  font-family:'EB Garamond',Georgia,serif;
-  padding:20px 22px 22px;
-  position:relative;
-}
-.panel.tile-northsea-mini:hover{background:#1c1712}
-.panel.tile-northsea-mini .eyebrow{
-  font-family:'Cinzel',serif;font-weight:600;
-  font-size:10.5px;letter-spacing:.28em;text-transform:uppercase;
-  color:#b8823a;margin-bottom:10px;
-}
-.panel.tile-northsea-mini h4{
-  font-family:'Cinzel',serif;font-weight:600;
-  font-size:22px;line-height:1.12;letter-spacing:.02em;
-  color:#e9dfc4;margin-bottom:8px;
-}
-.panel.tile-northsea-mini .deck{
-  font-family:'EB Garamond',serif;font-style:italic;
-  font-size:15.5px;line-height:1.4;color:#c9bd9e;margin-bottom:10px;
-}
-.panel.tile-northsea-mini .lede{
-  font-size:14.5px;line-height:1.55;color:#c9bd9e;margin-bottom:12px;
-}
-.panel.tile-northsea-mini .lede strong{color:#d8a34f;font-weight:600}
-.panel.tile-northsea-mini .rune{
-  height:14px;margin:12px 0 4px;position:relative;opacity:.7;
-  background-image:
-    linear-gradient(90deg, #b8823a 0, #b8823a 42%, transparent 42%, transparent 58%, #b8823a 58%, #b8823a 100%);
-  background-size:100% 1px;background-position:center;background-repeat:no-repeat;
-}
-.panel.tile-northsea-mini .rune::before{
-  content:"";position:absolute;left:50%;top:0;bottom:0;width:20px;
-  transform:translateX(-50%);
-  background:linear-gradient(135deg,transparent 45%,#b8823a 46%,#b8823a 54%,transparent 55%),
-             linear-gradient(-135deg,transparent 45%,#b8823a 46%,#b8823a 54%,transparent 55%);
-}
-.panel.tile-northsea-mini .foot{
-  margin-top:auto;padding-top:10px;
-  display:flex;justify-content:space-between;align-items:baseline;gap:10px;
-  font-family:'Cinzel',serif;
-  font-size:9.5px;letter-spacing:.22em;text-transform:uppercase;
-  color:#786f5c;font-weight:500;
-  border-top:1px solid rgba(184,130,58,.35);
-}
-.panel.tile-northsea-mini .foot .cta{color:#d8a34f;text-decoration:none;border-bottom:1px solid #b8823a;padding-bottom:1px}
-
-/* -------- Eddie / Bench School panel — samples the portal's own
-   aesthetic (mat-green field with blaze safety accent, Oswald +
-   Public Sans + JetBrains Mono). Workshop / qualification register. */
-.panel.tile-eddie-mini{
-  background:#1E4A40;color:#F7F6F2;
-  border-top:3px solid #DE5A12;
-  font-family:'Public Sans',system-ui,sans-serif;
-  padding:20px 22px 22px;
-}
-.panel.tile-eddie-mini:hover{background:#204A41}
-.panel.tile-eddie-mini .eyebrow{
-  font-family:'Oswald',sans-serif;
-  font-size:11px;letter-spacing:.24em;text-transform:uppercase;
-  color:#F0762E;font-weight:500;margin-bottom:10px;
-}
-.panel.tile-eddie-mini h4{
-  font-family:'Oswald',sans-serif;font-weight:700;
-  font-size:26px;line-height:1;letter-spacing:.02em;
-  text-transform:uppercase;color:#F7F6F2;margin-bottom:8px;
-}
-.panel.tile-eddie-mini h4 .who{color:#DE5A12}
-.panel.tile-eddie-mini .deck{
-  font-family:'Public Sans',system-ui,sans-serif;
-  font-size:14.5px;line-height:1.4;color:#c5cec9;margin-bottom:10px;
-  font-weight:500;
-}
-.panel.tile-eddie-mini .lede{
-  font-size:14px;line-height:1.55;color:#c5cec9;margin-bottom:12px;
-}
-.panel.tile-eddie-mini .stat-row{
-  display:grid;grid-template-columns:repeat(3,1fr);gap:8px;
-  margin-bottom:12px;
-}
-.panel.tile-eddie-mini .stat{
-  border:1px solid #3a5a51;padding:8px 6px;text-align:center;
-  background:#204A41;
-}
-.panel.tile-eddie-mini .stat .n{
-  font-family:'Oswald',sans-serif;font-weight:600;
-  font-size:18px;color:#F0762E;line-height:1;
-}
-.panel.tile-eddie-mini .stat .l{
-  font-family:'JetBrains Mono',monospace;
-  font-size:8.5px;letter-spacing:.12em;text-transform:uppercase;
-  color:#8fa39a;margin-top:5px;
-}
-.panel.tile-eddie-mini .foot{
-  margin-top:auto;padding-top:10px;
-  display:flex;justify-content:space-between;align-items:baseline;gap:10px;
-  font-family:'JetBrains Mono',monospace;
-  font-size:10px;letter-spacing:.12em;text-transform:uppercase;
-  color:#8fa39a;
-  border-top:1px solid #3a5a51;
-}
-.panel.tile-eddie-mini .foot .cta{color:#F0762E;text-decoration:none;border-bottom:1px solid #F0762E;padding-bottom:1px}
-
-/* ---------- WIRE (RSS placeholder) ---------- */
-.wire{
-  border-top:2px solid var(--ink);border-bottom:1px solid var(--rule);
-  padding:20px 0 24px;margin-top:20px;
-}
-.wire-head{
-  display:flex;align-items:baseline;gap:14px;margin-bottom:14px;
-}
-.wire-head h3{
-  font-family:'IBM Plex Mono',monospace;
-  font-size:12px;letter-spacing:.28em;text-transform:uppercase;
-  color:var(--red);font-weight:700;
-}
-.wire-head .note{
-  font-family:'Fraunces',Georgia,serif;
-  font-style:italic;
-  font-variation-settings:"opsz" 18,"SOFT" 80,"wght" 400;
-  font-size:14px;color:var(--muted);
-}
-.wire-empty{
-  display:grid;grid-template-columns:repeat(4, 1fr);gap:12px;
-  margin-top:8px;
-}
-.wire-slot{
-  border:1px dashed var(--rule);
-  padding:14px 12px;min-height:96px;
-  display:flex;flex-direction:column;justify-content:center;
-  text-align:center;
-}
-.wire-slot .k{
-  font-family:'IBM Plex Mono',monospace;
-  font-size:9px;letter-spacing:.22em;text-transform:uppercase;
-  color:var(--muted);
-}
-.wire-slot .v{
-  font-family:'Fraunces',Georgia,serif;
-  font-style:italic;
-  font-variation-settings:"opsz" 20,"SOFT" 80,"wght" 400;
-  font-size:14px;color:var(--ink-2);margin-top:5px;
-}
-
-/* ---------- COLOPHON (foot) ---------- */
-.colophon{
-  margin-top:28px;padding-top:18px;
-  border-top:1px solid var(--rule);
-  display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:24px;
-  font-size:13px;line-height:1.5;
-}
-.colophon h5{
-  font-family:'IBM Plex Mono',monospace;
-  font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;
-  color:var(--red);font-weight:700;margin-bottom:6px;
-}
-.colophon .about{color:var(--ink-2)}
-.colophon .about em{font-family:'Fraunces',serif;font-style:italic;font-weight:500}
-.colophon .col a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--rule)}
-.colophon .col p+p{margin-top:4px}
-.footline{
-  margin-top:20px;padding-top:14px;border-top:1px solid var(--rule-hair);
-  font-family:'IBM Plex Mono',monospace;
-  font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;
-  color:var(--muted);
-  display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;
-}
-
-/* ---------- responsive ---------- */
-@media (max-width:840px){
-  .lead-body{grid-template-columns:1fr;gap:20px}
-  .grid{grid-template-columns:1fr 1fr}
-  .wire-empty{grid-template-columns:1fr 1fr}
-  .colophon{grid-template-columns:1fr}
-}
-@media (max-width:520px){
-  .paper{padding:0 16px 60px}
-  .nameplate h1{font-size:52px}
-  .grid{grid-template-columns:1fr}
-  .wire-empty{grid-template-columns:1fr}
-  .lead .wip-stamp{font-size:22px;padding:8px 18px;letter-spacing:.10em}
-}
-</style>
-</head>
-<body>
-<div class="paper">
-
-  <!-- ============================================================
-       FLAG — thin top strip
-       ============================================================ -->
-  <div class="flag">
-    <span>Palmer Lake, Colorado &middot; 80133</span>
-    <span class="center">Vol. I &middot; No. 1</span>
-    <span>Monday, July 13, 2026</span>
-  </div>
-
-  <!-- ============================================================
-       NAMEPLATE — the masthead
-       ============================================================ -->
-  <header class="nameplate">
-    <h1>The Morton</h1>
-    <div class="strap">Coffee, machines, frameworks, and other work &mdash; filed as it lands.</div>
-    <div class="subflag">
-      <span>Editor &middot; Andrew Morton</span>
-      <span>Elevation 7,247 ft</span>
-      <span>Independent &middot; No advertising</span>
-    </div>
-  </header>
-
-  <!-- ============================================================
-       LEAD PANEL — above the fold
-       OSF, fully sealed as work-in-progress. Remove class="lead wip"
-       (leave just class="lead") to release it publicly.
-       ============================================================ -->
-  <section class="lead wip" aria-label="Lead story — Open Source Firefighter, work in progress">
-    <div class="eyebrow">Above the Fold &middot; Work in Progress</div>
-    <div class="lead-body">
-      <div>
-        <h2>An Open Standard for Coordinated Ember &amp; Terrain Defense.</h2>
-        <div class="deck">A sixteen-document specification family in first review.</div>
-        <div class="dateline">Palmer Lake &middot; Filed July 2026 &middot; Not for public distribution</div>
-        <a class="cta" href="osf/osf_site.html">Access on release &rarr;</a>
-      </div>
-      <div class="lede">
-        <p><span class="drop">A</span>&nbsp;stamped specification family &mdash; doctrine, hardware, protocol, tactics, strategy &mdash; for neighborhood-scale ember defense. Speaks ICS on the front end. Speaks Meshtastic and MANET on the back.</p>
-        <p>Companion site to the sixteen-document set. First review packages currently circulating with operational reviewers under distribution hold.</p>
-      </div>
-    </div>
-    <div class="wip-stamp">Work in Progress</div>
-  </section>
-
-  <!-- ============================================================
-       SECTION HEADER
-       ============================================================ -->
-  <div class="section-bar">
-    <h3>Of Record</h3>
-    <div class="rule"></div>
-    <div class="kicker">Standing work, filed by section</div>
-  </div>
-
-  <!-- ============================================================
-       PANEL GRID — the columns of the paper
-       Each panel is a link into its own doc.
-       ============================================================ -->
-  <div class="grid">
-
-    <a class="panel tile-joker-mini" href="joker_and_thief/joker_and_thief.html" aria-label="The Joker and The Thief">
-      <div class="eyebrow">Essay &middot; Symbol Politics</div>
-      <h4>The Joker <span class="amp">&amp;</span> The Thief</h4>
-      <div class="deck">The political inversion of Tarot's foundation, and the pop-culture encryption of truth.</div>
-      <div class="lede">Modern culture views the Devil as a terrifying lord of darkness. History reveals a deliberate inversion &mdash; the Devil is simply the <em>Fool</em>, rewritten by institutional power to make freedom terrifying.</div>
-      <div class="foot">
-        <span>An Inquiry</span>
-        <span class="cta">Read &rarr;</span>
-      </div>
-    </a>
-
-    <a class="panel tile-northsea-mini" href="north-sea-tribal-era/north-sea-tribal-era.html" aria-label="The Pre-King North Sea">
-      <div class="eyebrow">Working Notes &middot; Ancestors</div>
-      <h4>The Pre-King North Sea</h4>
-      <div class="deck">Tribal era, 150&ndash;400 AD. Before kings. Before Vikings. Before national names.</div>
-      <div class="lede">Long before modern national identities or the Viking Age, the coastal tribes of the North Sea shared one unified maritime, linguistic, and spiritual culture &mdash; <strong>animistic, runic, and bound to bog and coastline</strong>.</div>
-      <div class="rune" aria-hidden="true"></div>
-      <div class="foot">
-        <span>Return &amp; Expand</span>
-        <span class="cta">Read &rarr;</span>
-      </div>
-    </a>
-
-    <a class="panel tile-eddie-mini" href="eddie/eddie-portal.html" aria-label="Bench School — The Eddie File">
-      <div class="eyebrow">Morton Millworks &middot; Bench School</div>
-      <h4>The <span class="who">Eddie</span> File</h4>
-      <div class="deck">A qualification-table apprenticeship on the bench.</div>
-      <div class="lede">Dry, blank, live, qual &mdash; a military qualification skeleton wrapped around a PRIMM pedagogy. Real machines at every rung. Capstone: a turntable for the Vintage Book Shoppe.</div>
-      <div class="stat-row">
-        <div class="stat"><div class="n">01</div><div class="l">Cleared</div></div>
-        <div class="stat"><div class="n">02</div><div class="l">Current</div></div>
-        <div class="stat"><div class="n">12V</div><div class="l">Ceiling</div></div>
-      </div>
-      <div class="foot">
-        <span>Bench School</span>
-        <span class="cta">Enter &rarr;</span>
-      </div>
-    </a>
-
-    <a class="panel sec-engineering" href="cdpr/cdpr-construction-system.html">
-      <div class="eyebrow">Engineering</div>
-      <h4>Hybrid Site Construction</h4>
-      <div class="deck">Cable-Driven Parallel Robot (CDPR) &mdash; concept brief.</div>
-      <div class="lede">A cable-driven parallel manipulator applied to hybrid site construction. Cable geometry, load envelope, and an acoustic curiosity that surfaced when tensioned survey strings retuned as a four-string instrument.</div>
-      <div class="foot">
-        <span>Concept &middot; MM-CDPR-01</span>
-        <span class="cta">Read &rarr;</span>
-      </div>
-    </a>
-
-    <a class="panel tile-stone-mini" href="stone-economy-timber-machine/stone-economy-timber-machine.html" aria-label="Stone Economy, Timber Machine">
-      <div class="eyebrow">Essay &middot; From inside the trade</div>
-      <h4>Stone Economy,<span class="l2">Timber Machine</span></h4>
-      <div class="deck">The stone is what lasted. The wood did the work.</div>
-      <div class="lede">A <em>wood-and-rope</em> industry that moved stone, ran once with the limiter off, and used up the forest that made it. <strong>Pikes Peak</strong> and the Manitou Incline stand as live proof.</div>
-      <div class="foot">
-        <span>Palmer Lake &middot; July 2026</span>
-        <span class="cta">Read &rarr;</span>
-      </div>
-    </a>
-
-  </div>
-
-  <!-- ============================================================
-       WIRE — placeholder for future RSS feeds
-       ============================================================ -->
-  <section class="wire" aria-label="Wire — standing feeds">
-    <div class="wire-head">
-      <h3>Wire</h3>
-      <div class="note">Standing feeds &mdash; coming online</div>
-    </div>
-    <div class="wire-empty">
-      <div class="wire-slot">
-        <div class="k">Feed 01</div>
-        <div class="v">Shop log</div>
-      </div>
-      <div class="wire-slot">
-        <div class="k">Feed 02</div>
-        <div class="v">OSF review notes</div>
-      </div>
-      <div class="wire-slot">
-        <div class="k">Feed 03</div>
-        <div class="v">Weather &amp; fire watch</div>
-      </div>
-      <div class="wire-slot">
-        <div class="k">Feed 04</div>
-        <div class="v">Field dispatch</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============================================================
-       COLOPHON
-       ============================================================ -->
-  <div class="colophon">
-    <div class="col about">
-      <h5>About</h5>
-      <p><em>The Morton</em> is a one-page broadsheet indexing the active work of Andrew Morton &mdash; coffee roasting, CNC millwork, wildland fire policy, apprenticeship, and occasional essay.</p>
-      <p>New tiles are added as new work lands. Older items retire down the column.</p>
-    </div>
-    <div class="col">
-      <h5>Enterprises</h5>
-      <p>Morkat Coffee LLC</p>
-      <p>Pikes Perk Coffee Roasters</p>
-      <p>Morton Millworks</p>
-    </div>
-    <div class="col">
-      <h5>Correspondence</h5>
-      <p><a href="https://github.com/pikesperkcoffee">GitHub</a></p>
-      <p><a href="https://pikesperkcoffee.com">Pikes Perk</a></p>
-      <p>Palmer Lake, Colorado</p>
-    </div>
-  </div>
-
-  <div class="footline">
-    <div>&copy; Andrew Morton &middot; Morkat Coffee LLC</div>
-    <div>Set in Fraunces &amp; Source Serif &middot; No advertising</div>
-  </div>
-
-</div>
-</body>
-</html>
+%PDF-1.4
+%����
+1 0 obj
+<<
+/Producer (pypdf)
+>>
+endobj
+2 0 obj
+<<
+/Type /Pages
+/Count 4
+/Kids [ 4 0 R 13 0 R 15 0 R 17 0 R ]
+>>
+endobj
+3 0 obj
+<<
+/Type /Catalog
+/Pages 2 0 R
+>>
+endobj
+4 0 obj
+<<
+/Contents 5 0 R
+/MediaBox [ 0 0 612 792 ]
+/Resources <<
+/Font 6 0 R
+/ProcSet [ /PDF /Text /ImageB /ImageC /ImageI ]
+>>
+/Rotate 0
+/Trans <<
+>>
+/Type /Page
+/Parent 2 0 R
+>>
+endobj
+5 0 obj
+<<
+/Filter [ /ASCII85Decode /FlateDecode ]
+/Length 2215
+>>
+stream
+Gatm;?'"#(&q&SDd>uR]7a\^3]^=i>3?/ZJmUG*\p4\fGRotSI88:94YJ4gM[`@6-,7?%,YVc2!X1PF4>8a:4bJJ0Z&A;;spHN5Rjg<lB<[K,pJ"cW&2h/Q0mjsYPge*cX^6Or9W_SnF'Qr*)23-p9R?hB-r(].g:_cun2^K3>Uo*fMMsNN/s$>t#n.ICGC\#Xn+"$I#A6[a7^W[g[o>2qHoJ+Z2U<\XuJ$I(E!:meFP3P(u7(AQD`@B2a/$%rH>u6]e;BW]iQVrt:VVhE<;]_[ZCCY<ghFm]F[+7@RIkpu`Q-mGi$'u)2AkNr)-SUGpBWhEm67bnDM`P^@,p`huX>3&c=!_VN)+74`@k:HM\I]A7s7StR5e=3eBl[+#E]!JVHYW:q:sRhU!t!f2@4sa7`6TQ[G-j,m]Tp>a]d(pIWoXNTU<]3`q?gCITk,+ZGsRZJZ\'$3Bkt[1&&s'UeKbJ@00\N@'@2KklH[NSrG&FKO/lHL8RBXJD(7U)k.bo%U[BX)Wk9g$8BW2-)Z&pKDfg5HTX(S;m-48jQRl4gH-*+#S%0/WP%Mm;L%>Bi/Ko5c-C\MkQtY/c7umP=1;2?]BeLG4r,.a31AT%,Y/DaU+LFQ8Ujc4mkQ0k@O4A&8mmq/2BKPHT0AOs\Q-Lh^Ue=Hs8cu4A:KPdrj)a\mPm9+Ia0rXe2pWU?/+`q3-Y]iVR<Er28M.(&V;25jA.(_ZLJ8l@a&E,t1bMu-kG51iJCb`)V?f/bME:+:hF"lFBd\@kK\]AN73_.IKF.cS]142#LVJsunYAEEjT;P)BL8K`?<YUd54V'QnoR]W+,PHSF])drPEfQdL5J+\:>*6m+m^6Q0pmu&*[LNaZp[*(U_o40ObVK)!'g(<Tku&"U.OB^LZEP#VcQD)&=D*)gs2oI8S/BV`W&Ij_L>?g!X0'95YE^t-_8t*=<A;Lmd\#m<j.^o%"__R<gL\g!%5PFL9T`L(>[Ml%Ie"R#l=%l]"eVuf2$Fo9)H69dc,CWcl\>q2>j*u!_)D\1(XA(?T8IlmA7&8GoA8:hf8(OTl;f'=Hk+K<8TLY,9B6EFs`n)O$]=qBMgK1:q@[Q5?cN1D'7=!EQ<18XWR+u/t4!Q`?;kHQsR1*-84PkI6q]_==U\>enf<?='HR,eX8^;iFS*D@&ii0oHES;!O"K>a,1>Dd3:e^O,6EFe\DNC&?RgM8Mh@I&0*4jRVXAcBSn0L)8dY%0fdSjUh4rSL*#(/grX3U0T__g3:5Bs_?1@LT6hNtEL2&Adp,T@McIAAIs(%_0ue8>@k/,N.%0]Gkg7=3RuSJM2Pb]k_D85]<#l.=3.rH)\;RY;e]4#@B+YLuShsg]6d7djIE\.IoBWXb,=>`%7-4".:tbIp"+X0bb.aP+-i9^2!\l9_WncMDXQc>gF=[6;65<o@>H+08d?7^b"sKLa+?.,Ii9Qr0%W>*+>_V4/#8A]c^e(O*3Y&%krg:J.0W&IaM;IHej!C'*YtM=SZKZOK^NXCSf3_'n<IDE3a0iW.iU<DZhC'I.m.6aN\Y$:bBnB$S(h"<ejHIned&-r8<"99S<U>kZ1qAO(S@_2=o>813Hk<7Ia'^cd?8#ND#!eo"jTsZgN+6aMQFhi8cL[Ji1!h,=ps%mF<uC@UH1S\lBF`I.Vk1DV6S[t=XjerrHkNFqRpO*l>;h?;86`Lp'#Aq6A/L8joQL0P%jA=GVq*h6+$c_f\Cu3:>?i-Yc$=dM7gGBLqMrh>,1??6ad^oZ6W?t3A6ISr?elet-d^c()3.!4ChoEaBk+_!2siMfe4[a98[qK.+"0Ak"P@Dt'FEZR?N#*S)IWPcAao\1VN7;fZ6)7AjNA'eXm4;JI\<*@`JJ1jL`U^thl*\pn7,eT2m:GLOOM#%YCCP`cu'/>[lE%jqaOLQrp!JQ:FX?)2>@B4Sb!W;\_k8JbE&Q(m4QQX>IC*0k[N?R^'kKf\^+KAgUT9b%q6B#qOZkW[&DR>NpD*3%QkGYc5C6Bp`'g:l@-%feQ7M<LT&re142,`<E.6&(Z'QEEqZ[8'<GJ^kGGN?8kcl.UfD2X3.q4NI5m-^_J4$&U,%PX]#uHd#jpbi@p(^4h#m_U:%=OTA.D/0FV8%3_;sN(YUN/tbiZq&U6>uZNYfM!dc\OY?aj]Hpjm4lLMJ')-YE"T;-;3fs$@,7Ui,^BA*FY=6Co#K_\sR'UN)m;Bb/DNDp(OerXV^_fB3~>
+endstream
+endobj
+6 0 obj
+<<
+/F1 7 0 R
+/F2 8 0 R
+/F3 9 0 R
+/F4 10 0 R
+/F5 11 0 R
+/F6 12 0 R
+>>
+endobj
+7 0 obj
+<<
+/BaseFont /Helvetica
+/Encoding /WinAnsiEncoding
+/Name /F1
+/Subtype /Type1
+/Type /Font
+>>
+endobj
+8 0 obj
+<<
+/BaseFont /Times-Roman
+/Encoding /WinAnsiEncoding
+/Name /F2
+/Subtype /Type1
+/Type /Font
+>>
+endobj
+9 0 obj
+<<
+/BaseFont /Times-Italic
+/Encoding /WinAnsiEncoding
+/Name /F3
+/Subtype /Type1
+/Type /Font
+>>
+endobj
+10 0 obj
+<<
+/BaseFont /Times-Bold
+/Encoding /WinAnsiEncoding
+/Name /F4
+/Subtype /Type1
+/Type /Font
+>>
+endobj
+11 0 obj
+<<
+/BaseFont /Symbol
+/Name /F5
+/Subtype /Type1
+/Type /Font
+>>
+endobj
+12 0 obj
+<<
+/BaseFont /Courier
+/Encoding /WinAnsiEncoding
+/Name /F6
+/Subtype /Type1
+/Type /Font
+>>
+endobj
+13 0 obj
+<<
+/Contents 14 0 R
+/MediaBox [ 0 0 612 792 ]
+/Resources <<
+/Font 6 0 R
+/ProcSet [ /PDF /Text /ImageB /ImageC /ImageI ]
+>>
+/Rotate 0
+/Trans <<
+>>
+/Type /Page
+/Parent 2 0 R
+>>
+endobj
+14 0 obj
+<<
+/Filter [ /ASCII85Decode /FlateDecode ]
+/Length 2437
+>>
+stream
+Gau`T?'F#$&q'GWQkrgQG?UHmP4BCOlq?Wh(LKUlqZ;lkKe,eL!%=u;f3]%RII40rnQi/(=06Wl&A[r1o^jQ*)#k9LZg*A'YNal`KT_SN>>"H7VtE:=_tqW]Dl-<r;;j`sUNH>\b*,gC0.G&dHkD]iNE=:_-e%Q@a`Ke1'iDQ`.9f4eXZMuJhpD39>5s;c\6?@402$a4S^jL7A5,;P:29*J<L2i49c$4*&R0IeahMi;o.EZcQRO,qHVkF9JdFSg]tIcHBu5Y>qj:9Ep^g(.0Nog(,gU.PT\94i;(&qMZqBs9qFXqhNMT\CECJD^<D.?oBdHb@fr7TN,l>81]'j1u/8_d<-[SL49:]g%V8Mal.?'g-a8-KGljq$@A4=P.)Cb-0S\Wf\eN.D8&(1_2lYg\aGR?d+#8"$^>uJ*:OWr,VO4:)ub;do95$9H73Od+&dqQ"9e[pn<K\^EjX`]Pk"2)_DGQE1]T00WLjBf;(.8V)_d>jr<O!Ir7d2XoiIrr9U),PoKk=#f<s)Z-Ip1U#`!^"=,Q.]1<kp)tIBen.H98B&BR"J8,0Ltt.D[=kH(b$M*hb^Ec4UnOW*G:)7A)ADs:-TrG&Zp7Z)id"PK6LL-)EB/il`mY`W6ZmZKi'hUWhrj%E2%Qdc:5BtPWeER%RCSN(gGsd%af(V/@+@Fkq#nc>WTc/?^&c6OTMrR$2o\mYGE5[W=I9/Tf5H>*i/jq8>2]P6XEtL(>seU&KiunVH*cqDPL#gB99<s$0gZhUhX]HXrD`;S2?88Au&:uaC7]&-*V"%S*kean/f'5EhecTR7-J&C`%S;NotK/jf<^W>0g9.ke"Rgb@#`E#:q5u/^CJr*67dOqh1'i?>NTE<IJ"r5;RV%G)3AYj7>!h#))h#h:D>X"H;uGXriEWoW$>7i?sIS\mnt3J/Nr&0+!utaGTY"&B60HSe%j_+T'l.O?W3G;[>*kdV_raL[FW;5ud:I.MMFE,pjD\+32=(f2i7dJEq`B6/KDT#?7=/F`VprB0\XVPsu-HEY.U?lS0&ELI^_S/$;o.\p=W)=^A)5],'X6-^n@F]ZZH<B$6at.kGPF`^?$Z:t?D^j3obMDSUI=aqU;$$I#+#NR//Jr00KB*Re(4]81$n1r<W]?KDiE;_Fdd7OI>)is?3QHTaY_p]DGSRp>Ut^Lq,b[FfdU$m!^!bb\AM!]B0%r1[nRK,2Lg@=cgM^Q'FsE_LcBkmeF:Xn0;KXBa/=>88rbC0"Pl>RQj)!%=;B7!shj=o+(V1$+u3b;0ZLc\"&YV'&9m']lXE.#M)""OD]O*&=:Y(J`=)ANSkNh.r@ub4pZ`"?&_`OXHPU"".QT^Oqmq6&AP9YDTdi44\he&XK!`.;cml%.2\(hGA`^N`us=I6Tq@HHm=91$[/-n&@:S`G3AoJh;XWgZL+T#D@Ok>q=94&6q+PrU[6,Nd<^;/7.sf;,@oekkXlBLCaF[nR$dD8ssDsVu7j<VX=$#AWg_0AFVE7-mK8>e:*H^fh-Vi"WW_?3g46W(GnrY)c8aT`j^lA_A\EgHC[I=d/@">?ts$u\*h@uB!:pD8^r+V<e/AsR\_Q^aXe2,O/2_<n&]>=P4tLFN351H=Mm=]_dK:JLia#qDFWm8"ld#>0^M>j2Fsa!!&h$=GEt@pZTgHH=X0k.FG5>[r?ETVkdWcm`[qg^p]<MhT^'!<qa@kcIX*NVJH=-]H!p<GTr4sSec"Zcra%Uno.7!,g)+e=$"#0UC>fVR(jI8l#Aq$PPP1kcH:Yd<*7M"e\nU@b,M_/L/rl*j/>mb!]$lj)kg3LP=88g=>]<pMr/2RGbX`M+JpV7JcEUs<KsKQK[(dlXa)O5P+44c3*+=diaHJs+)I?+*0BtAtj@N81rqr[RMap+r72>aS-]RQF#J%4%AJQ*BNE]g3V5KO?`";ZL\O\nF"*4_Yff/<#Wm35?'<8EC^&9GjU\QL:PQ4nfs7Wd]k^g5a7^gW6fc,mnnR@o]VdM&.3"bC)#P2gHJ\G2"dDVQ<<n$]3H0Te?-W%65)[qJX%asE\MC2'ce"W?rHFaL3hc)\s>0iZ8r49k>9`_s*mnDCpCdhQ`N\A`2pd_6@>e0Y0mD;)^b_<g:\7u9mB:#T*r``Gn8egIeb`LRQhW,7Xm#/$>N0D64])jl9U97MhJdDiA&itO3E:OU2KR!i/=eLM2F(Ceh,"/Z$4Ru$-:4^<jrg#*2+Xd/2L%h]FaNN+k$Q\;?LF^YAj<r:(Ksp$VL%1mi56`,D*4Yod,X>mpoJ3r7_<=T$++`2@g0I1^kk=@RZ!-;O8OoqUEZAZbUj-T$/FAIb%I_[8.YQfrr<W,J%t$&?8+!q/0j%`\BIdZ=#3,@C72dfqKg-MWID>hjr@H#a<,KLl!+^-C4r:F>[IoPBE+YQcpl'hbie(t9\-plXWQi<ajEbW\^X\`OK&6DAcXWbQ~>
+endstream
+endobj
+15 0 obj
+<<
+/Contents 16 0 R
+/MediaBox [ 0 0 612 792 ]
+/Resources <<
+/Font 6 0 R
+/ProcSet [ /PDF /Text /ImageB /ImageC /ImageI ]
+>>
+/Rotate 0
+/Trans <<
+>>
+/Type /Page
+/Parent 2 0 R
+>>
+endobj
+16 0 obj
+<<
+/Filter [ /ASCII85Decode /FlateDecode ]
+/Length 2511
+>>
+stream
+Gau0DgN)=4&q0LUo[B+hZ7+Qt8U3s6:1gdnfjr*`>NLH-8A^_s(k@i?qt5:STOc.\Xh@r<n^oTM!;`3LVn8KrN.6]a?8b29h9k<HKT_Sf<g;ZB:3Z`2gUjLNYD,.1B^0NT;**KinmkV9F,I7IT>^t_`f#,4P?mcAafrT<RmuWnVecq[FP"kfqi:*YdbXZ1`6!),o^S&np74"Q/S.?m9I#P_KN!op?YMPGWiT<F-]@nR6QT<s;__&[;)if@N&"+Pjf"QlF,k618\nh/ISM=`33Xff&Pho`Vd7cm8l:]n-gH^1V'U7'8P]4gP$.>J:/n63_XW:(TrHYGPrQP.*J0AW;tlh<>1bud($.eu\ng";gMNnVXm;6YP;pProD(jBn#8_=d93DDK?];jK$?=,A0(fr6)P5Ibn_b&Nfn*20/AFE"\7bYbekbP3rAG5>1JJ;Uu2$oWjU?R;5FY/h>r1s>%puoRQ`WHN=R#f`P]^5@:.(O-.3hp$CjOV2U/POKCj0F\QE"^8Ds;/8.utc"*jWfBlmMP%d0ROWGAh]<%/C-eb^Ge0pT,7b)L4b'UrF4V<&Ep<H=p.-$?b2FustE9dtAn>*jTAU/_rZFP'/p?,)R\%Hi8gV0&9Ib/Z*"_F]8)060+udeCR7c!H!9*(TN].?^Ypo%aLiiCfXMiUpBVN,;>,N9EXdi6\T?qq<h4(b3pRqK@U:WikVM!aVq(78bqI*<OV/U68'r^$B4hc<s8;[`,=Mq#/GQciW1Kb0$u*\rGsFd,C>)'\6OlZ&3GmSLHLJ:t"h.1o@CZ9'FRrS#iTt1\U1&G[c020oRQN(26TB=W1L1?St1JOViJkk\_V+0?Ys,;rA!UYF.L$ek(N&AI<1+m8Sq%/1jRD6F(qn_<[[Y6.Ujo,]TCt?7Ni>Gd9!7*bbWPjL5mr![@,`#p38R"%W](iBVu7*!B>D;V'e]Z1PLXB?Y^V216o^7]^=&#!"9o<[F_8=V%MlddK)=L]`<ZHL!5@W_u+_NPm1ErPPHfk=,Bo\`QE$UCtQFA8+m<le\-7ABp*)RL^nh>X!XibMNRNZWVY8GbSK@47)PEg5%qLp/D9,L\-[!En4)Y!QWpQp"ES'7*I2e7aqZR7\sg&c2ktHZ/HdfP#LiokrDB)Er`Q"HN?fI!ALVI*WSDtV)rIm*gnRh;O5mm/*#]3ke?\+>K_cmL>a#O\5KU?g2g^LY?@'jE`l\sAuJ..#6cQdee,__HU+Vm,nIEcrIQcE2750HKRW#ZZmqFrHmhN,^9/tp_2'iDbr-sjK(D4f[:$a+If&/3m7,_tP[5E*Fr0trVU,.$s+R*3,!YGbds4!t:4&G=OS),i@/ED_ap/-OZ2j&J<B!+ZHakpAbeXbDC<qt4X%OsB./>(fS;'h"2FGs5-5%j_Qj@MgPM>9s\RU@\e4%*T5W.0k.QA#UhTDh*L(q=nqGTFah=S+mB*'5DSe9+#o=@mYRPX#Wp(hCdqYEbA;YoZ!,55(F1d?nLI9Y@+n&t@;1%qmRB?<5.p<0!9PF:T:P+@kS</3%E9ZOu@An[)Xc5.`%#U[rpFtT/KG@GGdQlb.I!\YMh*]>-Zdi=iIR!TnQV"_g.k!>Rq7oF8j24>7!l?$f9$cj?je@.e+S36H1TPegqC=r0$5Z>lK^beL_0qaua%X3E9_Pe'mjuI`jN"f3F2dLAes7r!3m9f"a2oXf3eb%r`:XI4'bu`ZYF/F]Kl6*(E%n7f;0=:0f;QW!E9N67^.7;P](sU1nkg>S<o$quDcN(]e8\cp\=*/VQ;AN^?H@>"OdI$1c_3S8O9+2!'ZMiMC_`K$N@p:7'_(tu.,\0)b*`8>DI)E^.jUNX5W"2Zf^S5:Xbu,FD9V3K2?ZO-PjHD38#]&MO$O:@)p+9i(M%7cTgFs*g+^Dou\gRt0YHc?W8fd<KK5/eKLre6AKR]J],&eV8\2UI8O2*o6Et8C+dY.GiD)AqaR4iuJas6O9I?*OCkaMK?+.rZ4IZ)3-$Cpne"d[]MICV'\Ub+^UUWVE6pgDR4o:\ZV8p$]JfP:a0F&"S@lk&(eHCe9ebDain4nr//p_maJpad*H'`790O1B@b<qIsHZqVG&EiC6g2j%.1BPk0kh_1b[:4E4bP@hcbch#7)\<BAX1>LR_K=6Q$:u+N&5`<qDE1;#EhNn=W^XWR=H4pQf31kVa;%oa#'$mk?^R3r,MkWb*j=)$$i_[;<*Spt<-a'qY=X(d;\$pkeptIHWP/fO]VA9*6)54]`:*BCs_KnbVk\1<h+Mm[XC]U0V*gs4/[ohH\]ElR724U:!j^Yk%\h'=(-7b(RU,5UG7lFX`l!stZ>g/l-0+mP`%%:G>A2$URk]k"urEk!`'@1g"^8JrtQYbH'(O#gY;b9m*EAgTFMJBEk9.UK("D.'2mP(c0kgB:)@H.PQO0bHs2F?:uTmaB5lTHHUor[]EN^sV/M;]'G>p*jlF-.D:'?R8H\B\3`rtFJ<F:unIa4$"G6/6_CCjb#br(,30&C2"\l0:Ld+T]p~>
+endstream
+endobj
+17 0 obj
+<<
+/Contents 18 0 R
+/MediaBox [ 0 0 612 792 ]
+/Resources <<
+/Font 19 0 R
+/ProcSet [ /PDF /Text /ImageB /ImageC /ImageI ]
+>>
+/Rotate 0
+/Trans <<
+>>
+/Type /Page
+/Parent 2 0 R
+>>
+endobj
+18 0 obj
+<<
+/Filter [ /ASCII85Decode /FlateDecode ]
+/Length 269
+>>
+stream
+GaqdY?#.>#(^8iEJ&Ss'bAb16e?I-)["XXYfY$"!1eFC#&Yp`>h_.QbYi,h]T'$Ya5A8hJ!SBHG*!jK%2+U@L=((KMA3B#;;=p3GBYiCh)^?p91-;*II#/GDO;\_&#r7lL3Y.ir.VGNQap`AM#VP%Lhj0'UlJt=_`H4P:I!q2/\-q)<d$>/U*\BabQsLOf=&Q(?<\qC&b>`V/O6IG7s4e5rOuCnrfrLQ>DtiB!XOuO%3QHnn6BtCBC\<WlCgusHr.@<5!e2Ik=9~>
+endstream
+endobj
+19 0 obj
+<<
+/F1 20 0 R
+/F2 21 0 R
+>>
+endobj
+20 0 obj
+<<
+/BaseFont /Helvetica
+/Encoding /WinAnsiEncoding
+/Name /F1
+/Subtype /Type1
+/Type /Font
+>>
+endobj
+21 0 obj
+<<
+/BaseFont /Helvetica-Oblique
+/Encoding /WinAnsiEncoding
+/Name /F2
+/Subtype /Type1
+/Type /Font
+>>
+endobj
+xref
+0 22
+0000000000 65535 f 
+0000000015 00000 n 
+0000000054 00000 n 
+0000000134 00000 n 
+0000000183 00000 n 
+0000000372 00000 n 
+0000002679 00000 n 
+0000002763 00000 n 
+0000002870 00000 n 
+0000002979 00000 n 
+0000003089 00000 n 
+0000003198 00000 n 
+0000003276 00000 n 
+0000003382 00000 n 
+0000003573 00000 n 
+0000006103 00000 n 
+0000006294 00000 n 
+0000008898 00000 n 
+0000009090 00000 n 
+0000009451 00000 n 
+0000009495 00000 n 
+0000009603 00000 n 
+trailer
+<<
+/Size 22
+/Root 3 0 R
+/Info 1 0 R
+>>
+startxref
+9719
+%%EOF
