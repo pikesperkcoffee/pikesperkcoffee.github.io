@@ -1,0 +1,999 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Morton — Palmer Lake, Colorado</title>
+<meta name="description" content="A one-page broadsheet indexing the active work of Andrew Morton — Morkat Coffee LLC, Pikes Perk Coffee Roasters, Morton Millworks.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,400..900,50..100;1,9..144,400..900,50..100&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=IBM+Plex+Mono:wght@400;500;700&family=Cinzel:wght@500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Oswald:wght@400;500;600;700&family=Public+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Space+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+/* ================================================================
+   THE MORTON REGISTER
+   A single-page broadsheet. Modern editorial typography, colored
+   section codes, tight multi-column body. Fraunces (masthead) +
+   Source Serif 4 (body) + IBM Plex Mono (labels/datelines).
+   ================================================================ */
+:root{
+  --paper:#faf7f0;
+  --paper-2:#f2ede1;
+  --ink:#181614;
+  --ink-2:#2a2620;
+  --muted:#6c665c;
+  --rule:#d8d1c1;
+  --rule-hair:#e4dfcf;
+  --red:#b62d24;
+  --blue:#1d4d75;
+  --green:#3d6f4a;
+  --amber:#a17318;
+  --plum:#6d3868;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:'Source Serif 4',Georgia,serif;
+  font-size:16px;line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+  font-optical-sizing:auto;
+}
+.paper{max-width:1080px;margin:0 auto;padding:0 22px 80px}
+
+/* ---------- FLAG (thin top strip with edition info) ---------- */
+.flag{
+  display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;
+  font-family:'IBM Plex Mono',monospace;
+  font-size:11px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--muted);
+  padding:12px 0 10px;
+  border-bottom:1px solid var(--rule-hair);
+}
+.flag .center{color:var(--red);font-weight:500}
+
+/* ---------- NAMEPLATE (masthead) ---------- */
+.nameplate{
+  text-align:center;
+  padding:26px 0 18px;
+  border-bottom:3px double var(--ink);
+}
+.nameplate .badge{
+  display:inline-block;
+  background:var(--red);color:var(--paper);
+  font-family:'IBM Plex Mono',monospace;
+  font-size:10.5px;letter-spacing:.24em;text-transform:uppercase;
+  padding:3px 10px;margin-bottom:14px;font-weight:700;
+}
+.nameplate h1{
+  font-family:'Cinzel',Georgia,serif;
+  font-weight:700;
+  font-size:clamp(46px, 8vw, 84px);
+  line-height:1;letter-spacing:.02em;
+  color:var(--ink);
+}
+.nameplate .strap{
+  margin-top:14px;
+  font-family:'Fraunces',Georgia,serif;
+  font-style:italic;
+  font-variation-settings:"opsz" 24, "SOFT" 100, "wght" 400;
+  font-size:18px;
+  color:var(--ink-2);
+}
+.nameplate .subflag{
+  margin-top:16px;padding-top:12px;
+  border-top:1px solid var(--rule);
+  display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;
+  font-family:'IBM Plex Mono',monospace;
+  font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--muted);
+}
+
+/* ---------- LEAD PANEL (above the fold) ---------- */
+.lead{
+  padding:28px 0 24px;
+  border-bottom:1px solid var(--rule);
+  position:relative;
+}
+.lead .eyebrow{
+  display:flex;align-items:center;gap:10px;
+  font-family:'IBM Plex Mono',monospace;
+  font-size:11.5px;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--red);font-weight:700;
+  margin-bottom:14px;
+}
+.lead .eyebrow::before,.lead .eyebrow::after{
+  content:"";flex:1;height:1px;background:var(--red);opacity:.35;
+}
+.lead-body{display:grid;grid-template-columns:1.4fr 1fr;gap:36px;align-items:start}
+.lead h2{
+  font-family:'Fraunces',Georgia,serif;
+  font-variation-settings:"opsz" 120, "SOFT" 60, "wght" 700;
+  font-weight:700;
+  font-size:clamp(30px, 4.2vw, 46px);
+  line-height:1.02;letter-spacing:-.005em;
+  color:var(--ink);
+  margin-bottom:12px;
+}
+.lead .deck{
+  font-family:'Fraunces',Georgia,serif;
+  font-style:italic;
+  font-variation-settings:"opsz" 32, "SOFT" 80, "wght" 400;
+  font-size:20px;line-height:1.4;
+  color:var(--ink-2);
+  margin-bottom:16px;
+}
+.lead .lede{font-size:17px;line-height:1.6;color:var(--ink-2)}
+.lead .lede p+p{margin-top:10px}
+.lead .lede .drop{
+  float:left;
+  font-family:'Fraunces',Georgia,serif;
+  font-variation-settings:"opsz" 144,"SOFT" 60,"wght" 700;
+  font-size:58px;line-height:.9;
+  color:var(--red);
+  padding:6px 8px 0 0;
+}
+.lead .dateline{
+  margin-top:16px;
+  font-family:'IBM Plex Mono',monospace;
+  font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--muted);
+}
+.lead .cta{
+  display:inline-block;margin-top:12px;
+  font-family:'IBM Plex Mono',monospace;
+  font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--red);border-bottom:1px solid var(--red);padding-bottom:1px;
+  text-decoration:none;
+}
+
+/* work-in-progress cover on the lead — full opaque veil with a
+   diagonal caution-tape pattern, heavy blur underneath. No hover
+   reveal; the lead is fully sealed until you remove class="wip". */
+.lead.wip{position:relative;overflow:hidden;min-height:300px}
+.lead.wip .lead-body{
+  filter:blur(18px);
+  opacity:.2;
+  pointer-events:none;
+}
+.lead.wip::before{
+  content:'';
+  position:absolute;inset:0;
+  background:repeating-linear-gradient(
+    135deg,
+    rgba(250,247,240,0.88) 0,
+    rgba(250,247,240,0.88) 22px,
+    rgba(182,45,36,0.10) 22px,
+    rgba(182,45,36,0.10) 42px
+  );
+  z-index:2;
+  pointer-events:none;
+}
+.lead .wip-stamp{
+  position:absolute;top:50%;left:50%;
+  transform:translate(-50%,-50%) rotate(-5deg);
+  font-family:'IBM Plex Mono',monospace;
+  font-weight:700;font-size:34px;letter-spacing:.14em;
+  color:var(--red);
+  background:rgba(250,247,240,.96);
+  border:5px double var(--red);
+  padding:12px 30px;
+  pointer-events:none;
+  text-transform:uppercase;white-space:nowrap;
+  z-index:3;
+  box-shadow:0 0 0 4px rgba(250,247,240,.96);
+}
+
+/* ---------- SECTION BAR (between fold and columns) ---------- */
+.section-bar{
+  display:flex;align-items:center;gap:14px;
+  padding:22px 0 12px;
+}
+.section-bar h3{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:12px;letter-spacing:.28em;text-transform:uppercase;
+  color:var(--ink);font-weight:700;
+}
+.section-bar .rule{flex:1;height:1px;background:var(--ink)}
+.section-bar .kicker{
+  font-family:'Fraunces',Georgia,serif;
+  font-style:italic;
+  font-variation-settings:"opsz" 18,"SOFT" 80,"wght" 400;
+  font-size:14px;color:var(--muted);
+}
+
+/* ---------- MULTI-COLUMN PANEL GRID ---------- */
+.grid{
+  display:grid;grid-template-columns:repeat(3, 1fr);gap:14px;
+  border-top:1px solid var(--rule);
+  padding-top:16px;
+}
+.panel{
+  padding:20px 20px 22px;
+  border:1px solid var(--rule);
+  display:flex;flex-direction:column;
+  text-decoration:none;color:inherit;
+  transition:background .15s ease;
+}
+.panel:hover{background:var(--paper-2)}
+.panel .eyebrow{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;
+  font-weight:700;margin-bottom:10px;
+}
+.panel h4{
+  font-family:'Fraunces',Georgia,serif;
+  font-variation-settings:"opsz" 60,"SOFT" 40,"wght" 700;
+  font-weight:700;
+  font-size:22px;line-height:1.08;letter-spacing:-.003em;
+  color:var(--ink);
+  margin-bottom:8px;
+}
+.panel .deck{
+  font-family:'Fraunces',Georgia,serif;
+  font-style:italic;
+  font-variation-settings:"opsz" 20,"SOFT" 80,"wght" 400;
+  font-size:15px;line-height:1.35;
+  color:var(--ink-2);
+  margin-bottom:12px;
+}
+.panel .lede{
+  font-size:14.5px;line-height:1.55;color:var(--ink-2);
+  margin-bottom:14px;
+}
+.panel .foot{
+  margin-top:auto;padding-top:10px;
+  display:flex;justify-content:space-between;align-items:baseline;gap:10px;
+  font-family:'IBM Plex Mono',monospace;
+  font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--muted);
+  border-top:1px solid var(--rule-hair);
+}
+.panel .foot .cta{color:inherit;text-decoration:none;border-bottom:1px solid currentColor;padding-bottom:1px}
+
+/* section-color coding for panel eyebrows and CTA */
+.panel.sec-workshop .eyebrow, .panel.sec-workshop .foot .cta{color:var(--green)}
+.panel.sec-engineering .eyebrow, .panel.sec-engineering .foot .cta{color:var(--blue)}
+.panel.sec-essay .eyebrow, .panel.sec-essay .foot .cta{color:var(--amber)}
+.panel.sec-spec .eyebrow, .panel.sec-spec .foot .cta{color:var(--red)}
+.panel.sec-workshop:hover{background:#f1efe1}
+.panel.sec-engineering:hover{background:#eef1f2}
+.panel.sec-essay:hover{background:#f4ede0}
+
+/* -------- Stone Economy sub-doc panel — samples the essay's own
+   aesthetic (aged paper with blue grid overlay, blue + oxblood +
+   brass, Iowan Old Style serif + SF Mono). Engineering-plate. */
+.panel.tile-stone-mini{
+  background:#efe8d6;color:#262219;
+  background-image:
+    linear-gradient(rgba(43,74,107,.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(43,74,107,.05) 1px, transparent 1px);
+  background-size:20px 20px;
+  border-top:3px solid #2b4a6b;
+  font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+  padding:20px 20px 22px;
+}
+.panel.tile-stone-mini:hover{background:#eae2c9}
+.panel.tile-stone-mini .eyebrow{
+  font-family:ui-monospace,"SF Mono","Cascadia Code",Menlo,monospace;
+  font-size:10px;letter-spacing:.22em;text-transform:uppercase;
+  color:#2b4a6b;font-weight:700;margin-bottom:10px;
+}
+.panel.tile-stone-mini h4{
+  font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+  font-weight:700;font-size:23px;line-height:1.05;letter-spacing:.003em;
+  color:#262219;margin-bottom:6px;
+}
+.panel.tile-stone-mini h4 .l2{display:block;color:#2b4a6b;font-size:.72em;margin-top:3px}
+.panel.tile-stone-mini .deck{
+  font-family:"Iowan Old Style",serif;font-style:italic;
+  font-size:14.5px;line-height:1.35;color:#4c4638;margin-bottom:10px;
+}
+.panel.tile-stone-mini .lede{
+  font-size:14px;line-height:1.55;color:#4c4638;margin-bottom:12px;
+}
+.panel.tile-stone-mini .lede em{color:#1e3550;font-style:italic}
+.panel.tile-stone-mini .lede strong{color:#7d2d18;font-weight:700}
+.panel.tile-stone-mini .foot{
+  margin-top:auto;padding-top:10px;
+  display:flex;justify-content:space-between;align-items:baseline;gap:10px;
+  font-family:ui-monospace,"SF Mono",monospace;
+  font-size:10px;letter-spacing:.12em;text-transform:uppercase;
+  color:#726b59;
+  border-top:1px dashed #d8cdb2;
+}
+.panel.tile-stone-mini .foot .cta{color:#9c3a22;text-decoration:none;border-bottom:1px solid #9c3a22;padding-bottom:1px}
+
+/* -------- Joker & Thief essay panel — samples the essay's own
+   aesthetic (warm parchment #f4ecdc with wine + gold, Cinzel display
+   with Cormorant/EB Garamond bodies). Occult renaissance register. */
+.panel.tile-joker-mini{
+  background:#f4ecdc;color:#2a1f17;
+  background-image:
+    radial-gradient(ellipse at top left, rgba(110,31,42,0.05) 0%, transparent 55%),
+    radial-gradient(ellipse at bottom right, rgba(138,106,44,0.06) 0%, transparent 55%);
+  border-top:3px solid #6e1f2a;
+  font-family:'EB Garamond',Georgia,serif;
+  padding:20px 22px 22px;
+  position:relative;
+}
+.panel.tile-joker-mini:hover{background:#f0e5ce}
+.panel.tile-joker-mini .eyebrow{
+  font-family:'Cinzel',serif;font-weight:600;
+  font-size:10.5px;letter-spacing:.28em;text-transform:uppercase;
+  color:#6e1f2a;margin-bottom:10px;
+}
+.panel.tile-joker-mini h4{
+  font-family:'Cinzel',serif;font-weight:600;
+  font-size:22px;line-height:1.12;letter-spacing:.02em;
+  color:#2a1f17;margin-bottom:8px;
+}
+.panel.tile-joker-mini h4 .amp{color:#8a6a2c;font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:500}
+.panel.tile-joker-mini .deck{
+  font-family:'Cormorant Garamond',serif;font-style:italic;
+  font-size:16px;line-height:1.35;color:#4a3a2c;margin-bottom:10px;
+}
+.panel.tile-joker-mini .lede{
+  font-size:14.5px;line-height:1.55;color:#4a3a2c;margin-bottom:12px;
+}
+.panel.tile-joker-mini .lede em{color:#6e1f2a;font-style:italic}
+.panel.tile-joker-mini .foot{
+  margin-top:auto;padding-top:10px;
+  display:flex;justify-content:space-between;align-items:baseline;gap:10px;
+  font-family:'Cinzel',serif;
+  font-size:9.5px;letter-spacing:.22em;text-transform:uppercase;
+  color:#7a6a55;font-weight:500;
+  border-top:1px solid #c9b88f;
+}
+.panel.tile-joker-mini .foot .cta{color:#6e1f2a;text-decoration:none;border-bottom:1px solid #6e1f2a;padding-bottom:1px}
+
+/* -------- North Sea working-notes panel — samples the doc's own
+   aesthetic (dark peat #15120e with parchment text, amber accents,
+   Cinzel display + EB Garamond body). Pre-king tribal register. */
+.panel.tile-northsea-mini{
+  background:#15120e;color:#e9dfc4;
+  background-image:
+    radial-gradient(ellipse at 20% -10%, rgba(184,130,58,0.10), transparent 45%),
+    radial-gradient(ellipse at 90% 10%, rgba(92,106,72,0.09), transparent 40%);
+  border-top:3px solid #b8823a;
+  font-family:'EB Garamond',Georgia,serif;
+  padding:20px 22px 22px;
+  position:relative;
+}
+.panel.tile-northsea-mini:hover{background:#1c1712}
+.panel.tile-northsea-mini .eyebrow{
+  font-family:'Cinzel',serif;font-weight:600;
+  font-size:10.5px;letter-spacing:.28em;text-transform:uppercase;
+  color:#b8823a;margin-bottom:10px;
+}
+.panel.tile-northsea-mini h4{
+  font-family:'Cinzel',serif;font-weight:600;
+  font-size:22px;line-height:1.12;letter-spacing:.02em;
+  color:#e9dfc4;margin-bottom:8px;
+}
+.panel.tile-northsea-mini .deck{
+  font-family:'EB Garamond',serif;font-style:italic;
+  font-size:15.5px;line-height:1.4;color:#c9bd9e;margin-bottom:10px;
+}
+.panel.tile-northsea-mini .lede{
+  font-size:14.5px;line-height:1.55;color:#c9bd9e;margin-bottom:12px;
+}
+.panel.tile-northsea-mini .lede strong{color:#d8a34f;font-weight:600}
+.panel.tile-northsea-mini .rune{
+  height:14px;margin:12px 0 4px;position:relative;opacity:.7;
+  background-image:
+    linear-gradient(90deg, #b8823a 0, #b8823a 42%, transparent 42%, transparent 58%, #b8823a 58%, #b8823a 100%);
+  background-size:100% 1px;background-position:center;background-repeat:no-repeat;
+}
+.panel.tile-northsea-mini .rune::before{
+  content:"";position:absolute;left:50%;top:0;bottom:0;width:20px;
+  transform:translateX(-50%);
+  background:linear-gradient(135deg,transparent 45%,#b8823a 46%,#b8823a 54%,transparent 55%),
+             linear-gradient(-135deg,transparent 45%,#b8823a 46%,#b8823a 54%,transparent 55%);
+}
+.panel.tile-northsea-mini .foot{
+  margin-top:auto;padding-top:10px;
+  display:flex;justify-content:space-between;align-items:baseline;gap:10px;
+  font-family:'Cinzel',serif;
+  font-size:9.5px;letter-spacing:.22em;text-transform:uppercase;
+  color:#786f5c;font-weight:500;
+  border-top:1px solid rgba(184,130,58,.35);
+}
+.panel.tile-northsea-mini .foot .cta{color:#d8a34f;text-decoration:none;border-bottom:1px solid #b8823a;padding-bottom:1px}
+
+/* -------- Eddie / Bench School panel — samples the portal's own
+   aesthetic (mat-green field with blaze safety accent, Oswald +
+   Public Sans + JetBrains Mono). Workshop / qualification register. */
+.panel.tile-eddie-mini{
+  background:#1E4A40;color:#F7F6F2;
+  border-top:3px solid #DE5A12;
+  font-family:'Public Sans',system-ui,sans-serif;
+  padding:20px 22px 22px;
+}
+.panel.tile-eddie-mini:hover{background:#204A41}
+.panel.tile-eddie-mini .eyebrow{
+  font-family:'Oswald',sans-serif;
+  font-size:11px;letter-spacing:.24em;text-transform:uppercase;
+  color:#F0762E;font-weight:500;margin-bottom:10px;
+}
+.panel.tile-eddie-mini h4{
+  font-family:'Oswald',sans-serif;font-weight:700;
+  font-size:26px;line-height:1;letter-spacing:.02em;
+  text-transform:uppercase;color:#F7F6F2;margin-bottom:8px;
+}
+.panel.tile-eddie-mini h4 .who{color:#DE5A12}
+.panel.tile-eddie-mini .deck{
+  font-family:'Public Sans',system-ui,sans-serif;
+  font-size:14.5px;line-height:1.4;color:#c5cec9;margin-bottom:10px;
+  font-weight:500;
+}
+.panel.tile-eddie-mini .lede{
+  font-size:14px;line-height:1.55;color:#c5cec9;margin-bottom:12px;
+}
+.panel.tile-eddie-mini .stat-row{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:8px;
+  margin-bottom:12px;
+}
+.panel.tile-eddie-mini .stat{
+  border:1px solid #3a5a51;padding:8px 6px;text-align:center;
+  background:#204A41;
+}
+.panel.tile-eddie-mini .stat .n{
+  font-family:'Oswald',sans-serif;font-weight:600;
+  font-size:18px;color:#F0762E;line-height:1;
+}
+.panel.tile-eddie-mini .stat .l{
+  font-family:'JetBrains Mono',monospace;
+  font-size:8.5px;letter-spacing:.12em;text-transform:uppercase;
+  color:#8fa39a;margin-top:5px;
+}
+.panel.tile-eddie-mini .foot{
+  margin-top:auto;padding-top:10px;
+  display:flex;justify-content:space-between;align-items:baseline;gap:10px;
+  font-family:'JetBrains Mono',monospace;
+  font-size:10px;letter-spacing:.12em;text-transform:uppercase;
+  color:#8fa39a;
+  border-top:1px solid #3a5a51;
+}
+.panel.tile-eddie-mini .foot .cta{color:#F0762E;text-decoration:none;border-bottom:1px solid #F0762E;padding-bottom:1px}
+
+/* -------- Shared PDF pill — small monospace filecode signaling that
+   clicking downloads a PDF rather than opening a page. Sits inside the
+   foot of any tile that links to a PDF. */
+.pdf-pill{
+  display:inline-block;
+  font-family:'JetBrains Mono',ui-monospace,monospace;
+  font-size:9px;letter-spacing:.14em;text-transform:uppercase;
+  padding:2px 6px;border-radius:2px;
+  vertical-align:middle;
+}
+
+/* -------- Palmer Lake vision panel — samples the vision doc's own
+   aesthetic (warm cream page, Playfair Display, sage/water/gold, subtle
+   contour lines). Civic-planning register. */
+.panel.tile-palmerlake-mini{
+  background:#f6f3ee;color:#1e1c18;
+  background-image:
+    radial-gradient(ellipse at 15% 85%, rgba(86,117,84,.08), transparent 55%),
+    radial-gradient(ellipse at 85% 15%, rgba(58,107,126,.06), transparent 55%);
+  border-top:3px solid #567554;
+  font-family:'Source Serif 4',Georgia,serif;
+  padding:20px 22px 22px;position:relative;
+}
+.panel.tile-palmerlake-mini:hover{background:#efeae0}
+.panel.tile-palmerlake-mini .eyebrow{
+  font-family:'Space Mono',ui-monospace,monospace;
+  font-size:10px;letter-spacing:.22em;text-transform:uppercase;
+  color:#3a6b7e;margin-bottom:10px;
+}
+.panel.tile-palmerlake-mini h4{
+  font-family:'Playfair Display',Georgia,serif;font-weight:700;
+  font-size:24px;line-height:1.05;letter-spacing:.005em;
+  color:#1e1c18;margin-bottom:8px;
+}
+.panel.tile-palmerlake-mini h4 em{color:#3a6b7e;font-style:italic;font-weight:400}
+.panel.tile-palmerlake-mini .deck{
+  font-family:'Source Serif 4',serif;font-style:italic;font-weight:300;
+  font-size:15px;line-height:1.4;color:#3a3730;margin-bottom:10px;
+}
+.panel.tile-palmerlake-mini .lede{
+  font-family:'Source Serif 4',serif;font-weight:300;
+  font-size:14px;line-height:1.55;color:#3a3730;margin-bottom:12px;
+}
+.panel.tile-palmerlake-mini .lede strong{color:#567554;font-weight:600}
+.panel.tile-palmerlake-mini .foot{
+  margin-top:auto;padding-top:10px;
+  display:flex;justify-content:space-between;align-items:baseline;gap:10px;
+  font-family:'Space Mono',ui-monospace,monospace;
+  font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+  color:#6b6455;
+  border-top:1px solid #ccc4b0;
+}
+.panel.tile-palmerlake-mini .foot .cta{color:#b08830;text-decoration:none;border-bottom:1px solid #b08830;padding-bottom:1px}
+
+/* -------- Bloomberg Terminal PDF tile — dark tech register with
+   terminal-amber accent. Nods to the actual Bloomberg terminal without
+   parody. */
+.panel.tile-bloomberg-mini{
+  background:#0f0f10;color:#e6e2d6;
+  border-top:3px solid #ff8c00;
+  font-family:'IBM Plex Mono',ui-monospace,monospace;
+  padding:20px 22px 22px;
+}
+.panel.tile-bloomberg-mini:hover{background:#151515}
+.panel.tile-bloomberg-mini .eyebrow{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:10px;letter-spacing:.22em;text-transform:uppercase;
+  color:#ff8c00;font-weight:500;margin-bottom:12px;
+}
+.panel.tile-bloomberg-mini h4{
+  font-family:'Source Serif 4','Times New Roman',serif;font-weight:700;
+  font-size:24px;line-height:1.1;letter-spacing:.005em;
+  color:#e6e2d6;margin-bottom:8px;
+}
+.panel.tile-bloomberg-mini .deck{
+  font-family:'Source Serif 4',serif;font-style:italic;font-weight:400;
+  font-size:14.5px;line-height:1.4;color:#a9a294;margin-bottom:10px;
+}
+.panel.tile-bloomberg-mini .lede{
+  font-family:'Source Serif 4',serif;font-weight:400;
+  font-size:14px;line-height:1.55;color:#a9a294;margin-bottom:12px;
+}
+.panel.tile-bloomberg-mini .lede strong{color:#ff8c00;font-weight:600}
+.panel.tile-bloomberg-mini .foot{
+  margin-top:auto;padding-top:10px;
+  display:flex;justify-content:space-between;align-items:baseline;gap:10px;
+  font-family:'IBM Plex Mono',monospace;
+  font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+  color:#7a7568;
+  border-top:1px solid #2a2822;
+}
+.panel.tile-bloomberg-mini .foot .cta{color:#ff8c00;text-decoration:none;border-bottom:1px solid #ff8c00;padding-bottom:1px}
+.panel.tile-bloomberg-mini .pdf-pill{background:#ff8c00;color:#0f0f10;font-weight:700}
+
+/* -------- Outsourced Homeostasis PDF tile — clinical notebook register.
+   Pale grid-hint background, muted teal accent, spare serif. */
+.panel.tile-homeostasis-mini{
+  background:#f5f4ef;color:#2a2822;
+  background-image:
+    linear-gradient(rgba(60,90,90,.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(60,90,90,.045) 1px, transparent 1px);
+  background-size:24px 24px;
+  border-top:3px solid #3d6d6a;
+  font-family:'Source Serif 4',Georgia,serif;
+  padding:20px 22px 22px;
+}
+.panel.tile-homeostasis-mini:hover{background:#efeee9}
+.panel.tile-homeostasis-mini .eyebrow{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:10px;letter-spacing:.22em;text-transform:uppercase;
+  color:#3d6d6a;font-weight:500;margin-bottom:10px;
+}
+.panel.tile-homeostasis-mini h4{
+  font-family:'Source Serif 4',Georgia,serif;font-weight:700;
+  font-size:22px;line-height:1.15;letter-spacing:.003em;
+  color:#2a2822;margin-bottom:8px;
+}
+.panel.tile-homeostasis-mini .deck{
+  font-family:'Source Serif 4',serif;font-style:italic;font-weight:400;
+  font-size:14.5px;line-height:1.4;color:#4a4638;margin-bottom:10px;
+}
+.panel.tile-homeostasis-mini .lede{
+  font-size:14px;line-height:1.55;color:#4a4638;margin-bottom:12px;
+}
+.panel.tile-homeostasis-mini .lede strong{color:#8a4a2c;font-weight:600}
+.panel.tile-homeostasis-mini .foot{
+  margin-top:auto;padding-top:10px;
+  display:flex;justify-content:space-between;align-items:baseline;gap:10px;
+  font-family:'IBM Plex Mono',monospace;
+  font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+  color:#726b59;
+  border-top:1px dashed #ccc4b0;
+}
+.panel.tile-homeostasis-mini .foot .cta{color:#3d6d6a;text-decoration:none;border-bottom:1px solid #3d6d6a;padding-bottom:1px}
+.panel.tile-homeostasis-mini .pdf-pill{background:#3d6d6a;color:#f5f4ef;font-weight:700}
+
+/* -------- The Thing You Already Know PDF tile — restrained ink-on-paper
+   register. The subject is heavy; the frame stays quiet. */
+.panel.tile-thing-mini{
+  background:#f8f4ec;color:#1a1814;
+  border-top:3px solid #1a1814;
+  font-family:'Source Serif 4',Georgia,serif;
+  padding:20px 22px 22px;
+}
+.panel.tile-thing-mini:hover{background:#f0ebdf}
+.panel.tile-thing-mini .eyebrow{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:10px;letter-spacing:.22em;text-transform:uppercase;
+  color:#1a1814;font-weight:600;margin-bottom:10px;
+}
+.panel.tile-thing-mini h4{
+  font-family:'Source Serif 4',Georgia,serif;font-weight:700;
+  font-size:23px;line-height:1.1;letter-spacing:.003em;
+  color:#1a1814;margin-bottom:8px;
+}
+.panel.tile-thing-mini .deck{
+  font-family:'Source Serif 4',serif;font-style:italic;font-weight:400;
+  font-size:14.5px;line-height:1.4;color:#3a3730;margin-bottom:10px;
+}
+.panel.tile-thing-mini .lede{
+  font-size:14px;line-height:1.55;color:#3a3730;margin-bottom:12px;
+}
+.panel.tile-thing-mini .lede em{color:#1a1814;font-style:italic;font-weight:600}
+.panel.tile-thing-mini .foot{
+  margin-top:auto;padding-top:10px;
+  display:flex;justify-content:space-between;align-items:baseline;gap:10px;
+  font-family:'IBM Plex Mono',monospace;
+  font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+  color:#6b6455;
+  border-top:1px solid #d8d1c1;
+}
+.panel.tile-thing-mini .foot .cta{color:#1a1814;text-decoration:none;border-bottom:1px solid #1a1814;padding-bottom:1px}
+.panel.tile-thing-mini .pdf-pill{background:#1a1814;color:#f8f4ec;font-weight:700}
+
+/* -------- Stone Machine Cycle PDF tile — companion to Stone Economy,
+   Timber Machine. Same paper family, a few shades darker (per request),
+   grid overlay pulled toward brass rather than blue to differentiate. */
+.panel.tile-stonemachine-mini{
+  background:#ddd1b6;color:#1e1912;
+  background-image:
+    linear-gradient(rgba(74,50,20,.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(74,50,20,.06) 1px, transparent 1px);
+  background-size:22px 22px;
+  border-top:3px solid #8a5a1e;
+  font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+  padding:20px 22px 22px;
+}
+.panel.tile-stonemachine-mini:hover{background:#d5c8a9}
+.panel.tile-stonemachine-mini .eyebrow{
+  font-family:ui-monospace,"SF Mono","Cascadia Code",Menlo,monospace;
+  font-size:10px;letter-spacing:.22em;text-transform:uppercase;
+  color:#8a5a1e;font-weight:700;margin-bottom:10px;
+}
+.panel.tile-stonemachine-mini h4{
+  font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+  font-weight:700;font-size:23px;line-height:1.05;letter-spacing:.003em;
+  color:#1e1912;margin-bottom:8px;
+}
+.panel.tile-stonemachine-mini h4 .l2{display:block;color:#8a5a1e;font-size:.72em;margin-top:3px}
+.panel.tile-stonemachine-mini .deck{
+  font-family:"Iowan Old Style",serif;font-style:italic;
+  font-size:14.5px;line-height:1.35;color:#3d3120;margin-bottom:10px;
+}
+.panel.tile-stonemachine-mini .lede{
+  font-size:14px;line-height:1.55;color:#3d3120;margin-bottom:12px;
+}
+.panel.tile-stonemachine-mini .lede em{color:#5c1e0f;font-style:italic}
+.panel.tile-stonemachine-mini .lede strong{color:#8a5a1e;font-weight:700}
+.panel.tile-stonemachine-mini .foot{
+  margin-top:auto;padding-top:10px;
+  display:flex;justify-content:space-between;align-items:baseline;gap:10px;
+  font-family:ui-monospace,"SF Mono",monospace;
+  font-size:10px;letter-spacing:.12em;text-transform:uppercase;
+  color:#6b5940;
+  border-top:1px dashed #b8a680;
+}
+.panel.tile-stonemachine-mini .foot .cta{color:#5c1e0f;text-decoration:none;border-bottom:1px solid #5c1e0f;padding-bottom:1px}
+.panel.tile-stonemachine-mini .pdf-pill{background:#8a5a1e;color:#ddd1b6;font-weight:700}
+
+/* ---------- WIRE (RSS placeholder) ---------- */
+.wire{
+  border-top:2px solid var(--ink);border-bottom:1px solid var(--rule);
+  padding:20px 0 24px;margin-top:20px;
+}
+.wire-head{
+  display:flex;align-items:baseline;gap:14px;margin-bottom:14px;
+}
+.wire-head h3{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:12px;letter-spacing:.28em;text-transform:uppercase;
+  color:var(--red);font-weight:700;
+}
+.wire-head .note{
+  font-family:'Fraunces',Georgia,serif;
+  font-style:italic;
+  font-variation-settings:"opsz" 18,"SOFT" 80,"wght" 400;
+  font-size:14px;color:var(--muted);
+}
+.wire-empty{
+  display:grid;grid-template-columns:repeat(4, 1fr);gap:12px;
+  margin-top:8px;
+}
+.wire-slot{
+  border:1px dashed var(--rule);
+  padding:14px 12px;min-height:96px;
+  display:flex;flex-direction:column;justify-content:center;
+  text-align:center;
+}
+.wire-slot .k{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:9px;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--muted);
+}
+.wire-slot .v{
+  font-family:'Fraunces',Georgia,serif;
+  font-style:italic;
+  font-variation-settings:"opsz" 20,"SOFT" 80,"wght" 400;
+  font-size:14px;color:var(--ink-2);margin-top:5px;
+}
+
+/* ---------- COLOPHON (foot) ---------- */
+.colophon{
+  margin-top:28px;padding-top:18px;
+  border-top:1px solid var(--rule);
+  display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:24px;
+  font-size:13px;line-height:1.5;
+}
+.colophon h5{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--red);font-weight:700;margin-bottom:6px;
+}
+.colophon .about{color:var(--ink-2)}
+.colophon .about em{font-family:'Fraunces',serif;font-style:italic;font-weight:500}
+.colophon .col a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--rule)}
+.colophon .col p+p{margin-top:4px}
+.footline{
+  margin-top:20px;padding-top:14px;border-top:1px solid var(--rule-hair);
+  font-family:'IBM Plex Mono',monospace;
+  font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--muted);
+  display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;
+}
+
+/* ---------- responsive ---------- */
+@media (max-width:840px){
+  .lead-body{grid-template-columns:1fr;gap:20px}
+  .grid{grid-template-columns:1fr 1fr}
+  .wire-empty{grid-template-columns:1fr 1fr}
+  .colophon{grid-template-columns:1fr}
+}
+@media (max-width:520px){
+  .paper{padding:0 16px 60px}
+  .nameplate h1{font-size:52px}
+  .grid{grid-template-columns:1fr}
+  .wire-empty{grid-template-columns:1fr}
+  .lead .wip-stamp{font-size:22px;padding:8px 18px;letter-spacing:.10em}
+}
+</style>
+</head>
+<body>
+<div class="paper">
+
+  <!-- ============================================================
+       FLAG — thin top strip
+       ============================================================ -->
+  <div class="flag">
+    <span>Palmer Lake, Colorado &middot; 80133</span>
+    <span class="center">Vol. I &middot; No. 1</span>
+    <span>Monday, July 13, 2026</span>
+  </div>
+
+  <!-- ============================================================
+       NAMEPLATE — the masthead
+       ============================================================ -->
+  <header class="nameplate">
+    <h1>The Morton</h1>
+    <div class="strap">Coffee, machines, frameworks, and other work &mdash; filed as it lands.</div>
+    <div class="subflag">
+      <span>Editor &middot; Andrew Morton</span>
+      <span>Elevation 7,247 ft</span>
+      <span>Independent &middot; No advertising</span>
+    </div>
+  </header>
+
+  <!-- ============================================================
+       LEAD PANEL — above the fold
+       OSF, fully sealed as work-in-progress. Remove class="lead wip"
+       (leave just class="lead") to release it publicly.
+       ============================================================ -->
+  <section class="lead wip" aria-label="Lead story — Open Source Firefighter, work in progress">
+    <div class="eyebrow">Above the Fold &middot; Work in Progress</div>
+    <div class="lead-body">
+      <div>
+        <h2>An Open Standard for Coordinated Ember &amp; Terrain Defense.</h2>
+        <div class="deck">A sixteen-document specification family in first review.</div>
+        <div class="dateline">Palmer Lake &middot; Filed July 2026 &middot; Not for public distribution</div>
+        <a class="cta" href="osf/osf_site.html">Access on release &rarr;</a>
+      </div>
+      <div class="lede">
+        <p><span class="drop">A</span>&nbsp;stamped specification family &mdash; doctrine, hardware, protocol, tactics, strategy &mdash; for neighborhood-scale ember defense. Speaks ICS on the front end. Speaks Meshtastic and MANET on the back.</p>
+        <p>Companion site to the sixteen-document set. First review packages currently circulating with operational reviewers under distribution hold.</p>
+      </div>
+    </div>
+    <div class="wip-stamp">Work in Progress</div>
+  </section>
+
+  <!-- ============================================================
+       SECTION HEADER
+       ============================================================ -->
+  <div class="section-bar">
+    <h3>Of Record</h3>
+    <div class="rule"></div>
+    <div class="kicker">Standing work, filed by section</div>
+  </div>
+
+  <!-- ============================================================
+       PANEL GRID — the columns of the paper
+       Each panel is a link into its own doc.
+       ============================================================ -->
+  <div class="grid">
+
+    <a class="panel tile-palmerlake-mini" href="palmer-lake-vision/palmer-lake-vision.html" aria-label="Palmer Lake — A Place Worth Coming Back To">
+      <div class="eyebrow">Neighborhood &middot; Vision</div>
+      <h4>Palmer Lake &mdash; <em>A Place Worth Coming Back To</em></h4>
+      <div class="deck">The creek. The fire. The flood that hasn't come yet. The land that stayed.</div>
+      <div class="lede">A small town inside a bowl. The mountains hold it on three sides, the railroad on a fourth. <strong>Monument Creek feeds the lake.</strong> The star on the hillside watches everything. A chapter-by-chapter vision for the corridor.</div>
+      <div class="foot">
+        <span>Planning Commission</span>
+        <span class="cta">Read &rarr;</span>
+      </div>
+    </a>
+
+    <a class="panel tile-stone-mini" href="stone-economy-timber-machine/stone-economy-timber-machine.html" aria-label="Stone Economy, Timber Machine">
+      <div class="eyebrow">Essay &middot; From inside the trade</div>
+      <h4>Stone Economy,<span class="l2">Timber Machine</span></h4>
+      <div class="deck">The stone is what lasted. The wood did the work.</div>
+      <div class="lede">A <em>wood-and-rope</em> industry that moved stone, ran once with the limiter off, and used up the forest that made it. <strong>Pikes Peak</strong> and the Manitou Incline stand as live proof.</div>
+      <div class="foot">
+        <span>Palmer Lake &middot; July 2026</span>
+        <span class="cta">Read &rarr;</span>
+      </div>
+    </a>
+
+    <a class="panel tile-stonemachine-mini" href="pdfs/stone-machine-cycle.pdf" aria-label="The Stone Machine Cycle — companion PDF">
+      <div class="eyebrow">Essay &middot; Companion Piece</div>
+      <h4>The Stone Machine<span class="l2">Cycle</span></h4>
+      <div class="deck">A companion to <em>Stone Economy, Timber Machine</em>.</div>
+      <div class="lede">Egyptian construction reframed as an <strong>integrated abrasive-processing system</strong>. Dolerite as working medium migrating through the stages &mdash; percussion, bearing, polish. The transport was the machining.</div>
+      <div class="foot">
+        <span>Working note</span>
+        <span><span class="pdf-pill">PDF</span> &nbsp;<span class="cta">Download &rarr;</span></span>
+      </div>
+    </a>
+
+    <a class="panel tile-thing-mini" href="pdfs/the-thing-you-already-know.pdf" aria-label="The Thing You Already Know — PDF essay">
+      <div class="eyebrow">Essay &middot; On Verification</div>
+      <h4>The Thing You Already Know</h4>
+      <div class="deck">On why the system that was supposed to verify knowledge ended up filtering it out.</div>
+      <div class="lede">Lysenko, thalidomide, 2008, the opioid crisis, the classroom. The direct observers were <em>right first</em>, and they were filtered out until the format requirements were satisfied.</div>
+      <div class="foot">
+        <span>Field research</span>
+        <span><span class="pdf-pill">PDF</span> &nbsp;<span class="cta">Download &rarr;</span></span>
+      </div>
+    </a>
+
+    <a class="panel tile-bloomberg-mini" href="pdfs/bloomberg-terminal.pdf" aria-label="The Bloomberg Terminal — PDF essay">
+      <div class="eyebrow">Essay &middot; Economics</div>
+      <h4>The Bloomberg Terminal</h4>
+      <div class="deck">The apparatus Hayek said couldn't exist has been running for forty years.</div>
+      <div class="lede">The <strong>framework</strong> that defeated socialism in the calculation debate depends on the claim that the terminal cannot exist. The people who use the terminal are the people who cite the framework.</div>
+      <div class="foot">
+        <span>Argument</span>
+        <span><span class="pdf-pill">PDF</span> &nbsp;<span class="cta">Download &rarr;</span></span>
+      </div>
+    </a>
+
+    <a class="panel tile-homeostasis-mini" href="pdfs/outsourced-homeostasis.pdf" aria-label="Outsourced Homeostasis — PDF framework draft">
+      <div class="eyebrow">Framework Draft &middot; Theory</div>
+      <h4>Outsourced Homeostasis</h4>
+      <div class="deck">Why the brain seeks plant chemistry, and what that means for treating addiction.</div>
+      <div class="lede">Biology has a habit of turning permanent environmental chemicals into functional necessities. What starts as a toxin can become a tool &mdash; and then a requirement. <strong>Addiction as foraging drive in a broken environment.</strong></div>
+      <div class="foot">
+        <span>Draft</span>
+        <span><span class="pdf-pill">PDF</span> &nbsp;<span class="cta">Download &rarr;</span></span>
+      </div>
+    </a>
+
+    <a class="panel tile-joker-mini" href="joker_and_thief/joker_and_thief.html" aria-label="The Joker and The Thief">
+      <div class="eyebrow">Essay &middot; Symbol Politics</div>
+      <h4>The Joker <span class="amp">&amp;</span> The Thief</h4>
+      <div class="deck">The political inversion of Tarot's foundation, and the pop-culture encryption of truth.</div>
+      <div class="lede">Modern culture views the Devil as a terrifying lord of darkness. History reveals a deliberate inversion &mdash; the Devil is simply the <em>Fool</em>, rewritten by institutional power to make freedom terrifying.</div>
+      <div class="foot">
+        <span>An Inquiry</span>
+        <span class="cta">Read &rarr;</span>
+      </div>
+    </a>
+
+    <a class="panel tile-northsea-mini" href="north-sea-tribal-era/north-sea-tribal-era.html" aria-label="The Pre-King North Sea">
+      <div class="eyebrow">Working Notes &middot; Ancestors</div>
+      <h4>The Pre-King North Sea</h4>
+      <div class="deck">Tribal era, 150&ndash;400 AD. Before kings. Before Vikings. Before national names.</div>
+      <div class="lede">Long before modern national identities or the Viking Age, the coastal tribes of the North Sea shared one unified maritime, linguistic, and spiritual culture &mdash; <strong>animistic, runic, and bound to bog and coastline</strong>.</div>
+      <div class="rune" aria-hidden="true"></div>
+      <div class="foot">
+        <span>Return &amp; Expand</span>
+        <span class="cta">Read &rarr;</span>
+      </div>
+    </a>
+
+    <a class="panel tile-eddie-mini" href="eddie/eddie-portal.html" aria-label="Bench School — The Eddie File">
+      <div class="eyebrow">Morton Millworks &middot; Bench School</div>
+      <h4>The <span class="who">Eddie</span> File</h4>
+      <div class="deck">A qualification-table apprenticeship on the bench.</div>
+      <div class="lede">Dry, blank, live, qual &mdash; a military qualification skeleton wrapped around a PRIMM pedagogy. Real machines at every rung. Capstone: a turntable for the Vintage Book Shoppe.</div>
+      <div class="stat-row">
+        <div class="stat"><div class="n">01</div><div class="l">Cleared</div></div>
+        <div class="stat"><div class="n">02</div><div class="l">Current</div></div>
+        <div class="stat"><div class="n">12V</div><div class="l">Ceiling</div></div>
+      </div>
+      <div class="foot">
+        <span>Bench School</span>
+        <span class="cta">Enter &rarr;</span>
+      </div>
+    </a>
+
+    <a class="panel sec-engineering" href="cdpr/cdpr-construction-system.html">
+      <div class="eyebrow">Engineering</div>
+      <h4>Hybrid Site Construction</h4>
+      <div class="deck">Cable-Driven Parallel Robot (CDPR) &mdash; concept brief.</div>
+      <div class="lede">A cable-driven parallel manipulator applied to hybrid site construction. Cable geometry, load envelope, and an acoustic curiosity that surfaced when tensioned survey strings retuned as a four-string instrument.</div>
+      <div class="foot">
+        <span>Concept &middot; MM-CDPR-01</span>
+        <span class="cta">Read &rarr;</span>
+      </div>
+    </a>
+
+  </div>
+
+  <!-- ============================================================
+       WIRE — placeholder for future RSS feeds
+       ============================================================ -->
+  <section class="wire" aria-label="Wire — standing feeds">
+    <div class="wire-head">
+      <h3>Wire</h3>
+      <div class="note">Standing feeds &mdash; coming online</div>
+    </div>
+    <div class="wire-empty">
+      <div class="wire-slot">
+        <div class="k">Feed 01</div>
+        <div class="v">Shop log</div>
+      </div>
+      <div class="wire-slot">
+        <div class="k">Feed 02</div>
+        <div class="v">OSF review notes</div>
+      </div>
+      <div class="wire-slot">
+        <div class="k">Feed 03</div>
+        <div class="v">Weather &amp; fire watch</div>
+      </div>
+      <div class="wire-slot">
+        <div class="k">Feed 04</div>
+        <div class="v">Field dispatch</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       COLOPHON
+       ============================================================ -->
+  <div class="colophon">
+    <div class="col about">
+      <h5>About</h5>
+      <p><em>The Morton</em> is a one-page broadsheet indexing the active work of Andrew Morton &mdash; coffee roasting, CNC millwork, wildland fire policy, apprenticeship, and occasional essay.</p>
+      <p>New tiles are added as new work lands. Older items retire down the column.</p>
+    </div>
+    <div class="col">
+      <h5>Enterprises</h5>
+      <p>Morkat Coffee LLC</p>
+      <p>Pikes Perk Coffee Roasters</p>
+      <p>Morton Millworks</p>
+    </div>
+    <div class="col">
+      <h5>Correspondence</h5>
+      <p><a href="https://github.com/pikesperkcoffee">GitHub</a></p>
+      <p><a href="https://pikesperkcoffee.com">Pikes Perk</a></p>
+      <p>Palmer Lake, Colorado</p>
+    </div>
+  </div>
+
+  <div class="footline">
+    <div>&copy; Andrew Morton &middot; Morkat Coffee LLC</div>
+    <div>Set in Fraunces &amp; Source Serif &middot; No advertising</div>
+  </div>
+
+</div>
+</body>
+</html>
