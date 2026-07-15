@@ -90,74 +90,48 @@ body{
   color:var(--muted);
 }
 
-/* ---------- LEAD PANEL (above the fold) ---------- */
+/* ---------- SPLIT LEAD PANEL (above the fold) ----------
+   Left third: OSF veil (WIP-sealed). Right two-thirds: PDF register
+   accordion. The lead is now a two-column region — the veil holds the
+   "something big exists but isn't ready" position while the register
+   is the day-to-day reading room. */
 .lead{
   padding:28px 0 24px;
   border-bottom:1px solid var(--rule);
   position:relative;
-}
-.lead .eyebrow{
-  display:flex;align-items:center;gap:10px;
-  font-family:'IBM Plex Mono',monospace;
-  font-size:11.5px;letter-spacing:.22em;text-transform:uppercase;
-  color:var(--red);font-weight:700;
-  margin-bottom:14px;
-}
-.lead .eyebrow::before,.lead .eyebrow::after{
-  content:"";flex:1;height:1px;background:var(--red);opacity:.35;
-}
-.lead-body{display:grid;grid-template-columns:1.4fr 1fr;gap:36px;align-items:start}
-.lead h2{
-  font-family:'Fraunces',Georgia,serif;
-  font-variation-settings:"opsz" 120, "SOFT" 60, "wght" 700;
-  font-weight:700;
-  font-size:clamp(30px, 4.2vw, 46px);
-  line-height:1.02;letter-spacing:-.005em;
-  color:var(--ink);
-  margin-bottom:12px;
-}
-.lead .deck{
-  font-family:'Fraunces',Georgia,serif;
-  font-style:italic;
-  font-variation-settings:"opsz" 32, "SOFT" 80, "wght" 400;
-  font-size:20px;line-height:1.4;
-  color:var(--ink-2);
-  margin-bottom:16px;
-}
-.lead .lede{font-size:17px;line-height:1.6;color:var(--ink-2)}
-.lead .lede p+p{margin-top:10px}
-.lead .lede .drop{
-  float:left;
-  font-family:'Fraunces',Georgia,serif;
-  font-variation-settings:"opsz" 144,"SOFT" 60,"wght" 700;
-  font-size:58px;line-height:.9;
-  color:var(--red);
-  padding:6px 8px 0 0;
-}
-.lead .dateline{
-  margin-top:16px;
-  font-family:'IBM Plex Mono',monospace;
-  font-size:11px;letter-spacing:.14em;text-transform:uppercase;
-  color:var(--muted);
-}
-.lead .cta{
-  display:inline-block;margin-top:12px;
-  font-family:'IBM Plex Mono',monospace;
-  font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;
-  color:var(--red);border-bottom:1px solid var(--red);padding-bottom:1px;
-  text-decoration:none;
+  display:grid;
+  grid-template-columns:1fr 2fr;
+  gap:24px;
 }
 
-/* work-in-progress cover on the lead — full opaque veil with a
-   diagonal caution-tape pattern, heavy blur underneath. No hover
-   reveal; the lead is fully sealed until you remove class="wip". */
-.lead.wip{position:relative;overflow:hidden;min-height:300px}
-.lead.wip .lead-body{
+/* --- Left third: OSF veil (WIP-sealed) --- */
+.lead-veil{position:relative;overflow:hidden;min-height:340px;
+  padding:18px;border:1px solid var(--rule);background:var(--paper-2)}
+.lead-veil .eyebrow{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--red);font-weight:700;
+  margin-bottom:14px;position:relative;z-index:1;
+}
+.lead-veil-body h2{
+  font-family:'Fraunces',Georgia,serif;
+  font-variation-settings:"opsz" 100, "SOFT" 60, "wght" 700;
+  font-weight:700;
+  font-size:24px;line-height:1.05;
+  color:var(--ink);margin-bottom:10px;
+}
+.lead-veil-body .deck{
+  font-family:'Fraunces',Georgia,serif;font-style:italic;
+  font-size:15px;line-height:1.4;color:var(--ink-2);margin-bottom:12px;
+}
+.lead-veil-body .lede{font-size:14px;line-height:1.55;color:var(--ink-2)}
+/* Scoped WIP treatment — remove class="wip" from .lead-veil to release. */
+.lead-veil.wip .lead-veil-body{
   filter:blur(18px);
   opacity:.2;
   pointer-events:none;
 }
-.lead.wip::before{
+.lead-veil.wip::before{
   content:'';
   position:absolute;inset:0;
   background:repeating-linear-gradient(
@@ -170,19 +144,120 @@ body{
   z-index:2;
   pointer-events:none;
 }
-.lead .wip-stamp{
+.lead-veil.wip .wip-stamp{
   position:absolute;top:50%;left:50%;
   transform:translate(-50%,-50%) rotate(-5deg);
   font-family:'IBM Plex Mono',monospace;
-  font-weight:700;font-size:34px;letter-spacing:.14em;
+  font-weight:700;font-size:20px;letter-spacing:.12em;
   color:var(--red);
   background:rgba(250,247,240,.96);
-  border:5px double var(--red);
-  padding:12px 30px;
+  border:4px double var(--red);
+  padding:9px 18px;
   pointer-events:none;
   text-transform:uppercase;white-space:nowrap;
   z-index:3;
-  box-shadow:0 0 0 4px rgba(250,247,240,.96);
+  box-shadow:0 0 0 3px rgba(250,247,240,.96);
+  text-align:center;line-height:1.15;
+}
+.lead-veil:not(.wip) .wip-stamp{display:none}
+
+/* --- Right two-thirds: PDF register (accordion) --- */
+.pdf-register{padding:0}
+.pdf-register-head{
+  display:flex;align-items:baseline;justify-content:space-between;gap:12px;
+  padding-bottom:12px;border-bottom:1px solid var(--ink);margin-bottom:4px;
+}
+.pdf-register-head h3{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:12px;letter-spacing:.28em;text-transform:uppercase;
+  color:var(--ink);font-weight:700;margin:0;
+}
+.pdf-register-head .kicker{
+  font-family:'Fraunces',Georgia,serif;font-style:italic;
+  font-variation-settings:"opsz" 18,"SOFT" 80,"wght" 400;
+  font-size:13.5px;color:var(--muted);
+}
+.pdf-register-scroll{
+  max-height:340px;overflow-y:auto;padding-right:6px;
+}
+.pdf-register-scroll::-webkit-scrollbar{width:5px}
+.pdf-register-scroll::-webkit-scrollbar-track{background:transparent}
+.pdf-register-scroll::-webkit-scrollbar-thumb{background:var(--rule);border-radius:3px}
+.pdf-entry{
+  border-bottom:1px solid var(--rule-hair);
+  padding:14px 4px 12px;
+}
+.pdf-entry:last-child{border-bottom:0}
+.pdf-entry summary{
+  cursor:pointer;list-style:none;
+  display:flex;align-items:baseline;justify-content:space-between;gap:14px;
+  padding:2px 0;
+}
+.pdf-entry summary::-webkit-details-marker{display:none}
+.pdf-entry summary::marker{display:none}
+.pdf-entry summary:hover .title{color:var(--red)}
+.pdf-entry .title-block{flex:1;min-width:0}
+.pdf-entry .title{
+  font-family:'Fraunces',Georgia,serif;
+  font-variation-settings:"opsz" 24,"SOFT" 60,"wght" 600;
+  font-weight:600;font-size:18px;line-height:1.15;
+  color:var(--ink);display:block;
+  transition:color .12s;
+}
+.pdf-entry[open] .title{color:var(--red)}
+.pdf-entry .filecode{
+  display:block;margin-top:4px;
+  font-family:'IBM Plex Mono',monospace;
+  font-size:9.5px;letter-spacing:.20em;text-transform:uppercase;
+  color:var(--muted);
+}
+.pdf-entry .marker{
+  flex-shrink:0;
+  font-family:'IBM Plex Mono',monospace;
+  font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--muted);
+  padding:3px 8px;border:1px solid var(--rule);border-radius:2px;
+  white-space:nowrap;align-self:flex-start;margin-top:2px;
+}
+.pdf-entry[open] .marker{color:var(--red);border-color:var(--red)}
+.pdf-entry .about{
+  font-family:'Source Serif 4',Georgia,serif;
+  font-size:14.5px;line-height:1.55;color:var(--ink-2);
+  margin:10px 0 8px;padding:4px 0 4px 14px;
+  border-left:2px solid var(--red);
+}
+.pdf-entry .actions{
+  display:flex;gap:14px;margin-top:8px;padding-left:14px;
+  font-family:'IBM Plex Mono',monospace;
+  font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+}
+.pdf-entry .actions a{
+  color:var(--red);text-decoration:none;
+  border-bottom:1px solid var(--red);padding-bottom:1px;
+}
+.pdf-entry .actions a:hover{color:var(--ink);border-bottom-color:var(--ink)}
+
+/* Legacy .lead-body / .lead h2 etc classes kept for future non-split
+   fold layouts; not used in current markup. */
+.lead-body{display:grid;grid-template-columns:1.4fr 1fr;gap:36px;align-items:start}
+.lead h2{
+  font-family:'Fraunces',Georgia,serif;
+  font-variation-settings:"opsz" 120, "SOFT" 60, "wght" 700;
+  font-weight:700;font-size:clamp(30px, 4.2vw, 46px);
+  line-height:1.02;letter-spacing:-.005em;color:var(--ink);margin-bottom:12px;
+}
+.lead .deck{
+  font-family:'Fraunces',Georgia,serif;font-style:italic;
+  font-variation-settings:"opsz" 32, "SOFT" 80, "wght" 400;
+  font-size:20px;line-height:1.4;color:var(--ink-2);margin-bottom:16px;
+}
+.lead .lede{font-size:17px;line-height:1.6;color:var(--ink-2)}
+.lead .cta{
+  display:inline-block;margin-top:12px;
+  font-family:'IBM Plex Mono',monospace;
+  font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--red);border-bottom:1px solid var(--red);padding-bottom:1px;
+  text-decoration:none;
 }
 
 /* ---------- SECTION BAR (between fold and columns) ---------- */
@@ -203,11 +278,24 @@ body{
   font-size:14px;color:var(--muted);
 }
 
-/* ---------- MULTI-COLUMN PANEL GRID ---------- */
+/* ---------- MULTI-COLUMN PANEL GRID — 3×3 WINDOWED FEED ----------
+   Nine tiles visible. Container caps at three rows plus half of a
+   fourth (~1080px) so a partial 4th row peeks in as the "more below"
+   affordance. Scroll vertically for older items. Newest first;
+   source order is authoritative — this project has first look at
+   every doc before it lands on GitHub. */
 .grid{
   display:grid;grid-template-columns:repeat(3, 1fr);gap:14px;
   border-top:1px solid var(--rule);
   padding-top:16px;
+  max-height:min(1080px, 88vh);
+  overflow-y:auto;
+  scroll-behavior:smooth;
+}
+.grid::-webkit-scrollbar{width:6px}
+.grid::-webkit-scrollbar-track{background:transparent}
+.grid::-webkit-scrollbar-thumb{background:var(--rule);border-radius:3px}
+.grid::-webkit-scrollbar-thumb:hover{background:var(--muted)}
 }
 .panel{
   padding:20px 20px 22px;
@@ -744,8 +832,11 @@ body{
 
 /* ---------- responsive ---------- */
 @media (max-width:840px){
+  .lead{grid-template-columns:1fr;gap:20px}
   .lead-body{grid-template-columns:1fr;gap:20px}
-  .grid{grid-template-columns:1fr 1fr}
+  .lead-veil{min-height:220px}
+  .pdf-register-scroll{max-height:none}
+  .grid{grid-template-columns:1fr 1fr;max-height:none}
   .wire-empty{grid-template-columns:1fr 1fr}
   .colophon{grid-template-columns:1fr}
 }
@@ -754,7 +845,7 @@ body{
   .nameplate h1{font-size:52px}
   .grid{grid-template-columns:1fr}
   .wire-empty{grid-template-columns:1fr}
-  .lead .wip-stamp{font-size:22px;padding:8px 18px;letter-spacing:.10em}
+  .lead-veil .wip-stamp{font-size:15px;padding:7px 14px;letter-spacing:.10em}
 }
 </style>
 </head>
@@ -784,25 +875,78 @@ body{
   </header>
 
   <!-- ============================================================
-       LEAD PANEL — above the fold
-       OSF, fully sealed as work-in-progress. Remove class="lead wip"
-       (leave just class="lead") to release it publicly.
+       SPLIT LEAD PANEL — above the fold
+       Left third: OSF, fully sealed as work-in-progress. Remove
+       class="wip" from .lead-veil to release publicly.
+       Right two-thirds: PDF register (accordion). New entries land
+       at the top of the register — same feed rule as the grid tiles.
        ============================================================ -->
-  <section class="lead wip" aria-label="Lead story — Open Source Firefighter, work in progress">
-    <div class="eyebrow">Above the Fold &middot; Work in Progress</div>
-    <div class="lead-body">
-      <div>
+  <section class="lead" aria-label="Split lead — OSF veil and PDF register">
+
+    <!-- Left third — OSF veil (WIP-sealed) -->
+    <div class="lead-veil wip">
+      <div class="eyebrow">Above the Fold &middot; Work in Progress</div>
+      <div class="lead-veil-body">
         <h2>An Open Standard for Coordinated Ember &amp; Terrain Defense.</h2>
         <div class="deck">A sixteen-document specification family in first review.</div>
-        <div class="dateline">Palmer Lake &middot; Filed July 2026 &middot; Not for public distribution</div>
-        <a class="cta" href="osf/osf_site.html">Access on release &rarr;</a>
+        <div class="lede">A stamped specification family &mdash; doctrine, hardware, protocol, tactics, strategy &mdash; for neighborhood-scale ember defense. Speaks ICS on the front end. Speaks Meshtastic and MANET on the back.</div>
       </div>
-      <div class="lede">
-        <p><span class="drop">A</span>&nbsp;stamped specification family &mdash; doctrine, hardware, protocol, tactics, strategy &mdash; for neighborhood-scale ember defense. Speaks ICS on the front end. Speaks Meshtastic and MANET on the back.</p>
-        <p>Companion site to the sixteen-document set. First review packages currently circulating with operational reviewers under distribution hold.</p>
+      <div class="wip-stamp">Work<br>in Progress</div>
+    </div>
+
+    <!-- Right two-thirds — PDF register -->
+    <div class="pdf-register" aria-label="PDF register">
+      <div class="pdf-register-head">
+        <h3>Register &middot; PDFs</h3>
+        <div class="kicker">the reading room</div>
+      </div>
+      <div class="pdf-register-scroll">
+
+        <details class="pdf-entry">
+          <summary>
+            <div class="title-block">
+              <span class="title">The Bloomberg Terminal</span>
+              <span class="filecode">bloomberg-terminal</span>
+            </div>
+            <span class="marker">PDF &middot; 4 pp</span>
+          </summary>
+          <p class="about">The apparatus Hayek said couldn&rsquo;t exist has been running for forty years. The framework that defeated socialism in the calculation debate depends on the claim that the terminal cannot exist &mdash; and the people who use the terminal are the people who cite the framework.</p>
+          <div class="actions">
+            <a href="pdfs/bloomberg-terminal.pdf" target="_blank" rel="noopener">Download &rarr;</a>
+          </div>
+        </details>
+
+        <details class="pdf-entry">
+          <summary>
+            <div class="title-block">
+              <span class="title">The Thing You Already Know</span>
+              <span class="filecode">the-thing-you-already-know</span>
+            </div>
+            <span class="marker">PDF &middot; 5 pp</span>
+          </summary>
+          <p class="about">On why the system that was supposed to verify knowledge ended up filtering it out. Lysenko, thalidomide, 2008, the opioid crisis, the classroom &mdash; the direct observers were right first, and they were filtered out until the format requirements were satisfied.</p>
+          <div class="actions">
+            <a href="pdfs/the-thing-you-already-know.pdf" target="_blank" rel="noopener">Download &rarr;</a>
+          </div>
+        </details>
+
+        <details class="pdf-entry">
+          <summary>
+            <div class="title-block">
+              <span class="title">Outsourced Homeostasis</span>
+              <span class="filecode">outsourced-homeostasis</span>
+            </div>
+            <span class="marker">PDF &middot; 4 pp</span>
+          </summary>
+          <p class="about">A framework draft on why the brain seeks plant chemistry, and what that means for treating addiction. Biology has a habit of turning permanent environmental chemicals into functional necessities. Addiction as foraging drive in a broken environment.</p>
+          <div class="actions">
+            <a href="pdfs/outsourced-homeostasis.pdf" target="_blank" rel="noopener">Download &rarr;</a>
+          </div>
+        </details>
+
       </div>
     </div>
-    <div class="wip-stamp">Work in Progress</div>
+
   </section>
 
   <!-- ============================================================
@@ -815,23 +959,27 @@ body{
   </div>
 
   <!-- ============================================================
-       PANEL GRID — the columns of the paper
-       Each panel is a link into its own doc.
+       PANEL GRID — the 3×3 windowed feed
+       Newest first. Each tile carries data-updated="YYYY-MM-DD".
+       When a doc is touched, its tile's date bumps and its position
+       moves to the top of source order. This project has first look
+       at every doc before it lands on GitHub, so the sort is
+       maintained by hand during the wash pass.
        ============================================================ -->
   <div class="grid">
 
-    <a class="panel tile-palmerlake-mini" href="palmer-lake-vision/palmer-lake-vision.html" aria-label="Palmer Lake — A Place Worth Coming Back To">
-      <div class="eyebrow">Neighborhood &middot; Vision</div>
-      <h4>Palmer Lake &mdash; <em>A Place Worth Coming Back To</em></h4>
-      <div class="deck">The creek. The fire. The flood that hasn't come yet. The land that stayed.</div>
-      <div class="lede">A small town inside a bowl. The mountains hold it on three sides, the railroad on a fourth. <strong>Monument Creek feeds the lake.</strong> The star on the hillside watches everything. A chapter-by-chapter vision for the corridor.</div>
+    <a class="panel tile-stonemachine-mini" href="stone-machine-cycle/stone-machine-cycle.html" aria-label="The Stone Machine Cycle" data-updated="2026-07-15">
+      <div class="eyebrow">Essay &middot; Companion Piece</div>
+      <h4>The Stone Machine<span class="l2">Cycle</span></h4>
+      <div class="deck">A companion to <em>Stone Economy, Timber Machine</em>.</div>
+      <div class="lede">Egyptian construction reframed as an <strong>integrated abrasive-processing system</strong>. Dolerite as working medium migrating through the stages &mdash; percussion, bearing, polish. The transport was the machining.</div>
       <div class="foot">
-        <span>Planning Commission</span>
+        <span>Palmer Lake &middot; July 2026</span>
         <span class="cta">Read &rarr;</span>
       </div>
     </a>
 
-    <a class="panel tile-stone-mini" href="stone-economy-timber-machine/stone-economy-timber-machine.html" aria-label="Stone Economy, Timber Machine">
+    <a class="panel tile-stone-mini" href="stone-economy-timber-machine/stone-economy-timber-machine.html" aria-label="Stone Economy, Timber Machine" data-updated="2026-07-15">
       <div class="eyebrow">Essay &middot; From inside the trade</div>
       <h4>Stone Economy,<span class="l2">Timber Machine</span></h4>
       <div class="deck">The stone is what lasted. The wood did the work.</div>
@@ -842,74 +990,18 @@ body{
       </div>
     </a>
 
-    <a class="panel tile-stonemachine-mini" href="pdfs/stone-machine-cycle.pdf" aria-label="The Stone Machine Cycle — companion PDF">
-      <div class="eyebrow">Essay &middot; Companion Piece</div>
-      <h4>The Stone Machine<span class="l2">Cycle</span></h4>
-      <div class="deck">A companion to <em>Stone Economy, Timber Machine</em>.</div>
-      <div class="lede">Egyptian construction reframed as an <strong>integrated abrasive-processing system</strong>. Dolerite as working medium migrating through the stages &mdash; percussion, bearing, polish. The transport was the machining.</div>
+    <a class="panel tile-palmerlake-mini" href="palmer-lake-vision/palmer-lake-vision.html" aria-label="Palmer Lake — A Place Worth Coming Back To" data-updated="2026-07-14">
+      <div class="eyebrow">Neighborhood &middot; Vision</div>
+      <h4>Palmer Lake &mdash; <em>A Place Worth Coming Back To</em></h4>
+      <div class="deck">The creek. The fire. The flood that hasn't come yet. The land that stayed.</div>
+      <div class="lede">A small town inside a bowl. The mountains hold it on three sides, the railroad on a fourth. <strong>Monument Creek feeds the lake.</strong> The star on the hillside watches everything. A chapter-by-chapter vision for the corridor.</div>
       <div class="foot">
-        <span>Working note</span>
-        <span><span class="pdf-pill">PDF</span> &nbsp;<span class="cta">Download &rarr;</span></span>
-      </div>
-    </a>
-
-    <a class="panel tile-thing-mini" href="pdfs/the-thing-you-already-know.pdf" aria-label="The Thing You Already Know — PDF essay">
-      <div class="eyebrow">Essay &middot; On Verification</div>
-      <h4>The Thing You Already Know</h4>
-      <div class="deck">On why the system that was supposed to verify knowledge ended up filtering it out.</div>
-      <div class="lede">Lysenko, thalidomide, 2008, the opioid crisis, the classroom. The direct observers were <em>right first</em>, and they were filtered out until the format requirements were satisfied.</div>
-      <div class="foot">
-        <span>Field research</span>
-        <span><span class="pdf-pill">PDF</span> &nbsp;<span class="cta">Download &rarr;</span></span>
-      </div>
-    </a>
-
-    <a class="panel tile-bloomberg-mini" href="pdfs/bloomberg-terminal.pdf" aria-label="The Bloomberg Terminal — PDF essay">
-      <div class="eyebrow">Essay &middot; Economics</div>
-      <h4>The Bloomberg Terminal</h4>
-      <div class="deck">The apparatus Hayek said couldn't exist has been running for forty years.</div>
-      <div class="lede">The <strong>framework</strong> that defeated socialism in the calculation debate depends on the claim that the terminal cannot exist. The people who use the terminal are the people who cite the framework.</div>
-      <div class="foot">
-        <span>Argument</span>
-        <span><span class="pdf-pill">PDF</span> &nbsp;<span class="cta">Download &rarr;</span></span>
-      </div>
-    </a>
-
-    <a class="panel tile-homeostasis-mini" href="pdfs/outsourced-homeostasis.pdf" aria-label="Outsourced Homeostasis — PDF framework draft">
-      <div class="eyebrow">Framework Draft &middot; Theory</div>
-      <h4>Outsourced Homeostasis</h4>
-      <div class="deck">Why the brain seeks plant chemistry, and what that means for treating addiction.</div>
-      <div class="lede">Biology has a habit of turning permanent environmental chemicals into functional necessities. What starts as a toxin can become a tool &mdash; and then a requirement. <strong>Addiction as foraging drive in a broken environment.</strong></div>
-      <div class="foot">
-        <span>Draft</span>
-        <span><span class="pdf-pill">PDF</span> &nbsp;<span class="cta">Download &rarr;</span></span>
-      </div>
-    </a>
-
-    <a class="panel tile-joker-mini" href="joker_and_thief/joker_and_thief.html" aria-label="The Joker and The Thief">
-      <div class="eyebrow">Essay &middot; Symbol Politics</div>
-      <h4>The Joker <span class="amp">&amp;</span> The Thief</h4>
-      <div class="deck">The political inversion of Tarot's foundation, and the pop-culture encryption of truth.</div>
-      <div class="lede">Modern culture views the Devil as a terrifying lord of darkness. History reveals a deliberate inversion &mdash; the Devil is simply the <em>Fool</em>, rewritten by institutional power to make freedom terrifying.</div>
-      <div class="foot">
-        <span>An Inquiry</span>
+        <span>Planning Commission</span>
         <span class="cta">Read &rarr;</span>
       </div>
     </a>
 
-    <a class="panel tile-northsea-mini" href="north-sea-tribal-era/north-sea-tribal-era.html" aria-label="The Pre-King North Sea">
-      <div class="eyebrow">Working Notes &middot; Ancestors</div>
-      <h4>The Pre-King North Sea</h4>
-      <div class="deck">Tribal era, 150&ndash;400 AD. Before kings. Before Vikings. Before national names.</div>
-      <div class="lede">Long before modern national identities or the Viking Age, the coastal tribes of the North Sea shared one unified maritime, linguistic, and spiritual culture &mdash; <strong>animistic, runic, and bound to bog and coastline</strong>.</div>
-      <div class="rune" aria-hidden="true"></div>
-      <div class="foot">
-        <span>Return &amp; Expand</span>
-        <span class="cta">Read &rarr;</span>
-      </div>
-    </a>
-
-    <a class="panel tile-eddie-mini" href="eddie/eddie-portal.html" aria-label="Bench School — The Eddie File">
+    <a class="panel tile-eddie-mini" href="eddie/eddie-portal.html" aria-label="Bench School — The Eddie File" data-updated="2026-07-13">
       <div class="eyebrow">Morton Millworks &middot; Bench School</div>
       <h4>The <span class="who">Eddie</span> File</h4>
       <div class="deck">A qualification-table apprenticeship on the bench.</div>
@@ -925,7 +1017,30 @@ body{
       </div>
     </a>
 
-    <a class="panel sec-engineering" href="cdpr/cdpr-construction-system.html">
+    <a class="panel tile-joker-mini" href="joker_and_thief/joker_and_thief.html" aria-label="The Joker and The Thief" data-updated="2026-07-12">
+      <div class="eyebrow">Essay &middot; Symbol Politics</div>
+      <h4>The Joker <span class="amp">&amp;</span> The Thief</h4>
+      <div class="deck">The political inversion of Tarot's foundation, and the pop-culture encryption of truth.</div>
+      <div class="lede">Modern culture views the Devil as a terrifying lord of darkness. History reveals a deliberate inversion &mdash; the Devil is simply the <em>Fool</em>, rewritten by institutional power to make freedom terrifying.</div>
+      <div class="foot">
+        <span>An Inquiry</span>
+        <span class="cta">Read &rarr;</span>
+      </div>
+    </a>
+
+    <a class="panel tile-northsea-mini" href="north-sea-tribal-era/north-sea-tribal-era.html" aria-label="The Pre-King North Sea" data-updated="2026-07-12">
+      <div class="eyebrow">Working Notes &middot; Ancestors</div>
+      <h4>The Pre-King North Sea</h4>
+      <div class="deck">Tribal era, 150&ndash;400 AD. Before kings. Before Vikings. Before national names.</div>
+      <div class="lede">Long before modern national identities or the Viking Age, the coastal tribes of the North Sea shared one unified maritime, linguistic, and spiritual culture &mdash; <strong>animistic, runic, and bound to bog and coastline</strong>.</div>
+      <div class="rune" aria-hidden="true"></div>
+      <div class="foot">
+        <span>Return &amp; Expand</span>
+        <span class="cta">Read &rarr;</span>
+      </div>
+    </a>
+
+    <a class="panel sec-engineering" href="cdpr/cdpr-construction-system.html" data-updated="2026-07-10">
       <div class="eyebrow">Engineering</div>
       <h4>Hybrid Site Construction</h4>
       <div class="deck">Cable-Driven Parallel Robot (CDPR) &mdash; concept brief.</div>
