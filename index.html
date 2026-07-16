@@ -33,7 +33,12 @@
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
 body{
-  background:var(--paper);
+  background-color:var(--paper);
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.045 0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E"),
+    linear-gradient(rgba(30,20,10,0.022) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(30,20,10,0.022) 1px, transparent 1px);
+  background-size:300px 300px, 28px 28px, 28px 28px;
   color:var(--ink);
   font-family:'Source Serif 4',Georgia,serif;
   font-size:16px;line-height:1.55;
@@ -290,19 +295,24 @@ body{
    than getting lost on the cream paper. */
 .grid{
   display:grid;grid-template-columns:repeat(3, 1fr);gap:14px;
-  background:#B5A494;
-  border:1px solid #2a1f14;
+  background-color:#B5A494;
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cfilter id='n2'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.09 0'/%3E%3C/filter%3E%3Crect width='260' height='260' filter='url(%23n2)'/%3E%3C/svg%3E"),
+    linear-gradient(rgba(30,20,10,0.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(30,20,10,0.055) 1px, transparent 1px);
+  background-size:260px 260px, 24px 24px, 24px 24px;
+  border:1px solid #8f7f6d;
   padding:20px;
   border-radius:2px;
   max-height:min(1080px, 88vh);
   overflow-y:auto;
   scroll-behavior:smooth;
-  box-shadow:inset 0 2px 8px rgba(0,0,0,.25);
+  box-shadow:inset 0 2px 8px rgba(0,0,0,.14);
 }
 .grid::-webkit-scrollbar{width:6px}
-.grid::-webkit-scrollbar-track{background:rgba(0,0,0,.15)}
-.grid::-webkit-scrollbar-thumb{background:#6b5a48;border-radius:3px}
-.grid::-webkit-scrollbar-thumb:hover{background:#8a7660}
+.grid::-webkit-scrollbar-track{background:rgba(0,0,0,.10)}
+.grid::-webkit-scrollbar-thumb{background:#7a6b5a;border-radius:3px}
+.grid::-webkit-scrollbar-thumb:hover{background:#5c4e3e}
 }
 .panel{
   padding:20px 20px 22px;
@@ -975,6 +985,22 @@ body{
        ============================================================ -->
   <div class="grid">
 
+    <a class="panel tile-eddie-mini" href="eddie/eddie-portal.html" aria-label="Bench School — The Eddie File" data-updated="2026-07-16">
+      <div class="eyebrow">Morton Millworks &middot; Bench School</div>
+      <h4>The <span class="who">Eddie</span> File</h4>
+      <div class="deck">A qualification-table apprenticeship on the bench.</div>
+      <div class="lede">Dry, blank, live, qual &mdash; a military qualification skeleton wrapped around a PRIMM pedagogy. Real machines at every rung. <strong>Lesson 03 posted:</strong> switch it, then dim it &mdash; relay, MOSFET, and the knob that fades.</div>
+      <div class="stat-row">
+        <div class="stat"><div class="n">02</div><div class="l">Cleared</div></div>
+        <div class="stat"><div class="n">03</div><div class="l">Current</div></div>
+        <div class="stat"><div class="n">12V</div><div class="l">Ceiling</div></div>
+      </div>
+      <div class="foot">
+        <span>Bench School</span>
+        <span class="cta">Enter &rarr;</span>
+      </div>
+    </a>
+
     <a class="panel tile-stonemachine-mini" href="stone-machine-cycle/stone-machine-cycle.html" aria-label="The Stone Machine Cycle" data-updated="2026-07-15">
       <div class="eyebrow">Essay &middot; Companion Piece</div>
       <h4>The Stone Machine<span class="l2">Cycle</span></h4>
@@ -1005,22 +1031,6 @@ body{
       <div class="foot">
         <span>Planning Commission</span>
         <span class="cta">Read &rarr;</span>
-      </div>
-    </a>
-
-    <a class="panel tile-eddie-mini" href="eddie/eddie-portal.html" aria-label="Bench School — The Eddie File" data-updated="2026-07-13">
-      <div class="eyebrow">Morton Millworks &middot; Bench School</div>
-      <h4>The <span class="who">Eddie</span> File</h4>
-      <div class="deck">A qualification-table apprenticeship on the bench.</div>
-      <div class="lede">Dry, blank, live, qual &mdash; a military qualification skeleton wrapped around a PRIMM pedagogy. Real machines at every rung. Capstone: a turntable for the Vintage Book Shoppe.</div>
-      <div class="stat-row">
-        <div class="stat"><div class="n">01</div><div class="l">Cleared</div></div>
-        <div class="stat"><div class="n">02</div><div class="l">Current</div></div>
-        <div class="stat"><div class="n">12V</div><div class="l">Ceiling</div></div>
-      </div>
-      <div class="foot">
-        <span>Bench School</span>
-        <span class="cta">Enter &rarr;</span>
       </div>
     </a>
 
