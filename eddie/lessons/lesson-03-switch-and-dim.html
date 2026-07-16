@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lesson 03 — Switch It, Then Dim It</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600&family=Public+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --mat:#2F6B5E; --mat-deep:#1E4A40;
+    --paper:#F7F6F2; --ink:#1D2321;
+    --blaze:#DE5A12; --steel:#5C6660;
+    --code-bg:#132621; --code-ink:#D9EAE2;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{background:var(--paper); color:var(--ink);
+    font-family:'Public Sans',system-ui,sans-serif; font-size:16px; line-height:1.55;}
+  .wrap{max-width:720px; margin:0 auto; padding:16px 16px 80px;}
+  header.card{background:var(--mat-deep); color:#fff; border-radius:10px; padding:20px; margin-bottom:20px;}
+  .eyebrow{font-family:'Oswald',Arial Narrow,sans-serif; letter-spacing:.18em; text-transform:uppercase;
+    font-size:12px; color:var(--blaze); font-weight:600;}
+  h1{font-family:'Oswald',Arial Narrow,sans-serif; font-weight:600; font-size:30px; line-height:1.15; margin:6px 0 14px; text-transform:uppercase;}
+  .tcs{display:grid; gap:8px; font-size:14px;}
+  .tcs b{color:var(--blaze); font-family:'Oswald',sans-serif; letter-spacing:.08em; font-weight:500;}
+  .rail{display:flex; gap:6px; margin:22px 0 6px;}
+  .rail span{flex:1; text-align:center; font-family:'Oswald',sans-serif; font-size:12px; letter-spacing:.14em;
+    padding:6px 0; border:2px solid var(--steel); color:var(--steel); border-radius:6px;}
+  .rail span.on{background:var(--blaze); border-color:var(--blaze); color:#fff;}
+  h2.table-head{font-family:'Oswald',sans-serif; font-weight:600; text-transform:uppercase; letter-spacing:.06em;
+    font-size:22px; margin:34px 0 4px; padding-left:12px; border-left:6px solid var(--blaze); color:var(--mat-deep);}
+  .table-sub{font-size:13px; color:var(--steel); margin-bottom:14px; padding-left:18px;}
+  h3{font-family:'Oswald',sans-serif; font-weight:500; font-size:17px; margin:20px 0 8px; color:var(--mat-deep);}
+  p{margin-bottom:12px;}
+  ul,ol{margin:0 0 12px 22px;}
+  li{margin-bottom:6px;}
+  .safety{border:3px solid var(--blaze); border-radius:10px; padding:16px; margin:18px 0; background:#fff;}
+  .safety h3{margin-top:0; color:var(--blaze);}
+  table{width:100%; border-collapse:collapse; font-size:13.5px; margin:12px 0; background:#fff;}
+  th{background:var(--mat); color:#fff; font-family:'Oswald',sans-serif; font-weight:500; letter-spacing:.05em;
+    text-align:left; padding:8px;}
+  td{border:1px solid #cfd4cf; padding:8px; vertical-align:top;}
+  .w-red{color:#B42318; font-weight:700;} .w-blk{font-weight:700;}
+  .w-yel{color:#8A6D0B; font-weight:700;} .w-blu{color:#1F4FA0; font-weight:700;}
+  .ai{background:#fff; border:2px dashed var(--mat); border-radius:10px; padding:14px 16px; margin:16px 0;}
+  .ai .tag{font-family:'Oswald',sans-serif; font-size:12px; letter-spacing:.16em; color:var(--mat-deep);
+    text-transform:uppercase; margin-bottom:8px;}
+  .ai .prompt{background:var(--paper); border-radius:8px; padding:10px 12px; font-size:14.5px; font-style:italic;
+    border-left:4px solid var(--blaze); margin-top:6px;}
+  .chk{background:#EAF1EC; border-left:6px solid var(--mat); border-radius:0 8px 8px 0; padding:12px 14px; margin:14px 0; font-size:14.5px;}
+  .chk b{font-family:'Oswald',sans-serif; letter-spacing:.08em; color:var(--mat-deep); font-weight:600;}
+  .big-idea{background:var(--mat-deep); color:#fff; border-radius:10px; padding:18px; margin:18px 0; font-size:15.5px;}
+  .big-idea b{color:var(--blaze);}
+  .codewrap{position:relative; margin:14px 0;}
+  pre{background:var(--code-bg); color:var(--code-ink); border-radius:10px; padding:16px 14px;
+    overflow-x:auto; font-family:ui-monospace,'Cascadia Mono',Menlo,monospace; font-size:13px; line-height:1.5;}
+  .copy{position:absolute; top:8px; right:8px; background:var(--blaze); color:#fff; border:none;
+    font-family:'Oswald',sans-serif; letter-spacing:.1em; font-size:11px; padding:6px 12px; border-radius:6px;}
+  .copy:active{background:var(--mat);}
+  .qual-box{background:var(--mat-deep); color:#fff; border-radius:10px; padding:18px; margin:16px 0;}
+  .qual-box h3{color:var(--blaze); margin-top:0;}
+  .qual-box table{background:transparent; color:#fff;}
+  .qual-box td{border-color:#4a6a60;}
+  .stage{background:#fff; border:2px solid var(--mat); border-radius:10px; padding:4px 14px 2px; margin:16px 0;}
+  .stage .sh{font-family:'Oswald',sans-serif; font-size:13px; letter-spacing:.12em; text-transform:uppercase;
+    color:#fff; background:var(--mat); display:inline-block; padding:4px 12px; border-radius:0 0 6px 6px; margin-bottom:10px;}
+  footer{margin-top:40px; font-size:12px; color:var(--steel); text-align:center;
+    font-family:'Oswald',sans-serif; letter-spacing:.12em; text-transform:uppercase;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="card">
+  <div class="eyebrow">Morton Millworks &middot; Bench Qualification</div>
+  <h1>Lesson 03<br>Switch It, Then Dim It</h1>
+  <div class="tcs">
+    <div><b>TASK</b> &mdash; Turn the 12&nbsp;V light bar on and off with the Pico. Then do it again with no moving parts. Then take a knob and make it fade.</div>
+    <div><b>CONDITIONS</b> &mdash; Bench 12&nbsp;V supply. Pico, relay module, MOSFET module, 10K pot, LED light bar. Thonny on the laptop, AI tutor on your phone.</div>
+    <div><b>STANDARD</b> &mdash; Light blinks on command through the relay. Same blink through the MOSFET. Knob smoothly fades the bar 0&ndash;100% with no flicker. Explain the difference between a switch and a dimmer at debrief.</div>
+  </div>
+</header>
+
+<div class="ai">
+  <div class="tag">&#9889; First move &mdash; set up your AI tutor</div>
+  <p style="font-size:14px">Paste this into your Claude before you touch anything:</p>
+  <div class="prompt">You're my electronics shop tutor today. Rules: never write complete code for me &mdash; the lesson doc has the code. Before I run anything, make me predict what it will do, then question my prediction. When I show a photo or an error, ask me diagnostic questions one at a time instead of answering. Keep replies short. If I try to get you to just solve it, remind me of this deal.</div>
+</div>
+
+<div class="big-idea">
+  <b>The big idea:</b> the Pico is a <b>tiny</b> brain. It can push about 3.3 volts and a few thousandths of an amp &mdash; enough to light one little LED and nothing more. That light bar wants 12 volts and a lot more current. So the Pico never touches the light. It touches a <b>switch</b>, and the switch touches the light. Everything you build from here follows that rule: <b>small signal commands, big thing obeys.</b>
+</div>
+
+<div class="safety">
+  <h3>&#9888; Safety Brief</h3>
+  <ul>
+    <li><b>Everything on this bench is 12&nbsp;V or less.</b> That is friendly. The worst thing that happens here is a part dies and we buy another one. That's tuition, not a hazard.</li>
+    <li><b>Wire it with the 12&nbsp;V supply OFF.</b> Build the circuit, look at it, then power it. Every time.</li>
+    <li><b>The light bar gets warm.</b> That's normal. Hot enough you can't hold it means something's wrong &mdash; kill power and ask.</li>
+    <li><b>Watch polarity on the light bar.</b> Red is +, black is &minus;. Backwards usually just means "doesn't light," but don't push your luck.</li>
+    <li><b>If you smell anything or see smoke, pull the 12&nbsp;V first.</b> The Pico's USB is harmless. The 12&nbsp;V rail is the muscle.</li>
+  </ul>
+</div>
+
+<h3>The four stages of this lesson</h3>
+<p>Same job, four times, each way better than the last. You are going to turn one light on and off with:</p>
+<ol>
+  <li><b>A relay</b> &mdash; a mechanical switch the Pico can click. You'll hear it.</li>
+  <li><b>A MOSFET</b> &mdash; the same job, silently, with no moving parts.</li>
+  <li><b>A pot</b> &mdash; the Pico learns to <i>listen</i> to a knob instead of just talk.</li>
+  <li><b>All three together</b> &mdash; the knob fades the light. That's PWM, and you already met it.</li>
+</ol>
+<p style="font-size:14px; color:var(--steel);">Do not skip ahead. Each stage is a different idea wearing the same job.</p>
+
+<!-- ============ TABLE I ============ -->
+<div class="rail"><span class="on">I &middot; DRY</span><span>II &middot; BLANK</span><span>III &middot; LIVE</span><span>IV &middot; QUAL</span></div>
+<h2 class="table-head">Table I &mdash; Dry</h2>
+<div class="table-sub">Nothing powered. Read Stage 1's code. Predict out loud before anything happens.</div>
+<ol>
+  <li>The code sets a pin HIGH, waits, sets it LOW, waits, forever. What do you expect to <i>hear</i>? What do you expect to <i>see</i>?</li>
+  <li>The relay is a switch. What is it switching &mdash; the Pico's power, or the 12&nbsp;V power?</li>
+  <li>Trace the path the 12&nbsp;V takes to get to the light. Say it out loud, start to finish.</li>
+</ol>
+
+<div class="ai">
+  <div class="tag">&#128248; Ask your AI</div>
+  <div class="prompt">I'm about to make a Pico click a relay that switches a 12V light bar (I'll paste the code). My prediction is: [your prediction]. Ask me questions that test whether I actually understand which wire carries what.</div>
+</div>
+
+<!-- ============ TABLE II ============ -->
+<div class="rail"><span>I &middot; DRY</span><span class="on">II &middot; BLANK</span><span>III &middot; LIVE</span><span>IV &middot; QUAL</span></div>
+<h2 class="table-head">Table II &mdash; Blank</h2>
+<div class="table-sub">Sanctioned copy-paste. Wire with the 12&nbsp;V off. Power up, then run.</div>
+
+<!-- STAGE 1 -->
+<div class="stage">
+  <div class="sh">Stage 1 &mdash; The Relay</div>
+
+  <p>A relay is an electric switch with a little arm inside. Send it a signal and a coil pulls the arm over, <b>click</b>, and the big circuit closes. It's the same as you flipping a light switch &mdash; except the Pico's finger is a wire.</p>
+
+  <h3>Wiring &mdash; Stage 1</h3>
+  <table>
+    <tr><th>Wire</th><th>From &rarr; To</th><th>Why</th></tr>
+    <tr><td class="w-red">Relay VCC</td><td>Pico <b>VBUS</b> (pin 40)</td><td>The relay coil wants 5&nbsp;V. VBUS is the 5&nbsp;V coming in from USB.</td></tr>
+    <tr><td class="w-blk">Relay GND</td><td>Pico <b>GND</b></td><td>Shared ground. The signal means nothing without it.</td></tr>
+    <tr><td class="w-blu">Relay IN</td><td>Pico <b>GP16</b></td><td>The command wire. This is the Pico's finger.</td></tr>
+    <tr><td class="w-red">12&nbsp;V +</td><td>Relay <b>COM</b></td><td>Power comes <i>into</i> the switch here.</td></tr>
+    <tr><td class="w-red">Relay <b>NO</b></td><td>Light bar <b>red (+)</b></td><td>NO = Normally Open. Off until the relay clicks.</td></tr>
+    <tr><td class="w-blk">12&nbsp;V &minus;</td><td>Light bar <b>black (&minus;)</b></td><td>The return path, straight back to the supply.</td></tr>
+  </table>
+  <p style="font-size:14px"><b>Heads up:</b> the 12&nbsp;V never touches the Pico. Look at the table again and prove that to yourself. Two separate worlds, joined only by a switch.</p>
+
+  <div class="codewrap">
+  <button class="copy" onclick="cp(this)">COPY</button>
+  <pre># Stage 1: click the relay on and off. The light follows.
+#
+# The Pico can't power a light bar - it can barely light one LED.
+# So it doesn't try. It just tells a relay "close" and "open",
+# and the relay does the heavy lifting with the 12 V.
+
+from machine import Pin
+import time
+
+# GP16 is our command wire out to the relay's IN terminal.
+relay = Pin(16, Pin.OUT)
+
+print("Blinking the light bar. Listen for the click.")
+
+while True:                  # loop forever until you hit Stop
+    relay.value(1)           # signal HIGH  -> relay closes -> light ON
+    print("ON  - click")
+    time.sleep(1)            # leave it on for one second
+
+    relay.value(0)           # signal LOW   -> relay opens  -> light OFF
+    print("OFF - clack")
+    time.sleep(1)            # leave it off for one second</pre>
+  </div>
+  <div class="chk"><b>CHECKPOINT</b> &mdash; The light blinks once per second and you can <i>hear</i> the relay click each time. If the Shell prints but nothing happens, the problem is in the wiring, not the code. If it clicks but no light, the problem is on the 12&nbsp;V side.</div>
+
+  <p><b>Now break it on purpose:</b> change both <code>time.sleep(1)</code> to <code>time.sleep(0.05)</code> and run it. Listen. That poor relay is trying to physically slam a metal arm back and forth 20 times a second. It sounds awful, it will wear out, and it can't keep up.</p>
+
+  <div class="big-idea">
+    <b>That noise is the whole reason Stage 2 exists.</b> A relay is a real switch with a real arm that has to physically move. It's great for on and off. It is <i>terrible</i> at doing that fast. Remember that sound &mdash; you're about to replace it with something that can switch thousands of times a second and never make a sound.
+  </div>
+</div>
+
+<!-- STAGE 2 -->
+<div class="stage">
+  <div class="sh">Stage 2 &mdash; The MOSFET (same job, no moving parts)</div>
+
+  <p>Pull the relay off the bench. <b>Start over.</b> Same light, same job, different switch.</p>
+  <p>A MOSFET is a switch with no arm, no coil, and nothing that moves. It's a chunk of silicon that either lets current through or doesn't, depending on the voltage you put on its control leg. No click. No wear. And it can switch <i>fast</i>.</p>
+
+  <h3>Wiring &mdash; Stage 2</h3>
+  <table>
+    <tr><th>Wire</th><th>From &rarr; To</th><th>Why</th></tr>
+    <tr><td class="w-blu">Board <b>TRIG/PWM</b></td><td>Pico <b>GP17</b></td><td>The command wire. Same idea as the relay's IN.</td></tr>
+    <tr><td class="w-blk">Board <b>GND</b></td><td>Pico <b>GND</b></td><td>Shared ground &mdash; still required, always.</td></tr>
+    <tr><td class="w-red">12&nbsp;V +</td><td>Blue terminal <b>V+ (input side)</b></td><td>Supply into the board.</td></tr>
+    <tr><td class="w-blk">12&nbsp;V &minus;</td><td>Blue terminal <b>V&minus; (input side)</b></td><td>Supply return.</td></tr>
+    <tr><td class="w-red">Output <b>+</b></td><td>Light bar <b>red (+)</b></td><td>Switched power out to the load.</td></tr>
+    <tr><td class="w-blk">Output <b>&minus;</b></td><td>Light bar <b>black (&minus;)</b></td><td>The MOSFET actually switches this side.</td></tr>
+  </table>
+  <p style="font-size:14px">Note the board has an <b>LED</b> on it that lights when it's triggered. Free diagnostic &mdash; if that LED is on and your light bar isn't, your problem is downstream.</p>
+
+  <div class="codewrap">
+  <button class="copy" onclick="cp(this)">COPY</button>
+  <pre># Stage 2: same blink, no relay. The MOSFET does it silently.
+#
+# Notice this code is almost identical to Stage 1. That's the point.
+# From the Pico's side, nothing changed - it's still just setting
+# a pin HIGH and LOW. Only the hardware listening to it changed.
+
+from machine import Pin
+import time
+
+# GP17 goes to the MOSFET board's TRIG/PWM terminal.
+gate = Pin(17, Pin.OUT)
+
+print("Blinking through the MOSFET. Silence is the feature.")
+
+while True:
+    gate.value(1)            # HIGH -> MOSFET conducts -> light ON
+    print("ON")
+    time.sleep(1)
+
+    gate.value(0)            # LOW  -> MOSFET blocks   -> light OFF
+    print("OFF")
+    time.sleep(1)</pre>
+  </div>
+  <div class="chk"><b>CHECKPOINT</b> &mdash; Same blink, zero noise. Now run the <code>0.05</code> version again. The relay screamed. The MOSFET doesn't care. It'll do this all day, faster than you can see, and never wear out.</div>
+
+  <p><b>Notice what just happened:</b> your code barely changed. Pin HIGH, pin LOW. The Pico doesn't know or care whether there's a relay or a MOSFET on the other end. <b>That's a channel.</b> You send a signal; something on the other end turns it into the real world. Swap the something, keep the code.</p>
+</div>
+
+<!-- STAGE 3 -->
+<div class="stage">
+  <div class="sh">Stage 3 &mdash; The Pot (the Pico learns to listen)</div>
+
+  <p>Everything you've done so far, the Pico has been <b>talking</b>. Now it learns to <b>listen</b>.</p>
+  <p>A potentiometer &mdash; a pot &mdash; is a knob with a strip of resistance inside and a slider that rides along it. Put 3.3&nbsp;V on one end and ground on the other, and the slider picks off a voltage somewhere between. Turn the knob, the voltage changes. That's it. That's the whole part.</p>
+
+  <p><b>Which wire is which?</b> Your pot has three wires and no instruction sheet. Don't guess &mdash; measure. Meter on resistance:</p>
+  <ul>
+    <li>The two wires whose resistance <b>doesn't change</b> when you turn the knob are the <b>ends</b> of the strip. (This pot is 10K, so expect about 10,000 ohms between them.)</li>
+    <li>The wire whose resistance <b>changes as you turn</b> is the <b>wiper</b> &mdash; the slider. That's the one that matters.</li>
+  </ul>
+  <p style="font-size:14px">Do this before you wire anything. Finding a pinout with a meter is a real technician skill and you just used it.</p>
+
+  <h3>Wiring &mdash; Stage 3</h3>
+  <table>
+    <tr><th>Wire</th><th>To</th><th>Why</th></tr>
+    <tr><td class="w-red">Pot end (either one)</td><td>Pico <b>3V3</b> (pin 36)</td><td>Top of the range.</td></tr>
+    <tr><td class="w-blk">Pot other end</td><td>Pico <b>GND</b></td><td>Bottom of the range.</td></tr>
+    <tr><td class="w-yel">Pot <b>wiper</b></td><td>Pico <b>GP26</b> (ADC0)</td><td>The reading. GP26/27/28 are the only pins that can read a voltage.</td></tr>
+  </table>
+  <div class="safety" style="border-width:2px; padding:12px;">
+    <h3 style="font-size:15px">&#9888; One hard rule on this stage</h3>
+    <p style="margin:0; font-size:14px"><b>The pot goes on 3V3. Never on VBUS, never on 12&nbsp;V.</b> The Pico's reading pins max out at 3.3 volts. Feed them more and you kill the chip. This is the one mistake on this bench that costs you a Pico &mdash; and it's a wire in the wrong hole, nothing more.</p>
+  </div>
+
+  <div class="codewrap">
+  <button class="copy" onclick="cp(this)">COPY</button>
+  <pre># Stage 3: read the knob. No light yet - just listening.
+#
+# ADC means Analog-to-Digital Converter. It's the part of the Pico
+# that measures a voltage and hands you back a number.
+# 0 volts reads as 0.  3.3 volts reads as 65535.  Everything
+# in between is proportional.
+
+from machine import ADC, Pin
+import time
+
+# GP26 is ADC channel 0. Only GP26, GP27, GP28 can do this.
+knob = ADC(Pin(26))
+
+print("Turn the knob. Watch the number move.")
+
+while True:
+    raw = knob.read_u16()        # get the number: 0 to 65535
+
+    # That number is big and ugly. Turn it into a percent
+    # so it means something to a human.
+    percent = raw * 100 // 65535
+
+    print("raw:", raw, "  ->", percent, "%")
+    time.sleep(0.2)              # 5 readings a second is plenty to watch</pre>
+  </div>
+  <div class="chk"><b>CHECKPOINT</b> &mdash; Knob all the way down reads near 0. All the way up reads near 65535. Sweep it slowly and watch the number climb. <b>You will probably not hit exactly 0 or exactly 65535, and the number will jitter a little even when you're not touching it.</b> That's not broken. That's the real world &mdash; more on that at debrief.</div>
+
+  <div class="ai">
+    <div class="tag">&#128248; Ask your AI</div>
+    <div class="prompt">My pot reading jumps around by a few hundred even when I'm not touching the knob. I think the reason is [your theory]. Ask me questions until my explanation holds up &mdash; don't just tell me.</div>
+  </div>
+</div>
+
+<!-- STAGE 4 -->
+<div class="stage">
+  <div class="sh">Stage 4 &mdash; Put It Together (the knob dims the light)</div>
+
+  <p>Keep the MOSFET wired from Stage 2. Keep the pot wired from Stage 3. Now they meet.</p>
+  <p>Here's the trick, and you already know it from the motor: <b>the MOSFET can't do half-on.</b> It's a switch &mdash; on or off, nothing between. So how do you get a dim light? You <b>blink it faster than the eye can see</b>, and change how much of each blink is ON.</p>
+  <ul>
+    <li>On 10% of the time, off 90% &mdash; looks dim.</li>
+    <li>On 90% of the time, off 10% &mdash; looks bright.</li>
+    <li>Do it a thousand times a second and your eye never sees the blinking. It just sees "dim" or "bright."</li>
+  </ul>
+  <p><b>That's PWM.</b> Pulse Width Modulation. It's the same thing you did to the motor in Lesson 01 &mdash; and the same discrete-time trick you watched in Lesson 02 when clicks turned into smooth motion. The light isn't dim. It's <i>flickering</i>, faster than you can catch it.</p>
+
+  <div class="codewrap">
+  <button class="copy" onclick="cp(this)">COPY</button>
+  <pre># Stage 4: the knob fades the light.
+#
+# Read the knob (a number 0-65535).
+# Hand that same number straight to the PWM output.
+# They happen to use the same range, which makes this almost too easy.
+
+from machine import ADC, Pin, PWM
+import time
+
+knob = ADC(Pin(26))          # the pot's wiper - the input
+light = PWM(Pin(17))         # the MOSFET's trigger - the output
+
+# How many times per second we blink the light.
+# 1000 is well past what your eye can see, so it looks smooth.
+light.freq(1000)
+
+print("Turn the knob. The light follows.")
+
+try:
+    while True:
+        raw = knob.read_u16()     # 0 (knob down) to 65535 (knob up)
+
+        light.duty_u16(raw)       # feed it straight to the light
+
+        # Show a human-readable percent so you can watch it work.
+        print(raw * 100 // 65535, "%")
+        time.sleep(0.05)          # 20 updates a second - feels instant
+
+finally:
+    # Whatever happens - error, or you hitting Stop - turn it off.
+    # Never leave a loop that drives something without this.
+    light.duty_u16(0)
+    print("Light off.")</pre>
+  </div>
+  <div class="chk"><b>CHECKPOINT</b> &mdash; Knob down = dark. Knob up = full bright. Smooth all the way through, no flicker, no steps. Hit Stop &mdash; the light goes out, because <code>finally:</code> made sure of it.</div>
+
+  <div class="big-idea">
+    <b>Look at what you just built.</b> A knob in your hand, a number in the Pico, and 12 volts doing what your fingers say. You didn't wire the knob to the light &mdash; you wired it to <i>the Pico's ears</i>, and the Pico told the MOSFET. That's the whole shape of every machine you'll ever build: <b>read a thing, decide, act on a thing.</b> Everything after this is just bigger nouns.
+  </div>
+</div>
+
+<!-- ============ TABLE III ============ -->
+<div class="rail"><span>I &middot; DRY</span><span>II &middot; BLANK</span><span class="on">III &middot; LIVE</span><span>IV &middot; QUAL</span></div>
+<h2 class="table-head">Table III &mdash; Live</h2>
+<div class="table-sub">The pasted code can't pass this table. Author the changes yourself.</div>
+
+<ol>
+  <li><b>Invert it.</b> Make the knob work backwards &mdash; knob up = dark, knob down = bright. (One line. Think about what 65535 minus your reading gives you.)</li>
+  <li><b>Floor and ceiling.</b> Make the light never go fully dark and never go fully bright &mdash; hold it between about 10% and 90% no matter where the knob is.</li>
+  <li><b>Steady it.</b> That jitter from Stage 3 makes the light twitch slightly at a fixed knob position. Take several readings, average them, use the average. Ask your AI for a <i>hint</i> about how &mdash; not the code.</li>
+  <li><b>Kill the fade.</b> Change <code>light.freq(1000)</code> to <code>light.freq(2)</code> and run it. Explain what you're seeing. Then put it back.</li>
+</ol>
+
+<div class="ai">
+  <div class="tag">&#128248; Ask your AI</div>
+  <div class="prompt">I need to average several sensor readings to smooth out jitter. Don't write it for me. Give me a hint about the shape of the code and one question that points at how to hold multiple readings.</div>
+</div>
+
+<!-- ============ TABLE IV ============ -->
+<div class="rail"><span>I &middot; DRY</span><span>II &middot; BLANK</span><span>III &middot; LIVE</span><span class="on">IV &middot; QUAL</span></div>
+<h2 class="table-head">Table IV &mdash; Qual</h2>
+<div class="table-sub">Book open. Phone closed. Instructor calls it.</div>
+
+<div class="qual-box">
+  <h3>The mission</h3>
+  <ol>
+    <li>Wire the bench from scratch: Pico, MOSFET, pot, light bar, 12&nbsp;V. Instructor watches the power-up order.</li>
+    <li>Instructor calls a brightness &mdash; you set it with the knob and hold it steady.</li>
+    <li>Instructor calls "off" &mdash; light goes out, safely, from software.</li>
+    <li>Then explain, out loud, why the light bar never touches the Pico.</li>
+  </ol>
+  <table>
+    <tr><th>Called</th><th>What you did</th><th>Pass?</th></tr>
+    <tr><td>&nbsp;</td><td></td><td></td></tr>
+    <tr><td>&nbsp;</td><td></td><td></td></tr>
+    <tr><td>&nbsp;</td><td></td><td></td></tr>
+  </table>
+</div>
+
+<h3>Debrief &mdash; out loud, AI closed</h3>
+<ol>
+  <li>Why couldn't the Pico just power the light bar directly? Two reasons.</li>
+  <li>Relay vs MOSFET: name one thing each is better at.</li>
+  <li>The light is "dim" at 20%. Is it actually dim, or is something else happening? Explain it like the machine works.</li>
+  <li>Why does the pot go on 3V3 and not on VBUS or 12&nbsp;V?</li>
+  <li>Your Stage 2 code and Stage 1 code were nearly identical. What does that tell you about what the Pico actually knows about the world?</li>
+  <li>What did <code>finally:</code> protect you from &mdash; one sentence.</li>
+</ol>
+<p><b>Bonus for next time:</b> you now have an input (the knob) and an output (the light). What if the input wasn't a knob &mdash; what if it was a sensor that measured how bright the room already was?</p>
+
+<footer>Lesson 03 &middot; Switch It, Then Dim It &middot; Qual tables I&ndash;IV</footer>
+</div>
+<script>
+function cp(btn){
+  var t = btn.parentElement.querySelector('pre').innerText;
+  if(navigator.clipboard){ navigator.clipboard.writeText(t); }
+  else{ var ta=document.createElement('textarea'); ta.value=t; document.body.appendChild(ta);
+        ta.select(); document.execCommand('copy'); document.body.removeChild(ta); }
+  btn.textContent='COPIED'; setTimeout(function(){btn.textContent='COPY';},1500);
+}
+</script>
+</body>
+</html>
