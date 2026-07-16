@@ -283,19 +283,26 @@ body{
    fourth (~1080px) so a partial 4th row peeks in as the "more below"
    affordance. Scroll vertically for older items. Newest first;
    source order is authoritative — this project has first look at
-   every doc before it lands on GitHub. */
+   every doc before it lands on GitHub.
+
+   The grid sits on a dark walnut "tile stage" background so the
+   individual tile aesthetics pop against a warm dark ground rather
+   than getting lost on the cream paper. */
 .grid{
   display:grid;grid-template-columns:repeat(3, 1fr);gap:14px;
-  border-top:1px solid var(--rule);
-  padding-top:16px;
+  background:#3d2e1f;
+  border:1px solid #2a1f14;
+  padding:20px;
+  border-radius:2px;
   max-height:min(1080px, 88vh);
   overflow-y:auto;
   scroll-behavior:smooth;
+  box-shadow:inset 0 2px 8px rgba(0,0,0,.25);
 }
 .grid::-webkit-scrollbar{width:6px}
-.grid::-webkit-scrollbar-track{background:transparent}
-.grid::-webkit-scrollbar-thumb{background:var(--rule);border-radius:3px}
-.grid::-webkit-scrollbar-thumb:hover{background:var(--muted)}
+.grid::-webkit-scrollbar-track{background:rgba(0,0,0,.15)}
+.grid::-webkit-scrollbar-thumb{background:#6b5a48;border-radius:3px}
+.grid::-webkit-scrollbar-thumb:hover{background:#8a7660}
 }
 .panel{
   padding:20px 20px 22px;
@@ -561,15 +568,15 @@ body{
    aesthetic (warm cream page, Playfair Display, sage/water/gold, subtle
    contour lines). Civic-planning register. */
 .panel.tile-palmerlake-mini{
-  background:#f6f3ee;color:#1e1c18;
+  background:#d9e5c4;color:#1e1c18;
   background-image:
-    radial-gradient(ellipse at 15% 85%, rgba(86,117,84,.08), transparent 55%),
-    radial-gradient(ellipse at 85% 15%, rgba(58,107,126,.06), transparent 55%);
+    radial-gradient(ellipse at 15% 85%, rgba(86,117,84,.14), transparent 55%),
+    radial-gradient(ellipse at 85% 15%, rgba(58,107,126,.08), transparent 55%);
   border-top:3px solid #567554;
   font-family:'Source Serif 4',Georgia,serif;
   padding:20px 22px 22px;position:relative;
 }
-.panel.tile-palmerlake-mini:hover{background:#efeae0}
+.panel.tile-palmerlake-mini:hover{background:#c9d9af}
 .panel.tile-palmerlake-mini .eyebrow{
   font-family:'Space Mono',ui-monospace,monospace;
   font-size:10px;letter-spacing:.22em;text-transform:uppercase;
