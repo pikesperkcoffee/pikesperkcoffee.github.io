@@ -507,6 +507,63 @@ body{
 }
 .panel.tile-northsea-mini .foot .cta{color:#d8a34f;text-decoration:none;border-bottom:1px solid #b8823a;padding-bottom:1px}
 
+/* -------- Huginn & Muninn panel — samples the doc's own aesthetic
+   (aurora-dark night #0b1016, ember #e0662e and aurora #4fd0a6
+   accents, Cinzel display + EB Garamond / Cormorant Garamond bodies).
+   Campfire-under-the-aurora register. */
+.panel.tile-huginn-mini{
+  background:#0b1016;color:#e8eef2;
+  background-image:
+    radial-gradient(ellipse at 25% -10%, rgba(79,208,166,.16), transparent 50%),
+    radial-gradient(ellipse at 75% -5%, rgba(63,167,196,.12), transparent 48%),
+    radial-gradient(ellipse at 50% 120%, rgba(224,102,46,.14), transparent 55%);
+  border-top:3px solid #e0662e;
+  font-family:'EB Garamond',Georgia,serif;
+  padding:20px 22px 22px;position:relative;overflow:hidden;
+}
+.panel.tile-huginn-mini::before{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background-image:
+    radial-gradient(1px 1px at 20% 24%, rgba(207,224,234,.9), transparent),
+    radial-gradient(1px 1px at 62% 16%, rgba(255,255,255,.8), transparent),
+    radial-gradient(1px 1px at 82% 30%, rgba(207,224,234,.7), transparent),
+    radial-gradient(1px 1px at 42% 40%, rgba(207,224,234,.55), transparent),
+    radial-gradient(1px 1px at 90% 55%, rgba(207,224,234,.5), transparent);
+  background-repeat:no-repeat;
+}
+.panel.tile-huginn-mini > *{position:relative;z-index:1}
+.panel.tile-huginn-mini:hover{background:#0f1620}
+.panel.tile-huginn-mini .eyebrow{
+  font-family:'Cinzel',serif;font-weight:600;
+  font-size:10.5px;letter-spacing:.28em;text-transform:uppercase;
+  color:#4fd0a6;margin-bottom:10px;
+}
+.panel.tile-huginn-mini h4{
+  font-family:'Cinzel',serif;font-weight:700;
+  font-size:22px;line-height:1.12;letter-spacing:.02em;
+  color:#e8eef2;margin-bottom:8px;
+  text-shadow:0 0 18px rgba(79,208,166,.18);
+}
+.panel.tile-huginn-mini h4 .amp{color:#e0662e;font-weight:600;text-shadow:0 0 16px rgba(224,102,46,.4)}
+.panel.tile-huginn-mini .deck{
+  font-family:'Cormorant Garamond',serif;font-style:italic;
+  font-size:16px;line-height:1.35;color:#b6c2cc;margin-bottom:10px;
+}
+.panel.tile-huginn-mini .lede{
+  font-size:14.5px;line-height:1.55;color:#b6c2cc;margin-bottom:12px;
+}
+.panel.tile-huginn-mini .lede em{color:#4fd0a6;font-style:italic}
+.panel.tile-huginn-mini .lede strong{color:#e8eef2;font-weight:600;background:rgba(79,208,166,.10);padding:0 3px}
+.panel.tile-huginn-mini .foot{
+  margin-top:auto;padding-top:10px;
+  display:flex;justify-content:space-between;align-items:baseline;gap:10px;
+  font-family:'Cinzel',serif;
+  font-size:9.5px;letter-spacing:.22em;text-transform:uppercase;
+  color:#8a97a2;font-weight:500;
+  border-top:1px solid #26313d;
+}
+.panel.tile-huginn-mini .foot .cta{color:#e0662e;text-decoration:none;border-bottom:1px solid #e0662e;padding-bottom:1px}
+
 /* -------- Eddie / Bench School panel — samples the portal's own
    aesthetic (mat-green field with blaze safety accent, Oswald +
    Public Sans + JetBrains Mono). Workshop / qualification register. */
@@ -985,6 +1042,17 @@ body{
        ============================================================ -->
   <div class="grid">
 
+    <a class="panel tile-huginn-mini" href="huginn-and-muninn/huginn-and-muninn.html" aria-label="Huginn and Muninn — a history and a telling" data-updated="2026-07-19">
+      <div class="eyebrow">Essay &middot; A History &amp; a Telling</div>
+      <h4>Huginn <span class="amp">&amp;</span> Muninn</h4>
+      <div class="deck">Thought and Memory. The two ravens, and the plain equation left underneath.</div>
+      <div class="lede">The raven-human arrangement, the late construction of Odin, three centuries of erasure, and the Alaska control sample. Underneath it all, one equation: <strong>give your eyes to thought and memory, and wisdom comes home</strong>. Told in chapters and songs.</div>
+      <div class="foot">
+        <span>Palmer Lake &middot; July 2026</span>
+        <span class="cta">Read &rarr;</span>
+      </div>
+    </a>
+
     <a class="panel tile-eddie-mini" href="eddie/eddie-portal.html" aria-label="Bench School — The Eddie File" data-updated="2026-07-16">
       <div class="eyebrow">Morton Millworks &middot; Bench School</div>
       <h4>The <span class="who">Eddie</span> File</h4>
@@ -1041,18 +1109,6 @@ body{
       <div class="lede">Modern culture views the Devil as a terrifying lord of darkness. History reveals a deliberate inversion &mdash; the Devil is simply the <em>Fool</em>, rewritten by institutional power to make freedom terrifying.</div>
       <div class="foot">
         <span>An Inquiry</span>
-        <span class="cta">Read &rarr;</span>
-      </div>
-    </a>
-
-    <a class="panel tile-northsea-mini" href="north-sea-tribal-era/north-sea-tribal-era.html" aria-label="The Pre-King North Sea" data-updated="2026-07-12">
-      <div class="eyebrow">Working Notes &middot; Ancestors</div>
-      <h4>The Pre-King North Sea</h4>
-      <div class="deck">Tribal era, 150&ndash;400 AD. Before kings. Before Vikings. Before national names.</div>
-      <div class="lede">Long before modern national identities or the Viking Age, the coastal tribes of the North Sea shared one unified maritime, linguistic, and spiritual culture &mdash; <strong>animistic, runic, and bound to bog and coastline</strong>.</div>
-      <div class="rune" aria-hidden="true"></div>
-      <div class="foot">
-        <span>Return &amp; Expand</span>
         <span class="cta">Read &rarr;</span>
       </div>
     </a>
