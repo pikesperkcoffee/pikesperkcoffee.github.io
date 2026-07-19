@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lesson 01 — Command the Motor</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600&family=Public+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --mat:#2F6B5E; --mat-deep:#1E4A40;
+    --paper:#F7F6F2; --ink:#1D2321;
+    --blaze:#DE5A12; --steel:#5C6660;
+    --code-bg:#132621; --code-ink:#D9EAE2;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{background:var(--paper); color:var(--ink);
+    font-family:'Public Sans',system-ui,sans-serif; font-size:16px; line-height:1.55;}
+  .wrap{max-width:720px; margin:0 auto; padding:16px 16px 80px;}
+  header.card{background:var(--mat-deep); color:#fff; border-radius:10px; padding:20px; margin-bottom:20px;}
+  .eyebrow{font-family:'Oswald',Arial Narrow,sans-serif; letter-spacing:.18em; text-transform:uppercase;
+    font-size:12px; color:var(--blaze); font-weight:600;}
+  h1{font-family:'Oswald',Arial Narrow,sans-serif; font-weight:600; font-size:30px; line-height:1.15; margin:6px 0 14px; text-transform:uppercase;}
+  .tcs{display:grid; gap:8px; font-size:14px;}
+  .tcs b{color:var(--blaze); font-family:'Oswald',sans-serif; letter-spacing:.08em; font-weight:500;}
+  .rail{display:flex; gap:6px; margin:22px 0 6px;}
+  .rail span{flex:1; text-align:center; font-family:'Oswald',sans-serif; font-size:12px; letter-spacing:.14em;
+    padding:6px 0; border:2px solid var(--steel); color:var(--steel); border-radius:6px;}
+  .rail span.on{background:var(--blaze); border-color:var(--blaze); color:#fff;}
+  h2.table-head{font-family:'Oswald',sans-serif; font-weight:600; text-transform:uppercase; letter-spacing:.06em;
+    font-size:22px; margin:34px 0 4px; padding-left:12px; border-left:6px solid var(--blaze); color:var(--mat-deep);}
+  .table-sub{font-size:13px; color:var(--steel); margin-bottom:14px; padding-left:18px;}
+  h3{font-family:'Oswald',sans-serif; font-weight:500; font-size:17px; margin:20px 0 8px; color:var(--mat-deep);}
+  p{margin-bottom:12px;}
+  ul,ol{margin:0 0 12px 22px;}
+  li{margin-bottom:6px;}
+  .safety{border:3px solid var(--blaze); border-radius:10px; padding:16px; margin:18px 0; background:#fff;}
+  .safety h3{margin-top:0; color:var(--blaze);}
+  table{width:100%; border-collapse:collapse; font-size:13.5px; margin:12px 0; background:#fff;}
+  th{background:var(--mat); color:#fff; font-family:'Oswald',sans-serif; font-weight:500; letter-spacing:.05em;
+    text-align:left; padding:8px;}
+  td{border:1px solid #cfd4cf; padding:8px; vertical-align:top;}
+  .w-red{color:#B42318; font-weight:700;} .w-blk{font-weight:700;}
+  .w-org{color:var(--blaze); font-weight:700;} .w-brn{color:#6B4A2B; font-weight:700;}
+  .ai{background:#fff; border:2px dashed var(--mat); border-radius:10px; padding:14px 16px; margin:16px 0;}
+  .ai .tag{font-family:'Oswald',sans-serif; font-size:12px; letter-spacing:.16em; color:var(--mat-deep);
+    text-transform:uppercase; margin-bottom:8px;}
+  .ai .prompt{background:var(--paper); border-radius:8px; padding:10px 12px; font-size:14.5px; font-style:italic;
+    border-left:4px solid var(--blaze); margin-top:6px;}
+  .chk{background:#EAF1EC; border-left:6px solid var(--mat); border-radius:0 8px 8px 0; padding:12px 14px; margin:14px 0; font-size:14.5px;}
+  .chk b{font-family:'Oswald',sans-serif; letter-spacing:.08em; color:var(--mat-deep); font-weight:600;}
+  .codewrap{position:relative; margin:14px 0;}
+  pre{background:var(--code-bg); color:var(--code-ink); border-radius:10px; padding:16px 14px;
+    overflow-x:auto; font-family:ui-monospace,'Cascadia Mono',Menlo,monospace; font-size:13px; line-height:1.5;}
+  .copy{position:absolute; top:8px; right:8px; background:var(--blaze); color:#fff; border:none;
+    font-family:'Oswald',sans-serif; letter-spacing:.1em; font-size:11px; padding:6px 12px; border-radius:6px;}
+  .copy:active{background:var(--mat);}
+  .qual-box{background:var(--mat-deep); color:#fff; border-radius:10px; padding:18px; margin:16px 0;}
+  .qual-box h3{color:var(--blaze); margin-top:0;}
+  .qual-box table{background:transparent; color:#fff;}
+  .qual-box td{border-color:#4a6a60;}
+  footer{margin-top:40px; font-size:12px; color:var(--steel); text-align:center;
+    font-family:'Oswald',sans-serif; letter-spacing:.12em; text-transform:uppercase;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="card">
+  <div class="eyebrow">Morton Millworks · Bench Qualification</div>
+  <h1>Lesson 01<br>Command the Motor</h1>
+  <div class="tcs">
+    <div><b>TASK</b> — Spin the brushless motor at an RPM the instructor calls out, using the Pi Pico.</div>
+    <div><b>CONDITIONS</b> — Bench per wiring table. Thonny on the laptop. Laser tach on the bench. Your AI tutor on your phone. Instructor somewhere in the shop, findable.</div>
+    <div><b>STANDARD</b> — Hit three called RPM targets within ±5%. Safe power-up and shutdown every time. Debrief answered with the AI closed.</div>
+  </div>
+</header>
+
+<div class="ai">
+  <div class="tag">⚡ First move — set up your AI tutor</div>
+  <p style="font-size:14px">Before anything else, paste this into your Claude. It sets the rules for the whole lesson:</p>
+  <div class="prompt">You're my electronics shop tutor today. Rules: never write complete code for me — the lesson doc has the code. Before I run anything, make me predict what it will do, then question my prediction. When I show you a photo or an error, ask me diagnostic questions one at a time instead of giving the answer. Keep replies short. If I try to get you to just solve it, remind me of this deal.</div>
+</div>
+
+<div class="safety">
+  <h3>⚠ Safety Brief — read it, mean it</h3>
+  <ul>
+    <li><b>Clamp the motor.</b> A spinning outrunner walks and jumps. Nothing on the shaft but a strip of reflective tape.</li>
+    <li><b>The whole outer bell spins</b>, not just a shaft. Wires, fingers, and sleeves stay clear.</li>
+    <li><b>Power-up order:</b> USB + code first (signal already saying "throttle off"), motor power (XT60) last.</li>
+    <li><b>Shutdown is the reverse.</b> Throttle to zero in software, XT60 out, then USB.</li>
+    <li><b>Anything looks or smells wrong → pull the XT60.</b> That kills the muscle. The brain is harmless.</li>
+  </ul>
+</div>
+
+<h3>Five minutes of theory</h3>
+<p>The ESC is a translator. It takes a small timing signal from the Pico and switches big current into the motor's three coils in sequence. The magnets in the bell chase the moving field. That's the whole trick.</p>
+<p>The signal is old radio-control language: a pulse repeated 50 times per second, where the <b>width</b> of the pulse is the command. <b>1000&nbsp;µs = throttle off. 2000&nbsp;µs = full throttle.</b> Everything between is proportional. The Pico's PWM hardware repeats the pulse for you at exact widths — your code just tells it how wide.</p>
+<p>One conversion to own: the Pico wants a number 0–65535 meaning "what fraction of each 20,000&nbsp;µs cycle is on." So: <b>duty = µs ÷ 20,000 × 65,535</b>. You'll write it once as a function and never think about it again. That's what functions are for.</p>
+
+<h3>Wiring table</h3>
+<table>
+  <tr><th>Wire</th><th>From → To</th><th>Why</th></tr>
+  <tr><td class="w-red">RED heavy</td><td>Supply V+ → XT60 → ESC red</td><td>Muscle power, 12 V</td></tr>
+  <tr><td class="w-blk">BLACK heavy</td><td>Supply V− → XT60 → ESC black</td><td>Return path</td></tr>
+  <tr><td class="w-blk">3 phase wires</td><td>ESC → motor bullets</td><td>Any order. Swap any two to reverse spin</td></tr>
+  <tr><td class="w-org">ORANGE/WHITE thin</td><td>ESC servo lead → Pico <b>GP15</b></td><td>The command signal</td></tr>
+  <tr><td class="w-brn">BROWN/BLACK thin</td><td>ESC servo lead → Pico <b>GND</b></td><td>Shared ground. A signal is a voltage <i>compared to something</i></td></tr>
+  <tr><td class="w-red">RED thin</td><td><b>NOWHERE — tape it off</b></td><td>ESC offering 5 V. Pico already has USB power. Two supplies fighting can kill the board</td></tr>
+</table>
+
+<div class="ai">
+  <div class="tag">📸 Ask your AI</div>
+  <p style="font-size:14px">Wire it up, take a photo of the whole bench, and send it with:</p>
+  <div class="prompt">Here's my wiring for a Pico driving an ESC and brushless motor. Don't tell me if it's right. Ask me questions one at a time so I verify it myself against my wiring table. Pay attention to the thin red wire.</div>
+</div>
+
+<!-- ============ TABLE I ============ -->
+<div class="rail"><span class="on">I · DRY</span><span>II · BLANK</span><span>III · LIVE</span><span>IV · QUAL</span></div>
+<h2 class="table-head">Table I — Dry</h2>
+<div class="table-sub">No power anywhere. Read the code. Predict out loud. Wrong predictions are the good part.</div>
+
+<p>Read Chunk 1 below top to bottom. Then answer these three, out loud or to your AI — <b>before running anything:</b></p>
+<ol>
+  <li>What will show up in the Shell window when this runs?</li>
+  <li>Which line decides how wide the pulse is?</li>
+  <li>The comment says a meter on GP15 will read about 0.16 V, not 3.3 V. Why not 3.3?</li>
+</ol>
+
+<div class="ai">
+  <div class="tag">📸 Ask your AI</div>
+  <div class="prompt">I'm about to run this code on a Pico (I'll paste it). Here's my prediction of what it does: [your prediction]. Poke holes in my prediction with questions — don't just tell me.</div>
+</div>
+
+<!-- ============ TABLE II ============ -->
+<div class="rail"><span>I · DRY</span><span class="on">II · BLANK</span><span>III · LIVE</span><span>IV · QUAL</span></div>
+<h2 class="table-head">Table II — Blank</h2>
+<div class="table-sub">Sanctioned copy-paste. USB only — XT60 stays unplugged until Chunk 2 says so.</div>
+
+<h3>Chunk 1 — Make the signal (XT60 UNPLUGGED)</h3>
+<div class="codewrap">
+<button class="copy" onclick="cp(this)">COPY</button>
+<pre># Chunk 1: generate a "throttle off" signal on pin GP15.
+# The motor's big power plug (XT60) must be UNPLUGGED for this chunk.
+
+from machine import Pin, PWM   # toolbox for controlling pins
+import time                    # toolbox for waiting
+
+# Set up GP15 as a PWM output. PWM = hardware that repeats
+# a pulse over and over at a width we choose.
+esc = PWM(Pin(15))
+
+# The ESC expects the pulse to repeat 50 times per second.
+esc.freq(50)
+
+def throttle(us):
+    # Convert pulse width in microseconds to the 0-65535 number
+    # the Pico wants. One full cycle at 50 Hz is 20,000 microseconds.
+    duty = int(us * 65535 / 20000)
+    esc.duty_u16(duty)
+
+# 1000 microseconds = "throttle off" in ESC language.
+throttle(1000)
+
+print("Signal running: 1000 microsecond pulses, 50 per second.")
+print("Meter on DC volts: red probe GP15, black probe GND.")
+print("Expect roughly 0.16 V - the 3.3 V pulse averaged out,")
+print("because it's only on for 1/20th of each cycle.")</pre>
+</div>
+<div class="chk"><b>CHECKPOINT</b> — Meter reads ~0.16 V between GP15 and GND. Reads 0? The signal isn't there. Reads a steady 3.3? The pulse is stuck on. Figure out which before moving.</div>
+
+<h3>Chunk 2 — Wake the ESC (no code — ears only)</h3>
+<p>Leave Chunk 1 running. Now plug in the XT60. You should hear the ESC's startup ritual: a few musical beeps (power good), then a confirmation tone — "I see a valid throttle-off signal, I'm armed."</p>
+<div class="chk"><b>CHECKPOINT</b> — Endless beeping that never settles = the ESC can't see a valid signal. Orange wire on GP15? Brown wire on Pico GND? Chunk 1 still running?</div>
+
+<div class="ai">
+  <div class="tag">📸 Ask your AI</div>
+  <div class="prompt">My ESC won't stop beeping after power-up. Ask me diagnostic questions one at a time. Don't give me the fix until I've proposed one myself.</div>
+</div>
+
+<h3>Chunk 3 — First spin, gentle and automatic</h3>
+<div class="codewrap">
+<button class="copy" onclick="cp(this)">COPY</button>
+<pre># Chunk 3: ramp the motor up gently, hold, shut off.
+# Motor CLAMPED. Stand clear of the spinning bell.
+
+from machine import Pin, PWM
+import time
+
+esc = PWM(Pin(15))
+esc.freq(50)
+
+def throttle(us):
+    duty = int(us * 65535 / 20000)
+    esc.duty_u16(duty)
+
+# try/finally is a safety promise: whatever happens inside "try" --
+# an error, or you hitting Stop -- the "finally" part still runs
+# and shuts the throttle off. Never run a motor without it.
+try:
+    throttle(1000)        # start at throttle off
+    time.sleep(2)         # let the ESC settle
+
+    print("Ramping up...")
+    for pulse in range(1000, 1201, 10):   # 1000, 1010 ... 1200
+        throttle(pulse)
+        time.sleep(0.1)
+
+    print("Holding at 1200 for 5 seconds. Try the tach now.")
+    time.sleep(5)
+
+finally:
+    throttle(1000)        # ALWAYS end at throttle off
+    print("Throttle off.")</pre>
+</div>
+<div class="chk"><b>CHECKPOINT</b> — Smooth spin during the hold, clean stop at the end. Take one tach reading during the hold for practice. Reflective tape on the bell first.</div>
+
+<p><b>Investigate before Table III</b> — answer from the code, not from memory:</p>
+<ol>
+  <li>Which line makes the ramp happen more than once?</li>
+  <li>What are the three numbers in <code>range(1000, 1201, 10)</code> each doing?</li>
+  <li>Hit Stop mid-ramp. What happened to the motor, and which line saved you?</li>
+</ol>
+
+<!-- ============ TABLE III ============ -->
+<div class="rail"><span>I · DRY</span><span>II · BLANK</span><span class="on">III · LIVE</span><span>IV · QUAL</span></div>
+<h2 class="table-head">Table III — Live</h2>
+<div class="table-sub">The pasted code alone can't pass this table. Every checkpoint needs a change you author.</div>
+
+<h3>Chunk 4 — The throttle console</h3>
+<div class="codewrap">
+<button class="copy" onclick="cp(this)">COPY</button>
+<pre># Chunk 4: type a pulse width, motor obeys. Type "stop" to quit.
+
+from machine import Pin, PWM
+import time
+
+esc = PWM(Pin(15))
+esc.freq(50)
+
+def throttle(us):
+    duty = int(us * 65535 / 20000)
+    esc.duty_u16(duty)
+
+# Safety limits for this lesson. The ESC would take 2000, but
+# clamped motors at full throttle are how benches get rearranged.
+LOW_LIMIT = 1000
+HIGH_LIMIT = 1600
+
+try:
+    throttle(1000)
+    time.sleep(2)
+    print("Throttle console ready.")
+    print("Number from", LOW_LIMIT, "to", HIGH_LIMIT, "or 'stop'.")
+
+    while True:                    # loop until we break out
+        answer = input("pulse width > ")
+
+        if answer == "stop":
+            break                  # jump out, land in finally
+
+        # int() turns typed text into a number. Typing junk
+        # makes it fail, so we catch that politely.
+        try:
+            pulse = int(answer)
+        except ValueError:
+            print("Not a number. Try again.")
+            continue               # back to the top of the loop
+
+        if pulse < LOW_LIMIT or pulse > HIGH_LIMIT:
+            print("Out of bounds.")
+            continue
+
+        throttle(pulse)
+        print("Commanded:", pulse, "microseconds")
+
+finally:
+    throttle(1000)
+    print("Throttle off. Console closed.")</pre>
+</div>
+
+<p><b>Live modifications — do all three, prove each with a run:</b></p>
+<ol>
+  <li>Change Chunk 3 to hold at <b>1300 for 8 seconds</b>.</li>
+  <li>In Chunk 4, make the console <b>print a warning</b> when a command is within 50 of HIGH_LIMIT.</li>
+  <li>Make "stop" also work if you type "STOP". (There's a string trick. Ask your AI for a hint — a hint, not the line.)</li>
+</ol>
+
+<div class="ai">
+  <div class="tag">📸 Ask your AI</div>
+  <div class="prompt">I need to modify this code to [say the goal]. Don't write it for me. Give me a hint about which line to change and one question that points at how.</div>
+</div>
+
+<!-- ============ TABLE IV ============ -->
+<div class="rail"><span>I · DRY</span><span>II · BLANK</span><span>III · LIVE</span><span class="on">IV · QUAL</span></div>
+<h2 class="table-head">Table IV — Qual</h2>
+<div class="table-sub">Book open. Phone closed. Instructor calls the targets.</div>
+
+<div class="qual-box">
+  <h3>The mission</h3>
+  <ol>
+    <li>Reflective tape on the bell. Instructor calls an RPM.</li>
+    <li>Use your console: command, let it settle 2–3 s, tach it, record.</li>
+    <li>Adjust until within <b>±5%</b>. Three different targets. Every data point recorded — the misses are the map.</li>
+  </ol>
+  <table>
+    <tr><th>Commanded (µs)</th><th>Tach (RPM)</th><th>Notes</th></tr>
+    <tr><td>&nbsp;</td><td></td><td></td></tr>
+    <tr><td>&nbsp;</td><td></td><td></td></tr>
+    <tr><td>&nbsp;</td><td></td><td></td></tr>
+    <tr><td>&nbsp;</td><td></td><td></td></tr>
+    <tr><td>&nbsp;</td><td></td><td></td></tr>
+    <tr><td>&nbsp;</td><td></td><td></td></tr>
+  </table>
+</div>
+
+<h3>Debrief — out loud, AI closed</h3>
+<ol>
+  <li>Why does the signal repeat 50 times a second instead of just once?</li>
+  <li>The brown ground wire falls off but the orange stays on. What happens, and why?</li>
+  <li>Why did we tape the thin red wire instead of connecting it?</li>
+  <li>Look at your table: is pulse-to-RPM a straight line? Why might it not be?</li>
+  <li>What does <code>finally:</code> protect you from — one sentence.</li>
+</ol>
+<p><b>Bonus for next time:</b> raise the supply voltage and the same command gives a different RPM. Why? Hint: the ESC hands the motor slices of whatever voltage it's fed.</p>
+
+<footer>Lesson 01 · Command the Motor · Qual tables I–IV</footer>
+</div>
+<script>
+function cp(btn){
+  var t = btn.parentElement.querySelector('pre').innerText;
+  if(navigator.clipboard){ navigator.clipboard.writeText(t); }
+  else{ var ta=document.createElement('textarea'); ta.value=t; document.body.appendChild(ta);
+        ta.select(); document.execCommand('copy'); document.body.removeChild(ta); }
+  btn.textContent='COPIED'; setTimeout(function(){btn.textContent='COPY';},1500);
+}
+</script>
+</body>
+</html>
