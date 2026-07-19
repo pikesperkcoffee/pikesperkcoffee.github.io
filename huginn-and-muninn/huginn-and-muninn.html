@@ -7,7 +7,7 @@
 <meta name="description" content="Thought and Memory — a history and a telling of the two ravens. The raven-human hunting arrangement, the late construction of Odin, the erasure, the Alaska control sample, and the plain equation underneath: give your eyes to thought and memory, and wisdom comes home. Andrew Morton, Palmer Lake, Colorado.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Noto+Sans+Runic&display=swap" rel="stylesheet">
 <style>
   :root{
     /* Aurora-dark campfire palette — night sky over snow, a fire in it. */
@@ -334,12 +334,37 @@
     transition:color .12s, border-color .12s}
   .sitenav a:hover{color:var(--ember);border-color:var(--ember)}
   @media (max-width:640px){.sitenav{top:10px;right:10px}.sitenav a{padding:5px 8px;font-size:10px}}
+
+  /* --- ethereal rune underlines: the carving beneath the words --- */
+  .runeline{
+    font-family:'Noto Sans Runic',var(--serif);
+    text-align:center;font-size:14.5px;letter-spacing:.24em;
+    color:var(--aurora);opacity:.48;line-height:1.8;
+    text-shadow:0 0 14px rgba(79,208,166,.4), 0 0 30px rgba(63,167,196,.18);
+    margin:8px auto 0;max-width:60ch;
+  }
+  .plate .runeline{color:var(--gold);opacity:.6;
+    text-shadow:0 0 14px rgba(201,154,74,.45);margin-top:10px}
+  .coda .runeline{margin-top:14px}
+  @media (max-width:640px){.runeline{font-size:12.5px;letter-spacing:.16em}}
+
+  /* --- paragraph undertext: the carving beneath the telling (songs only) --- */
+  .runeunder{
+    font-family:'Noto Sans Runic',var(--serif);
+    font-size:11.5px;letter-spacing:.14em;line-height:1.7;
+    color:var(--gold);opacity:.72;
+    text-shadow:0 0 10px rgba(201,154,74,.5), 0 0 22px rgba(224,102,46,.18);
+    margin:5px 0 20px;word-break:break-word;
+    -webkit-user-select:none;user-select:none;
+  }
+  @media (max-width:640px){.runeunder{font-size:10px;letter-spacing:.08em}}
 </style>
 </head>
 <body>
 <nav class="sitenav" aria-label="Site navigation">
   <a href="../index.html" title="Back one page (up one directory)">../</a>
   <a href="../index.html" title="Site index (root)">/</a>
+  <a href="the-making.html" title="The Making — how the world was made, in the version the north would have kept">the making</a>
 </nav>
 
 <!-- night sky backdrop -->
@@ -355,8 +380,10 @@
   <header class="plate">
     <div class="kicker">A history &amp; a telling</div>
     <h1>Huginn <span class="amp">&amp;</span> Muninn</h1>
+    <div class="runeline" aria-hidden="true">ᚺᚢᚷᛁᚾ᛫ᚨᚾᛞ᛫ᛗᚢᚾᛁᚾ</div>
     <p class="subtitle">Thought and Memory &mdash; the two ravens, the story built around them, and the plain equation left underneath.</p>
     <p class="epigraph">&ldquo;Thought and memory go after the eye, and you get wisdom.&rdquo;</p>
+    <div class="runeline" aria-hidden="true">ᚦᛟᚢᛏ᛫ᚨᚾᛞ᛫ᛗᛖᛗᛟᚱᛁ᛫ᚷᛟ᛫ᚨᚠᛏᛖᚱ᛫ᚦᛖ᛫ᛖᛁ᛫ᚨᚾᛞ᛫ᛃᛟᚢ᛫ᚷᛖᛏ᛫ᚹᛁᛊᛞᛟᛗ</div>
     <p class="tocline">
       <span>ch. i</span> &middot; <span>song i</span> &middot;
       <span>ch. ii</span> &middot; <span>the secret</span> &middot; <span>song ii</span> &middot;
@@ -404,16 +431,22 @@
   <section class="song">
     <div class="song-mark">Song the First</div>
     <h3 class="song-title">Before there was a name for the north</h3>
+    <div class="runeline" aria-hidden="true">ᛒᛖᚠᛟᚱ᛫ᚦᛖᚱ᛫ᚹᚨᛊ᛫ᚨ᛫ᚾᚨᛗ᛫ᚠᛟᚱ᛫ᚦᛖ᛫ᚾᛟᚱᚦ</div>
 
     <p class="opener">Before there was a name for the north, there were two ravens. They were there when the ice let go of the land, and they were there before that, riding the wind off the front of the ice itself. They did not come to the north. <em>The north grew up around them.</em> In the old tongue their names were <em>Huginn and Muninn</em> &mdash; Thought and Memory &mdash; and the names were not given to them. The names were <strong>learned</strong> from them, because thought and memory are what the two birds are, and this story will show you why.</p>
+    <div class="runeunder" aria-hidden="true">ᛒᛖᚠᛟᚱ᛫ᚦᛖᚱ᛫ᚹᚨᛊ᛫ᚨ᛫ᚾᚨᛗ᛫ᚠᛟᚱ᛫ᚦᛖ᛫ᚾᛟᚱᚦ᛫ᚦᛖᚱ᛫ᚹᛖᚱ᛫ᛏᚹᛟ᛫ᚱᚨᚹᛖᚾᛊ᛫ᚦᛖᛁ᛫ᚹᛖᚱ᛫ᚦᛖᚱ᛫ᚹᛖᚾ᛫ᚦᛖ᛫ᛁᛊᛖ᛫ᛚᛖᛏ᛫ᚷᛟ᛫ᛟᚠ᛫ᚦᛖ᛫ᛚᚨᚾᛞ᛫ᚨᚾᛞ᛫ᚦᛖᛁ᛫ᚹᛖᚱ᛫ᚦᛖᚱ᛫ᛒᛖᚠᛟᚱ᛫ᚦᚨᛏ᛫ᚱᛁᛞᛁᛜ᛫ᚦᛖ᛫ᚹᛁᚾᛞ᛫ᛟᚠ᛫ᚦᛖ᛫ᚠᚱᛟᚾᛏ᛫ᛟᚠ᛫ᚦᛖ᛫ᛁᛊᛖ᛫ᛁᛏᛊᛖᛚᚠ᛫ᚦᛖᛁ᛫ᛞᛁᛞ᛫ᚾᛟᛏ᛫ᚲᛟᛗ᛫ᛏᛟ᛫ᚦᛖ᛫ᚾᛟᚱᚦ᛫ᚦᛖ᛫ᚾᛟᚱᚦ᛫ᚷᚱᛖᚹ᛫ᚢᛈ᛫ᚨᚱᛟᚢᚾᛞ᛫ᚦᛖᛗ᛫ᛁᚾ᛫ᚦᛖ᛫ᛟᛚᛞ᛫ᛏᛟᛜᚢᛖ᛫ᚦᛖᛁᚱ᛫ᚾᚨᛗᛖᛊ᛫ᚹᛖᚱ᛫ᚺᚢᚷᛁᚾ᛫ᚨᚾᛞ᛫ᛗᚢᚾᛁᚾ᛫ᚦᛟᚢᛏ᛫ᚨᚾᛞ᛫ᛗᛖᛗᛟᚱᛁ᛫ᚨᚾᛞ᛫ᚦᛖ᛫ᚾᚨᛗᛖᛊ᛫ᚹᛖᚱ᛫ᚾᛟᛏ᛫ᚷᛁᚹᛖᚾ᛫ᛏᛟ᛫ᚦᛖᛗ᛫ᚦᛖ᛫ᚾᚨᛗᛖᛊ᛫ᚹᛖᚱ᛫ᛚᛖᚨᚱᚾᛖᛞ᛫ᚠᚱᛟᛗ᛫ᚦᛖᛗ᛫ᛒᛖᚲᚨᚢᛊ᛫ᚦᛟᚢᛏ᛫ᚨᚾᛞ᛫ᛗᛖᛗᛟᚱᛁ᛫ᚨᚱᛖ᛫ᚹᚨᛏ᛫ᚦᛖ᛫ᛏᚹᛟ᛫ᛒᛁᚱᛞᛊ᛫ᚨᚱᛖ᛫ᚨᚾᛞ᛫ᚦᛁᛊ᛫ᛊᛏᛟᚱᛁ᛫ᚹᛁᛚ᛫ᛊᚺᛟᚹ᛫ᛃᛟᚢ᛫ᚹᛁ</div>
 
     <p>This is what they did, and it is the only thing they ever did. Each morning one flew out and one flew home. Over the white fields and the black water, over the passes where the wind stands up like a wall, they went out at first light and read the whole world &mdash; the moose down in the willows, the herd on the move, the wolf&rsquo;s line written in the snow, the smoke of a man&rsquo;s fire. Huginn was the going-out: the seeing, the finding, the knowing of what is. Muninn was the coming-home: the keeping, so that nothing seen was ever lost. Between the two of them, everything that happened under that sky was witnessed, and everything witnessed was remembered. <em>That is all thought and memory have ever been.</em> The birds did it first.</p>
+    <div class="runeunder" aria-hidden="true">ᚦᛁᛊ᛫ᛁᛊ᛫ᚹᚨᛏ᛫ᚦᛖᛁ᛫ᛞᛁᛞ᛫ᚨᚾᛞ᛫ᛁᛏ᛫ᛁᛊ᛫ᚦᛖ᛫ᛟᚾᛚᛁ᛫ᚦᛁᛜ᛫ᚦᛖᛁ᛫ᛖᚹᛖᚱ᛫ᛞᛁᛞ᛫ᛖᚨᚲᚺ᛫ᛗᛟᚱᚾᛁᛜ᛫ᛟᚾᛖ᛫ᚠᛚᛖᚹ᛫ᛟᚢᛏ᛫ᚨᚾᛞ᛫ᛟᚾᛖ᛫ᚠᛚᛖᚹ᛫ᚺᛟᛗ᛫ᛟᚹᛖᚱ᛫ᚦᛖ᛫ᚹᛁᛏ᛫ᚠᛁᛖᛚᛞᛊ᛫ᚨᚾᛞ᛫ᚦᛖ᛫ᛒᛚᚨᚲ᛫ᚹᚨᛏᛖᚱ᛫ᛟᚹᛖᚱ᛫ᚦᛖ᛫ᛈᚨᛊᛖᛊ᛫ᚹᛖᚱ᛫ᚦᛖ᛫ᚹᛁᚾᛞ᛫ᛊᛏᚨᚾᛞᛊ᛫ᚢᛈ᛫ᛚᛁᚲ᛫ᚨ᛫ᚹᚨᛚ᛫ᚦᛖᛁ᛫ᚹᛖᚾᛏ᛫ᛟᚢᛏ᛫ᚨᛏ᛫ᚠᛁᚱᛊᛏ᛫ᛚᛁᛏ᛫ᚨᚾᛞ᛫ᚱᛖᚨᛞ᛫ᚦᛖ᛫ᚹᛟᛚ᛫ᚹᛟᚱᛚᛞ᛫ᚦᛖ᛫ᛗᛟᛊ᛫ᛞᛟᚹᚾ᛫ᛁᚾ᛫ᚦᛖ᛫ᚹᛁᛚᛟᚹᛊ᛫ᚦᛖ᛫ᚺᛖᚱᛞ᛫ᛟᚾ᛫ᚦᛖ᛫ᛗᛟᚹ᛫ᚦᛖ᛫ᚹᛟᛚᚠᛊ᛫ᛚᛁᚾ᛫ᚹᚱᛁᛏᛖᚾ᛫ᛁᚾ᛫ᚦᛖ᛫ᛊᚾᛟᚹ᛫ᚦᛖ᛫ᛊᛗᛟᚲ᛫ᛟᚠ᛫ᚨ᛫ᛗᚨᚾᛊ᛫ᚠᛁᚱ᛫ᚺᚢᚷᛁᚾ᛫ᚹᚨᛊ᛫ᚦᛖ᛫ᚷᛟᛁᛜᛟᚢᛏ᛫ᚦᛖ᛫ᛊᛖᛁᛜ᛫ᚦᛖ᛫ᚠᛁᚾᛞᛁᛜ᛫ᚦᛖ᛫ᚲᚾᛟᚹᛁᛜ᛫ᛟᚠ᛫ᚹᚨᛏ᛫ᛁᛊ᛫ᛗᚢᚾᛁᚾ᛫ᚹᚨᛊ᛫ᚦᛖ᛫ᚲᛟᛗᛁᛜᚺᛟᛗ᛫ᚦᛖ᛫ᚲᛖᛈᛁᛜ᛫ᛊᛟ᛫ᚦᚨᛏ᛫ᚾᛟᚦᛁᛜ᛫ᛊᛖᚾ᛫ᚹᚨᛊ᛫ᛖᚹᛖᚱ᛫ᛚᛟᛊᛏ᛫ᛒᛖᛏᚹᛖᚾ᛫ᚦᛖ᛫ᛏᚹᛟ᛫ᛟᚠ᛫ᚦᛖᛗ᛫ᛖᚹᛖᚱᛁᚦᛁᛜ᛫ᚦᚨᛏ᛫ᚺᚨᛈᛖᚾᛖᛞ᛫ᚢᚾᛞᛖᚱ᛫ᚦᚨᛏ᛫ᛊᚲᛁ᛫ᚹᚨᛊ᛫ᚹᛁᛏᚾᛖᛊᛖᛞ᛫ᚨᚾᛞ᛫ᛖᚹᛖᚱᛁᚦᛁᛜ᛫ᚹᛁᛏᚾᛖᛊᛖᛞ᛫ᚹᚨᛊ᛫ᚱᛖᛗᛖᛗᛒᛖᚱᛖᛞ᛫ᚦᚨᛏ᛫ᛁᛊ᛫ᚨᛚ᛫ᚦᛟᚢᛏ᛫ᚨᚾᛞ᛫ᛗᛖᛗᛟᚱᛁ᛫ᚺᚨᚹ᛫ᛖᚹᛖᚱ᛫ᛒᛖᚾ᛫ᚦᛖ᛫ᛒᛁᚱᛞᛊ᛫ᛞᛁᛞ᛫ᛁᛏ᛫ᚠᛁᚱᛊᛏ</div>
 
     <p>And they knew the dead before anything else knew. That was their office. Where a thing fell &mdash; moose, wolf, man, it made no difference, for the ravens do not rank the dead &mdash; they came down out of the grey and took the eye first. <em>Always the eye.</em> Because the eye is where the seeing lived, and the seeing must not lie in the snow and go dark. They took it up and carried it, and so every eye that ever closed in the north went on seeing through them. The bear got the meat. The wolf got the bones. The two took the sight, and kept it, <strong>and nothing was wasted and nothing was lost.</strong></p>
+    <div class="runeunder" aria-hidden="true">ᚨᚾᛞ᛫ᚦᛖᛁ᛫ᚲᚾᛖᚹ᛫ᚦᛖ᛫ᛞᛖᚨᛞ᛫ᛒᛖᚠᛟᚱ᛫ᚨᚾᛁᚦᛁᛜ᛫ᛖᛚᛊ᛫ᚲᚾᛖᚹ᛫ᚦᚨᛏ᛫ᚹᚨᛊ᛫ᚦᛖᛁᚱ᛫ᛟᚠᛁᛊ᛫ᚹᛖᚱ᛫ᚨ᛫ᚦᛁᛜ᛫ᚠᛖᛚ᛫ᛗᛟᛊ᛫ᚹᛟᛚᚠ᛫ᛗᚨᚾ᛫ᛁᛏ᛫ᛗᚨᛞ᛫ᚾᛟ᛫ᛞᛁᚠᛖᚱᛖᚾᛊ᛫ᚠᛟᚱ᛫ᚦᛖ᛫ᚱᚨᚹᛖᚾᛊ᛫ᛞᛟ᛫ᚾᛟᛏ᛫ᚱᚨᚾᚲ᛫ᚦᛖ᛫ᛞᛖᚨᛞ᛫ᚦᛖᛁ᛫ᚲᚨᛗ᛫ᛞᛟᚹᚾ᛫ᛟᚢᛏ᛫ᛟᚠ᛫ᚦᛖ᛫ᚷᚱᛖᛁ᛫ᚨᚾᛞ᛫ᛏᛟᚲ᛫ᚦᛖ᛫ᛖᛁ᛫ᚠᛁᚱᛊᛏ᛫ᚨᛚᚹᚨᛁᛊ᛫ᚦᛖ᛫ᛖᛁ᛫ᛒᛖᚲᚨᚢᛊ᛫ᚦᛖ᛫ᛖᛁ᛫ᛁᛊ᛫ᚹᛖᚱ᛫ᚦᛖ᛫ᛊᛖᛁᛜ᛫ᛚᛁᚹᛖᛞ᛫ᚨᚾᛞ᛫ᚦᛖ᛫ᛊᛖᛁᛜ᛫ᛗᚢᛊᛏ᛫ᚾᛟᛏ᛫ᛚᛁᛖ᛫ᛁᚾ᛫ᚦᛖ᛫ᛊᚾᛟᚹ᛫ᚨᚾᛞ᛫ᚷᛟ᛫ᛞᚨᚱᚲ᛫ᚦᛖᛁ᛫ᛏᛟᚲ᛫ᛁᛏ᛫ᚢᛈ᛫ᚨᚾᛞ᛫ᚲᚨᚱᛁᛖᛞ᛫ᛁᛏ᛫ᚨᚾᛞ᛫ᛊᛟ᛫ᛖᚹᛖᚱᛁ᛫ᛖᛁ᛫ᚦᚨᛏ᛫ᛖᚹᛖᚱ᛫ᚲᛚᛟᛊᛖᛞ᛫ᛁᚾ᛫ᚦᛖ᛫ᚾᛟᚱᚦ᛫ᚹᛖᚾᛏ᛫ᛟᚾ᛫ᛊᛖᛁᛜ᛫ᚦᚱᛟᚢᚷᚺ᛫ᚦᛖᛗ᛫ᚦᛖ᛫ᛒᛖᚨᚱ᛫ᚷᛟᛏ᛫ᚦᛖ᛫ᛗᛖᚨᛏ᛫ᚦᛖ᛫ᚹᛟᛚᚠ᛫ᚷᛟᛏ᛫ᚦᛖ᛫ᛒᛟᚾᛖᛊ᛫ᚦᛖ᛫ᛏᚹᛟ᛫ᛏᛟᚲ᛫ᚦᛖ᛫ᛊᛁᛏ᛫ᚨᚾᛞ᛫ᚲᛖᛈᛏ᛫ᛁᛏ᛫ᚨᚾᛞ᛫ᚾᛟᚦᛁᛜ᛫ᚹᚨᛊ᛫ᚹᚨᛊᛏᛖᛞ᛫ᚨᚾᛞ᛫ᚾᛟᚦᛁᛜ᛫ᚹᚨᛊ᛫ᛚᛟᛊᛏ</div>
 
     <p>The first people learned this the way you learn weather &mdash; by living in it. They watched where the ravens circled and found meat under the circling. They opened with their blades what the birds could not open with their beaks, and the birds fed beside them at the kill, and led them to the next one, and the arrangement was older than any word for it: the birds found, the people opened, everyone ate, and the eye went to the ones whose office it was. When those people at last wanted words for what we know and what we keep, they did not have to invent anything. They looked up. <em>The names were already circling overhead.</em></p>
+    <div class="runeunder" aria-hidden="true">ᚦᛖ᛫ᚠᛁᚱᛊᛏ᛫ᛈᛖᛟᛈᛚ᛫ᛚᛖᚨᚱᚾᛖᛞ᛫ᚦᛁᛊ᛫ᚦᛖ᛫ᚹᚨᛁ᛫ᛃᛟᚢ᛫ᛚᛖᚨᚱᚾ᛫ᚹᛖᚨᚦᛖᚱ᛫ᛒᛁ᛫ᛚᛁᚹᛁᛜ᛫ᛁᚾ᛫ᛁᛏ᛫ᚦᛖᛁ᛫ᚹᚨᛏᚲᚺᛖᛞ᛫ᚹᛖᚱ᛫ᚦᛖ᛫ᚱᚨᚹᛖᚾᛊ᛫ᛊᛁᚱᚲᛚᛖᛞ᛫ᚨᚾᛞ᛫ᚠᛟᚢᚾᛞ᛫ᛗᛖᚨᛏ᛫ᚢᚾᛞᛖᚱ᛫ᚦᛖ᛫ᛊᛁᚱᚲᛚᛁᛜ᛫ᚦᛖᛁ᛫ᛟᛈᛖᚾᛖᛞ᛫ᚹᛁᚦ᛫ᚦᛖᛁᚱ᛫ᛒᛚᚨᛞᛖᛊ᛫ᚹᚨᛏ᛫ᚦᛖ᛫ᛒᛁᚱᛞᛊ᛫ᚲᛟᚢᛚᛞ᛫ᚾᛟᛏ᛫ᛟᛈᛖᚾ᛫ᚹᛁᚦ᛫ᚦᛖᛁᚱ᛫ᛒᛖᚨᚲᛊ᛫ᚨᚾᛞ᛫ᚦᛖ᛫ᛒᛁᚱᛞᛊ᛫ᚠᛖᛞ᛫ᛒᛖᛊᛁᛞ᛫ᚦᛖᛗ᛫ᚨᛏ᛫ᚦᛖ᛫ᚲᛁᛚ᛫ᚨᚾᛞ᛫ᛚᛖᛞ᛫ᚦᛖᛗ᛫ᛏᛟ᛫ᚦᛖ᛫ᚾᛖᚲᛊᛏ᛫ᛟᚾᛖ᛫ᚨᚾᛞ᛫ᚦᛖ᛫ᚨᚱᚨᛜᛖᛗᛖᚾᛏ᛫ᚹᚨᛊ᛫ᛟᛚᛞᛖᚱ᛫ᚦᚨᚾ᛫ᚨᚾᛁ᛫ᚹᛟᚱᛞ᛫ᚠᛟᚱ᛫ᛁᛏ᛫ᚦᛖ᛫ᛒᛁᚱᛞᛊ᛫ᚠᛟᚢᚾᛞ᛫ᚦᛖ᛫ᛈᛖᛟᛈᛚ᛫ᛟᛈᛖᚾᛖᛞ᛫ᛖᚹᛖᚱᛃᛟᚾ᛫ᚨᛏᛖ᛫ᚨᚾᛞ᛫ᚦᛖ᛫ᛖᛁ᛫ᚹᛖᚾᛏ᛫ᛏᛟ᛫ᚦᛖ᛫ᛟᚾᛖᛊ᛫ᚹᛟᛊ᛫ᛟᚠᛁᛊ᛫ᛁᛏ᛫ᚹᚨᛊ᛫ᚹᛖᚾ᛫ᚦᛟᛊ᛫ᛈᛖᛟᛈᛚ᛫ᚨᛏ᛫ᛚᚨᛊᛏ᛫ᚹᚨᚾᛏᛖᛞ᛫ᚹᛟᚱᛞᛊ᛫ᚠᛟᚱ᛫ᚹᚨᛏ᛫ᚹᛖ᛫ᚲᚾᛟᚹ᛫ᚨᚾᛞ᛫ᚹᚨᛏ᛫ᚹᛖ᛫ᚲᛖᛈ᛫ᚦᛖᛁ᛫ᛞᛁᛞ᛫ᚾᛟᛏ᛫ᚺᚨᚹ᛫ᛏᛟ᛫ᛁᚾᚹᛖᚾᛏ᛫ᚨᚾᛁᚦᛁᛜ᛫ᚦᛖᛁ᛫ᛚᛟᚲᛖᛞ᛫ᚢᛈ᛫ᚦᛖ᛫ᚾᚨᛗᛖᛊ᛫ᚹᛖᚱ᛫ᚨᛚᚱᛖᚨᛞᛁ᛫ᛊᛁᚱᚲᛚᛁᛜ᛫ᛟᚹᛖᚱᚺᛖᚨᛞ</div>
 
     <p>For a long age that was the whole of it, and it was enough.</p>
+    <div class="runeunder" aria-hidden="true">ᚠᛟᚱ᛫ᚨ᛫ᛚᛟᛜ᛫ᚨᚷᛖ᛫ᚦᚨᛏ᛫ᚹᚨᛊ᛫ᚦᛖ᛫ᚹᛟᛚ᛫ᛟᚠ᛫ᛁᛏ᛫ᚨᚾᛞ᛫ᛁᛏ᛫ᚹᚨᛊ᛫ᛖᚾᛟᚢᚷᚺ</div>
   </section>
 
   <!-- ============================================================
@@ -440,6 +473,7 @@
   <div class="secret">
     <p>And here is the plain secret the well-story was built to dress up, the one thing worth carrying out of all of this:</p>
     <p class="eq">The eye goes to Thought and Memory,<br>and what comes back is wisdom.</p>
+    <div class="runeline" aria-hidden="true">ᚦᛖ᛫ᛖᛁ᛫ᚷᛟᛖᛊ᛫ᛏᛟ᛫ᚦᛟᚢᛏ᛫ᚨᚾᛞ᛫ᛗᛖᛗᛟᚱᛁ᛫ᚨᚾᛞ᛫ᚹᚨᛏ᛫ᚲᛟᛗᛖᛊ᛫ᛒᚨᚲ᛫ᛁᛊ᛫ᚹᛁᛊᛞᛟᛗ</div>
     <p>Seeing, worked over by thought, kept by memory. That is the whole recipe &mdash; not from a well, not from a throne, not from a hall with five hundred doors. The two birds have been performing it over the north since before anyone was there to want it. The old people knew it so well they did not call it a secret. They just looked up.</p>
   </div>
 
@@ -449,12 +483,16 @@
   <section class="song">
     <div class="song-mark">Song the Second</div>
     <h3 class="song-title">Then the halls came</h3>
+    <div class="runeline" aria-hidden="true">ᚦᛖᚾ᛫ᚦᛖ᛫ᚺᚨᛚᛊ᛫ᚲᚨᛗ</div>
 
     <p class="opener">Then the halls came. Men learned to build long houses with fires down the middle, and to sit lords at the head of them, and to bind young men to those lords with rings and mead and oaths. And a people who had lorded no one began to want their heavens to look like their halls. So they built a god to sit at the head of the sky: tall, grey-bearded, wise and terrible, a giver of victory, a lord of the slain. They gave him a spear and a high seat and a hall with five hundred doors. And because no king of the north could be imagined without the two birds &mdash; because <em>the birds were the oldest true thing anyone knew</em> &mdash; they set Huginn and Muninn on his shoulders like ornaments, and said the ravens were his: his messengers, his little servants, flying out each morning to bring the king his news.</p>
+    <div class="runeunder" aria-hidden="true">ᚦᛖᚾ᛫ᚦᛖ᛫ᚺᚨᛚᛊ᛫ᚲᚨᛗ᛫ᛗᛖᚾ᛫ᛚᛖᚨᚱᚾᛖᛞ᛫ᛏᛟ᛫ᛒᚢᛁᛚᛞ᛫ᛚᛟᛜ᛫ᚺᛟᚢᛊᛖᛊ᛫ᚹᛁᚦ᛫ᚠᛁᚱᛖᛊ᛫ᛞᛟᚹᚾ᛫ᚦᛖ᛫ᛗᛁᛞᛚ᛫ᚨᚾᛞ᛫ᛏᛟ᛫ᛊᛁᛏ᛫ᛚᛟᚱᛞᛊ᛫ᚨᛏ᛫ᚦᛖ᛫ᚺᛖᚨᛞ᛫ᛟᚠ᛫ᚦᛖᛗ᛫ᚨᚾᛞ᛫ᛏᛟ᛫ᛒᛁᚾᛞ᛫ᛃᛟᚢᛜ᛫ᛗᛖᚾ᛫ᛏᛟ᛫ᚦᛟᛊ᛫ᛚᛟᚱᛞᛊ᛫ᚹᛁᚦ᛫ᚱᛁᛜᛊ᛫ᚨᚾᛞ᛫ᛗᛖᚨᛞ᛫ᚨᚾᛞ᛫ᛟᚨᚦᛊ᛫ᚨᚾᛞ᛫ᚨ᛫ᛈᛖᛟᛈᛚ᛫ᚹᛟ᛫ᚺᚨᛞ᛫ᛚᛟᚱᛞᛖᛞ᛫ᚾᛟ᛫ᛟᚾᛖ᛫ᛒᛖᚷᚨᚾ᛫ᛏᛟ᛫ᚹᚨᚾᛏ᛫ᚦᛖᛁᚱ᛫ᚺᛖᚨᚹᛖᚾᛊ᛫ᛏᛟ᛫ᛚᛟᚲ᛫ᛚᛁᚲ᛫ᚦᛖᛁᚱ᛫ᚺᚨᛚᛊ᛫ᛊᛟ᛫ᚦᛖᛁ᛫ᛒᚢᛁᛚᛏ᛫ᚨ᛫ᚷᛟᛞ᛫ᛏᛟ᛫ᛊᛁᛏ᛫ᚨᛏ᛫ᚦᛖ᛫ᚺᛖᚨᛞ᛫ᛟᚠ᛫ᚦᛖ᛫ᛊᚲᛁ᛫ᛏᚨᛚ᛫ᚷᚱᛖᛁᛒᛖᚨᚱᛞᛖᛞ᛫ᚹᛁᛊ᛫ᚨᚾᛞ᛫ᛏᛖᚱᛁᛒᛚ᛫ᚨ᛫ᚷᛁᚹᛖᚱ᛫ᛟᚠ᛫ᚹᛁᚲᛏᛟᚱᛁ᛫ᚨ᛫ᛚᛟᚱᛞ᛫ᛟᚠ᛫ᚦᛖ᛫ᛊᛚᚨᛁᚾ᛫ᚦᛖᛁ᛫ᚷᚨᚹ᛫ᚺᛁᛗ᛫ᚨ᛫ᛊᛈᛖᚨᚱ᛫ᚨᚾᛞ᛫ᚨ᛫ᚺᛁ᛫ᛊᛖᚨᛏ᛫ᚨᚾᛞ᛫ᚨ᛫ᚺᚨᛚ᛫ᚹᛁᚦ᛫ᚠᛁᚹ᛫ᚺᚢᚾᛞᚱᛖᛞ᛫ᛞᛟᚱᛊ᛫ᚨᚾᛞ᛫ᛒᛖᚲᚨᚢᛊ᛫ᚾᛟ᛫ᚲᛁᛜ᛫ᛟᚠ᛫ᚦᛖ᛫ᚾᛟᚱᚦ᛫ᚲᛟᚢᛚᛞ᛫ᛒᛖ᛫ᛁᛗᚨᚷᛁᚾᛖᛞ᛫ᚹᛁᚦᛟᚢᛏ᛫ᚦᛖ᛫ᛏᚹᛟ᛫ᛒᛁᚱᛞᛊ᛫ᛒᛖᚲᚨᚢᛊ᛫ᚦᛖ᛫ᛒᛁᚱᛞᛊ᛫ᚹᛖᚱ᛫ᚦᛖ᛫ᛟᛚᛞᛖᛊᛏ᛫ᛏᚱᚢᛖ᛫ᚦᛁᛜ᛫ᚨᚾᛃᛟᚾ᛫ᚲᚾᛖᚹ᛫ᚦᛖᛁ᛫ᛊᛖᛏ᛫ᚺᚢᚷᛁᚾ᛫ᚨᚾᛞ᛫ᛗᚢᚾᛁᚾ᛫ᛟᚾ᛫ᚺᛁᛊ᛫ᛊᚺᛟᚢᛚᛞᛖᚱᛊ᛫ᛚᛁᚲ᛫ᛟᚱᚾᚨᛗᛖᚾᛏᛊ᛫ᚨᚾᛞ᛫ᛊᚨᛁᛞ᛫ᚦᛖ᛫ᚱᚨᚹᛖᚾᛊ᛫ᚹᛖᚱ᛫ᚺᛁᛊ᛫ᚺᛁᛊ᛫ᛗᛖᛊᛖᛜᛖᚱᛊ᛫ᚺᛁᛊ᛫ᛚᛁᛏᛚ᛫ᛊᛖᚱᚹᚨᚾᛏᛊ᛫ᚠᛚᛃᛁᛜ᛫ᛟᚢᛏ᛫ᛖᚨᚲᚺ᛫ᛗᛟᚱᚾᛁᛜ᛫ᛏᛟ᛫ᛒᚱᛁᛜ᛫ᚦᛖ᛫ᚲᛁᛜ᛫ᚺᛁᛊ᛫ᚾᛖᚹᛊ</div>
 
     <p>And they turned one more thing around, the boldest turn of all. The god was one-eyed, and the story they told was that he had given the eye &mdash; laid it down nobly in a well of wisdom, a king&rsquo;s grand bargain, sight traded for knowing.</p>
+    <div class="runeunder" aria-hidden="true">ᚨᚾᛞ᛫ᚦᛖᛁ᛫ᛏᚢᚱᚾᛖᛞ᛫ᛟᚾᛖ᛫ᛗᛟᚱ᛫ᚦᛁᛜ᛫ᚨᚱᛟᚢᚾᛞ᛫ᚦᛖ᛫ᛒᛟᛚᛞᛖᛊᛏ᛫ᛏᚢᚱᚾ᛫ᛟᚠ᛫ᚨᛚ᛫ᚦᛖ᛫ᚷᛟᛞ᛫ᚹᚨᛊ᛫ᛟᚾᛖᛃᛖᛞ᛫ᚨᚾᛞ᛫ᚦᛖ᛫ᛊᛏᛟᚱᛁ᛫ᚦᛖᛁ᛫ᛏᛟᛚᛞ᛫ᚹᚨᛊ᛫ᚦᚨᛏ᛫ᚺᛖ᛫ᚺᚨᛞ᛫ᚷᛁᚹᛖᚾ᛫ᚦᛖ᛫ᛖᛁ᛫ᛚᚨᛁᛞ᛫ᛁᛏ᛫ᛞᛟᚹᚾ᛫ᚾᛟᛒᛚᛁ᛫ᛁᚾ᛫ᚨ᛫ᚹᛖᛚ᛫ᛟᚠ᛫ᚹᛁᛊᛞᛟᛗ᛫ᚨ᛫ᚲᛁᛜᛊ᛫ᚷᚱᚨᚾᛞ᛫ᛒᚨᚱᚷᚨᛁᚾ᛫ᛊᛁᛏ᛫ᛏᚱᚨᛞᛖᛞ᛫ᚠᛟᚱ᛫ᚲᚾᛟᚹᛁᛜ</div>
 
     <p>But every hunter in the north knew how an eye leaves a head. <strong>Nothing in that country is given.</strong> It is taken &mdash; first, before all else, by the ones whose office it is. The people who told the king&rsquo;s story had stood over enough carcasses to know exactly which god had taken that eye, and exactly why the one-eyed lord&rsquo;s wisdom arrived each morning on black wings and was whispered into his ear. His far-sight was their flight. His knowing was their keeping. <em>The king had not bought the ravens&rsquo; service. The king had been built around the ravens</em>, the way a hall is built around a fire that was burning before the first post was set.</p>
+    <div class="runeunder" aria-hidden="true">ᛒᚢᛏ᛫ᛖᚹᛖᚱᛁ᛫ᚺᚢᚾᛏᛖᚱ᛫ᛁᚾ᛫ᚦᛖ᛫ᚾᛟᚱᚦ᛫ᚲᚾᛖᚹ᛫ᚺᛟᚹ᛫ᚨᚾ᛫ᛖᛁ᛫ᛚᛖᚨᚹᛖᛊ᛫ᚨ᛫ᚺᛖᚨᛞ᛫ᚾᛟᚦᛁᛜ᛫ᛁᚾ᛫ᚦᚨᛏ᛫ᚲᛟᚢᚾᛏᚱᛁ᛫ᛁᛊ᛫ᚷᛁᚹᛖᚾ᛫ᛁᛏ᛫ᛁᛊ᛫ᛏᚨᚲᛖᚾ᛫ᚠᛁᚱᛊᛏ᛫ᛒᛖᚠᛟᚱ᛫ᚨᛚ᛫ᛖᛚᛊ᛫ᛒᛁ᛫ᚦᛖ᛫ᛟᚾᛖᛊ᛫ᚹᛟᛊ᛫ᛟᚠᛁᛊ᛫ᛁᛏ᛫ᛁᛊ᛫ᚦᛖ᛫ᛈᛖᛟᛈᛚ᛫ᚹᛟ᛫ᛏᛟᛚᛞ᛫ᚦᛖ᛫ᚲᛁᛜᛊ᛫ᛊᛏᛟᚱᛁ᛫ᚺᚨᛞ᛫ᛊᛏᛟᛞ᛫ᛟᚹᛖᚱ᛫ᛖᚾᛟᚢᚷᚺ᛫ᚲᚨᚱᚲᚨᛊᛖᛊ᛫ᛏᛟ᛫ᚲᚾᛟᚹ᛫ᛖᚲᛊᚨᚲᛏᛚᛁ᛫ᚹᛁᚲᚺ᛫ᚷᛟᛞ᛫ᚺᚨᛞ᛫ᛏᚨᚲᛖᚾ᛫ᚦᚨᛏ᛫ᛖᛁ᛫ᚨᚾᛞ᛫ᛖᚲᛊᚨᚲᛏᛚᛁ᛫ᚹᛁ᛫ᚦᛖ᛫ᛟᚾᛖᛃᛖᛞ᛫ᛚᛟᚱᛞᛊ᛫ᚹᛁᛊᛞᛟᛗ᛫ᚨᚱᛁᚹᛖᛞ᛫ᛖᚨᚲᚺ᛫ᛗᛟᚱᚾᛁᛜ᛫ᛟᚾ᛫ᛒᛚᚨᚲ᛫ᚹᛁᛜᛊ᛫ᚨᚾᛞ᛫ᚹᚨᛊ᛫ᚹᛁᛊᛈᛖᚱᛖᛞ᛫ᛁᚾᛏᛟ᛫ᚺᛁᛊ᛫ᛖᚨᚱ᛫ᚺᛁᛊ᛫ᚠᚨᚱᛊᛁᛏ᛫ᚹᚨᛊ᛫ᚦᛖᛁᚱ᛫ᚠᛚᛁᛏ᛫ᚺᛁᛊ᛫ᚲᚾᛟᚹᛁᛜ᛫ᚹᚨᛊ᛫ᚦᛖᛁᚱ᛫ᚲᛖᛈᛁᛜ᛫ᚦᛖ᛫ᚲᛁᛜ᛫ᚺᚨᛞ᛫ᚾᛟᛏ᛫ᛒᛟᚢᛏ᛫ᚦᛖ᛫ᚱᚨᚹᛖᚾᛊ᛫ᛊᛖᚱᚹᛁᛊ᛫ᚦᛖ᛫ᚲᛁᛜ᛫ᚺᚨᛞ᛫ᛒᛖᚾ᛫ᛒᚢᛁᛚᛏ᛫ᚨᚱᛟᚢᚾᛞ᛫ᚦᛖ᛫ᚱᚨᚹᛖᚾᛊ᛫ᚦᛖ᛫ᚹᚨᛁ᛫ᚨ᛫ᚺᚨᛚ᛫ᛁᛊ᛫ᛒᚢᛁᛚᛏ᛫ᚨᚱᛟᚢᚾᛞ᛫ᚨ᛫ᚠᛁᚱ᛫ᚦᚨᛏ᛫ᚹᚨᛊ᛫ᛒᚢᚱᚾᛁᛜ᛫ᛒᛖᚠᛟᚱ᛫ᚦᛖ᛫ᚠᛁᚱᛊᛏ᛫ᛈᛟᛊᛏ᛫ᚹᚨᛊ᛫ᛊᛖᛏ</div>
   </section>
 
   <!-- ============================================================
@@ -483,18 +521,25 @@
   <section class="song">
     <div class="song-mark">Song the Third</div>
     <h3 class="song-title">The end the old ones would have sung</h3>
+    <div class="runeline" aria-hidden="true">ᚦᛖ᛫ᛖᚾᛞ᛫ᚦᛖ᛫ᛟᛚᛞ᛫ᛟᚾᛖᛊ᛫ᚹᛟᚢᛚᛞ᛫ᚺᚨᚹ᛫ᛊᚢᛜ</div>
 
     <p class="opener">And the north was honest about one thing more, even inside the king&rsquo;s own story: it did not let him live forever. The poets sang it plainly. <em>The hall would fall.</em> The lord of the slain would join the slain. At the end of things the wolf would take him whole, the way the wolf takes everything &mdash; and the poets of the war-fields knew what came after the wolf, because they had seen it a hundred times with their own eyes and set it in their verses: where the slaughter is, three come always &mdash; the eagle, the wolf, and the raven. They sang the beasts of battle over every field of the dead, and they knew that on that last field the dead would include the god.</p>
+    <div class="runeunder" aria-hidden="true">ᚨᚾᛞ᛫ᚦᛖ᛫ᚾᛟᚱᚦ᛫ᚹᚨᛊ᛫ᚺᛟᚾᛖᛊᛏ᛫ᚨᛒᛟᚢᛏ᛫ᛟᚾᛖ᛫ᚦᛁᛜ᛫ᛗᛟᚱ᛫ᛖᚹᛖᚾ᛫ᛁᚾᛊᛁᛞ᛫ᚦᛖ᛫ᚲᛁᛜᛊ᛫ᛟᚹᚾ᛫ᛊᛏᛟᚱᛁ᛫ᛁᛏ᛫ᛞᛁᛞ᛫ᚾᛟᛏ᛫ᛚᛖᛏ᛫ᚺᛁᛗ᛫ᛚᛁᚹ᛫ᚠᛟᚱᛖᚹᛖᚱ᛫ᚦᛖ᛫ᛈᛟᛖᛏᛊ᛫ᛊᚨᛜ᛫ᛁᛏ᛫ᛈᛚᚨᛁᚾᛚᛁ᛫ᚦᛖ᛫ᚺᚨᛚ᛫ᚹᛟᚢᛚᛞ᛫ᚠᚨᛚ᛫ᚦᛖ᛫ᛚᛟᚱᛞ᛫ᛟᚠ᛫ᚦᛖ᛫ᛊᛚᚨᛁᚾ᛫ᚹᛟᚢᛚᛞ᛫ᛃᛟᛁᚾ᛫ᚦᛖ᛫ᛊᛚᚨᛁᚾ᛫ᚨᛏ᛫ᚦᛖ᛫ᛖᚾᛞ᛫ᛟᚠ᛫ᚦᛁᛜᛊ᛫ᚦᛖ᛫ᚹᛟᛚᚠ᛫ᚹᛟᚢᛚᛞ᛫ᛏᚨᚲ᛫ᚺᛁᛗ᛫ᚹᛟᛚ᛫ᚦᛖ᛫ᚹᚨᛁ᛫ᚦᛖ᛫ᚹᛟᛚᚠ᛫ᛏᚨᚲᛖᛊ᛫ᛖᚹᛖᚱᛁᚦᛁᛜ᛫ᚨᚾᛞ᛫ᚦᛖ᛫ᛈᛟᛖᛏᛊ᛫ᛟᚠ᛫ᚦᛖ᛫ᚹᚨᚱᚠᛁᛖᛚᛞᛊ᛫ᚲᚾᛖᚹ᛫ᚹᚨᛏ᛫ᚲᚨᛗ᛫ᚨᚠᛏᛖᚱ᛫ᚦᛖ᛫ᚹᛟᛚᚠ᛫ᛒᛖᚲᚨᚢᛊ᛫ᚦᛖᛁ᛫ᚺᚨᛞ᛫ᛊᛖᚾ᛫ᛁᛏ᛫ᚨ᛫ᚺᚢᚾᛞᚱᛖᛞ᛫ᛏᛁᛗᛖᛊ᛫ᚹᛁᚦ᛫ᚦᛖᛁᚱ᛫ᛟᚹᚾ᛫ᛖᛁᛊ᛫ᚨᚾᛞ᛫ᛊᛖᛏ᛫ᛁᛏ᛫ᛁᚾ᛫ᚦᛖᛁᚱ᛫ᚹᛖᚱᛊᛖᛊ᛫ᚹᛖᚱ᛫ᚦᛖ᛫ᛊᛚᚨᚢᛏᛖᚱ᛫ᛁᛊ᛫ᚦᚱᛖ᛫ᚲᛟᛗ᛫ᚨᛚᚹᚨᛁᛊ᛫ᚦᛖ᛫ᛖᚨᚷᛚ᛫ᚦᛖ᛫ᚹᛟᛚᚠ᛫ᚨᚾᛞ᛫ᚦᛖ᛫ᚱᚨᚹᛖᚾ᛫ᚦᛖᛁ᛫ᛊᚨᛜ᛫ᚦᛖ᛫ᛒᛖᚨᛊᛏᛊ᛫ᛟᚠ᛫ᛒᚨᛏᛚ᛫ᛟᚹᛖᚱ᛫ᛖᚹᛖᚱᛁ᛫ᚠᛁᛖᛚᛞ᛫ᛟᚠ᛫ᚦᛖ᛫ᛞᛖᚨᛞ᛫ᚨᚾᛞ᛫ᚦᛖᛁ᛫ᚲᚾᛖᚹ᛫ᚦᚨᛏ᛫ᛟᚾ᛫ᚦᚨᛏ᛫ᛚᚨᛊᛏ᛫ᚠᛁᛖᛚᛞ᛫ᚦᛖ᛫ᛞᛖᚨᛞ᛫ᚹᛟᚢᛚᛞ᛫ᛁᚾᚲᛚᚢᛞ᛫ᚦᛖ᛫ᚷᛟᛞ</div>
 
     <p>So hear the end the way the old ones would have sung it, if the singing had survived:</p>
+    <div class="runeunder" aria-hidden="true">ᛊᛟ᛫ᚺᛖᚨᚱ᛫ᚦᛖ᛫ᛖᚾᛞ᛫ᚦᛖ᛫ᚹᚨᛁ᛫ᚦᛖ᛫ᛟᛚᛞ᛫ᛟᚾᛖᛊ᛫ᚹᛟᚢᛚᛞ᛫ᚺᚨᚹ᛫ᛊᚢᛜ᛫ᛁᛏ᛫ᛁᚠ᛫ᚦᛖ᛫ᛊᛁᛜᛁᛜ᛫ᚺᚨᛞ᛫ᛊᚢᚱᚹᛁᚹᛖᛞ</div>
 
     <p>The hall burned, as halls do. The spear broke, as spears do. The one-eyed lord went down under the grey sky <em>like a bull moose in the willows, like any king, like any man</em>, and lay still. And out of the grey came two. They did not mourn, for mourning was never their office. They came down to the greatest carcass the north had ever offered them and they did what they had done since before he had a name, since before anyone had a name. They took the eye first &mdash; his last eye, the one the well never got &mdash; <strong>because the seeing must not lie in the snow and go dark. Not even a god&rsquo;s. Especially not a god&rsquo;s.</strong> And all that he had seen, and all that he had known, and every whisper they had ever carried to his ear, they took back and carried home, because it had always been theirs on loan.</p>
+    <div class="runeunder" aria-hidden="true">ᚦᛖ᛫ᚺᚨᛚ᛫ᛒᚢᚱᚾᛖᛞ᛫ᚨᛊ᛫ᚺᚨᛚᛊ᛫ᛞᛟ᛫ᚦᛖ᛫ᛊᛈᛖᚨᚱ᛫ᛒᚱᛟᚲ᛫ᚨᛊ᛫ᛊᛈᛖᚨᚱᛊ᛫ᛞᛟ᛫ᚦᛖ᛫ᛟᚾᛖᛃᛖᛞ᛫ᛚᛟᚱᛞ᛫ᚹᛖᚾᛏ᛫ᛞᛟᚹᚾ᛫ᚢᚾᛞᛖᚱ᛫ᚦᛖ᛫ᚷᚱᛖᛁ᛫ᛊᚲᛁ᛫ᛚᛁᚲ᛫ᚨ᛫ᛒᚢᛚ᛫ᛗᛟᛊ᛫ᛁᚾ᛫ᚦᛖ᛫ᚹᛁᛚᛟᚹᛊ᛫ᛚᛁᚲ᛫ᚨᚾᛁ᛫ᚲᛁᛜ᛫ᛚᛁᚲ᛫ᚨᚾᛁ᛫ᛗᚨᚾ᛫ᚨᚾᛞ᛫ᛚᚨᛁ᛫ᛊᛏᛁᛚ᛫ᚨᚾᛞ᛫ᛟᚢᛏ᛫ᛟᚠ᛫ᚦᛖ᛫ᚷᚱᛖᛁ᛫ᚲᚨᛗ᛫ᛏᚹᛟ᛫ᚦᛖᛁ᛫ᛞᛁᛞ᛫ᚾᛟᛏ᛫ᛗᛟᚢᚱᚾ᛫ᚠᛟᚱ᛫ᛗᛟᚢᚱᚾᛁᛜ᛫ᚹᚨᛊ᛫ᚾᛖᚹᛖᚱ᛫ᚦᛖᛁᚱ᛫ᛟᚠᛁᛊ᛫ᚦᛖᛁ᛫ᚲᚨᛗ᛫ᛞᛟᚹᚾ᛫ᛏᛟ᛫ᚦᛖ᛫ᚷᚱᛖᚨᛏᛖᛊᛏ᛫ᚲᚨᚱᚲᚨᛊ᛫ᚦᛖ᛫ᚾᛟᚱᚦ᛫ᚺᚨᛞ᛫ᛖᚹᛖᚱ᛫ᛟᚠᛖᚱᛖᛞ᛫ᚦᛖᛗ᛫ᚨᚾᛞ᛫ᚦᛖᛁ᛫ᛞᛁᛞ᛫ᚹᚨᛏ᛫ᚦᛖᛁ᛫ᚺᚨᛞ᛫ᛞᛟᚾ᛫ᛊᛁᚾᛊ᛫ᛒᛖᚠᛟᚱ᛫ᚺᛖ᛫ᚺᚨᛞ᛫ᚨ᛫ᚾᚨᛗ᛫ᛊᛁᚾᛊ᛫ᛒᛖᚠᛟᚱ᛫ᚨᚾᛃᛟᚾ᛫ᚺᚨᛞ᛫ᚨ᛫ᚾᚨᛗ᛫ᚦᛖᛁ᛫ᛏᛟᚲ᛫ᚦᛖ᛫ᛖᛁ᛫ᚠᛁᚱᛊᛏ᛫ᚺᛁᛊ᛫ᛚᚨᛊᛏ᛫ᛖᛁ᛫ᚦᛖ᛫ᛟᚾᛖ᛫ᚦᛖ᛫ᚹᛖᛚ᛫ᚾᛖᚹᛖᚱ᛫ᚷᛟᛏ᛫ᛒᛖᚲᚨᚢᛊ᛫ᚦᛖ᛫ᛊᛖᛁᛜ᛫ᛗᚢᛊᛏ᛫ᚾᛟᛏ᛫ᛚᛁᛖ᛫ᛁᚾ᛫ᚦᛖ᛫ᛊᚾᛟᚹ᛫ᚨᚾᛞ᛫ᚷᛟ᛫ᛞᚨᚱᚲ᛫ᚾᛟᛏ᛫ᛖᚹᛖᚾ᛫ᚨ᛫ᚷᛟᛞᛊ᛫ᛖᛊᛈᛖᛊᛁᚨᛚᛁ᛫ᚾᛟᛏ᛫ᚨ᛫ᚷᛟᛞᛊ᛫ᚨᚾᛞ᛫ᚨᛚ᛫ᚦᚨᛏ᛫ᚺᛖ᛫ᚺᚨᛞ᛫ᛊᛖᚾ᛫ᚨᚾᛞ᛫ᚨᛚ᛫ᚦᚨᛏ᛫ᚺᛖ᛫ᚺᚨᛞ᛫ᚲᚾᛟᚹᚾ᛫ᚨᚾᛞ᛫ᛖᚹᛖᚱᛁ᛫ᚹᛁᛊᛈᛖᚱ᛫ᚦᛖᛁ᛫ᚺᚨᛞ᛫ᛖᚹᛖᚱ᛫ᚲᚨᚱᛁᛖᛞ᛫ᛏᛟ᛫ᚺᛁᛊ᛫ᛖᚨᚱ᛫ᚦᛖᛁ᛫ᛏᛟᚲ᛫ᛒᚨᚲ᛫ᚨᚾᛞ᛫ᚲᚨᚱᛁᛖᛞ᛫ᚺᛟᛗ᛫ᛒᛖᚲᚨᚢᛊ᛫ᛁᛏ᛫ᚺᚨᛞ᛫ᚨᛚᚹᚨᛁᛊ᛫ᛒᛖᚾ᛫ᚦᛖᛁᚱᛊ᛫ᛟᚾ᛫ᛚᛟᚨᚾ</div>
 
     <p><em>The wolf got the god. The fire got the hall. The two took the sight, and kept it.</em></p>
+    <div class="runeunder" aria-hidden="true">ᚦᛖ᛫ᚹᛟᛚᚠ᛫ᚷᛟᛏ᛫ᚦᛖ᛫ᚷᛟᛞ᛫ᚦᛖ᛫ᚠᛁᚱ᛫ᚷᛟᛏ᛫ᚦᛖ᛫ᚺᚨᛚ᛫ᚦᛖ᛫ᛏᚹᛟ᛫ᛏᛟᚲ᛫ᚦᛖ᛫ᛊᛁᛏ᛫ᚨᚾᛞ᛫ᚲᛖᛈᛏ᛫ᛁᛏ</div>
 
     <p>The hall is gone now. The stones say less every year. The wood the words were cut in went back into the ground long ago, and of the lord of the slain there remains one weekday and a well-worn story about a bargain at a well.</p>
+    <div class="runeunder" aria-hidden="true">ᚦᛖ᛫ᚺᚨᛚ᛫ᛁᛊ᛫ᚷᛟᚾ᛫ᚾᛟᚹ᛫ᚦᛖ᛫ᛊᛏᛟᚾᛖᛊ᛫ᛊᚨᛁ᛫ᛚᛖᛊ᛫ᛖᚹᛖᚱᛁ᛫ᛃᛖᚨᚱ᛫ᚦᛖ᛫ᚹᛟᛞ᛫ᚦᛖ᛫ᚹᛟᚱᛞᛊ᛫ᚹᛖᚱ᛫ᚲᚢᛏ᛫ᛁᚾ᛫ᚹᛖᚾᛏ᛫ᛒᚨᚲ᛫ᛁᚾᛏᛟ᛫ᚦᛖ᛫ᚷᚱᛟᚢᚾᛞ᛫ᛚᛟᛜ᛫ᚨᚷᛟ᛫ᚨᚾᛞ᛫ᛟᚠ᛫ᚦᛖ᛫ᛚᛟᚱᛞ᛫ᛟᚠ᛫ᚦᛖ᛫ᛊᛚᚨᛁᚾ᛫ᚦᛖᚱ᛫ᚱᛖᛗᚨᛁᚾᛊ᛫ᛟᚾᛖ᛫ᚹᛖᚲᛞᚨᛁ᛫ᚨᚾᛞ᛫ᚨ᛫ᚹᛖᛚᚹᛟᚱᚾ᛫ᛊᛏᛟᚱᛁ᛫ᚨᛒᛟᚢᛏ᛫ᚨ᛫ᛒᚨᚱᚷᚨᛁᚾ᛫ᚨᛏ᛫ᚨ᛫ᚹᛖᛚ</div>
 
     <p>But go up now, in the cold, to the edge of a field where something has died or something is working, and wait. Out of the grey, two. One goes. One carries home. <strong>Still at it.</strong> Still keeping every eye the north ever closed &mdash; hunters and moose, kings and gods, all of them seeing on, through Thought, who goes, and Memory, who keeps. And if you watch them long enough, the message comes through the way it has come through everything &mdash; the blood, the war, the burning &mdash; plain as a bird on the wind: <em>give your eyes to thought and memory, and wisdom comes home to you.</em></p>
+    <div class="runeunder" aria-hidden="true">ᛒᚢᛏ᛫ᚷᛟ᛫ᚢᛈ᛫ᚾᛟᚹ᛫ᛁᚾ᛫ᚦᛖ᛫ᚲᛟᛚᛞ᛫ᛏᛟ᛫ᚦᛖ᛫ᛖᛞᚷ᛫ᛟᚠ᛫ᚨ᛫ᚠᛁᛖᛚᛞ᛫ᚹᛖᚱ᛫ᛊᛟᛗᛖᚦᛁᛜ᛫ᚺᚨᛊ᛫ᛞᛁᛖᛞ᛫ᛟᚱ᛫ᛊᛟᛗᛖᚦᛁᛜ᛫ᛁᛊ᛫ᚹᛟᚱᚲᛁᛜ᛫ᚨᚾᛞ᛫ᚹᚨᛁᛏ᛫ᛟᚢᛏ᛫ᛟᚠ᛫ᚦᛖ᛫ᚷᚱᛖᛁ᛫ᛏᚹᛟ᛫ᛟᚾᛖ᛫ᚷᛟᛖᛊ᛫ᛟᚾᛖ᛫ᚲᚨᚱᛁᛖᛊ᛫ᚺᛟᛗ᛫ᛊᛏᛁᛚ᛫ᚨᛏ᛫ᛁᛏ᛫ᛊᛏᛁᛚ᛫ᚲᛖᛈᛁᛜ᛫ᛖᚹᛖᚱᛁ᛫ᛖᛁ᛫ᚦᛖ᛫ᚾᛟᚱᚦ᛫ᛖᚹᛖᚱ᛫ᚲᛚᛟᛊᛖᛞ᛫ᚺᚢᚾᛏᛖᚱᛊ᛫ᚨᚾᛞ᛫ᛗᛟᛊ᛫ᚲᛁᛜᛊ᛫ᚨᚾᛞ᛫ᚷᛟᛞᛊ᛫ᚨᛚ᛫ᛟᚠ᛫ᚦᛖᛗ᛫ᛊᛖᛁᛜ᛫ᛟᚾ᛫ᚦᚱᛟᚢᚷᚺ᛫ᚦᛟᚢᛏ᛫ᚹᛟ᛫ᚷᛟᛖᛊ᛫ᚨᚾᛞ᛫ᛗᛖᛗᛟᚱᛁ᛫ᚹᛟ᛫ᚲᛖᛈᛊ᛫ᚨᚾᛞ᛫ᛁᚠ᛫ᛃᛟᚢ᛫ᚹᚨᛏᚲᚺ᛫ᚦᛖᛗ᛫ᛚᛟᛜ᛫ᛖᚾᛟᚢᚷᚺ᛫ᚦᛖ᛫ᛗᛖᛊᚨᚷ᛫ᚲᛟᛗᛖᛊ᛫ᚦᚱᛟᚢᚷᚺ᛫ᚦᛖ᛫ᚹᚨᛁ᛫ᛁᛏ᛫ᚺᚨᛊ᛫ᚲᛟᛗ᛫ᚦᚱᛟᚢᚷᚺ᛫ᛖᚹᛖᚱᛁᚦᛁᛜ᛫ᚦᛖ᛫ᛒᛚᛟᛞ᛫ᚦᛖ᛫ᚹᚨᚱ᛫ᚦᛖ᛫ᛒᚢᚱᚾᛁᛜ᛫ᛈᛚᚨᛁᚾ᛫ᚨᛊ᛫ᚨ᛫ᛒᛁᚱᛞ᛫ᛟᚾ᛫ᚦᛖ᛫ᚹᛁᚾᛞ᛫ᚷᛁᚹ᛫ᛃᛟᚢᚱ᛫ᛖᛁᛊ᛫ᛏᛟ᛫ᚦᛟᚢᛏ᛫ᚨᚾᛞ᛫ᛗᛖᛗᛟᚱᛁ᛫ᚨᚾᛞ᛫ᚹᛁᛊᛞᛟᛗ᛫ᚲᛟᛗᛖᛊ᛫ᚺᛟᛗ᛫ᛏᛟ᛫ᛃᛟᚢ</div>
   </section>
 
   <!-- ============================================================
@@ -504,6 +549,7 @@
     <div class="mark">Coda</div>
     <p>They were never anyone&rsquo;s birds.</p>
     <p class="emphatic">Everyone was theirs.</p>
+    <div class="runeline" aria-hidden="true">ᚦᛖᛁ᛫ᚹᛖᚱ᛫ᚾᛖᚹᛖᚱ᛫ᚨᚾᛃᛟᚾᛖᛊ᛫ᛒᛁᚱᛞᛊ᛫ᛖᚹᛖᚱᛃᛟᚾ᛫ᚹᚨᛊ᛫ᚦᛖᛁᚱᛊ</div>
 
     <span class="close-rule"></span>
     <p class="sig">End of the telling.</p>
