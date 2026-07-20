@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Muninn — How the World Was Made</title>
+<meta name="description" content="The Making — a reconstructed creation myth of the north. The Norse making and the Koyukon Distant Time poured back into one vessel: the ice and the fire, the flood and the raft, the driftwood people, and the two ravens who attended it all. No king. Andrew Morton, Palmer Lake, Colorado.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Noto+Sans+Runic&display=swap" rel="stylesheet">
+<style>
+  :root{
+    /* Aurora-dark campfire palette — night sky over snow, a fire in it. */
+    --night:#0b1016;          /* deep cold night sky */
+    --night-2:#0f151d;        /* panel night */
+    --night-3:#131b25;        /* raised night */
+    --snow:#e8eef2;           /* starlight on snow — primary text */
+    --snow-dim:#b6c2cc;       /* dimmer snow */
+    --ash:#8a97a2;            /* cold grey — faint text */
+    --ember:#e0662e;          /* campfire ember — primary warm accent */
+    --ember-bright:#f2894a;   /* flame tip */
+    --ember-deep:#a8431a;     /* coal */
+    --aurora:#4fd0a6;         /* aurora green */
+    --aurora-2:#3fa7c4;       /* aurora cyan */
+    --aurora-violet:#8a6fd0;  /* aurora violet edge */
+    --star:#cfe0ea;           /* star white-blue */
+    --rule:#26313d;           /* hairline on night */
+    --rule-soft:#1c242e;
+    --gold:#c99a4a;           /* old brass, for small marks */
+    --display:'Cinzel',Georgia,serif;
+    --serif:'EB Garamond','Palatino Linotype',Georgia,serif;
+    --song-serif:'Cormorant Garamond','EB Garamond',Georgia,serif;
+    --mono:ui-monospace,"SF Mono","Cascadia Code",Menlo,Consolas,monospace;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0;background-color:var(--night);color:var(--snow);
+    font-family:var(--serif);font-size:19px;line-height:1.68;
+    -webkit-font-smoothing:antialiased;
+    position:relative;
+  }
+
+  /* --- fixed night-sky backdrop: aurora wash + starfield --- */
+  .skyfield{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+  .aurora-wash{position:absolute;inset:-10% -10% auto -10%;height:70%;
+    background:
+      radial-gradient(60% 80% at 20% 0%, rgba(79,208,166,.14), transparent 60%),
+      radial-gradient(50% 70% at 70% 5%, rgba(63,167,196,.12), transparent 60%),
+      radial-gradient(40% 60% at 45% 0%, rgba(138,111,208,.10), transparent 55%);
+    filter:blur(6px);
+  }
+  .aurora-band{position:absolute;top:4%;left:-20%;width:140%;height:38%;
+    background:
+      radial-gradient(closest-side at 30% 50%, rgba(79,208,166,.16), transparent 70%),
+      radial-gradient(closest-side at 55% 40%, rgba(63,167,196,.13), transparent 70%),
+      radial-gradient(closest-side at 78% 55%, rgba(138,111,208,.10), transparent 70%);
+    transform:skewY(-6deg);filter:blur(14px);opacity:.9}
+  .stars{position:absolute;inset:0;
+    background-image:
+      radial-gradient(1px 1px at 12% 18%, rgba(207,224,234,.9), transparent),
+      radial-gradient(1px 1px at 24% 42%, rgba(207,224,234,.7), transparent),
+      radial-gradient(1.4px 1.4px at 38% 12%, rgba(255,255,255,.85), transparent),
+      radial-gradient(1px 1px at 52% 30%, rgba(207,224,234,.6), transparent),
+      radial-gradient(1px 1px at 63% 8%, rgba(207,224,234,.8), transparent),
+      radial-gradient(1.3px 1.3px at 72% 22%, rgba(255,255,255,.8), transparent),
+      radial-gradient(1px 1px at 84% 40%, rgba(207,224,234,.6), transparent),
+      radial-gradient(1px 1px at 91% 15%, rgba(207,224,234,.75), transparent),
+      radial-gradient(1px 1px at 8% 60%, rgba(207,224,234,.55), transparent),
+      radial-gradient(1px 1px at 33% 70%, rgba(207,224,234,.5), transparent),
+      radial-gradient(1.2px 1.2px at 47% 62%, rgba(255,255,255,.6), transparent),
+      radial-gradient(1px 1px at 68% 78%, rgba(207,224,234,.45), transparent),
+      radial-gradient(1px 1px at 88% 68%, rgba(207,224,234,.5), transparent),
+      radial-gradient(1px 1px at 18% 88%, rgba(207,224,234,.4), transparent),
+      radial-gradient(1px 1px at 58% 92%, rgba(207,224,234,.38), transparent),
+      radial-gradient(1px 1px at 79% 88%, rgba(207,224,234,.4), transparent);
+    background-repeat:no-repeat;
+  }
+  /* subtle horizon glow from the fire, bottom center */
+  .emberglow{position:fixed;left:50%;bottom:-8%;transform:translateX(-50%);
+    width:80%;height:32%;z-index:0;pointer-events:none;
+    background:radial-gradient(closest-side, rgba(224,102,46,.14), rgba(168,67,26,.05) 55%, transparent 75%);
+    filter:blur(10px)}
+
+  .wrap{max-width:720px;margin:0 auto;padding:0 22px 120px;position:relative;z-index:1;
+    background:
+      linear-gradient(to bottom, rgba(11,16,22,.72) 0%, rgba(11,16,22,.88) 12%, rgba(11,16,22,.9) 88%, rgba(11,16,22,.72) 100%);
+    box-shadow:0 0 60px rgba(0,0,0,.5)}
+
+  /* nameplate */
+  header.plate{padding:64px 0 30px;text-align:center;position:relative;
+    border-bottom:1px solid var(--rule)}
+  header.plate .kicker{
+    font-family:var(--display);font-weight:600;
+    font-size:11.5px;letter-spacing:.34em;text-transform:uppercase;
+    color:var(--aurora);margin-bottom:20px;
+  }
+  header.plate .kicker::before,header.plate .kicker::after{
+    content:"\2022";margin:0 12px;color:var(--ember);
+  }
+  h1{font-family:var(--display);font-weight:700;
+    font-size:clamp(38px,8.2vw,62px);
+    line-height:1.02;margin:0 0 16px;
+    color:var(--snow);letter-spacing:.02em;
+    text-shadow:0 0 26px rgba(79,208,166,.18), 0 0 60px rgba(63,167,196,.10)}
+  h1 .amp{color:var(--ember);font-weight:600;
+    text-shadow:0 0 22px rgba(224,102,46,.35)}
+  .subtitle{
+    font-family:var(--song-serif);font-style:italic;
+    font-size:clamp(16px,3.6vw,20px);color:var(--snow-dim);
+    max-width:38ch;margin:0 auto 16px;
+  }
+  .epigraph{
+    font-family:var(--song-serif);font-style:italic;
+    font-size:clamp(17px,3.8vw,21px);color:var(--star);
+    max-width:34ch;margin:26px auto 0;line-height:1.4;
+    position:relative;padding:16px 0;
+  }
+  .epigraph::before,.epigraph::after{
+    content:"";position:absolute;left:50%;transform:translateX(-50%);
+    width:40px;height:1px;
+    background:linear-gradient(90deg, transparent, var(--ember), transparent);
+  }
+  .epigraph::before{top:0}
+  .epigraph::after{bottom:0}
+  .tocline{
+    font-family:var(--display);font-weight:500;
+    font-size:11px;letter-spacing:.18em;
+    text-transform:uppercase;color:var(--gold);
+    margin-top:26px;line-height:1.9;
+  }
+  .tocline span{white-space:nowrap}
+  .byline{
+    font-family:var(--display);font-weight:500;
+    font-size:12px;letter-spacing:.12em;
+    color:var(--ash);margin-top:18px;font-variant:small-caps;
+  }
+
+  /* dedication card — like a hide pinned by the fire */
+  .dedication{
+    max-width:44ch;margin:38px auto 0;
+    padding:24px 28px;
+    border:1px solid var(--rule);
+    background:var(--night-3);
+    font-family:var(--song-serif);font-style:italic;
+    font-size:16.5px;line-height:1.55;color:var(--snow-dim);
+    text-align:center;position:relative;
+    box-shadow:inset 0 0 40px rgba(224,102,46,.05);
+  }
+  .dedication::before,.dedication::after{
+    content:"";position:absolute;left:50%;transform:translateX(-50%);
+    width:10px;height:10px;
+    background:var(--ember);
+    clip-path:polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
+    box-shadow:0 0 12px rgba(224,102,46,.5);
+  }
+  .dedication::before{top:-5px}
+  .dedication::after{bottom:-5px}
+  .dedication b{font-style:normal;color:var(--snow);font-weight:500}
+
+  /* prologue */
+  .prologue{padding:46px 0 8px;text-align:center}
+  .prologue p{
+    font-family:var(--song-serif);font-style:italic;
+    font-size:18.5px;line-height:1.55;color:var(--snow-dim);
+    max-width:46ch;margin:0 auto;
+  }
+  .prologue .rule{
+    display:block;width:60px;height:1px;
+    background:linear-gradient(90deg, transparent, var(--ember), transparent);
+    margin:26px auto 0;
+  }
+
+  /* chapter — the analytical voice */
+  .chapter{padding:48px 0 8px;position:relative}
+  .chapter-head{
+    display:flex;align-items:baseline;gap:16px;margin-bottom:10px;
+    border-bottom:1px solid var(--rule);padding-bottom:12px;
+  }
+  .chapter-mark{
+    font-family:var(--display);font-weight:600;font-size:14px;
+    color:var(--aurora);letter-spacing:.08em;
+  }
+  .chapter-title{
+    font-family:var(--display);font-weight:700;
+    font-size:clamp(23px,5.4vw,32px);color:var(--snow);
+    margin:0;line-height:1.1;letter-spacing:.015em;
+  }
+  .chapter p{margin:0 0 18px;color:var(--snow)}
+  .chapter p.first{font-size:20.5px;color:var(--snow)}
+  .chapter p.first::first-letter{
+    font-family:var(--display);font-weight:700;
+    font-size:56px;line-height:.9;
+    float:left;padding:6px 12px 0 0;
+    color:var(--ember);
+    text-shadow:0 0 20px rgba(224,102,46,.4);
+  }
+  .chapter em{color:var(--aurora);font-style:italic}
+  .chapter strong{color:var(--snow);font-weight:600;
+    background:rgba(79,208,166,.08);padding:0 3px}
+
+  /* song — the mythic voice, told like firelight */
+  .song{
+    margin:56px 0 8px;padding:40px 26px 36px;
+    position:relative;
+    background:
+      radial-gradient(120% 90% at 50% 100%, rgba(224,102,46,.09), transparent 60%),
+      linear-gradient(to bottom, rgba(19,27,37,0) 0%, rgba(19,27,37,.72) 8%, rgba(19,27,37,.72) 92%, rgba(19,27,37,0) 100%);
+    border-top:1px solid var(--rule-soft);
+    border-bottom:1px solid var(--rule-soft);
+  }
+  .song::before,.song::after{
+    content:"";position:absolute;left:50%;transform:translateX(-50%);
+    width:56px;height:1px;
+    background:linear-gradient(90deg, transparent, var(--ember), transparent);
+  }
+  .song::before{top:14px}
+  .song::after{bottom:14px}
+  .song-mark{
+    text-align:center;
+    font-family:var(--display);font-weight:500;
+    font-size:11px;letter-spacing:.28em;
+    text-transform:uppercase;color:var(--ember);
+    margin-bottom:14px;
+  }
+  .song-mark::before{content:"\25C6\a0\a0"}
+  .song-mark::after{content:"\a0\a0\25C6"}
+  .song-title{
+    text-align:center;
+    font-family:var(--display);font-weight:700;
+    font-size:clamp(20px,4.8vw,26px);
+    color:var(--snow);margin:0 0 24px;line-height:1.15;
+    letter-spacing:.015em;
+    text-shadow:0 0 24px rgba(224,102,46,.15);
+  }
+  .song p{
+    font-family:var(--song-serif);
+    font-style:italic;font-size:19px;line-height:1.66;
+    color:var(--star);
+    margin:0 0 16px;max-width:56ch;margin-left:auto;margin-right:auto;
+  }
+  .song p.opener::first-letter{
+    font-family:var(--display);font-weight:700;font-style:normal;
+    font-size:44px;line-height:.9;
+    float:left;padding:5px 10px 0 0;
+    color:var(--ember);
+    text-shadow:0 0 18px rgba(224,102,46,.45);
+  }
+  .song p em{color:var(--ember-bright);font-style:normal;font-weight:500;
+    font-variant:small-caps;letter-spacing:.05em}
+  .song p strong{color:var(--snow);font-weight:500;font-style:italic}
+
+  /* the secret — the wisdom equation, set apart as a hearth-stone */
+  .secret{
+    margin:52px auto;max-width:52ch;
+    padding:30px 30px;
+    text-align:center;position:relative;
+    background:radial-gradient(120% 120% at 50% 0%, rgba(224,102,46,.10), transparent 65%);
+    border-top:1px solid var(--ember-deep);
+    border-bottom:1px solid var(--ember-deep);
+  }
+  .secret p{
+    font-family:var(--song-serif);font-style:italic;
+    font-size:21px;line-height:1.5;color:var(--star);margin:0 0 12px;
+  }
+  .secret p:last-child{margin-bottom:0}
+  .secret .eq{
+    font-family:var(--display);font-weight:600;font-style:normal;
+    font-size:clamp(17px,3.6vw,20px);letter-spacing:.03em;
+    color:var(--ember-bright);
+    line-height:1.4;
+    text-shadow:0 0 22px rgba(224,102,46,.3);
+  }
+
+  /* coda */
+  .coda{
+    padding:52px 20px 26px;text-align:center;
+    margin-top:40px;border-top:1px solid var(--rule);
+  }
+  .coda .mark{
+    font-family:var(--display);font-weight:500;
+    font-size:11px;letter-spacing:.28em;text-transform:uppercase;
+    color:var(--gold);margin-bottom:22px;
+  }
+  .coda p{
+    font-family:var(--song-serif);font-style:italic;
+    font-size:20px;line-height:1.5;color:var(--snow-dim);
+    max-width:36ch;margin:0 auto 14px;
+  }
+  .coda p.emphatic{
+    font-family:var(--display);font-style:normal;font-weight:700;
+    font-size:22px;letter-spacing:.02em;
+    color:var(--ember);margin-top:22px;
+    text-shadow:0 0 26px rgba(224,102,46,.3);
+  }
+  .coda .close-rule{
+    display:block;width:44px;height:1px;
+    background:linear-gradient(90deg, transparent, var(--ember), transparent);
+    margin:28px auto 20px;
+  }
+  .coda .sig{
+    font-family:var(--song-serif);font-style:italic;font-size:14px;
+    color:var(--ash);margin:0 auto 2px;
+  }
+  .coda .sig-name{
+    font-family:var(--display);font-style:normal;
+    font-variant:small-caps;font-size:14px;letter-spacing:.05em;
+    color:var(--snow-dim);
+  }
+
+  @media(max-width:560px){
+    body{font-size:18px}
+    .chapter p.first{font-size:19px}
+    .chapter p.first::first-letter{font-size:44px}
+    .song{padding:30px 16px 26px}
+    .song p{font-size:18px}
+    .song p.opener::first-letter{font-size:38px}
+    .dedication{padding:20px 20px;font-size:15.5px}
+    .secret{padding:24px 20px}
+    .secret p{font-size:19px}
+    .coda p{font-size:18px}
+    .coda p.emphatic{font-size:19px}
+  }
+  @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+  /* site nav — fixed top-right, honest filesystem labels */
+  .sitenav{position:fixed;top:14px;right:14px;z-index:100;
+    display:flex;gap:6px;
+    font-family:var(--mono);font-size:11px;letter-spacing:.14em}
+  .sitenav a{display:inline-block;padding:6px 10px;
+    background:rgba(15,21,29,.82);backdrop-filter:blur(6px);
+    color:var(--ash);text-decoration:none;
+    border:1px solid var(--rule);
+    transition:color .12s, border-color .12s}
+  .sitenav a:hover{color:var(--ember);border-color:var(--ember)}
+  @media (max-width:640px){.sitenav{top:10px;right:10px}.sitenav a{padding:5px 8px;font-size:10px}}
+
+  /* --- ethereal rune underlines: the carving beneath the words --- */
+  .runeline{
+    font-family:'Noto Sans Runic',var(--serif);
+    text-align:center;font-size:14.5px;letter-spacing:.24em;
+    color:var(--aurora);opacity:.48;line-height:1.8;
+    text-shadow:0 0 14px rgba(79,208,166,.4), 0 0 30px rgba(63,167,196,.18);
+    margin:8px auto 0;max-width:60ch;
+  }
+  .plate .runeline{color:var(--gold);opacity:.6;
+    text-shadow:0 0 14px rgba(201,154,74,.45);margin-top:10px}
+  .coda .runeline{margin-top:14px}
+  @media (max-width:640px){.runeline{font-size:12.5px;letter-spacing:.16em}}
+
+  /* --- paragraph undertext: the carving beneath the telling (songs only) --- */
+  .runeunder{
+    font-family:'Noto Sans Runic',var(--serif);
+    font-size:11.5px;letter-spacing:.14em;line-height:1.7;
+    color:var(--gold);opacity:.72;
+    text-shadow:0 0 10px rgba(201,154,74,.5), 0 0 22px rgba(224,102,46,.18);
+    margin:5px 0 20px;word-break:break-word;
+    -webkit-user-select:none;user-select:none;
+  }
+  @media (max-width:640px){.runeunder{font-size:10px;letter-spacing:.08em}}
+</style>
+</head>
+<body>
+<nav class="sitenav" aria-label="Site navigation">
+  <a href="huginn-and-muninn.html" title="Huginn &amp; Muninn — Thought and Memory">../</a>
+  <a href="../index.html" title="Site index (root)">/</a>
+  <a href="huginn.html" title="Huginn — the telling, a history and a telling">huginn</a>
+</nav>
+
+<!-- night sky backdrop -->
+<div class="skyfield" aria-hidden="true">
+  <div class="aurora-wash"></div>
+  <div class="aurora-band"></div>
+  <div class="stars"></div>
+</div>
+<div class="emberglow" aria-hidden="true"></div>
+
+<div class="wrap">
+
+  <header class="plate">
+    <div class="kicker">Muninn &middot; Memory &middot; A Making &amp; a Reconstruction</div>
+    <h1>Muninn</h1>
+    <div class="runeline" aria-hidden="true">ᛗᚢᚾᛁᚾ</div>
+    <p class="subtitle">How the world was made, in the version the north would have kept.</p>
+    <p class="epigraph">&ldquo;Nothing was wasted, and every eye was carried home.&rdquo;</p>
+    <div class="runeline" aria-hidden="true">ᚾᛟᚦᛁᛜ᛫ᚹᚨᛊ᛫ᚹᚨᛊᛏᛖᛞ᛫ᚨᚾᛞ᛫ᛖᚹᛖᚱᛁ᛫ᛖᛁ᛫ᚹᚨᛊ᛫ᚲᚨᚱᛁᛖᛞ᛫ᚺᛟᛗ</div>
+    <p class="tocline">
+      <span>the two survivals</span> &middot; <span>the making</span> &middot; <span>coda</span>
+    </p>
+    <p class="byline">Andrew Morton &middot; Palmer Lake, Colorado &middot; July 2026</p>
+
+    <div class="dedication">
+      For Huginn and Muninn &mdash; the two I met on the Richardson. The pair on the highway, the ones at the moose sites, the two that learned my tractor and came to work the field beside me. <b>I understand now what those north people felt. This is the debt.</b>
+    </div>
+  </header>
+
+  <!-- ============================================================
+       PROLOGUE
+       ============================================================ -->
+  <section class="prologue">
+    <p>This page stands before the other, the way a beginning stands before its story. What follows is a reconstruction: two creation stories that survived from raven country, compared until the one inserted scene shows itself &mdash; and then the making told whole, with the scene removed and the gap refilled from the living parallel. Read the chapter for how it was recovered. Read the song for the thing itself. Then go read the telling.</p>
+    <span class="rule"></span>
+  </section>
+
+  <!-- ============================================================
+       CHAPTER — THE TWO SURVIVALS
+       ============================================================ -->
+  <section class="chapter">
+    <div class="chapter-head">
+      <span class="chapter-mark">The Argument</span>
+      <h2 class="chapter-title">The Two Survivals</h2>
+    </div>
+
+    <p class="first">Two creation stories come down to us from raven country, one from each end of the erasure. The first was caught late and secondhand: the Norse making, written down in Iceland in the 1200s, two centuries after conversion. It begins with a yawning gap &mdash; no up in it and no down &mdash; an ice country in the north and a fire country in the south, and life thawing out of the drip where they meet. The first beings are giants. Then comes the scene everything else hangs on: <em>three brothers murder the first giant and build the world from the corpse</em> &mdash; flesh into earth, blood into sea, bones into mountains, skull into sky. The blood rises into a flood that drowns the whole first race, except one who escapes <strong>on a vessel</strong>. Afterward, walking the new shore, the powers find two pieces of driftwood at the tideline and make the first people from them, giving three gifts: breath, <em>thought</em>, and the senses.</p>
+
+    <p>The second survival was caught live, from the control country. Along the Koyukuk in the 1970s, Koyukon elders were still reciting the Distant Time: a first age when animals and people shared one speech, an age of giant animals that no longer exist &mdash; and a great flood that covered the entire earth, with <strong>a pair of every kind saved aboard a vessel</strong> under the Raven&rsquo;s supervision. The people of the first age all drowned, and afterward the Raven <em>remade people in their present form</em>. The coastal cousins keep the smallest version of the making on record: the Raven settling on a speck in the open sea and speaking to it &mdash; and it became Earth.</p>
+
+    <p>Set them side by side and the convergence is not subtle. Both remember a first age of giants that ended in water. Both put the survivors of the drowning <strong>on a vessel</strong>. Both have people made, or remade, by a power working the water&rsquo;s edge &mdash; and made from what the water carried in. Both hand the new people the same gifts: breath, and the faculties of knowing. These are the same story, held at two ends of a broken transmission &mdash; one end caught late by a king-age scribe in a foreign alphabet, the other carried alive down an unbroken chain of reciters in the one country the fire could not reach.</p>
+
+    <p>The difference between them is a single scene: <em>the murder.</em> And the murder is the scene that does not belong. Consider what the Norse making actually describes once the three brothers are set aside: a great body, and a power that renders it completely &mdash; flesh to land, blood to sea, bones to mountains, breath to mist &mdash; <strong>a world built from a carcass with nothing wasted.</strong> That is not king&rsquo;s work. No lord in any hall ever rendered a carcass. It is carrion work, the oldest office in the north, and there was only ever one power whose office it was. The scene was theirs before the brothers were written into it &mdash; the same late hands that built the god-king needed their new lord present at the founding, so they armed him, gave him a victim, and turned an attending into a killing. Remove the one inserted scene, pour the two survivals back into one vessel, and the missing making &mdash; the one the raven-people would have kept &mdash; reads itself back. It follows.</p>
+  </section>
+
+  <!-- ============================================================
+       SONG — THE MAKING
+       ============================================================ -->
+  <section class="song">
+    <div class="song-mark">The Song</div>
+    <h3 class="song-title">The Making</h3>
+    <div class="runeline" aria-hidden="true">ᛒᛖᚠᛟᚱ᛫ᚦᛖ᛫ᚹᛟᚱᛚᛞ᛫ᚦᛖᚱ᛫ᚹᚨᛊ᛫ᚦᛖ᛫ᚷᚨᛈ</div>
+
+    <p class="opener">Before the world there was the gap &mdash; a yawning emptiness with no up in it and no down. In the north of the gap lay the ice country, all mist and frozen rivers, and in the south lay the fire country, all sparks and burning. For an age of ages they did not touch. And over the gap, riding the wind between the cold and the heat, went two ravens, who were old already, for they had never not been. One was Thought and one was Memory, and in that empty time they had nothing to see and nothing to keep, and so they flew, and waited, <em>for waiting is a thing ravens do well.</em></p>
+    <div class="runeunder" aria-hidden="true">ᛒᛖᚠᛟᚱ᛫ᚦᛖ᛫ᚹᛟᚱᛚᛞ᛫ᚦᛖᚱ᛫ᚹᚨᛊ᛫ᚦᛖ᛫ᚷᚨᛈ᛫ᚨ᛫ᛃᚨᚹᚾᛁᛜ᛫ᛖᛗᛈᛏᛁᚾᛖᛊ᛫ᚹᛁᚦ᛫ᚾᛟ᛫ᚢᛈ᛫ᛁᚾ᛫ᛁᛏ᛫ᚨᚾᛞ᛫ᚾᛟ᛫ᛞᛟᚹᚾ᛫ᛁᚾ᛫ᚦᛖ᛫ᚾᛟᚱᚦ᛫ᛟᚠ᛫ᚦᛖ᛫ᚷᚨᛈ᛫ᛚᚨᛁ᛫ᚦᛖ᛫ᛁᛊᛖ᛫ᚲᛟᚢᚾᛏᚱᛁ᛫ᚨᛚ᛫ᛗᛁᛊᛏ᛫ᚨᚾᛞ᛫ᚠᚱᛟᛉᛖᚾ᛫ᚱᛁᚹᛖᚱᛊ᛫ᚨᚾᛞ᛫ᛁᚾ᛫ᚦᛖ᛫ᛊᛟᚢᚦ᛫ᛚᚨᛁ᛫ᚦᛖ᛫ᚠᛁᚱ᛫ᚲᛟᚢᚾᛏᚱᛁ᛫ᚨᛚ᛫ᛊᛈᚨᚱᚲᛊ᛫ᚨᚾᛞ᛫ᛒᚢᚱᚾᛁᛜ᛫ᚠᛟᚱ᛫ᚨᚾ᛫ᚨᚷᛖ᛫ᛟᚠ᛫ᚨᚷᛖᛊ᛫ᚦᛖᛁ᛫ᛞᛁᛞ᛫ᚾᛟᛏ᛫ᛏᛟᚢᚲᚺ᛫ᚨᚾᛞ᛫ᛟᚹᛖᚱ᛫ᚦᛖ᛫ᚷᚨᛈ᛫ᚱᛁᛞᛁᛜ᛫ᚦᛖ᛫ᚹᛁᚾᛞ᛫ᛒᛖᛏᚹᛖᚾ᛫ᚦᛖ᛫ᚲᛟᛚᛞ᛫ᚨᚾᛞ᛫ᚦᛖ᛫ᚺᛖᚨᛏ᛫ᚹᛖᚾᛏ᛫ᛏᚹᛟ᛫ᚱᚨᚹᛖᚾᛊ᛫ᚹᛟ᛫ᚹᛖᚱ᛫ᛟᛚᛞ᛫ᚨᛚᚱᛖᚨᛞᛁ᛫ᚠᛟᚱ᛫ᚦᛖᛁ᛫ᚺᚨᛞ᛫ᚾᛖᚹᛖᚱ᛫ᚾᛟᛏ᛫ᛒᛖᚾ᛫ᛟᚾᛖ᛫ᚹᚨᛊ᛫ᚦᛟᚢᛏ᛫ᚨᚾᛞ᛫ᛟᚾᛖ᛫ᚹᚨᛊ᛫ᛗᛖᛗᛟᚱᛁ᛫ᚨᚾᛞ᛫ᛁᚾ᛫ᚦᚨᛏ᛫ᛖᛗᛈᛏᛁ᛫ᛏᛁᛗ᛫ᚦᛖᛁ᛫ᚺᚨᛞ᛫ᚾᛟᚦᛁᛜ᛫ᛏᛟ᛫ᛊᛖ᛫ᚨᚾᛞ᛫ᚾᛟᚦᛁᛜ᛫ᛏᛟ᛫ᚲᛖᛈ᛫ᚨᚾᛞ᛫ᛊᛟ᛫ᚦᛖᛁ᛫ᚠᛚᛖᚹ᛫ᚨᚾᛞ᛫ᚹᚨᛁᛏᛖᛞ᛫ᚠᛟᚱ᛫ᚹᚨᛁᛏᛁᛜ᛫ᛁᛊ᛫ᚨ᛫ᚦᛁᛜ᛫ᚱᚨᚹᛖᚾᛊ᛫ᛞᛟ᛫ᚹᛖᛚ</div>
+
+    <p>Then the ice crept south and the sparks flew north, and where they met, the ice began to weep. Out of the dripping the first lives thawed, and they were giants &mdash; the great beings of the Distant Time, animals vaster than any that live now, beings half-animal and half-person, and in that age all of them spoke, every creature, in the one speech. The melt ran off the ice in rivers and pooled beneath, and there was still no land &mdash; only the wide water, the mist, and the giants of the first age wading and swimming and speaking in it.</p>
+    <div class="runeunder" aria-hidden="true">ᚦᛖᚾ᛫ᚦᛖ᛫ᛁᛊᛖ᛫ᚲᚱᛖᛈᛏ᛫ᛊᛟᚢᚦ᛫ᚨᚾᛞ᛫ᚦᛖ᛫ᛊᛈᚨᚱᚲᛊ᛫ᚠᛚᛖᚹ᛫ᚾᛟᚱᚦ᛫ᚨᚾᛞ᛫ᚹᛖᚱ᛫ᚦᛖᛁ᛫ᛗᛖᛏ᛫ᚦᛖ᛫ᛁᛊᛖ᛫ᛒᛖᚷᚨᚾ᛫ᛏᛟ᛫ᚹᛖᛈ᛫ᛟᚢᛏ᛫ᛟᚠ᛫ᚦᛖ᛫ᛞᚱᛁᛈᛁᛜ᛫ᚦᛖ᛫ᚠᛁᚱᛊᛏ᛫ᛚᛁᚹᛖᛊ᛫ᚦᚨᚹᛖᛞ᛫ᚨᚾᛞ᛫ᚦᛖᛁ᛫ᚹᛖᚱ᛫ᚷᛁᚨᚾᛏᛊ᛫ᚦᛖ᛫ᚷᚱᛖᚨᛏ᛫ᛒᛖᛁᛜᛊ᛫ᛟᚠ᛫ᚦᛖ᛫ᛞᛁᛊᛏᚨᚾᛏ᛫ᛏᛁᛗ᛫ᚨᚾᛁᛗᚨᛚᛊ᛫ᚹᚨᛊᛏᛖᚱ᛫ᚦᚨᚾ᛫ᚨᚾᛁ᛫ᚦᚨᛏ᛫ᛚᛁᚹ᛫ᚾᛟᚹ᛫ᛒᛖᛁᛜᛊ᛫ᚺᚨᛚᚠᚨᚾᛁᛗᚨᛚ᛫ᚨᚾᛞ᛫ᚺᚨᛚᚠᛈᛖᚱᛊᛟᚾ᛫ᚨᚾᛞ᛫ᛁᚾ᛫ᚦᚨᛏ᛫ᚨᚷᛖ᛫ᚨᛚ᛫ᛟᚠ᛫ᚦᛖᛗ᛫ᛊᛈᛟᚲ᛫ᛖᚹᛖᚱᛁ᛫ᚲᚱᛖᚨᛏᚢᚱ᛫ᛁᚾ᛫ᚦᛖ᛫ᛟᚾᛖ᛫ᛊᛈᛖᚲᚺ᛫ᚦᛖ᛫ᛗᛖᛚᛏ᛫ᚱᚨᚾ᛫ᛟᚠ᛫ᚦᛖ᛫ᛁᛊᛖ᛫ᛁᚾ᛫ᚱᛁᚹᛖᚱᛊ᛫ᚨᚾᛞ᛫ᛈᛟᛚᛖᛞ᛫ᛒᛖᚾᛖᚨᚦ᛫ᚨᚾᛞ᛫ᚦᛖᚱ᛫ᚹᚨᛊ᛫ᛊᛏᛁᛚ᛫ᚾᛟ᛫ᛚᚨᚾᛞ᛫ᛟᚾᛚᛁ᛫ᚦᛖ᛫ᚹᛁᛞ᛫ᚹᚨᛏᛖᚱ᛫ᚦᛖ᛫ᛗᛁᛊᛏ᛫ᚨᚾᛞ᛫ᚦᛖ᛫ᚷᛁᚨᚾᛏᛊ᛫ᛟᚠ᛫ᚦᛖ᛫ᚠᛁᚱᛊᛏ᛫ᚨᚷᛖ᛫ᚹᚨᛞᛁᛜ᛫ᚨᚾᛞ᛫ᛊᚹᛁᛗᛁᛜ᛫ᚨᚾᛞ᛫ᛊᛈᛖᚨᚲᛁᛜ᛫ᛁᚾ᛫ᛁᛏ</div>
+
+    <p>The two came down to look, for now there was something to see. And finding a little thing floating on the wide water &mdash; a speck, a mote, hardly anything &mdash; one of them settled on it and spoke to it in the one speech, and said: <em>become ground.</em> And it became ground, a first small island in the melt, and Memory kept the word that had done it, which is why the word still works, <strong>for anything spoken and kept can be spoken again.</strong></p>
+    <div class="runeunder" aria-hidden="true">ᚦᛖ᛫ᛏᚹᛟ᛫ᚲᚨᛗ᛫ᛞᛟᚹᚾ᛫ᛏᛟ᛫ᛚᛟᚲ᛫ᚠᛟᚱ᛫ᚾᛟᚹ᛫ᚦᛖᚱ᛫ᚹᚨᛊ᛫ᛊᛟᛗᛖᚦᛁᛜ᛫ᛏᛟ᛫ᛊᛖ᛫ᚨᚾᛞ᛫ᚠᛁᚾᛞᛁᛜ᛫ᚨ᛫ᛚᛁᛏᛚ᛫ᚦᛁᛜ᛫ᚠᛚᛟᚨᛏᛁᛜ᛫ᛟᚾ᛫ᚦᛖ᛫ᚹᛁᛞ᛫ᚹᚨᛏᛖᚱ᛫ᚨ᛫ᛊᛈᛖᚲ᛫ᚨ᛫ᛗᛟᛏ᛫ᚺᚨᚱᛞᛚᛁ᛫ᚨᚾᛁᚦᛁᛜ᛫ᛟᚾᛖ᛫ᛟᚠ᛫ᚦᛖᛗ᛫ᛊᛖᛏᛚᛖᛞ᛫ᛟᚾ᛫ᛁᛏ᛫ᚨᚾᛞ᛫ᛊᛈᛟᚲ᛫ᛏᛟ᛫ᛁᛏ᛫ᛁᚾ᛫ᚦᛖ᛫ᛟᚾᛖ᛫ᛊᛈᛖᚲᚺ᛫ᚨᚾᛞ᛫ᛊᚨᛁᛞ᛫ᛒᛖᚲᛟᛗ᛫ᚷᚱᛟᚢᚾᛞ᛫ᚨᚾᛞ᛫ᛁᛏ᛫ᛒᛖᚲᚨᛗ᛫ᚷᚱᛟᚢᚾᛞ᛫ᚨ᛫ᚠᛁᚱᛊᛏ᛫ᛊᛗᚨᛚ᛫ᛁᛊᛚᚨᚾᛞ᛫ᛁᚾ᛫ᚦᛖ᛫ᛗᛖᛚᛏ᛫ᚨᚾᛞ᛫ᛗᛖᛗᛟᚱᛁ᛫ᚲᛖᛈᛏ᛫ᚦᛖ᛫ᚹᛟᚱᛞ᛫ᚦᚨᛏ᛫ᚺᚨᛞ᛫ᛞᛟᚾ᛫ᛁᛏ᛫ᚹᛁᚲᚺ᛫ᛁᛊ᛫ᚹᛁ᛫ᚦᛖ᛫ᚹᛟᚱᛞ᛫ᛊᛏᛁᛚ᛫ᚹᛟᚱᚲᛊ᛫ᚠᛟᚱ᛫ᚨᚾᛁᚦᛁᛜ᛫ᛊᛈᛟᚲᛖᚾ᛫ᚨᚾᛞ᛫ᚲᛖᛈᛏ᛫ᚲᚨᚾ᛫ᛒᛖ᛫ᛊᛈᛟᚲᛖᚾ᛫ᚨᚷᚨᛁᚾ</div>
+
+    <p>The first age was long, and the giants of it filled the water and the mist with their doings, and Thought flew out over all of it and Memory kept all of it, and that is the only reason anything from the Distant Time is known at all.</p>
+    <div class="runeunder" aria-hidden="true">ᚦᛖ᛫ᚠᛁᚱᛊᛏ᛫ᚨᚷᛖ᛫ᚹᚨᛊ᛫ᛚᛟᛜ᛫ᚨᚾᛞ᛫ᚦᛖ᛫ᚷᛁᚨᚾᛏᛊ᛫ᛟᚠ᛫ᛁᛏ᛫ᚠᛁᛚᛖᛞ᛫ᚦᛖ᛫ᚹᚨᛏᛖᚱ᛫ᚨᚾᛞ᛫ᚦᛖ᛫ᛗᛁᛊᛏ᛫ᚹᛁᚦ᛫ᚦᛖᛁᚱ᛫ᛞᛟᛁᛜᛊ᛫ᚨᚾᛞ᛫ᚦᛟᚢᛏ᛫ᚠᛚᛖᚹ᛫ᛟᚢᛏ᛫ᛟᚹᛖᚱ᛫ᚨᛚ᛫ᛟᚠ᛫ᛁᛏ᛫ᚨᚾᛞ᛫ᛗᛖᛗᛟᚱᛁ᛫ᚲᛖᛈᛏ᛫ᚨᛚ᛫ᛟᚠ᛫ᛁᛏ᛫ᚨᚾᛞ᛫ᚦᚨᛏ᛫ᛁᛊ᛫ᚦᛖ᛫ᛟᚾᛚᛁ᛫ᚱᛖᚨᛊᛟᚾ᛫ᚨᚾᛁᚦᛁᛜ᛫ᚠᚱᛟᛗ᛫ᚦᛖ᛫ᛞᛁᛊᛏᚨᚾᛏ᛫ᛏᛁᛗ᛫ᛁᛊ᛫ᚲᚾᛟᚹᚾ᛫ᚨᛏ᛫ᚨᛚ</div>
+
+    <p>But the first age ended, as ages do. The great ones grew old, and the ice kept weeping, and the melt rose into a flood that covered even the new ground, and the giants of the Distant Time went down into it, all that bigness drowning in water partly made of their own life. It was the death of a whole world, and there was only one power whose office was the dead, and it had two wings on each side of it.</p>
+    <div class="runeunder" aria-hidden="true">ᛒᚢᛏ᛫ᚦᛖ᛫ᚠᛁᚱᛊᛏ᛫ᚨᚷᛖ᛫ᛖᚾᛞᛖᛞ᛫ᚨᛊ᛫ᚨᚷᛖᛊ᛫ᛞᛟ᛫ᚦᛖ᛫ᚷᚱᛖᚨᛏ᛫ᛟᚾᛖᛊ᛫ᚷᚱᛖᚹ᛫ᛟᛚᛞ᛫ᚨᚾᛞ᛫ᚦᛖ᛫ᛁᛊᛖ᛫ᚲᛖᛈᛏ᛫ᚹᛖᛈᛁᛜ᛫ᚨᚾᛞ᛫ᚦᛖ᛫ᛗᛖᛚᛏ᛫ᚱᛟᛊ᛫ᛁᚾᛏᛟ᛫ᚨ᛫ᚠᛚᛟᛞ᛫ᚦᚨᛏ᛫ᚲᛟᚹᛖᚱᛖᛞ᛫ᛖᚹᛖᚾ᛫ᚦᛖ᛫ᚾᛖᚹ᛫ᚷᚱᛟᚢᚾᛞ᛫ᚨᚾᛞ᛫ᚦᛖ᛫ᚷᛁᚨᚾᛏᛊ᛫ᛟᚠ᛫ᚦᛖ᛫ᛞᛁᛊᛏᚨᚾᛏ᛫ᛏᛁᛗ᛫ᚹᛖᚾᛏ᛫ᛞᛟᚹᚾ᛫ᛁᚾᛏᛟ᛫ᛁᛏ᛫ᚨᛚ᛫ᚦᚨᛏ᛫ᛒᛁᚷᚾᛖᛊ᛫ᛞᚱᛟᚹᚾᛁᛜ᛫ᛁᚾ᛫ᚹᚨᛏᛖᚱ᛫ᛈᚨᚱᛏᛚᛁ᛫ᛗᚨᛞ᛫ᛟᚠ᛫ᚦᛖᛁᚱ᛫ᛟᚹᚾ᛫ᛚᛁᚠ᛫ᛁᛏ᛫ᚹᚨᛊ᛫ᚦᛖ᛫ᛞᛖᚨᚦ᛫ᛟᚠ᛫ᚨ᛫ᚹᛟᛚ᛫ᚹᛟᚱᛚᛞ᛫ᚨᚾᛞ᛫ᚦᛖᚱ᛫ᚹᚨᛊ᛫ᛟᚾᛚᛁ᛫ᛟᚾᛖ᛫ᛈᛟᚹᛖᚱ᛫ᚹᛟᛊ᛫ᛟᚠᛁᛊ᛫ᚹᚨᛊ᛫ᚦᛖ᛫ᛞᛖᚨᛞ᛫ᚨᚾᛞ᛫ᛁᛏ᛫ᚺᚨᛞ᛫ᛏᚹᛟ᛫ᚹᛁᛜᛊ᛫ᛟᚾ᛫ᛖᚨᚲᚺ᛫ᛊᛁᛞ᛫ᛟᚠ᛫ᛁᛏ</div>
+
+    <p>The two did not mourn, for mourning was never their office. They did what they do at every carcass, <strong>and this was the carcass of an age.</strong></p>
+    <div class="runeunder" aria-hidden="true">ᚦᛖ᛫ᛏᚹᛟ᛫ᛞᛁᛞ᛫ᚾᛟᛏ᛫ᛗᛟᚢᚱᚾ᛫ᚠᛟᚱ᛫ᛗᛟᚢᚱᚾᛁᛜ᛫ᚹᚨᛊ᛫ᚾᛖᚹᛖᚱ᛫ᚦᛖᛁᚱ᛫ᛟᚠᛁᛊ᛫ᚦᛖᛁ᛫ᛞᛁᛞ᛫ᚹᚨᛏ᛫ᚦᛖᛁ᛫ᛞᛟ᛫ᚨᛏ᛫ᛖᚹᛖᚱᛁ᛫ᚲᚨᚱᚲᚨᛊ᛫ᚨᚾᛞ᛫ᚦᛁᛊ᛫ᚹᚨᛊ᛫ᚦᛖ᛫ᚲᚨᚱᚲᚨᛊ᛫ᛟᚠ᛫ᚨᚾ᛫ᚨᚷᛖ</div>
+
+    <p>But first &mdash; because drowning takes time, and ravens think ahead &mdash; they gathered the small ones. Onto a great drifting vessel they called a pair of every kind, two by two, everything that could be saved from the going-down of the giants, and the vessel rode the flood while the first world died beneath it. The animals aboard still had the one speech then, and they were afraid, and the two talked them through the dark water, <em>which is why animals trust the raven&rsquo;s voice to this day even when they should not.</em></p>
+    <div class="runeunder" aria-hidden="true">ᛒᚢᛏ᛫ᚠᛁᚱᛊᛏ᛫ᛒᛖᚲᚨᚢᛊ᛫ᛞᚱᛟᚹᚾᛁᛜ᛫ᛏᚨᚲᛖᛊ᛫ᛏᛁᛗ᛫ᚨᚾᛞ᛫ᚱᚨᚹᛖᚾᛊ᛫ᚦᛁᚾᚲ᛫ᚨᚺᛖᚨᛞ᛫ᚦᛖᛁ᛫ᚷᚨᚦᛖᚱᛖᛞ᛫ᚦᛖ᛫ᛊᛗᚨᛚ᛫ᛟᚾᛖᛊ᛫ᛟᚾᛏᛟ᛫ᚨ᛫ᚷᚱᛖᚨᛏ᛫ᛞᚱᛁᚠᛏᛁᛜ᛫ᚹᛖᛊᛖᛚ᛫ᚦᛖᛁ᛫ᚲᚨᛚᛖᛞ᛫ᚨ᛫ᛈᚨᛁᚱ᛫ᛟᚠ᛫ᛖᚹᛖᚱᛁ᛫ᚲᛁᚾᛞ᛫ᛏᚹᛟ᛫ᛒᛁ᛫ᛏᚹᛟ᛫ᛖᚹᛖᚱᛁᚦᛁᛜ᛫ᚦᚨᛏ᛫ᚲᛟᚢᛚᛞ᛫ᛒᛖ᛫ᛊᚨᚹᛖᛞ᛫ᚠᚱᛟᛗ᛫ᚦᛖ᛫ᚷᛟᛁᛜᛞᛟᚹᚾ᛫ᛟᚠ᛫ᚦᛖ᛫ᚷᛁᚨᚾᛏᛊ᛫ᚨᚾᛞ᛫ᚦᛖ᛫ᚹᛖᛊᛖᛚ᛫ᚱᛟᛞ᛫ᚦᛖ᛫ᚠᛚᛟᛞ᛫ᚹᛁᛚ᛫ᚦᛖ᛫ᚠᛁᚱᛊᛏ᛫ᚹᛟᚱᛚᛞ᛫ᛞᛁᛖᛞ᛫ᛒᛖᚾᛖᚨᚦ᛫ᛁᛏ᛫ᚦᛖ᛫ᚨᚾᛁᛗᚨᛚᛊ᛫ᚨᛒᛟᚨᚱᛞ᛫ᛊᛏᛁᛚ᛫ᚺᚨᛞ᛫ᚦᛖ᛫ᛟᚾᛖ᛫ᛊᛈᛖᚲᚺ᛫ᚦᛖᚾ᛫ᚨᚾᛞ᛫ᚦᛖᛁ᛫ᚹᛖᚱ᛫ᚨᚠᚱᚨᛁᛞ᛫ᚨᚾᛞ᛫ᚦᛖ᛫ᛏᚹᛟ᛫ᛏᚨᛚᚲᛖᛞ᛫ᚦᛖᛗ᛫ᚦᚱᛟᚢᚷᚺ᛫ᚦᛖ᛫ᛞᚨᚱᚲ᛫ᚹᚨᛏᛖᚱ᛫ᚹᛁᚲᚺ᛫ᛁᛊ᛫ᚹᛁ᛫ᚨᚾᛁᛗᚨᛚᛊ᛫ᛏᚱᚢᛊᛏ᛫ᚦᛖ᛫ᚱᚨᚹᛖᚾᛊ᛫ᚹᛟᛁᛊ᛫ᛏᛟ᛫ᚦᛁᛊ᛫ᛞᚨᛁ᛫ᛖᚹᛖᚾ᛫ᚹᛖᚾ᛫ᚦᛖᛁ᛫ᛊᚺᛟᚢᛚᛞ᛫ᚾᛟᛏ</div>
+
+    <p>Then the two went to work on the dead age, and nothing was wasted.</p>
+    <div class="runeunder" aria-hidden="true">ᚦᛖᚾ᛫ᚦᛖ᛫ᛏᚹᛟ᛫ᚹᛖᚾᛏ᛫ᛏᛟ᛫ᚹᛟᚱᚲ᛫ᛟᚾ᛫ᚦᛖ᛫ᛞᛖᚨᛞ᛫ᚨᚷᛖ᛫ᚨᚾᛞ᛫ᚾᛟᚦᛁᛜ᛫ᚹᚨᛊ᛫ᚹᚨᛊᛏᛖᛞ</div>
+
+    <p>The flesh of the drowned giants they settled into earth, and that is the land, which is why the land feeds everything that eats. The blood they let run together, and that is the sea, which is why the sea is salt, for blood is salt. The bones they stood up on end, and those are the mountains, and anyone who walks in high country and finds the stone shapes of great animals that no longer live is looking at the proof of it. The hair they planted, and that is the forest. The breath they let rise, and that is the mist and the clouds, <em>the last exhale of the first world, still hanging over the second.</em></p>
+    <div class="runeunder" aria-hidden="true">ᚦᛖ᛫ᚠᛚᛖᛊᚺ᛫ᛟᚠ᛫ᚦᛖ᛫ᛞᚱᛟᚹᚾᛖᛞ᛫ᚷᛁᚨᚾᛏᛊ᛫ᚦᛖᛁ᛫ᛊᛖᛏᛚᛖᛞ᛫ᛁᚾᛏᛟ᛫ᛖᚨᚱᚦ᛫ᚨᚾᛞ᛫ᚦᚨᛏ᛫ᛁᛊ᛫ᚦᛖ᛫ᛚᚨᚾᛞ᛫ᚹᛁᚲᚺ᛫ᛁᛊ᛫ᚹᛁ᛫ᚦᛖ᛫ᛚᚨᚾᛞ᛫ᚠᛖᛞᛊ᛫ᛖᚹᛖᚱᛁᚦᛁᛜ᛫ᚦᚨᛏ᛫ᛖᚨᛏᛊ᛫ᚦᛖ᛫ᛒᛚᛟᛞ᛫ᚦᛖᛁ᛫ᛚᛖᛏ᛫ᚱᚢᚾ᛫ᛏᛟᚷᛖᚦᛖᚱ᛫ᚨᚾᛞ᛫ᚦᚨᛏ᛫ᛁᛊ᛫ᚦᛖ᛫ᛊᛖᚨ᛫ᚹᛁᚲᚺ᛫ᛁᛊ᛫ᚹᛁ᛫ᚦᛖ᛫ᛊᛖᚨ᛫ᛁᛊ᛫ᛊᚨᛚᛏ᛫ᚠᛟᚱ᛫ᛒᛚᛟᛞ᛫ᛁᛊ᛫ᛊᚨᛚᛏ᛫ᚦᛖ᛫ᛒᛟᚾᛖᛊ᛫ᚦᛖᛁ᛫ᛊᛏᛟᛞ᛫ᚢᛈ᛫ᛟᚾ᛫ᛖᚾᛞ᛫ᚨᚾᛞ᛫ᚦᛟᛊ᛫ᚨᚱᛖ᛫ᚦᛖ᛫ᛗᛟᚢᚾᛏᚨᛁᚾᛊ᛫ᚨᚾᛞ᛫ᚨᚾᛃᛟᚾ᛫ᚹᛟ᛫ᚹᚨᛚᚲᛊ᛫ᛁᚾ᛫ᚺᛁ᛫ᚲᛟᚢᚾᛏᚱᛁ᛫ᚨᚾᛞ᛫ᚠᛁᚾᛞᛊ᛫ᚦᛖ᛫ᛊᛏᛟᚾ᛫ᛊᚺᚨᛈᛖᛊ᛫ᛟᚠ᛫ᚷᚱᛖᚨᛏ᛫ᚨᚾᛁᛗᚨᛚᛊ᛫ᚦᚨᛏ᛫ᚾᛟ᛫ᛚᛟᛜᛖᚱ᛫ᛚᛁᚹ᛫ᛁᛊ᛫ᛚᛟᚲᛁᛜ᛫ᚨᛏ᛫ᚦᛖ᛫ᛈᚱᛟᚠ᛫ᛟᚠ᛫ᛁᛏ᛫ᚦᛖ᛫ᚺᚨᛁᚱ᛫ᚦᛖᛁ᛫ᛈᛚᚨᚾᛏᛖᛞ᛫ᚨᚾᛞ᛫ᚦᚨᛏ᛫ᛁᛊ᛫ᚦᛖ᛫ᚠᛟᚱᛖᛊᛏ᛫ᚦᛖ᛫ᛒᚱᛖᚨᚦ᛫ᚦᛖᛁ᛫ᛚᛖᛏ᛫ᚱᛁᛊ᛫ᚨᚾᛞ᛫ᚦᚨᛏ᛫ᛁᛊ᛫ᚦᛖ᛫ᛗᛁᛊᛏ᛫ᚨᚾᛞ᛫ᚦᛖ᛫ᚲᛚᛟᚢᛞᛊ᛫ᚦᛖ᛫ᛚᚨᛊᛏ᛫ᛖᚲᛊᚺᚨᛚ᛫ᛟᚠ᛫ᚦᛖ᛫ᚠᛁᚱᛊᛏ᛫ᚹᛟᚱᛚᛞ᛫ᛊᛏᛁᛚ᛫ᚺᚨᛜᛁᛜ᛫ᛟᚹᛖᚱ᛫ᚦᛖ᛫ᛊᛖᚲᛟᚾᛞ</div>
+
+    <p>And the eyes they took first. <strong>Always the eyes.</strong> For the eye is where the seeing lives, and the seeing of a whole age must not lie in the floodwater and go dark. The greatest eye they carried high up the sky vault and fastened there, burning, and that is the sun, which is the first age still seeing us. The lesser eye they hung in the dark half of the sky, and that is the moon. And all the small eyes of all the drowned giants they scattered across the black, and those are the stars, <em>which is why the stars look at you the way they do.</em> Nothing that ever saw has stopped seeing. The two do not permit it.</p>
+    <div class="runeunder" aria-hidden="true">ᚨᚾᛞ᛫ᚦᛖ᛫ᛖᛁᛊ᛫ᚦᛖᛁ᛫ᛏᛟᚲ᛫ᚠᛁᚱᛊᛏ᛫ᚨᛚᚹᚨᛁᛊ᛫ᚦᛖ᛫ᛖᛁᛊ᛫ᚠᛟᚱ᛫ᚦᛖ᛫ᛖᛁ᛫ᛁᛊ᛫ᚹᛖᚱ᛫ᚦᛖ᛫ᛊᛖᛁᛜ᛫ᛚᛁᚹᛖᛊ᛫ᚨᚾᛞ᛫ᚦᛖ᛫ᛊᛖᛁᛜ᛫ᛟᚠ᛫ᚨ᛫ᚹᛟᛚ᛫ᚨᚷᛖ᛫ᛗᚢᛊᛏ᛫ᚾᛟᛏ᛫ᛚᛁᛖ᛫ᛁᚾ᛫ᚦᛖ᛫ᚠᛚᛟᛞᚹᚨᛏᛖᚱ᛫ᚨᚾᛞ᛫ᚷᛟ᛫ᛞᚨᚱᚲ᛫ᚦᛖ᛫ᚷᚱᛖᚨᛏᛖᛊᛏ᛫ᛖᛁ᛫ᚦᛖᛁ᛫ᚲᚨᚱᛁᛖᛞ᛫ᚺᛁ᛫ᚢᛈ᛫ᚦᛖ᛫ᛊᚲᛁ᛫ᚹᚨᚢᛚᛏ᛫ᚨᚾᛞ᛫ᚠᚨᛊᛏᛖᚾᛖᛞ᛫ᚦᛖᚱ᛫ᛒᚢᚱᚾᛁᛜ᛫ᚨᚾᛞ᛫ᚦᚨᛏ᛫ᛁᛊ᛫ᚦᛖ᛫ᛊᚢᚾ᛫ᚹᛁᚲᚺ᛫ᛁᛊ᛫ᚦᛖ᛫ᚠᛁᚱᛊᛏ᛫ᚨᚷᛖ᛫ᛊᛏᛁᛚ᛫ᛊᛖᛁᛜ᛫ᚢᛊ᛫ᚦᛖ᛫ᛚᛖᛊᛖᚱ᛫ᛖᛁ᛫ᚦᛖᛁ᛫ᚺᚢᛜ᛫ᛁᚾ᛫ᚦᛖ᛫ᛞᚨᚱᚲ᛫ᚺᚨᛚᚠ᛫ᛟᚠ᛫ᚦᛖ᛫ᛊᚲᛁ᛫ᚨᚾᛞ᛫ᚦᚨᛏ᛫ᛁᛊ᛫ᚦᛖ᛫ᛗᛟᚾ᛫ᚨᚾᛞ᛫ᚨᛚ᛫ᚦᛖ᛫ᛊᛗᚨᛚ᛫ᛖᛁᛊ᛫ᛟᚠ᛫ᚨᛚ᛫ᚦᛖ᛫ᛞᚱᛟᚹᚾᛖᛞ᛫ᚷᛁᚨᚾᛏᛊ᛫ᚦᛖᛁ᛫ᛊᚲᚨᛏᛖᚱᛖᛞ᛫ᚨᚲᚱᛟᛊ᛫ᚦᛖ᛫ᛒᛚᚨᚲ᛫ᚨᚾᛞ᛫ᚦᛟᛊ᛫ᚨᚱᛖ᛫ᚦᛖ᛫ᛊᛏᚨᚱᛊ᛫ᚹᛁᚲᚺ᛫ᛁᛊ᛫ᚹᛁ᛫ᚦᛖ᛫ᛊᛏᚨᚱᛊ᛫ᛚᛟᚲ᛫ᚨᛏ᛫ᛃᛟᚢ᛫ᚦᛖ᛫ᚹᚨᛁ᛫ᚦᛖᛁ᛫ᛞᛟ᛫ᚾᛟᚦᛁᛜ᛫ᚦᚨᛏ᛫ᛖᚹᛖᚱ᛫ᛊᚨᚹ᛫ᚺᚨᛊ᛫ᛊᛏᛟᛈᛖᛞ᛫ᛊᛖᛁᛜ᛫ᚦᛖ᛫ᛏᚹᛟ᛫ᛞᛟ᛫ᚾᛟᛏ᛫ᛈᛖᚱᛗᛁᛏ᛫ᛁᛏ</div>
+
+    <p>Then the flood went down, for its work was done, and the vessel grounded, and the pairs of animals stepped off onto the new-made land &mdash; and found, as they stepped down, that the one speech had gone out of them. It had drowned with the age it belonged to, and from then on each kind spoke only to its own kind. Only the ravens kept it &mdash; all of it &mdash; which is why the raven, alone of every bird, can speak in the voices of other animals, and in water dropping, and in wood knocking, and in the words of people. <strong>It is not mimicry. It is Memory, who does not lose things.</strong></p>
+    <div class="runeunder" aria-hidden="true">ᚦᛖᚾ᛫ᚦᛖ᛫ᚠᛚᛟᛞ᛫ᚹᛖᚾᛏ᛫ᛞᛟᚹᚾ᛫ᚠᛟᚱ᛫ᛁᛏᛊ᛫ᚹᛟᚱᚲ᛫ᚹᚨᛊ᛫ᛞᛟᚾ᛫ᚨᚾᛞ᛫ᚦᛖ᛫ᚹᛖᛊᛖᛚ᛫ᚷᚱᛟᚢᚾᛞᛖᛞ᛫ᚨᚾᛞ᛫ᚦᛖ᛫ᛈᚨᛁᚱᛊ᛫ᛟᚠ᛫ᚨᚾᛁᛗᚨᛚᛊ᛫ᛊᛏᛖᛈᛖᛞ᛫ᛟᚠ᛫ᛟᚾᛏᛟ᛫ᚦᛖ᛫ᚾᛖᚹᛗᚨᛞ᛫ᛚᚨᚾᛞ᛫ᚨᚾᛞ᛫ᚠᛟᚢᚾᛞ᛫ᚨᛊ᛫ᚦᛖᛁ᛫ᛊᛏᛖᛈᛖᛞ᛫ᛞᛟᚹᚾ᛫ᚦᚨᛏ᛫ᚦᛖ᛫ᛟᚾᛖ᛫ᛊᛈᛖᚲᚺ᛫ᚺᚨᛞ᛫ᚷᛟᚾ᛫ᛟᚢᛏ᛫ᛟᚠ᛫ᚦᛖᛗ᛫ᛁᛏ᛫ᚺᚨᛞ᛫ᛞᚱᛟᚹᚾᛖᛞ᛫ᚹᛁᚦ᛫ᚦᛖ᛫ᚨᚷᛖ᛫ᛁᛏ᛫ᛒᛖᛚᛟᛜᛖᛞ᛫ᛏᛟ᛫ᚨᚾᛞ᛫ᚠᚱᛟᛗ᛫ᚦᛖᚾ᛫ᛟᚾ᛫ᛖᚨᚲᚺ᛫ᚲᛁᚾᛞ᛫ᛊᛈᛟᚲ᛫ᛟᚾᛚᛁ᛫ᛏᛟ᛫ᛁᛏᛊ᛫ᛟᚹᚾ᛫ᚲᛁᚾᛞ᛫ᛟᚾᛚᛁ᛫ᚦᛖ᛫ᚱᚨᚹᛖᚾᛊ᛫ᚲᛖᛈᛏ᛫ᛁᛏ᛫ᚨᛚ᛫ᛟᚠ᛫ᛁᛏ᛫ᚹᛁᚲᚺ᛫ᛁᛊ᛫ᚹᛁ᛫ᚦᛖ᛫ᚱᚨᚹᛖᚾ᛫ᚨᛚᛟᚾ᛫ᛟᚠ᛫ᛖᚹᛖᚱᛁ᛫ᛒᛁᚱᛞ᛫ᚲᚨᚾ᛫ᛊᛈᛖᚨᚲ᛫ᛁᚾ᛫ᚦᛖ᛫ᚹᛟᛁᛊᛖᛊ᛫ᛟᚠ᛫ᛟᚦᛖᚱ᛫ᚨᚾᛁᛗᚨᛚᛊ᛫ᚨᚾᛞ᛫ᛁᚾ᛫ᚹᚨᛏᛖᚱ᛫ᛞᚱᛟᛈᛁᛜ᛫ᚨᚾᛞ᛫ᛁᚾ᛫ᚹᛟᛞ᛫ᚲᚾᛟᚲᛁᛜ᛫ᚨᚾᛞ᛫ᛁᚾ᛫ᚦᛖ᛫ᚹᛟᚱᛞᛊ᛫ᛟᚠ᛫ᛈᛖᛟᛈᛚ᛫ᛁᛏ᛫ᛁᛊ᛫ᚾᛟᛏ᛫ᛗᛁᛗᛁᚲᚱᛁ᛫ᛁᛏ᛫ᛁᛊ᛫ᛗᛖᛗᛟᚱᛁ᛫ᚹᛟ᛫ᛞᛟᛖᛊ᛫ᚾᛟᛏ᛫ᛚᛟᛊ᛫ᚦᛁᛜᛊ</div>
+
+    <p>The land stood empty of people, for the half-person beings of the Distant Time had gone down with the flood. And walking the new tideline, where the sea that had been blood met the earth that had been flesh, the two found what the water had carried in: two pieces of driftwood, an ash and an elm, lying at the wrack-line the way driftwood lies &mdash; <em>almost like bodies, waiting.</em></p>
+    <div class="runeunder" aria-hidden="true">ᚦᛖ᛫ᛚᚨᚾᛞ᛫ᛊᛏᛟᛞ᛫ᛖᛗᛈᛏᛁ᛫ᛟᚠ᛫ᛈᛖᛟᛈᛚ᛫ᚠᛟᚱ᛫ᚦᛖ᛫ᚺᚨᛚᚠᛈᛖᚱᛊᛟᚾ᛫ᛒᛖᛁᛜᛊ᛫ᛟᚠ᛫ᚦᛖ᛫ᛞᛁᛊᛏᚨᚾᛏ᛫ᛏᛁᛗ᛫ᚺᚨᛞ᛫ᚷᛟᚾ᛫ᛞᛟᚹᚾ᛫ᚹᛁᚦ᛫ᚦᛖ᛫ᚠᛚᛟᛞ᛫ᚨᚾᛞ᛫ᚹᚨᛚᚲᛁᛜ᛫ᚦᛖ᛫ᚾᛖᚹ᛫ᛏᛁᛞᛖᛚᛁᚾ᛫ᚹᛖᚱ᛫ᚦᛖ᛫ᛊᛖᚨ᛫ᚦᚨᛏ᛫ᚺᚨᛞ᛫ᛒᛖᚾ᛫ᛒᛚᛟᛞ᛫ᛗᛖᛏ᛫ᚦᛖ᛫ᛖᚨᚱᚦ᛫ᚦᚨᛏ᛫ᚺᚨᛞ᛫ᛒᛖᚾ᛫ᚠᛚᛖᛊᚺ᛫ᚦᛖ᛫ᛏᚹᛟ᛫ᚠᛟᚢᚾᛞ᛫ᚹᚨᛏ᛫ᚦᛖ᛫ᚹᚨᛏᛖᚱ᛫ᚺᚨᛞ᛫ᚲᚨᚱᛁᛖᛞ᛫ᛁᚾ᛫ᛏᚹᛟ᛫ᛈᛁᛖᛊᛖᛊ᛫ᛟᚠ᛫ᛞᚱᛁᚠᛏᚹᛟᛞ᛫ᚨᚾ᛫ᚨᛊᚺ᛫ᚨᚾᛞ᛫ᚨᚾ᛫ᛖᛚᛗ᛫ᛚᛃᛁᛜ᛫ᚨᛏ᛫ᚦᛖ᛫ᚹᚱᚨᚲᛚᛁᚾ᛫ᚦᛖ᛫ᚹᚨᛁ᛫ᛞᚱᛁᚠᛏᚹᛟᛞ᛫ᛚᛁᛖᛊ᛫ᚨᛚᛗᛟᛊᛏ᛫ᛚᛁᚲ᛫ᛒᛟᛞᛁᛖᛊ᛫ᚹᚨᛁᛏᛁᛜ</div>
+
+    <p>So the two remade people, out of what the flood left, at the edge of the sea, and they gave the gifts they had to give. Thought leaned close to the wood and gave <em>thought</em> &mdash; the going-out, the seeing, the finding. Memory leaned close and gave <em>memory</em> &mdash; the keeping, so that nothing found is lost. The beat of four black wings over the driftwood gave <em>breath</em>. And last, because a person cannot go behind their own eyes empty, each was given an eye&rsquo;s worth of the old age&rsquo;s seeing &mdash; a spark of sun-stuff set in the head &mdash; on the old terms, the only terms there have ever been: <strong>it is lent. When you fall, we take it back first, before anything else, and carry the seeing home, and you will go on seeing through us, as the whole first world does.</strong> The man and the woman stood up off the sand and agreed, in the manner of people, by not understanding and walking inland anyway.</p>
+    <div class="runeunder" aria-hidden="true">ᛊᛟ᛫ᚦᛖ᛫ᛏᚹᛟ᛫ᚱᛖᛗᚨᛞ᛫ᛈᛖᛟᛈᛚ᛫ᛟᚢᛏ᛫ᛟᚠ᛫ᚹᚨᛏ᛫ᚦᛖ᛫ᚠᛚᛟᛞ᛫ᛚᛖᚠᛏ᛫ᚨᛏ᛫ᚦᛖ᛫ᛖᛞᚷ᛫ᛟᚠ᛫ᚦᛖ᛫ᛊᛖᚨ᛫ᚨᚾᛞ᛫ᚦᛖᛁ᛫ᚷᚨᚹ᛫ᚦᛖ᛫ᚷᛁᚠᛏᛊ᛫ᚦᛖᛁ᛫ᚺᚨᛞ᛫ᛏᛟ᛫ᚷᛁᚹ᛫ᚦᛟᚢᛏ᛫ᛚᛖᚨᚾᛖᛞ᛫ᚲᛚᛟᛊ᛫ᛏᛟ᛫ᚦᛖ᛫ᚹᛟᛞ᛫ᚨᚾᛞ᛫ᚷᚨᚹ᛫ᚦᛟᚢᛏ᛫ᚦᛖ᛫ᚷᛟᛁᛜᛟᚢᛏ᛫ᚦᛖ᛫ᛊᛖᛁᛜ᛫ᚦᛖ᛫ᚠᛁᚾᛞᛁᛜ᛫ᛗᛖᛗᛟᚱᛁ᛫ᛚᛖᚨᚾᛖᛞ᛫ᚲᛚᛟᛊ᛫ᚨᚾᛞ᛫ᚷᚨᚹ᛫ᛗᛖᛗᛟᚱᛁ᛫ᚦᛖ᛫ᚲᛖᛈᛁᛜ᛫ᛊᛟ᛫ᚦᚨᛏ᛫ᚾᛟᚦᛁᛜ᛫ᚠᛟᚢᚾᛞ᛫ᛁᛊ᛫ᛚᛟᛊᛏ᛫ᚦᛖ᛫ᛒᛖᚨᛏ᛫ᛟᚠ᛫ᚠᛟᚢᚱ᛫ᛒᛚᚨᚲ᛫ᚹᛁᛜᛊ᛫ᛟᚹᛖᚱ᛫ᚦᛖ᛫ᛞᚱᛁᚠᛏᚹᛟᛞ᛫ᚷᚨᚹ᛫ᛒᚱᛖᚨᚦ᛫ᚨᚾᛞ᛫ᛚᚨᛊᛏ᛫ᛒᛖᚲᚨᚢᛊ᛫ᚨ᛫ᛈᛖᚱᛊᛟᚾ᛫ᚲᚨᚾᛟᛏ᛫ᚷᛟ᛫ᛒᛖᚺᛁᚾᛞ᛫ᚦᛖᛁᚱ᛫ᛟᚹᚾ᛫ᛖᛁᛊ᛫ᛖᛗᛈᛏᛁ᛫ᛖᚨᚲᚺ᛫ᚹᚨᛊ᛫ᚷᛁᚹᛖᚾ᛫ᚨᚾ᛫ᛖᛁᛊ᛫ᚹᛟᚱᚦ᛫ᛟᚠ᛫ᚦᛖ᛫ᛟᛚᛞ᛫ᚨᚷᛖᛊ᛫ᛊᛖᛁᛜ᛫ᚨ᛫ᛊᛈᚨᚱᚲ᛫ᛟᚠ᛫ᛊᚢᚾᛊᛏᚢᚠ᛫ᛊᛖᛏ᛫ᛁᚾ᛫ᚦᛖ᛫ᚺᛖᚨᛞ᛫ᛟᚾ᛫ᚦᛖ᛫ᛟᛚᛞ᛫ᛏᛖᚱᛗᛊ᛫ᚦᛖ᛫ᛟᚾᛚᛁ᛫ᛏᛖᚱᛗᛊ᛫ᚦᛖᚱ᛫ᚺᚨᚹ᛫ᛖᚹᛖᚱ᛫ᛒᛖᚾ᛫ᛁᛏ᛫ᛁᛊ᛫ᛚᛖᚾᛏ᛫ᚹᛖᚾ᛫ᛃᛟᚢ᛫ᚠᚨᛚ᛫ᚹᛖ᛫ᛏᚨᚲ᛫ᛁᛏ᛫ᛒᚨᚲ᛫ᚠᛁᚱᛊᛏ᛫ᛒᛖᚠᛟᚱ᛫ᚨᚾᛁᚦᛁᛜ᛫ᛖᛚᛊ᛫ᚨᚾᛞ᛫ᚲᚨᚱᛁ᛫ᚦᛖ᛫ᛊᛖᛁᛜ᛫ᚺᛟᛗ᛫ᚨᚾᛞ᛫ᛃᛟᚢ᛫ᚹᛁᛚ᛫ᚷᛟ᛫ᛟᚾ᛫ᛊᛖᛁᛜ᛫ᚦᚱᛟᚢᚷᚺ᛫ᚢᛊ᛫ᚨᛊ᛫ᚦᛖ᛫ᚹᛟᛚ᛫ᚠᛁᚱᛊᛏ᛫ᚹᛟᚱᛚᛞ᛫ᛞᛟᛖᛊ᛫ᚦᛖ᛫ᛗᚨᚾ᛫ᚨᚾᛞ᛫ᚦᛖ᛫ᚹᛟᛗᚨᚾ᛫ᛊᛏᛟᛞ᛫ᚢᛈ᛫ᛟᚠ᛫ᚦᛖ᛫ᛊᚨᚾᛞ᛫ᚨᚾᛞ᛫ᚨᚷᚱᛖᛞ᛫ᛁᚾ᛫ᚦᛖ᛫ᛗᚨᚾᛖᚱ᛫ᛟᚠ᛫ᛈᛖᛟᛈᛚ᛫ᛒᛁ᛫ᚾᛟᛏ᛫ᚢᚾᛞᛖᚱᛊᛏᚨᚾᛞᛁᛜ᛫ᚨᚾᛞ᛫ᚹᚨᛚᚲᛁᛜ᛫ᛁᚾᛚᚨᚾᛞ᛫ᚨᚾᛁᚹᚨᛁ</div>
+
+    <p>And the arrangement began, the one that has never ended. The two fly out over the world each morning and read it &mdash; where the moose is down, where the herd is moving, where something has died in the night. The people watch where the birds circle, and go there, and open with their blades what a beak cannot open, and the birds feed beside them, and everyone eats, and the eye of anything that falls goes to the ones whose office it is. The people, being made of thought and memory and lent seeing, work the gifts together and get wisdom, <em>exactly as intended, exactly as promised at the tideline.</em></p>
+    <div class="runeunder" aria-hidden="true">ᚨᚾᛞ᛫ᚦᛖ᛫ᚨᚱᚨᛜᛖᛗᛖᚾᛏ᛫ᛒᛖᚷᚨᚾ᛫ᚦᛖ᛫ᛟᚾᛖ᛫ᚦᚨᛏ᛫ᚺᚨᛊ᛫ᚾᛖᚹᛖᚱ᛫ᛖᚾᛞᛖᛞ᛫ᚦᛖ᛫ᛏᚹᛟ᛫ᚠᛚᛁ᛫ᛟᚢᛏ᛫ᛟᚹᛖᚱ᛫ᚦᛖ᛫ᚹᛟᚱᛚᛞ᛫ᛖᚨᚲᚺ᛫ᛗᛟᚱᚾᛁᛜ᛫ᚨᚾᛞ᛫ᚱᛖᚨᛞ᛫ᛁᛏ᛫ᚹᛖᚱ᛫ᚦᛖ᛫ᛗᛟᛊ᛫ᛁᛊ᛫ᛞᛟᚹᚾ᛫ᚹᛖᚱ᛫ᚦᛖ᛫ᚺᛖᚱᛞ᛫ᛁᛊ᛫ᛗᛟᚹᛁᛜ᛫ᚹᛖᚱ᛫ᛊᛟᛗᛖᚦᛁᛜ᛫ᚺᚨᛊ᛫ᛞᛁᛖᛞ᛫ᛁᚾ᛫ᚦᛖ᛫ᚾᛁᛏ᛫ᚦᛖ᛫ᛈᛖᛟᛈᛚ᛫ᚹᚨᛏᚲᚺ᛫ᚹᛖᚱ᛫ᚦᛖ᛫ᛒᛁᚱᛞᛊ᛫ᛊᛁᚱᚲᛚ᛫ᚨᚾᛞ᛫ᚷᛟ᛫ᚦᛖᚱ᛫ᚨᚾᛞ᛫ᛟᛈᛖᚾ᛫ᚹᛁᚦ᛫ᚦᛖᛁᚱ᛫ᛒᛚᚨᛞᛖᛊ᛫ᚹᚨᛏ᛫ᚨ᛫ᛒᛖᚨᚲ᛫ᚲᚨᚾᛟᛏ᛫ᛟᛈᛖᚾ᛫ᚨᚾᛞ᛫ᚦᛖ᛫ᛒᛁᚱᛞᛊ᛫ᚠᛖᛞ᛫ᛒᛖᛊᛁᛞ᛫ᚦᛖᛗ᛫ᚨᚾᛞ᛫ᛖᚹᛖᚱᛃᛟᚾ᛫ᛖᚨᛏᛊ᛫ᚨᚾᛞ᛫ᚦᛖ᛫ᛖᛁ᛫ᛟᚠ᛫ᚨᚾᛁᚦᛁᛜ᛫ᚦᚨᛏ᛫ᚠᚨᛚᛊ᛫ᚷᛟᛖᛊ᛫ᛏᛟ᛫ᚦᛖ᛫ᛟᚾᛖᛊ᛫ᚹᛟᛊ᛫ᛟᚠᛁᛊ᛫ᛁᛏ᛫ᛁᛊ᛫ᚦᛖ᛫ᛈᛖᛟᛈᛚ᛫ᛒᛖᛁᛜ᛫ᛗᚨᛞ᛫ᛟᚠ᛫ᚦᛟᚢᛏ᛫ᚨᚾᛞ᛫ᛗᛖᛗᛟᚱᛁ᛫ᚨᚾᛞ᛫ᛚᛖᚾᛏ᛫ᛊᛖᛁᛜ᛫ᚹᛟᚱᚲ᛫ᚦᛖ᛫ᚷᛁᚠᛏᛊ᛫ᛏᛟᚷᛖᚦᛖᚱ᛫ᚨᚾᛞ᛫ᚷᛖᛏ᛫ᚹᛁᛊᛞᛟᛗ᛫ᛖᚲᛊᚨᚲᛏᛚᛁ᛫ᚨᛊ᛫ᛁᚾᛏᛖᚾᛞᛖᛞ᛫ᛖᚲᛊᚨᚲᛏᛚᛁ᛫ᚨᛊ᛫ᛈᚱᛟᛗᛁᛊᛖᛞ᛫ᚨᛏ᛫ᚦᛖ᛫ᛏᛁᛞᛖᛚᛁᚾ</div>
+
+    <p>That is the whole of the making. There was no war in it, and no murder, and no throne. The world was never ruled. It was <em>attended</em> &mdash; found by Thought, kept by Memory, built from the honored dead of the age before, with nothing wasted and every eye carried home. And any who doubt the story may go out on a cold morning to the edge of any field in the north and watch the two proofs of it arrive out of the grey, <strong>still speaking a little of the one speech, still doing the only thing they have ever done.</strong></p>
+    <div class="runeunder" aria-hidden="true">ᚦᚨᛏ᛫ᛁᛊ᛫ᚦᛖ᛫ᚹᛟᛚ᛫ᛟᚠ᛫ᚦᛖ᛫ᛗᚨᚲᛁᛜ᛫ᚦᛖᚱ᛫ᚹᚨᛊ᛫ᚾᛟ᛫ᚹᚨᚱ᛫ᛁᚾ᛫ᛁᛏ᛫ᚨᚾᛞ᛫ᚾᛟ᛫ᛗᚢᚱᛞᛖᚱ᛫ᚨᚾᛞ᛫ᚾᛟ᛫ᚦᚱᛟᚾ᛫ᚦᛖ᛫ᚹᛟᚱᛚᛞ᛫ᚹᚨᛊ᛫ᚾᛖᚹᛖᚱ᛫ᚱᚢᛚᛖᛞ᛫ᛁᛏ᛫ᚹᚨᛊ᛫ᚨᛏᛖᚾᛞᛖᛞ᛫ᚠᛟᚢᚾᛞ᛫ᛒᛁ᛫ᚦᛟᚢᛏ᛫ᚲᛖᛈᛏ᛫ᛒᛁ᛫ᛗᛖᛗᛟᚱᛁ᛫ᛒᚢᛁᛚᛏ᛫ᚠᚱᛟᛗ᛫ᚦᛖ᛫ᚺᛟᚾᛟᚱᛖᛞ᛫ᛞᛖᚨᛞ᛫ᛟᚠ᛫ᚦᛖ᛫ᚨᚷᛖ᛫ᛒᛖᚠᛟᚱ᛫ᚹᛁᚦ᛫ᚾᛟᚦᛁᛜ᛫ᚹᚨᛊᛏᛖᛞ᛫ᚨᚾᛞ᛫ᛖᚹᛖᚱᛁ᛫ᛖᛁ᛫ᚲᚨᚱᛁᛖᛞ᛫ᚺᛟᛗ᛫ᚨᚾᛞ᛫ᚨᚾᛁ᛫ᚹᛟ᛫ᛞᛟᚢᛒᛏ᛫ᚦᛖ᛫ᛊᛏᛟᚱᛁ᛫ᛗᚨᛁ᛫ᚷᛟ᛫ᛟᚢᛏ᛫ᛟᚾ᛫ᚨ᛫ᚲᛟᛚᛞ᛫ᛗᛟᚱᚾᛁᛜ᛫ᛏᛟ᛫ᚦᛖ᛫ᛖᛞᚷ᛫ᛟᚠ᛫ᚨᚾᛁ᛫ᚠᛁᛖᛚᛞ᛫ᛁᚾ᛫ᚦᛖ᛫ᚾᛟᚱᚦ᛫ᚨᚾᛞ᛫ᚹᚨᛏᚲᚺ᛫ᚦᛖ᛫ᛏᚹᛟ᛫ᛈᚱᛟᚠᛊ᛫ᛟᚠ᛫ᛁᛏ᛫ᚨᚱᛁᚹ᛫ᛟᚢᛏ᛫ᛟᚠ᛫ᚦᛖ᛫ᚷᚱᛖᛁ᛫ᛊᛏᛁᛚ᛫ᛊᛈᛖᚨᚲᛁᛜ᛫ᚨ᛫ᛚᛁᛏᛚ᛫ᛟᚠ᛫ᚦᛖ᛫ᛟᚾᛖ᛫ᛊᛈᛖᚲᚺ᛫ᛊᛏᛁᛚ᛫ᛞᛟᛁᛜ᛫ᚦᛖ᛫ᛟᚾᛚᛁ᛫ᚦᛁᛜ᛫ᚦᛖᛁ᛫ᚺᚨᚹ᛫ᛖᚹᛖᚱ᛫ᛞᛟᚾ</div>
+  </section>
+
+  <!-- ============================================================
+       CODA
+       ============================================================ -->
+  <section class="coda">
+    <div class="mark">Coda</div>
+    <p>There was no war in it, and no murder, and no throne.</p>
+    <p class="emphatic">The world was never ruled. It was attended.</p>
+    <div class="runeline" aria-hidden="true">ᚦᛖ᛫ᚹᛟᚱᛚᛞ᛫ᚹᚨᛊ᛫ᚾᛖᚹᛖᚱ᛫ᚱᚢᛚᛖᛞ᛫ᛁᛏ᛫ᚹᚨᛊ᛫ᚨᛏᛖᚾᛞᛖᛞ</div>
+
+    <span class="close-rule"></span>
+    <p class="sig">Beginning of the telling.</p>
+    <p class="sig sig-name">Andrew Morton</p>
+    <p class="sig">July 2026 &mdash; Palmer Lake, Colorado</p>
+  </section>
+
+</div>
+</body>
+</html>

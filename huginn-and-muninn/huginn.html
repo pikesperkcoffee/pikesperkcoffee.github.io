@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Huginn — A History and a Telling</title>
+<meta name="description" content="Thought and Memory — a history and a telling of the two ravens. The raven-human hunting arrangement, the late construction of Odin, the erasure, the Alaska control sample, and the plain equation underneath: give your eyes to thought and memory, and wisdom comes home. Andrew Morton, Palmer Lake, Colorado.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Noto+Sans+Runic&display=swap" rel="stylesheet">
+<style>
+  :root{
+    /* Aurora-dark campfire palette — night sky over snow, a fire in it. */
+    --night:#0b1016;          /* deep cold night sky */
+    --night-2:#0f151d;        /* panel night */
+    --night-3:#131b25;        /* raised night */
+    --snow:#e8eef2;           /* starlight on snow — primary text */
+    --snow-dim:#b6c2cc;       /* dimmer snow */
+    --ash:#8a97a2;            /* cold grey — faint text */
+    --ember:#e0662e;          /* campfire ember — primary warm accent */
+    --ember-bright:#f2894a;   /* flame tip */
+    --ember-deep:#a8431a;     /* coal */
+    --aurora:#4fd0a6;         /* aurora green */
+    --aurora-2:#3fa7c4;       /* aurora cyan */
+    --aurora-violet:#8a6fd0;  /* aurora violet edge */
+    --star:#cfe0ea;           /* star white-blue */
+    --rule:#26313d;           /* hairline on night */
+    --rule-soft:#1c242e;
+    --gold:#c99a4a;           /* old brass, for small marks */
+    --display:'Cinzel',Georgia,serif;
+    --serif:'EB Garamond','Palatino Linotype',Georgia,serif;
+    --song-serif:'Cormorant Garamond','EB Garamond',Georgia,serif;
+    --mono:ui-monospace,"SF Mono","Cascadia Code",Menlo,Consolas,monospace;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0;background-color:var(--night);color:var(--snow);
+    font-family:var(--serif);font-size:19px;line-height:1.68;
+    -webkit-font-smoothing:antialiased;
+    position:relative;
+  }
+
+  /* --- fixed night-sky backdrop: aurora wash + starfield --- */
+  .skyfield{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+  .aurora-wash{position:absolute;inset:-10% -10% auto -10%;height:70%;
+    background:
+      radial-gradient(60% 80% at 20% 0%, rgba(79,208,166,.14), transparent 60%),
+      radial-gradient(50% 70% at 70% 5%, rgba(63,167,196,.12), transparent 60%),
+      radial-gradient(40% 60% at 45% 0%, rgba(138,111,208,.10), transparent 55%);
+    filter:blur(6px);
+  }
+  .aurora-band{position:absolute;top:4%;left:-20%;width:140%;height:38%;
+    background:
+      radial-gradient(closest-side at 30% 50%, rgba(79,208,166,.16), transparent 70%),
+      radial-gradient(closest-side at 55% 40%, rgba(63,167,196,.13), transparent 70%),
+      radial-gradient(closest-side at 78% 55%, rgba(138,111,208,.10), transparent 70%);
+    transform:skewY(-6deg);filter:blur(14px);opacity:.9}
+  .stars{position:absolute;inset:0;
+    background-image:
+      radial-gradient(1px 1px at 12% 18%, rgba(207,224,234,.9), transparent),
+      radial-gradient(1px 1px at 24% 42%, rgba(207,224,234,.7), transparent),
+      radial-gradient(1.4px 1.4px at 38% 12%, rgba(255,255,255,.85), transparent),
+      radial-gradient(1px 1px at 52% 30%, rgba(207,224,234,.6), transparent),
+      radial-gradient(1px 1px at 63% 8%, rgba(207,224,234,.8), transparent),
+      radial-gradient(1.3px 1.3px at 72% 22%, rgba(255,255,255,.8), transparent),
+      radial-gradient(1px 1px at 84% 40%, rgba(207,224,234,.6), transparent),
+      radial-gradient(1px 1px at 91% 15%, rgba(207,224,234,.75), transparent),
+      radial-gradient(1px 1px at 8% 60%, rgba(207,224,234,.55), transparent),
+      radial-gradient(1px 1px at 33% 70%, rgba(207,224,234,.5), transparent),
+      radial-gradient(1.2px 1.2px at 47% 62%, rgba(255,255,255,.6), transparent),
+      radial-gradient(1px 1px at 68% 78%, rgba(207,224,234,.45), transparent),
+      radial-gradient(1px 1px at 88% 68%, rgba(207,224,234,.5), transparent),
+      radial-gradient(1px 1px at 18% 88%, rgba(207,224,234,.4), transparent),
+      radial-gradient(1px 1px at 58% 92%, rgba(207,224,234,.38), transparent),
+      radial-gradient(1px 1px at 79% 88%, rgba(207,224,234,.4), transparent);
+    background-repeat:no-repeat;
+  }
+  /* subtle horizon glow from the fire, bottom center */
+  .emberglow{position:fixed;left:50%;bottom:-8%;transform:translateX(-50%);
+    width:80%;height:32%;z-index:0;pointer-events:none;
+    background:radial-gradient(closest-side, rgba(224,102,46,.14), rgba(168,67,26,.05) 55%, transparent 75%);
+    filter:blur(10px)}
+
+  .wrap{max-width:720px;margin:0 auto;padding:0 22px 120px;position:relative;z-index:1;
+    background:
+      linear-gradient(to bottom, rgba(11,16,22,.72) 0%, rgba(11,16,22,.88) 12%, rgba(11,16,22,.9) 88%, rgba(11,16,22,.72) 100%);
+    box-shadow:0 0 60px rgba(0,0,0,.5)}
+
+  /* nameplate */
+  header.plate{padding:64px 0 30px;text-align:center;position:relative;
+    border-bottom:1px solid var(--rule)}
+  header.plate .kicker{
+    font-family:var(--display);font-weight:600;
+    font-size:11.5px;letter-spacing:.34em;text-transform:uppercase;
+    color:var(--aurora);margin-bottom:20px;
+  }
+  header.plate .kicker::before,header.plate .kicker::after{
+    content:"\2022";margin:0 12px;color:var(--ember);
+  }
+  h1{font-family:var(--display);font-weight:700;
+    font-size:clamp(38px,8.2vw,62px);
+    line-height:1.02;margin:0 0 16px;
+    color:var(--snow);letter-spacing:.02em;
+    text-shadow:0 0 26px rgba(79,208,166,.18), 0 0 60px rgba(63,167,196,.10)}
+  h1 .amp{color:var(--ember);font-weight:600;
+    text-shadow:0 0 22px rgba(224,102,46,.35)}
+  .subtitle{
+    font-family:var(--song-serif);font-style:italic;
+    font-size:clamp(16px,3.6vw,20px);color:var(--snow-dim);
+    max-width:38ch;margin:0 auto 16px;
+  }
+  .epigraph{
+    font-family:var(--song-serif);font-style:italic;
+    font-size:clamp(17px,3.8vw,21px);color:var(--star);
+    max-width:34ch;margin:26px auto 0;line-height:1.4;
+    position:relative;padding:16px 0;
+  }
+  .epigraph::before,.epigraph::after{
+    content:"";position:absolute;left:50%;transform:translateX(-50%);
+    width:40px;height:1px;
+    background:linear-gradient(90deg, transparent, var(--ember), transparent);
+  }
+  .epigraph::before{top:0}
+  .epigraph::after{bottom:0}
+  .tocline{
+    font-family:var(--display);font-weight:500;
+    font-size:11px;letter-spacing:.18em;
+    text-transform:uppercase;color:var(--gold);
+    margin-top:26px;line-height:1.9;
+  }
+  .tocline span{white-space:nowrap}
+  .byline{
+    font-family:var(--display);font-weight:500;
+    font-size:12px;letter-spacing:.12em;
+    color:var(--ash);margin-top:18px;font-variant:small-caps;
+  }
+
+  /* dedication card — like a hide pinned by the fire */
+  .dedication{
+    max-width:44ch;margin:38px auto 0;
+    padding:24px 28px;
+    border:1px solid var(--rule);
+    background:var(--night-3);
+    font-family:var(--song-serif);font-style:italic;
+    font-size:16.5px;line-height:1.55;color:var(--snow-dim);
+    text-align:center;position:relative;
+    box-shadow:inset 0 0 40px rgba(224,102,46,.05);
+  }
+  .dedication::before,.dedication::after{
+    content:"";position:absolute;left:50%;transform:translateX(-50%);
+    width:10px;height:10px;
+    background:var(--ember);
+    clip-path:polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
+    box-shadow:0 0 12px rgba(224,102,46,.5);
+  }
+  .dedication::before{top:-5px}
+  .dedication::after{bottom:-5px}
+  .dedication b{font-style:normal;color:var(--snow);font-weight:500}
+
+  /* prologue */
+  .prologue{padding:46px 0 8px;text-align:center}
+  .prologue p{
+    font-family:var(--song-serif);font-style:italic;
+    font-size:18.5px;line-height:1.55;color:var(--snow-dim);
+    max-width:46ch;margin:0 auto;
+  }
+  .prologue .rule{
+    display:block;width:60px;height:1px;
+    background:linear-gradient(90deg, transparent, var(--ember), transparent);
+    margin:26px auto 0;
+  }
+
+  /* chapter — the analytical voice */
+  .chapter{padding:48px 0 8px;position:relative}
+  .chapter-head{
+    display:flex;align-items:baseline;gap:16px;margin-bottom:10px;
+    border-bottom:1px solid var(--rule);padding-bottom:12px;
+  }
+  .chapter-mark{
+    font-family:var(--display);font-weight:600;font-size:14px;
+    color:var(--aurora);letter-spacing:.08em;
+  }
+  .chapter-title{
+    font-family:var(--display);font-weight:700;
+    font-size:clamp(23px,5.4vw,32px);color:var(--snow);
+    margin:0;line-height:1.1;letter-spacing:.015em;
+  }
+  .chapter p{margin:0 0 18px;color:var(--snow)}
+  .chapter p.first{font-size:20.5px;color:var(--snow)}
+  .chapter p.first::first-letter{
+    font-family:var(--display);font-weight:700;
+    font-size:56px;line-height:.9;
+    float:left;padding:6px 12px 0 0;
+    color:var(--ember);
+    text-shadow:0 0 20px rgba(224,102,46,.4);
+  }
+  .chapter em{color:var(--aurora);font-style:italic}
+  .chapter strong{color:var(--snow);font-weight:600;
+    background:rgba(79,208,166,.08);padding:0 3px}
+
+  /* song — the mythic voice, told like firelight */
+  .song{
+    margin:56px 0 8px;padding:40px 26px 36px;
+    position:relative;
+    background:
+      radial-gradient(120% 90% at 50% 100%, rgba(224,102,46,.09), transparent 60%),
+      linear-gradient(to bottom, rgba(19,27,37,0) 0%, rgba(19,27,37,.72) 8%, rgba(19,27,37,.72) 92%, rgba(19,27,37,0) 100%);
+    border-top:1px solid var(--rule-soft);
+    border-bottom:1px solid var(--rule-soft);
+  }
+  .song::before,.song::after{
+    content:"";position:absolute;left:50%;transform:translateX(-50%);
+    width:56px;height:1px;
+    background:linear-gradient(90deg, transparent, var(--ember), transparent);
+  }
+  .song::before{top:14px}
+  .song::after{bottom:14px}
+  .song-mark{
+    text-align:center;
+    font-family:var(--display);font-weight:500;
+    font-size:11px;letter-spacing:.28em;
+    text-transform:uppercase;color:var(--ember);
+    margin-bottom:14px;
+  }
+  .song-mark::before{content:"\25C6\a0\a0"}
+  .song-mark::after{content:"\a0\a0\25C6"}
+  .song-title{
+    text-align:center;
+    font-family:var(--display);font-weight:700;
+    font-size:clamp(20px,4.8vw,26px);
+    color:var(--snow);margin:0 0 24px;line-height:1.15;
+    letter-spacing:.015em;
+    text-shadow:0 0 24px rgba(224,102,46,.15);
+  }
+  .song p{
+    font-family:var(--song-serif);
+    font-style:italic;font-size:19px;line-height:1.66;
+    color:var(--star);
+    margin:0 0 16px;max-width:56ch;margin-left:auto;margin-right:auto;
+  }
+  .song p.opener::first-letter{
+    font-family:var(--display);font-weight:700;font-style:normal;
+    font-size:44px;line-height:.9;
+    float:left;padding:5px 10px 0 0;
+    color:var(--ember);
+    text-shadow:0 0 18px rgba(224,102,46,.45);
+  }
+  .song p em{color:var(--ember-bright);font-style:normal;font-weight:500;
+    font-variant:small-caps;letter-spacing:.05em}
+  .song p strong{color:var(--snow);font-weight:500;font-style:italic}
+
+  /* the secret — the wisdom equation, set apart as a hearth-stone */
+  .secret{
+    margin:52px auto;max-width:52ch;
+    padding:30px 30px;
+    text-align:center;position:relative;
+    background:radial-gradient(120% 120% at 50% 0%, rgba(224,102,46,.10), transparent 65%);
+    border-top:1px solid var(--ember-deep);
+    border-bottom:1px solid var(--ember-deep);
+  }
+  .secret p{
+    font-family:var(--song-serif);font-style:italic;
+    font-size:21px;line-height:1.5;color:var(--star);margin:0 0 12px;
+  }
+  .secret p:last-child{margin-bottom:0}
+  .secret .eq{
+    font-family:var(--display);font-weight:600;font-style:normal;
+    font-size:clamp(17px,3.6vw,20px);letter-spacing:.03em;
+    color:var(--ember-bright);
+    line-height:1.4;
+    text-shadow:0 0 22px rgba(224,102,46,.3);
+  }
+
+  /* coda */
+  .coda{
+    padding:52px 20px 26px;text-align:center;
+    margin-top:40px;border-top:1px solid var(--rule);
+  }
+  .coda .mark{
+    font-family:var(--display);font-weight:500;
+    font-size:11px;letter-spacing:.28em;text-transform:uppercase;
+    color:var(--gold);margin-bottom:22px;
+  }
+  .coda p{
+    font-family:var(--song-serif);font-style:italic;
+    font-size:20px;line-height:1.5;color:var(--snow-dim);
+    max-width:36ch;margin:0 auto 14px;
+  }
+  .coda p.emphatic{
+    font-family:var(--display);font-style:normal;font-weight:700;
+    font-size:22px;letter-spacing:.02em;
+    color:var(--ember);margin-top:22px;
+    text-shadow:0 0 26px rgba(224,102,46,.3);
+  }
+  .coda .close-rule{
+    display:block;width:44px;height:1px;
+    background:linear-gradient(90deg, transparent, var(--ember), transparent);
+    margin:28px auto 20px;
+  }
+  .coda .sig{
+    font-family:var(--song-serif);font-style:italic;font-size:14px;
+    color:var(--ash);margin:0 auto 2px;
+  }
+  .coda .sig-name{
+    font-family:var(--display);font-style:normal;
+    font-variant:small-caps;font-size:14px;letter-spacing:.05em;
+    color:var(--snow-dim);
+  }
+
+  @media(max-width:560px){
+    body{font-size:18px}
+    .chapter p.first{font-size:19px}
+    .chapter p.first::first-letter{font-size:44px}
+    .song{padding:30px 16px 26px}
+    .song p{font-size:18px}
+    .song p.opener::first-letter{font-size:38px}
+    .dedication{padding:20px 20px;font-size:15.5px}
+    .secret{padding:24px 20px}
+    .secret p{font-size:19px}
+    .coda p{font-size:18px}
+    .coda p.emphatic{font-size:19px}
+  }
+  @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+  /* site nav — fixed top-right, honest filesystem labels */
+  .sitenav{position:fixed;top:14px;right:14px;z-index:100;
+    display:flex;gap:6px;
+    font-family:var(--mono);font-size:11px;letter-spacing:.14em}
+  .sitenav a{display:inline-block;padding:6px 10px;
+    background:rgba(15,21,29,.82);backdrop-filter:blur(6px);
+    color:var(--ash);text-decoration:none;
+    border:1px solid var(--rule);
+    transition:color .12s, border-color .12s}
+  .sitenav a:hover{color:var(--ember);border-color:var(--ember)}
+  @media (max-width:640px){.sitenav{top:10px;right:10px}.sitenav a{padding:5px 8px;font-size:10px}}
+
+  /* --- ethereal rune underlines: the carving beneath the words --- */
+  .runeline{
+    font-family:'Noto Sans Runic',var(--serif);
+    text-align:center;font-size:14.5px;letter-spacing:.24em;
+    color:var(--aurora);opacity:.48;line-height:1.8;
+    text-shadow:0 0 14px rgba(79,208,166,.4), 0 0 30px rgba(63,167,196,.18);
+    margin:8px auto 0;max-width:60ch;
+  }
+  .plate .runeline{color:var(--gold);opacity:.6;
+    text-shadow:0 0 14px rgba(201,154,74,.45);margin-top:10px}
+  .coda .runeline{margin-top:14px}
+  @media (max-width:640px){.runeline{font-size:12.5px;letter-spacing:.16em}}
+
+  /* --- paragraph undertext: the carving beneath the telling (songs only) --- */
+  .runeunder{
+    font-family:'Noto Sans Runic',var(--serif);
+    font-size:11.5px;letter-spacing:.14em;line-height:1.7;
+    color:var(--gold);opacity:.72;
+    text-shadow:0 0 10px rgba(201,154,74,.5), 0 0 22px rgba(224,102,46,.18);
+    margin:5px 0 20px;word-break:break-word;
+    -webkit-user-select:none;user-select:none;
+  }
+  @media (max-width:640px){.runeunder{font-size:10px;letter-spacing:.08em}}
+</style>
+</head>
+<body>
+<nav class="sitenav" aria-label="Site navigation">
+  <a href="huginn-and-muninn.html" title="Huginn &amp; Muninn — Thought and Memory">../</a>
+  <a href="../index.html" title="Site index (root)">/</a>
+  <a href="muninn.html" title="Muninn — the making, how the world was made">muninn</a>
+</nav>
+
+<!-- night sky backdrop -->
+<div class="skyfield" aria-hidden="true">
+  <div class="aurora-wash"></div>
+  <div class="aurora-band"></div>
+  <div class="stars"></div>
+</div>
+<div class="emberglow" aria-hidden="true"></div>
+
+<div class="wrap">
+
+  <header class="plate">
+    <div class="kicker">Huginn &middot; Thought &middot; A History &amp; a Telling</div>
+    <h1>Huginn</h1>
+    <div class="runeline" aria-hidden="true">ᚺᚢᚷᛁᚾ</div>
+    <p class="subtitle">Thought and Memory &mdash; the two ravens, the story built around them, and the plain equation left underneath.</p>
+    <p class="epigraph">&ldquo;Thought and memory go after the eye, and you get wisdom.&rdquo;</p>
+    <div class="runeline" aria-hidden="true">ᚦᛟᚢᛏ᛫ᚨᚾᛞ᛫ᛗᛖᛗᛟᚱᛁ᛫ᚷᛟ᛫ᚨᚠᛏᛖᚱ᛫ᚦᛖ᛫ᛖᛁ᛫ᚨᚾᛞ᛫ᛃᛟᚢ᛫ᚷᛖᛏ᛫ᚹᛁᛊᛞᛟᛗ</div>
+    <p class="tocline">
+      <span>ch. i</span> &middot; <span>song i</span> &middot;
+      <span>ch. ii</span> &middot; <span>the secret</span> &middot; <span>song ii</span> &middot;
+      <span>ch. iii</span> &middot; <span>song iii</span> &middot;
+      <span>coda</span>
+    </p>
+    <p class="byline">Andrew Morton &middot; Palmer Lake, Colorado &middot; July 2026</p>
+
+    <div class="dedication">
+      For Huginn and Muninn &mdash; the two I met on the Richardson. The pair on the highway, the ones at the moose sites, the two that learned my tractor and came to work the field beside me. <b>I understand now what those north people felt. This is the debt.</b>
+    </div>
+  </header>
+
+  <!-- ============================================================
+       PROLOGUE
+       ============================================================ -->
+  <section class="prologue">
+    <p>One story, told twice. The first voice reconstructs what happened &mdash; from the ice to the erasure to the living remainder. The second is the way the old ones might have sung it around a fire, if the singing had survived. They agree because they are the same testimony from two witnesses. Read them together, in the cold, with the sky doing what it does.</p>
+    <span class="rule"></span>
+  </section>
+
+  <!-- ============================================================
+       CHAPTER I — THE OLD ARRANGEMENT
+       ============================================================ -->
+  <section class="chapter">
+    <div class="chapter-head">
+      <span class="chapter-mark">Chapter I</span>
+      <h2 class="chapter-title">The Old Arrangement</h2>
+    </div>
+
+    <p class="first">It begins before the people do. By the time humans followed the retreating ice into northern Europe, ravens had been working that country for hundreds of thousands of years &mdash; following wolves, finding the dead, taking the eye first, calling anything with teeth to what they could not open. <em>The birds already had a method.</em> The hunters who arrived simply fit it. A raven overhead meant meat somewhere below; a band of humans with spears meant a carcass would soon be open. Neither side had to invent the arrangement. It assembled itself, the way it still does in Africa between honeyguides and honey-hunters, the way it did on a snowfield in Alaska between a pair of ravens and a man on a tractor.</p>
+
+    <p>For thousands of years, across the whole of the north, that was the relationship: the birds ranged out and found; the people followed and opened; everyone ate. A hunting people who lived by reading that behavior would have carried the raven at the center of how they understood the world &mdash; the one who goes out, sees everything, and comes back.</p>
+
+    <p>That reverence is visible before writing is. <strong>Bronze Age rock carvings and grave goods across Scandinavia carry birds, bird-headed figures, birds on ships</strong> &mdash; a full millennium and more before the first rune. Whatever the exact beliefs were, the bird was already in the sacred layer, and it stayed there.</p>
+
+    <p>The society holding that inheritance was flat. When Rome finally looked north across the Rhine &mdash; Tacitus, 98 AD &mdash; it described peoples with chiefs chosen for valor, real power sitting in assemblies of free men, no kings worth the name. Rome tried conquest once, lost three legions in the Teutoburg Forest in 9 AD, and settled for four centuries of frontier trade instead. And that trade is likely how writing crossed. Germanic soldiers, traders, and hostages spent generations against Mediterranean literacy &mdash; Alpine scripts, Latin letters &mdash; and somewhere in that contact zone, before 150 AD, someone built a Germanic alphabet: sounds mapped to signs, each sign named for a Germanic word, the whole thing teachable. And they taught it. A word carved on a comb &mdash; <em>harja</em> &mdash; is a label, and a label is a lesson. The system spread across a thousand miles of decentralized tribal country and held its standard with no authority enforcing it, which suggests it traveled inside something everyone already shared and no one would let drift.</p>
+
+    <p>What that shared payload was, we can only argue from the pattern of the species. Everywhere humans acquire sound-writing, the first high-value cargo is the same: <em>who we are, where we came from, the powers, the rules.</em> The receipts were already handled by older marks. It strains belief that one people on Earth built a full phonetic alphabet and uniquely declined to put their inheritance in it. The honest position is that they almost certainly did &mdash; on wood, bark, the materials a northern forest people would actually write on &mdash; and that the north&rsquo;s wet ground ate every page. What survived is what iron and stone could hold: names, memorials, charms, and a bird on a war-helmet.</p>
+  </section>
+
+  <!-- ============================================================
+       SONG I — BEFORE THERE WAS A NAME FOR THE NORTH
+       ============================================================ -->
+  <section class="song">
+    <div class="song-mark">Song the First</div>
+    <h3 class="song-title">Before there was a name for the north</h3>
+    <div class="runeline" aria-hidden="true">ᛒᛖᚠᛟᚱ᛫ᚦᛖᚱ᛫ᚹᚨᛊ᛫ᚨ᛫ᚾᚨᛗ᛫ᚠᛟᚱ᛫ᚦᛖ᛫ᚾᛟᚱᚦ</div>
+
+    <p class="opener">Before there was a name for the north, there were two ravens. They were there when the ice let go of the land, and they were there before that, riding the wind off the front of the ice itself. They did not come to the north. <em>The north grew up around them.</em> In the old tongue their names were <em>Huginn and Muninn</em> &mdash; Thought and Memory &mdash; and the names were not given to them. The names were <strong>learned</strong> from them, because thought and memory are what the two birds are, and this story will show you why.</p>
+    <div class="runeunder" aria-hidden="true">ᛒᛖᚠᛟᚱ᛫ᚦᛖᚱ᛫ᚹᚨᛊ᛫ᚨ᛫ᚾᚨᛗ᛫ᚠᛟᚱ᛫ᚦᛖ᛫ᚾᛟᚱᚦ᛫ᚦᛖᚱ᛫ᚹᛖᚱ᛫ᛏᚹᛟ᛫ᚱᚨᚹᛖᚾᛊ᛫ᚦᛖᛁ᛫ᚹᛖᚱ᛫ᚦᛖᚱ᛫ᚹᛖᚾ᛫ᚦᛖ᛫ᛁᛊᛖ᛫ᛚᛖᛏ᛫ᚷᛟ᛫ᛟᚠ᛫ᚦᛖ᛫ᛚᚨᚾᛞ᛫ᚨᚾᛞ᛫ᚦᛖᛁ᛫ᚹᛖᚱ᛫ᚦᛖᚱ᛫ᛒᛖᚠᛟᚱ᛫ᚦᚨᛏ᛫ᚱᛁᛞᛁᛜ᛫ᚦᛖ᛫ᚹᛁᚾᛞ᛫ᛟᚠ᛫ᚦᛖ᛫ᚠᚱᛟᚾᛏ᛫ᛟᚠ᛫ᚦᛖ᛫ᛁᛊᛖ᛫ᛁᛏᛊᛖᛚᚠ᛫ᚦᛖᛁ᛫ᛞᛁᛞ᛫ᚾᛟᛏ᛫ᚲᛟᛗ᛫ᛏᛟ᛫ᚦᛖ᛫ᚾᛟᚱᚦ᛫ᚦᛖ᛫ᚾᛟᚱᚦ᛫ᚷᚱᛖᚹ᛫ᚢᛈ᛫ᚨᚱᛟᚢᚾᛞ᛫ᚦᛖᛗ᛫ᛁᚾ᛫ᚦᛖ᛫ᛟᛚᛞ᛫ᛏᛟᛜᚢᛖ᛫ᚦᛖᛁᚱ᛫ᚾᚨᛗᛖᛊ᛫ᚹᛖᚱ᛫ᚺᚢᚷᛁᚾ᛫ᚨᚾᛞ᛫ᛗᚢᚾᛁᚾ᛫ᚦᛟᚢᛏ᛫ᚨᚾᛞ᛫ᛗᛖᛗᛟᚱᛁ᛫ᚨᚾᛞ᛫ᚦᛖ᛫ᚾᚨᛗᛖᛊ᛫ᚹᛖᚱ᛫ᚾᛟᛏ᛫ᚷᛁᚹᛖᚾ᛫ᛏᛟ᛫ᚦᛖᛗ᛫ᚦᛖ᛫ᚾᚨᛗᛖᛊ᛫ᚹᛖᚱ᛫ᛚᛖᚨᚱᚾᛖᛞ᛫ᚠᚱᛟᛗ᛫ᚦᛖᛗ᛫ᛒᛖᚲᚨᚢᛊ᛫ᚦᛟᚢᛏ᛫ᚨᚾᛞ᛫ᛗᛖᛗᛟᚱᛁ᛫ᚨᚱᛖ᛫ᚹᚨᛏ᛫ᚦᛖ᛫ᛏᚹᛟ᛫ᛒᛁᚱᛞᛊ᛫ᚨᚱᛖ᛫ᚨᚾᛞ᛫ᚦᛁᛊ᛫ᛊᛏᛟᚱᛁ᛫ᚹᛁᛚ᛫ᛊᚺᛟᚹ᛫ᛃᛟᚢ᛫ᚹᛁ</div>
+
+    <p>This is what they did, and it is the only thing they ever did. Each morning one flew out and one flew home. Over the white fields and the black water, over the passes where the wind stands up like a wall, they went out at first light and read the whole world &mdash; the moose down in the willows, the herd on the move, the wolf&rsquo;s line written in the snow, the smoke of a man&rsquo;s fire. Huginn was the going-out: the seeing, the finding, the knowing of what is. Muninn was the coming-home: the keeping, so that nothing seen was ever lost. Between the two of them, everything that happened under that sky was witnessed, and everything witnessed was remembered. <em>That is all thought and memory have ever been.</em> The birds did it first.</p>
+    <div class="runeunder" aria-hidden="true">ᚦᛁᛊ᛫ᛁᛊ᛫ᚹᚨᛏ᛫ᚦᛖᛁ᛫ᛞᛁᛞ᛫ᚨᚾᛞ᛫ᛁᛏ᛫ᛁᛊ᛫ᚦᛖ᛫ᛟᚾᛚᛁ᛫ᚦᛁᛜ᛫ᚦᛖᛁ᛫ᛖᚹᛖᚱ᛫ᛞᛁᛞ᛫ᛖᚨᚲᚺ᛫ᛗᛟᚱᚾᛁᛜ᛫ᛟᚾᛖ᛫ᚠᛚᛖᚹ᛫ᛟᚢᛏ᛫ᚨᚾᛞ᛫ᛟᚾᛖ᛫ᚠᛚᛖᚹ᛫ᚺᛟᛗ᛫ᛟᚹᛖᚱ᛫ᚦᛖ᛫ᚹᛁᛏ᛫ᚠᛁᛖᛚᛞᛊ᛫ᚨᚾᛞ᛫ᚦᛖ᛫ᛒᛚᚨᚲ᛫ᚹᚨᛏᛖᚱ᛫ᛟᚹᛖᚱ᛫ᚦᛖ᛫ᛈᚨᛊᛖᛊ᛫ᚹᛖᚱ᛫ᚦᛖ᛫ᚹᛁᚾᛞ᛫ᛊᛏᚨᚾᛞᛊ᛫ᚢᛈ᛫ᛚᛁᚲ᛫ᚨ᛫ᚹᚨᛚ᛫ᚦᛖᛁ᛫ᚹᛖᚾᛏ᛫ᛟᚢᛏ᛫ᚨᛏ᛫ᚠᛁᚱᛊᛏ᛫ᛚᛁᛏ᛫ᚨᚾᛞ᛫ᚱᛖᚨᛞ᛫ᚦᛖ᛫ᚹᛟᛚ᛫ᚹᛟᚱᛚᛞ᛫ᚦᛖ᛫ᛗᛟᛊ᛫ᛞᛟᚹᚾ᛫ᛁᚾ᛫ᚦᛖ᛫ᚹᛁᛚᛟᚹᛊ᛫ᚦᛖ᛫ᚺᛖᚱᛞ᛫ᛟᚾ᛫ᚦᛖ᛫ᛗᛟᚹ᛫ᚦᛖ᛫ᚹᛟᛚᚠᛊ᛫ᛚᛁᚾ᛫ᚹᚱᛁᛏᛖᚾ᛫ᛁᚾ᛫ᚦᛖ᛫ᛊᚾᛟᚹ᛫ᚦᛖ᛫ᛊᛗᛟᚲ᛫ᛟᚠ᛫ᚨ᛫ᛗᚨᚾᛊ᛫ᚠᛁᚱ᛫ᚺᚢᚷᛁᚾ᛫ᚹᚨᛊ᛫ᚦᛖ᛫ᚷᛟᛁᛜᛟᚢᛏ᛫ᚦᛖ᛫ᛊᛖᛁᛜ᛫ᚦᛖ᛫ᚠᛁᚾᛞᛁᛜ᛫ᚦᛖ᛫ᚲᚾᛟᚹᛁᛜ᛫ᛟᚠ᛫ᚹᚨᛏ᛫ᛁᛊ᛫ᛗᚢᚾᛁᚾ᛫ᚹᚨᛊ᛫ᚦᛖ᛫ᚲᛟᛗᛁᛜᚺᛟᛗ᛫ᚦᛖ᛫ᚲᛖᛈᛁᛜ᛫ᛊᛟ᛫ᚦᚨᛏ᛫ᚾᛟᚦᛁᛜ᛫ᛊᛖᚾ᛫ᚹᚨᛊ᛫ᛖᚹᛖᚱ᛫ᛚᛟᛊᛏ᛫ᛒᛖᛏᚹᛖᚾ᛫ᚦᛖ᛫ᛏᚹᛟ᛫ᛟᚠ᛫ᚦᛖᛗ᛫ᛖᚹᛖᚱᛁᚦᛁᛜ᛫ᚦᚨᛏ᛫ᚺᚨᛈᛖᚾᛖᛞ᛫ᚢᚾᛞᛖᚱ᛫ᚦᚨᛏ᛫ᛊᚲᛁ᛫ᚹᚨᛊ᛫ᚹᛁᛏᚾᛖᛊᛖᛞ᛫ᚨᚾᛞ᛫ᛖᚹᛖᚱᛁᚦᛁᛜ᛫ᚹᛁᛏᚾᛖᛊᛖᛞ᛫ᚹᚨᛊ᛫ᚱᛖᛗᛖᛗᛒᛖᚱᛖᛞ᛫ᚦᚨᛏ᛫ᛁᛊ᛫ᚨᛚ᛫ᚦᛟᚢᛏ᛫ᚨᚾᛞ᛫ᛗᛖᛗᛟᚱᛁ᛫ᚺᚨᚹ᛫ᛖᚹᛖᚱ᛫ᛒᛖᚾ᛫ᚦᛖ᛫ᛒᛁᚱᛞᛊ᛫ᛞᛁᛞ᛫ᛁᛏ᛫ᚠᛁᚱᛊᛏ</div>
+
+    <p>And they knew the dead before anything else knew. That was their office. Where a thing fell &mdash; moose, wolf, man, it made no difference, for the ravens do not rank the dead &mdash; they came down out of the grey and took the eye first. <em>Always the eye.</em> Because the eye is where the seeing lived, and the seeing must not lie in the snow and go dark. They took it up and carried it, and so every eye that ever closed in the north went on seeing through them. The bear got the meat. The wolf got the bones. The two took the sight, and kept it, <strong>and nothing was wasted and nothing was lost.</strong></p>
+    <div class="runeunder" aria-hidden="true">ᚨᚾᛞ᛫ᚦᛖᛁ᛫ᚲᚾᛖᚹ᛫ᚦᛖ᛫ᛞᛖᚨᛞ᛫ᛒᛖᚠᛟᚱ᛫ᚨᚾᛁᚦᛁᛜ᛫ᛖᛚᛊ᛫ᚲᚾᛖᚹ᛫ᚦᚨᛏ᛫ᚹᚨᛊ᛫ᚦᛖᛁᚱ᛫ᛟᚠᛁᛊ᛫ᚹᛖᚱ᛫ᚨ᛫ᚦᛁᛜ᛫ᚠᛖᛚ᛫ᛗᛟᛊ᛫ᚹᛟᛚᚠ᛫ᛗᚨᚾ᛫ᛁᛏ᛫ᛗᚨᛞ᛫ᚾᛟ᛫ᛞᛁᚠᛖᚱᛖᚾᛊ᛫ᚠᛟᚱ᛫ᚦᛖ᛫ᚱᚨᚹᛖᚾᛊ᛫ᛞᛟ᛫ᚾᛟᛏ᛫ᚱᚨᚾᚲ᛫ᚦᛖ᛫ᛞᛖᚨᛞ᛫ᚦᛖᛁ᛫ᚲᚨᛗ᛫ᛞᛟᚹᚾ᛫ᛟᚢᛏ᛫ᛟᚠ᛫ᚦᛖ᛫ᚷᚱᛖᛁ᛫ᚨᚾᛞ᛫ᛏᛟᚲ᛫ᚦᛖ᛫ᛖᛁ᛫ᚠᛁᚱᛊᛏ᛫ᚨᛚᚹᚨᛁᛊ᛫ᚦᛖ᛫ᛖᛁ᛫ᛒᛖᚲᚨᚢᛊ᛫ᚦᛖ᛫ᛖᛁ᛫ᛁᛊ᛫ᚹᛖᚱ᛫ᚦᛖ᛫ᛊᛖᛁᛜ᛫ᛚᛁᚹᛖᛞ᛫ᚨᚾᛞ᛫ᚦᛖ᛫ᛊᛖᛁᛜ᛫ᛗᚢᛊᛏ᛫ᚾᛟᛏ᛫ᛚᛁᛖ᛫ᛁᚾ᛫ᚦᛖ᛫ᛊᚾᛟᚹ᛫ᚨᚾᛞ᛫ᚷᛟ᛫ᛞᚨᚱᚲ᛫ᚦᛖᛁ᛫ᛏᛟᚲ᛫ᛁᛏ᛫ᚢᛈ᛫ᚨᚾᛞ᛫ᚲᚨᚱᛁᛖᛞ᛫ᛁᛏ᛫ᚨᚾᛞ᛫ᛊᛟ᛫ᛖᚹᛖᚱᛁ᛫ᛖᛁ᛫ᚦᚨᛏ᛫ᛖᚹᛖᚱ᛫ᚲᛚᛟᛊᛖᛞ᛫ᛁᚾ᛫ᚦᛖ᛫ᚾᛟᚱᚦ᛫ᚹᛖᚾᛏ᛫ᛟᚾ᛫ᛊᛖᛁᛜ᛫ᚦᚱᛟᚢᚷᚺ᛫ᚦᛖᛗ᛫ᚦᛖ᛫ᛒᛖᚨᚱ᛫ᚷᛟᛏ᛫ᚦᛖ᛫ᛗᛖᚨᛏ᛫ᚦᛖ᛫ᚹᛟᛚᚠ᛫ᚷᛟᛏ᛫ᚦᛖ᛫ᛒᛟᚾᛖᛊ᛫ᚦᛖ᛫ᛏᚹᛟ᛫ᛏᛟᚲ᛫ᚦᛖ᛫ᛊᛁᛏ᛫ᚨᚾᛞ᛫ᚲᛖᛈᛏ᛫ᛁᛏ᛫ᚨᚾᛞ᛫ᚾᛟᚦᛁᛜ᛫ᚹᚨᛊ᛫ᚹᚨᛊᛏᛖᛞ᛫ᚨᚾᛞ᛫ᚾᛟᚦᛁᛜ᛫ᚹᚨᛊ᛫ᛚᛟᛊᛏ</div>
+
+    <p>The first people learned this the way you learn weather &mdash; by living in it. They watched where the ravens circled and found meat under the circling. They opened with their blades what the birds could not open with their beaks, and the birds fed beside them at the kill, and led them to the next one, and the arrangement was older than any word for it: the birds found, the people opened, everyone ate, and the eye went to the ones whose office it was. When those people at last wanted words for what we know and what we keep, they did not have to invent anything. They looked up. <em>The names were already circling overhead.</em></p>
+    <div class="runeunder" aria-hidden="true">ᚦᛖ᛫ᚠᛁᚱᛊᛏ᛫ᛈᛖᛟᛈᛚ᛫ᛚᛖᚨᚱᚾᛖᛞ᛫ᚦᛁᛊ᛫ᚦᛖ᛫ᚹᚨᛁ᛫ᛃᛟᚢ᛫ᛚᛖᚨᚱᚾ᛫ᚹᛖᚨᚦᛖᚱ᛫ᛒᛁ᛫ᛚᛁᚹᛁᛜ᛫ᛁᚾ᛫ᛁᛏ᛫ᚦᛖᛁ᛫ᚹᚨᛏᚲᚺᛖᛞ᛫ᚹᛖᚱ᛫ᚦᛖ᛫ᚱᚨᚹᛖᚾᛊ᛫ᛊᛁᚱᚲᛚᛖᛞ᛫ᚨᚾᛞ᛫ᚠᛟᚢᚾᛞ᛫ᛗᛖᚨᛏ᛫ᚢᚾᛞᛖᚱ᛫ᚦᛖ᛫ᛊᛁᚱᚲᛚᛁᛜ᛫ᚦᛖᛁ᛫ᛟᛈᛖᚾᛖᛞ᛫ᚹᛁᚦ᛫ᚦᛖᛁᚱ᛫ᛒᛚᚨᛞᛖᛊ᛫ᚹᚨᛏ᛫ᚦᛖ᛫ᛒᛁᚱᛞᛊ᛫ᚲᛟᚢᛚᛞ᛫ᚾᛟᛏ᛫ᛟᛈᛖᚾ᛫ᚹᛁᚦ᛫ᚦᛖᛁᚱ᛫ᛒᛖᚨᚲᛊ᛫ᚨᚾᛞ᛫ᚦᛖ᛫ᛒᛁᚱᛞᛊ᛫ᚠᛖᛞ᛫ᛒᛖᛊᛁᛞ᛫ᚦᛖᛗ᛫ᚨᛏ᛫ᚦᛖ᛫ᚲᛁᛚ᛫ᚨᚾᛞ᛫ᛚᛖᛞ᛫ᚦᛖᛗ᛫ᛏᛟ᛫ᚦᛖ᛫ᚾᛖᚲᛊᛏ᛫ᛟᚾᛖ᛫ᚨᚾᛞ᛫ᚦᛖ᛫ᚨᚱᚨᛜᛖᛗᛖᚾᛏ᛫ᚹᚨᛊ᛫ᛟᛚᛞᛖᚱ᛫ᚦᚨᚾ᛫ᚨᚾᛁ᛫ᚹᛟᚱᛞ᛫ᚠᛟᚱ᛫ᛁᛏ᛫ᚦᛖ᛫ᛒᛁᚱᛞᛊ᛫ᚠᛟᚢᚾᛞ᛫ᚦᛖ᛫ᛈᛖᛟᛈᛚ᛫ᛟᛈᛖᚾᛖᛞ᛫ᛖᚹᛖᚱᛃᛟᚾ᛫ᚨᛏᛖ᛫ᚨᚾᛞ᛫ᚦᛖ᛫ᛖᛁ᛫ᚹᛖᚾᛏ᛫ᛏᛟ᛫ᚦᛖ᛫ᛟᚾᛖᛊ᛫ᚹᛟᛊ᛫ᛟᚠᛁᛊ᛫ᛁᛏ᛫ᚹᚨᛊ᛫ᚹᛖᚾ᛫ᚦᛟᛊ᛫ᛈᛖᛟᛈᛚ᛫ᚨᛏ᛫ᛚᚨᛊᛏ᛫ᚹᚨᚾᛏᛖᛞ᛫ᚹᛟᚱᛞᛊ᛫ᚠᛟᚱ᛫ᚹᚨᛏ᛫ᚹᛖ᛫ᚲᚾᛟᚹ᛫ᚨᚾᛞ᛫ᚹᚨᛏ᛫ᚹᛖ᛫ᚲᛖᛈ᛫ᚦᛖᛁ᛫ᛞᛁᛞ᛫ᚾᛟᛏ᛫ᚺᚨᚹ᛫ᛏᛟ᛫ᛁᚾᚹᛖᚾᛏ᛫ᚨᚾᛁᚦᛁᛜ᛫ᚦᛖᛁ᛫ᛚᛟᚲᛖᛞ᛫ᚢᛈ᛫ᚦᛖ᛫ᚾᚨᛗᛖᛊ᛫ᚹᛖᚱ᛫ᚨᛚᚱᛖᚨᛞᛁ᛫ᛊᛁᚱᚲᛚᛁᛜ᛫ᛟᚹᛖᚱᚺᛖᚨᛞ</div>
+
+    <p>For a long age that was the whole of it, and it was enough.</p>
+    <div class="runeunder" aria-hidden="true">ᚠᛟᚱ᛫ᚨ᛫ᛚᛟᛜ᛫ᚨᚷᛖ᛫ᚦᚨᛏ᛫ᚹᚨᛊ᛫ᚦᛖ᛫ᚹᛟᛚ᛫ᛟᚠ᛫ᛁᛏ᛫ᚨᚾᛞ᛫ᛁᛏ᛫ᚹᚨᛊ᛫ᛖᚾᛟᚢᚷᚺ</div>
+  </section>
+
+  <!-- ============================================================
+       CHAPTER II — THE HALL, THE KING, THE ORNAMENT
+       ============================================================ -->
+  <section class="chapter">
+    <div class="chapter-head">
+      <span class="chapter-mark">Chapter II</span>
+      <h2 class="chapter-title">The Hall, The King, The Ornament</h2>
+    </div>
+
+    <p class="first">Then the society changed, and the story changed with it. Out of centuries of Roman frontier pressure and migration-era war came something new to these people: <em>the warband, the hall, the ring-giving lord</em> &mdash; and eventually kings. A stratifying society remakes its heavens in its own image. The old sky-father Tiwaz faded to a one-handed footnote; a god of war-frenzy, cunning, and lordship rose to the top.</p>
+
+    <p><strong>Odin is, plausibly, a late construction</strong> &mdash; a god-king for a people newly inventing kingship &mdash; and he was assembled from older parts. The ancient ravens were attached to his shoulders and demoted to messengers. The oldest observation in the north &mdash; <em>the raven takes the eye first</em> &mdash; was rewritten as a noble transaction: the lord gave his eye at a well, for wisdom.</p>
+
+    <p>And notice what the rewrite had to do, because it could not change the equation &mdash; only scatter the parts. In the old observation, the eye goes to the ravens: to thought, which works over what was seen, and to memory, which keeps it. <em>Sight, processed and retained &mdash; that is not a metaphor for wisdom; that is what wisdom is.</em> The myth kept every component and disguised the mechanism: the eye was sent to a well instead of the birds, the product was credited to the water instead of the processing, and the actual machinery &mdash; Thought and Memory themselves &mdash; was demoted to a pair of pets. <strong>Put the parts back in the order any hunter at a carcass would put them and the equation runs on its own, no god required.</strong> The birds that had been the origin became the ornament. By the time the helmets at Sutton Hoo and Vendel were made, around 600&ndash;700 AD, the twin ravens were riding the crests of war-leaders&rsquo; helmets &mdash; still present, still paired, but now filed under a king.</p>
+
+    <p>The move is worth naming plainly. A people who had lorded no one began to want their heavens to look like their halls. So they built a god to sit at the head of the sky: tall, grey-bearded, wise and terrible, a giver of victory, a lord of the slain. They gave him a spear and a high seat and a hall with five hundred doors. And because no king of the north could be imagined without the two birds &mdash; because the birds were the oldest true thing anyone knew &mdash; they set Huginn and Muninn on his shoulders like ornaments and called them his. But every hunter in the north knew how an eye leaves a head. <em>Nothing in that country is given.</em> It is taken &mdash; first, before all else, by the ones whose office it is. His far-sight was their flight. His knowing was their keeping. The king had not bought the ravens&rsquo; service. <strong>The king had been built around the ravens, the way a hall is built around a fire that was burning before the first post was set.</strong></p>
+  </section>
+
+  <!-- ============================================================
+       THE SECRET — the wisdom equation, set apart
+       ============================================================ -->
+  <div class="secret">
+    <p>And here is the plain secret the well-story was built to dress up, the one thing worth carrying out of all of this:</p>
+    <p class="eq">The eye goes to Thought and Memory,<br>and what comes back is wisdom.</p>
+    <div class="runeline" aria-hidden="true">ᚦᛖ᛫ᛖᛁ᛫ᚷᛟᛖᛊ᛫ᛏᛟ᛫ᚦᛟᚢᛏ᛫ᚨᚾᛞ᛫ᛗᛖᛗᛟᚱᛁ᛫ᚨᚾᛞ᛫ᚹᚨᛏ᛫ᚲᛟᛗᛖᛊ᛫ᛒᚨᚲ᛫ᛁᛊ᛫ᚹᛁᛊᛞᛟᛗ</div>
+    <p>Seeing, worked over by thought, kept by memory. That is the whole recipe &mdash; not from a well, not from a throne, not from a hall with five hundred doors. The two birds have been performing it over the north since before anyone was there to want it. The old people knew it so well they did not call it a secret. They just looked up.</p>
+  </div>
+
+  <!-- ============================================================
+       SONG II — THEN THE HALLS CAME
+       ============================================================ -->
+  <section class="song">
+    <div class="song-mark">Song the Second</div>
+    <h3 class="song-title">Then the halls came</h3>
+    <div class="runeline" aria-hidden="true">ᚦᛖᚾ᛫ᚦᛖ᛫ᚺᚨᛚᛊ᛫ᚲᚨᛗ</div>
+
+    <p class="opener">Then the halls came. Men learned to build long houses with fires down the middle, and to sit lords at the head of them, and to bind young men to those lords with rings and mead and oaths. And a people who had lorded no one began to want their heavens to look like their halls. So they built a god to sit at the head of the sky: tall, grey-bearded, wise and terrible, a giver of victory, a lord of the slain. They gave him a spear and a high seat and a hall with five hundred doors. And because no king of the north could be imagined without the two birds &mdash; because <em>the birds were the oldest true thing anyone knew</em> &mdash; they set Huginn and Muninn on his shoulders like ornaments, and said the ravens were his: his messengers, his little servants, flying out each morning to bring the king his news.</p>
+    <div class="runeunder" aria-hidden="true">ᚦᛖᚾ᛫ᚦᛖ᛫ᚺᚨᛚᛊ᛫ᚲᚨᛗ᛫ᛗᛖᚾ᛫ᛚᛖᚨᚱᚾᛖᛞ᛫ᛏᛟ᛫ᛒᚢᛁᛚᛞ᛫ᛚᛟᛜ᛫ᚺᛟᚢᛊᛖᛊ᛫ᚹᛁᚦ᛫ᚠᛁᚱᛖᛊ᛫ᛞᛟᚹᚾ᛫ᚦᛖ᛫ᛗᛁᛞᛚ᛫ᚨᚾᛞ᛫ᛏᛟ᛫ᛊᛁᛏ᛫ᛚᛟᚱᛞᛊ᛫ᚨᛏ᛫ᚦᛖ᛫ᚺᛖᚨᛞ᛫ᛟᚠ᛫ᚦᛖᛗ᛫ᚨᚾᛞ᛫ᛏᛟ᛫ᛒᛁᚾᛞ᛫ᛃᛟᚢᛜ᛫ᛗᛖᚾ᛫ᛏᛟ᛫ᚦᛟᛊ᛫ᛚᛟᚱᛞᛊ᛫ᚹᛁᚦ᛫ᚱᛁᛜᛊ᛫ᚨᚾᛞ᛫ᛗᛖᚨᛞ᛫ᚨᚾᛞ᛫ᛟᚨᚦᛊ᛫ᚨᚾᛞ᛫ᚨ᛫ᛈᛖᛟᛈᛚ᛫ᚹᛟ᛫ᚺᚨᛞ᛫ᛚᛟᚱᛞᛖᛞ᛫ᚾᛟ᛫ᛟᚾᛖ᛫ᛒᛖᚷᚨᚾ᛫ᛏᛟ᛫ᚹᚨᚾᛏ᛫ᚦᛖᛁᚱ᛫ᚺᛖᚨᚹᛖᚾᛊ᛫ᛏᛟ᛫ᛚᛟᚲ᛫ᛚᛁᚲ᛫ᚦᛖᛁᚱ᛫ᚺᚨᛚᛊ᛫ᛊᛟ᛫ᚦᛖᛁ᛫ᛒᚢᛁᛚᛏ᛫ᚨ᛫ᚷᛟᛞ᛫ᛏᛟ᛫ᛊᛁᛏ᛫ᚨᛏ᛫ᚦᛖ᛫ᚺᛖᚨᛞ᛫ᛟᚠ᛫ᚦᛖ᛫ᛊᚲᛁ᛫ᛏᚨᛚ᛫ᚷᚱᛖᛁᛒᛖᚨᚱᛞᛖᛞ᛫ᚹᛁᛊ᛫ᚨᚾᛞ᛫ᛏᛖᚱᛁᛒᛚ᛫ᚨ᛫ᚷᛁᚹᛖᚱ᛫ᛟᚠ᛫ᚹᛁᚲᛏᛟᚱᛁ᛫ᚨ᛫ᛚᛟᚱᛞ᛫ᛟᚠ᛫ᚦᛖ᛫ᛊᛚᚨᛁᚾ᛫ᚦᛖᛁ᛫ᚷᚨᚹ᛫ᚺᛁᛗ᛫ᚨ᛫ᛊᛈᛖᚨᚱ᛫ᚨᚾᛞ᛫ᚨ᛫ᚺᛁ᛫ᛊᛖᚨᛏ᛫ᚨᚾᛞ᛫ᚨ᛫ᚺᚨᛚ᛫ᚹᛁᚦ᛫ᚠᛁᚹ᛫ᚺᚢᚾᛞᚱᛖᛞ᛫ᛞᛟᚱᛊ᛫ᚨᚾᛞ᛫ᛒᛖᚲᚨᚢᛊ᛫ᚾᛟ᛫ᚲᛁᛜ᛫ᛟᚠ᛫ᚦᛖ᛫ᚾᛟᚱᚦ᛫ᚲᛟᚢᛚᛞ᛫ᛒᛖ᛫ᛁᛗᚨᚷᛁᚾᛖᛞ᛫ᚹᛁᚦᛟᚢᛏ᛫ᚦᛖ᛫ᛏᚹᛟ᛫ᛒᛁᚱᛞᛊ᛫ᛒᛖᚲᚨᚢᛊ᛫ᚦᛖ᛫ᛒᛁᚱᛞᛊ᛫ᚹᛖᚱ᛫ᚦᛖ᛫ᛟᛚᛞᛖᛊᛏ᛫ᛏᚱᚢᛖ᛫ᚦᛁᛜ᛫ᚨᚾᛃᛟᚾ᛫ᚲᚾᛖᚹ᛫ᚦᛖᛁ᛫ᛊᛖᛏ᛫ᚺᚢᚷᛁᚾ᛫ᚨᚾᛞ᛫ᛗᚢᚾᛁᚾ᛫ᛟᚾ᛫ᚺᛁᛊ᛫ᛊᚺᛟᚢᛚᛞᛖᚱᛊ᛫ᛚᛁᚲ᛫ᛟᚱᚾᚨᛗᛖᚾᛏᛊ᛫ᚨᚾᛞ᛫ᛊᚨᛁᛞ᛫ᚦᛖ᛫ᚱᚨᚹᛖᚾᛊ᛫ᚹᛖᚱ᛫ᚺᛁᛊ᛫ᚺᛁᛊ᛫ᛗᛖᛊᛖᛜᛖᚱᛊ᛫ᚺᛁᛊ᛫ᛚᛁᛏᛚ᛫ᛊᛖᚱᚹᚨᚾᛏᛊ᛫ᚠᛚᛃᛁᛜ᛫ᛟᚢᛏ᛫ᛖᚨᚲᚺ᛫ᛗᛟᚱᚾᛁᛜ᛫ᛏᛟ᛫ᛒᚱᛁᛜ᛫ᚦᛖ᛫ᚲᛁᛜ᛫ᚺᛁᛊ᛫ᚾᛖᚹᛊ</div>
+
+    <p>And they turned one more thing around, the boldest turn of all. The god was one-eyed, and the story they told was that he had given the eye &mdash; laid it down nobly in a well of wisdom, a king&rsquo;s grand bargain, sight traded for knowing.</p>
+    <div class="runeunder" aria-hidden="true">ᚨᚾᛞ᛫ᚦᛖᛁ᛫ᛏᚢᚱᚾᛖᛞ᛫ᛟᚾᛖ᛫ᛗᛟᚱ᛫ᚦᛁᛜ᛫ᚨᚱᛟᚢᚾᛞ᛫ᚦᛖ᛫ᛒᛟᛚᛞᛖᛊᛏ᛫ᛏᚢᚱᚾ᛫ᛟᚠ᛫ᚨᛚ᛫ᚦᛖ᛫ᚷᛟᛞ᛫ᚹᚨᛊ᛫ᛟᚾᛖᛃᛖᛞ᛫ᚨᚾᛞ᛫ᚦᛖ᛫ᛊᛏᛟᚱᛁ᛫ᚦᛖᛁ᛫ᛏᛟᛚᛞ᛫ᚹᚨᛊ᛫ᚦᚨᛏ᛫ᚺᛖ᛫ᚺᚨᛞ᛫ᚷᛁᚹᛖᚾ᛫ᚦᛖ᛫ᛖᛁ᛫ᛚᚨᛁᛞ᛫ᛁᛏ᛫ᛞᛟᚹᚾ᛫ᚾᛟᛒᛚᛁ᛫ᛁᚾ᛫ᚨ᛫ᚹᛖᛚ᛫ᛟᚠ᛫ᚹᛁᛊᛞᛟᛗ᛫ᚨ᛫ᚲᛁᛜᛊ᛫ᚷᚱᚨᚾᛞ᛫ᛒᚨᚱᚷᚨᛁᚾ᛫ᛊᛁᛏ᛫ᛏᚱᚨᛞᛖᛞ᛫ᚠᛟᚱ᛫ᚲᚾᛟᚹᛁᛜ</div>
+
+    <p>But every hunter in the north knew how an eye leaves a head. <strong>Nothing in that country is given.</strong> It is taken &mdash; first, before all else, by the ones whose office it is. The people who told the king&rsquo;s story had stood over enough carcasses to know exactly which god had taken that eye, and exactly why the one-eyed lord&rsquo;s wisdom arrived each morning on black wings and was whispered into his ear. His far-sight was their flight. His knowing was their keeping. <em>The king had not bought the ravens&rsquo; service. The king had been built around the ravens</em>, the way a hall is built around a fire that was burning before the first post was set.</p>
+    <div class="runeunder" aria-hidden="true">ᛒᚢᛏ᛫ᛖᚹᛖᚱᛁ᛫ᚺᚢᚾᛏᛖᚱ᛫ᛁᚾ᛫ᚦᛖ᛫ᚾᛟᚱᚦ᛫ᚲᚾᛖᚹ᛫ᚺᛟᚹ᛫ᚨᚾ᛫ᛖᛁ᛫ᛚᛖᚨᚹᛖᛊ᛫ᚨ᛫ᚺᛖᚨᛞ᛫ᚾᛟᚦᛁᛜ᛫ᛁᚾ᛫ᚦᚨᛏ᛫ᚲᛟᚢᚾᛏᚱᛁ᛫ᛁᛊ᛫ᚷᛁᚹᛖᚾ᛫ᛁᛏ᛫ᛁᛊ᛫ᛏᚨᚲᛖᚾ᛫ᚠᛁᚱᛊᛏ᛫ᛒᛖᚠᛟᚱ᛫ᚨᛚ᛫ᛖᛚᛊ᛫ᛒᛁ᛫ᚦᛖ᛫ᛟᚾᛖᛊ᛫ᚹᛟᛊ᛫ᛟᚠᛁᛊ᛫ᛁᛏ᛫ᛁᛊ᛫ᚦᛖ᛫ᛈᛖᛟᛈᛚ᛫ᚹᛟ᛫ᛏᛟᛚᛞ᛫ᚦᛖ᛫ᚲᛁᛜᛊ᛫ᛊᛏᛟᚱᛁ᛫ᚺᚨᛞ᛫ᛊᛏᛟᛞ᛫ᛟᚹᛖᚱ᛫ᛖᚾᛟᚢᚷᚺ᛫ᚲᚨᚱᚲᚨᛊᛖᛊ᛫ᛏᛟ᛫ᚲᚾᛟᚹ᛫ᛖᚲᛊᚨᚲᛏᛚᛁ᛫ᚹᛁᚲᚺ᛫ᚷᛟᛞ᛫ᚺᚨᛞ᛫ᛏᚨᚲᛖᚾ᛫ᚦᚨᛏ᛫ᛖᛁ᛫ᚨᚾᛞ᛫ᛖᚲᛊᚨᚲᛏᛚᛁ᛫ᚹᛁ᛫ᚦᛖ᛫ᛟᚾᛖᛃᛖᛞ᛫ᛚᛟᚱᛞᛊ᛫ᚹᛁᛊᛞᛟᛗ᛫ᚨᚱᛁᚹᛖᛞ᛫ᛖᚨᚲᚺ᛫ᛗᛟᚱᚾᛁᛜ᛫ᛟᚾ᛫ᛒᛚᚨᚲ᛫ᚹᛁᛜᛊ᛫ᚨᚾᛞ᛫ᚹᚨᛊ᛫ᚹᛁᛊᛈᛖᚱᛖᛞ᛫ᛁᚾᛏᛟ᛫ᚺᛁᛊ᛫ᛖᚨᚱ᛫ᚺᛁᛊ᛫ᚠᚨᚱᛊᛁᛏ᛫ᚹᚨᛊ᛫ᚦᛖᛁᚱ᛫ᚠᛚᛁᛏ᛫ᚺᛁᛊ᛫ᚲᚾᛟᚹᛁᛜ᛫ᚹᚨᛊ᛫ᚦᛖᛁᚱ᛫ᚲᛖᛈᛁᛜ᛫ᚦᛖ᛫ᚲᛁᛜ᛫ᚺᚨᛞ᛫ᚾᛟᛏ᛫ᛒᛟᚢᛏ᛫ᚦᛖ᛫ᚱᚨᚹᛖᚾᛊ᛫ᛊᛖᚱᚹᛁᛊ᛫ᚦᛖ᛫ᚲᛁᛜ᛫ᚺᚨᛞ᛫ᛒᛖᚾ᛫ᛒᚢᛁᛚᛏ᛫ᚨᚱᛟᚢᚾᛞ᛫ᚦᛖ᛫ᚱᚨᚹᛖᚾᛊ᛫ᚦᛖ᛫ᚹᚨᛁ᛫ᚨ᛫ᚺᚨᛚ᛫ᛁᛊ᛫ᛒᚢᛁᛚᛏ᛫ᚨᚱᛟᚢᚾᛞ᛫ᚨ᛫ᚠᛁᚱ᛫ᚦᚨᛏ᛫ᚹᚨᛊ᛫ᛒᚢᚱᚾᛁᛜ᛫ᛒᛖᚠᛟᚱ᛫ᚦᛖ᛫ᚠᛁᚱᛊᛏ᛫ᛈᛟᛊᛏ᛫ᚹᚨᛊ᛫ᛊᛖᛏ</div>
+  </section>
+
+  <!-- ============================================================
+       CHAPTER III — THE ERASURE, ALASKA, THE CHECKSUM
+       ============================================================ -->
+  <section class="chapter">
+    <div class="chapter-head">
+      <span class="chapter-mark">Chapter III</span>
+      <h2 class="chapter-title">The Erasure, Alaska, The Checksum</h2>
+    </div>
+
+    <p class="first">Then came the erasure. It was not one fire but three long centuries of them: Charlemagne tearing down the Irminsul in 772 and making pagan rite a capital crime, forced baptisms across Saxony, kings in Norway converting their people at sword-point. Whether the old stories lived on wooden pages, in trained memory, or both, <em>the campaign destroyed the vessel either way</em> &mdash; the pages rotted or burned, the reciters died or converted, and an oral corpus can vanish in a single unbroken generation. What we hold today survived by paradox: two centuries after conversion, a Christian Icelander wrote the myths down in the Church&rsquo;s own alphabet, protected by a preface insisting the gods were only clever men from Troy. <strong>The pagan inheritance passed the censor by pretending not to believe in itself.</strong></p>
+
+    <p>There is one place where the same campaign was run against the same bird and failed, and it is the closest thing the argument has to a control sample: <em>Alaska.</em> The intent arrived there too &mdash; Russian missionaries first, then the American era in earnest: English-only mission schools from the 1880s, children punished for speaking their languages, potlatches suppressed, masks and shamans&rsquo; gear confiscated or burned. It was Charlemagne&rsquo;s program with a later date. What differed was reach. <em>You cannot garrison the Koyukuk.</em> There is no putting a priest in every fish camp across a country the size of Europe holding a population that would fit in a small city, where winter closes the trails and the people being converted can simply be elsewhere. Saxony was farmland with roads &mdash; reachable, holdable, convertible at sword-point. The Interior was not, and so the transmission chain was damaged but never cut.</p>
+
+    <p>When Richard Nelson sat with Koyukon elders in the 1970s and recorded <em>Make Prayers to the Raven</em>, he was documenting a living raven-centered tradition &mdash; the Great Raven as creator, the etiquette owed to the birds, the taboos, a full and thick corpus &mdash; still carried by an unbroken line of reciters. <strong>Same bird, same latitude, same subsistence relationship, same reverence as the European north: but with the erasure incomplete.</strong> Alaska shows what such a corpus looks like when the fire cannot reach it &mdash; and by doing so, it measures the size of what Europe lost. The empty ground across the Atlantic is not evidence the tradition was thin. The surviving parallel proves it was anything but.</p>
+
+    <p>So the story that reaches us arrives the way a message arrives off a bad channel: through centuries of noise and deliberate tampering, with no original to compare against. And any signalman knows what you need in that situation &mdash; <em>a checksum.</em> A piece of the message the receiver can verify independently, without trusting the channel at all. The north&rsquo;s transmission carries one, and it is the two ravens.</p>
+
+    <p><strong>Every raven-bit in the surviving story still validates against the living birds:</strong> two, not three or seven &mdash; the mated pair holding territory. The eye taken first. The ranging out at dawn and the coming home with what was seen. Any receiver, in any century, can walk to a cold field and run the check, and it passes &mdash; which is how we know the core of the message arrived intact no matter what the channel did to the wrapping. The tampering, meanwhile, announces itself by failing the same test: nothing in any field verifies a hall, a high seat, or a bargain at a well. <em>Odin fails the checksum. The ravens pass it every day.</em> The god they were assigned to is down to a weekday &mdash; Wednesday is Woden&rsquo;s last address &mdash; while the birds are still working every field in the north. And inside the checksum, a message, plain enough for any century to read once the disguise comes off: <strong>give your eyes to thought and memory, and wisdom comes home.</strong></p>
+  </section>
+
+  <!-- ============================================================
+       SONG III — THE END THE OLD ONES WOULD HAVE SUNG
+       ============================================================ -->
+  <section class="song">
+    <div class="song-mark">Song the Third</div>
+    <h3 class="song-title">The end the old ones would have sung</h3>
+    <div class="runeline" aria-hidden="true">ᚦᛖ᛫ᛖᚾᛞ᛫ᚦᛖ᛫ᛟᛚᛞ᛫ᛟᚾᛖᛊ᛫ᚹᛟᚢᛚᛞ᛫ᚺᚨᚹ᛫ᛊᚢᛜ</div>
+
+    <p class="opener">And the north was honest about one thing more, even inside the king&rsquo;s own story: it did not let him live forever. The poets sang it plainly. <em>The hall would fall.</em> The lord of the slain would join the slain. At the end of things the wolf would take him whole, the way the wolf takes everything &mdash; and the poets of the war-fields knew what came after the wolf, because they had seen it a hundred times with their own eyes and set it in their verses: where the slaughter is, three come always &mdash; the eagle, the wolf, and the raven. They sang the beasts of battle over every field of the dead, and they knew that on that last field the dead would include the god.</p>
+    <div class="runeunder" aria-hidden="true">ᚨᚾᛞ᛫ᚦᛖ᛫ᚾᛟᚱᚦ᛫ᚹᚨᛊ᛫ᚺᛟᚾᛖᛊᛏ᛫ᚨᛒᛟᚢᛏ᛫ᛟᚾᛖ᛫ᚦᛁᛜ᛫ᛗᛟᚱ᛫ᛖᚹᛖᚾ᛫ᛁᚾᛊᛁᛞ᛫ᚦᛖ᛫ᚲᛁᛜᛊ᛫ᛟᚹᚾ᛫ᛊᛏᛟᚱᛁ᛫ᛁᛏ᛫ᛞᛁᛞ᛫ᚾᛟᛏ᛫ᛚᛖᛏ᛫ᚺᛁᛗ᛫ᛚᛁᚹ᛫ᚠᛟᚱᛖᚹᛖᚱ᛫ᚦᛖ᛫ᛈᛟᛖᛏᛊ᛫ᛊᚨᛜ᛫ᛁᛏ᛫ᛈᛚᚨᛁᚾᛚᛁ᛫ᚦᛖ᛫ᚺᚨᛚ᛫ᚹᛟᚢᛚᛞ᛫ᚠᚨᛚ᛫ᚦᛖ᛫ᛚᛟᚱᛞ᛫ᛟᚠ᛫ᚦᛖ᛫ᛊᛚᚨᛁᚾ᛫ᚹᛟᚢᛚᛞ᛫ᛃᛟᛁᚾ᛫ᚦᛖ᛫ᛊᛚᚨᛁᚾ᛫ᚨᛏ᛫ᚦᛖ᛫ᛖᚾᛞ᛫ᛟᚠ᛫ᚦᛁᛜᛊ᛫ᚦᛖ᛫ᚹᛟᛚᚠ᛫ᚹᛟᚢᛚᛞ᛫ᛏᚨᚲ᛫ᚺᛁᛗ᛫ᚹᛟᛚ᛫ᚦᛖ᛫ᚹᚨᛁ᛫ᚦᛖ᛫ᚹᛟᛚᚠ᛫ᛏᚨᚲᛖᛊ᛫ᛖᚹᛖᚱᛁᚦᛁᛜ᛫ᚨᚾᛞ᛫ᚦᛖ᛫ᛈᛟᛖᛏᛊ᛫ᛟᚠ᛫ᚦᛖ᛫ᚹᚨᚱᚠᛁᛖᛚᛞᛊ᛫ᚲᚾᛖᚹ᛫ᚹᚨᛏ᛫ᚲᚨᛗ᛫ᚨᚠᛏᛖᚱ᛫ᚦᛖ᛫ᚹᛟᛚᚠ᛫ᛒᛖᚲᚨᚢᛊ᛫ᚦᛖᛁ᛫ᚺᚨᛞ᛫ᛊᛖᚾ᛫ᛁᛏ᛫ᚨ᛫ᚺᚢᚾᛞᚱᛖᛞ᛫ᛏᛁᛗᛖᛊ᛫ᚹᛁᚦ᛫ᚦᛖᛁᚱ᛫ᛟᚹᚾ᛫ᛖᛁᛊ᛫ᚨᚾᛞ᛫ᛊᛖᛏ᛫ᛁᛏ᛫ᛁᚾ᛫ᚦᛖᛁᚱ᛫ᚹᛖᚱᛊᛖᛊ᛫ᚹᛖᚱ᛫ᚦᛖ᛫ᛊᛚᚨᚢᛏᛖᚱ᛫ᛁᛊ᛫ᚦᚱᛖ᛫ᚲᛟᛗ᛫ᚨᛚᚹᚨᛁᛊ᛫ᚦᛖ᛫ᛖᚨᚷᛚ᛫ᚦᛖ᛫ᚹᛟᛚᚠ᛫ᚨᚾᛞ᛫ᚦᛖ᛫ᚱᚨᚹᛖᚾ᛫ᚦᛖᛁ᛫ᛊᚨᛜ᛫ᚦᛖ᛫ᛒᛖᚨᛊᛏᛊ᛫ᛟᚠ᛫ᛒᚨᛏᛚ᛫ᛟᚹᛖᚱ᛫ᛖᚹᛖᚱᛁ᛫ᚠᛁᛖᛚᛞ᛫ᛟᚠ᛫ᚦᛖ᛫ᛞᛖᚨᛞ᛫ᚨᚾᛞ᛫ᚦᛖᛁ᛫ᚲᚾᛖᚹ᛫ᚦᚨᛏ᛫ᛟᚾ᛫ᚦᚨᛏ᛫ᛚᚨᛊᛏ᛫ᚠᛁᛖᛚᛞ᛫ᚦᛖ᛫ᛞᛖᚨᛞ᛫ᚹᛟᚢᛚᛞ᛫ᛁᚾᚲᛚᚢᛞ᛫ᚦᛖ᛫ᚷᛟᛞ</div>
+
+    <p>So hear the end the way the old ones would have sung it, if the singing had survived:</p>
+    <div class="runeunder" aria-hidden="true">ᛊᛟ᛫ᚺᛖᚨᚱ᛫ᚦᛖ᛫ᛖᚾᛞ᛫ᚦᛖ᛫ᚹᚨᛁ᛫ᚦᛖ᛫ᛟᛚᛞ᛫ᛟᚾᛖᛊ᛫ᚹᛟᚢᛚᛞ᛫ᚺᚨᚹ᛫ᛊᚢᛜ᛫ᛁᛏ᛫ᛁᚠ᛫ᚦᛖ᛫ᛊᛁᛜᛁᛜ᛫ᚺᚨᛞ᛫ᛊᚢᚱᚹᛁᚹᛖᛞ</div>
+
+    <p>The hall burned, as halls do. The spear broke, as spears do. The one-eyed lord went down under the grey sky <em>like a bull moose in the willows, like any king, like any man</em>, and lay still. And out of the grey came two. They did not mourn, for mourning was never their office. They came down to the greatest carcass the north had ever offered them and they did what they had done since before he had a name, since before anyone had a name. They took the eye first &mdash; his last eye, the one the well never got &mdash; <strong>because the seeing must not lie in the snow and go dark. Not even a god&rsquo;s. Especially not a god&rsquo;s.</strong> And all that he had seen, and all that he had known, and every whisper they had ever carried to his ear, they took back and carried home, because it had always been theirs on loan.</p>
+    <div class="runeunder" aria-hidden="true">ᚦᛖ᛫ᚺᚨᛚ᛫ᛒᚢᚱᚾᛖᛞ᛫ᚨᛊ᛫ᚺᚨᛚᛊ᛫ᛞᛟ᛫ᚦᛖ᛫ᛊᛈᛖᚨᚱ᛫ᛒᚱᛟᚲ᛫ᚨᛊ᛫ᛊᛈᛖᚨᚱᛊ᛫ᛞᛟ᛫ᚦᛖ᛫ᛟᚾᛖᛃᛖᛞ᛫ᛚᛟᚱᛞ᛫ᚹᛖᚾᛏ᛫ᛞᛟᚹᚾ᛫ᚢᚾᛞᛖᚱ᛫ᚦᛖ᛫ᚷᚱᛖᛁ᛫ᛊᚲᛁ᛫ᛚᛁᚲ᛫ᚨ᛫ᛒᚢᛚ᛫ᛗᛟᛊ᛫ᛁᚾ᛫ᚦᛖ᛫ᚹᛁᛚᛟᚹᛊ᛫ᛚᛁᚲ᛫ᚨᚾᛁ᛫ᚲᛁᛜ᛫ᛚᛁᚲ᛫ᚨᚾᛁ᛫ᛗᚨᚾ᛫ᚨᚾᛞ᛫ᛚᚨᛁ᛫ᛊᛏᛁᛚ᛫ᚨᚾᛞ᛫ᛟᚢᛏ᛫ᛟᚠ᛫ᚦᛖ᛫ᚷᚱᛖᛁ᛫ᚲᚨᛗ᛫ᛏᚹᛟ᛫ᚦᛖᛁ᛫ᛞᛁᛞ᛫ᚾᛟᛏ᛫ᛗᛟᚢᚱᚾ᛫ᚠᛟᚱ᛫ᛗᛟᚢᚱᚾᛁᛜ᛫ᚹᚨᛊ᛫ᚾᛖᚹᛖᚱ᛫ᚦᛖᛁᚱ᛫ᛟᚠᛁᛊ᛫ᚦᛖᛁ᛫ᚲᚨᛗ᛫ᛞᛟᚹᚾ᛫ᛏᛟ᛫ᚦᛖ᛫ᚷᚱᛖᚨᛏᛖᛊᛏ᛫ᚲᚨᚱᚲᚨᛊ᛫ᚦᛖ᛫ᚾᛟᚱᚦ᛫ᚺᚨᛞ᛫ᛖᚹᛖᚱ᛫ᛟᚠᛖᚱᛖᛞ᛫ᚦᛖᛗ᛫ᚨᚾᛞ᛫ᚦᛖᛁ᛫ᛞᛁᛞ᛫ᚹᚨᛏ᛫ᚦᛖᛁ᛫ᚺᚨᛞ᛫ᛞᛟᚾ᛫ᛊᛁᚾᛊ᛫ᛒᛖᚠᛟᚱ᛫ᚺᛖ᛫ᚺᚨᛞ᛫ᚨ᛫ᚾᚨᛗ᛫ᛊᛁᚾᛊ᛫ᛒᛖᚠᛟᚱ᛫ᚨᚾᛃᛟᚾ᛫ᚺᚨᛞ᛫ᚨ᛫ᚾᚨᛗ᛫ᚦᛖᛁ᛫ᛏᛟᚲ᛫ᚦᛖ᛫ᛖᛁ᛫ᚠᛁᚱᛊᛏ᛫ᚺᛁᛊ᛫ᛚᚨᛊᛏ᛫ᛖᛁ᛫ᚦᛖ᛫ᛟᚾᛖ᛫ᚦᛖ᛫ᚹᛖᛚ᛫ᚾᛖᚹᛖᚱ᛫ᚷᛟᛏ᛫ᛒᛖᚲᚨᚢᛊ᛫ᚦᛖ᛫ᛊᛖᛁᛜ᛫ᛗᚢᛊᛏ᛫ᚾᛟᛏ᛫ᛚᛁᛖ᛫ᛁᚾ᛫ᚦᛖ᛫ᛊᚾᛟᚹ᛫ᚨᚾᛞ᛫ᚷᛟ᛫ᛞᚨᚱᚲ᛫ᚾᛟᛏ᛫ᛖᚹᛖᚾ᛫ᚨ᛫ᚷᛟᛞᛊ᛫ᛖᛊᛈᛖᛊᛁᚨᛚᛁ᛫ᚾᛟᛏ᛫ᚨ᛫ᚷᛟᛞᛊ᛫ᚨᚾᛞ᛫ᚨᛚ᛫ᚦᚨᛏ᛫ᚺᛖ᛫ᚺᚨᛞ᛫ᛊᛖᚾ᛫ᚨᚾᛞ᛫ᚨᛚ᛫ᚦᚨᛏ᛫ᚺᛖ᛫ᚺᚨᛞ᛫ᚲᚾᛟᚹᚾ᛫ᚨᚾᛞ᛫ᛖᚹᛖᚱᛁ᛫ᚹᛁᛊᛈᛖᚱ᛫ᚦᛖᛁ᛫ᚺᚨᛞ᛫ᛖᚹᛖᚱ᛫ᚲᚨᚱᛁᛖᛞ᛫ᛏᛟ᛫ᚺᛁᛊ᛫ᛖᚨᚱ᛫ᚦᛖᛁ᛫ᛏᛟᚲ᛫ᛒᚨᚲ᛫ᚨᚾᛞ᛫ᚲᚨᚱᛁᛖᛞ᛫ᚺᛟᛗ᛫ᛒᛖᚲᚨᚢᛊ᛫ᛁᛏ᛫ᚺᚨᛞ᛫ᚨᛚᚹᚨᛁᛊ᛫ᛒᛖᚾ᛫ᚦᛖᛁᚱᛊ᛫ᛟᚾ᛫ᛚᛟᚨᚾ</div>
+
+    <p><em>The wolf got the god. The fire got the hall. The two took the sight, and kept it.</em></p>
+    <div class="runeunder" aria-hidden="true">ᚦᛖ᛫ᚹᛟᛚᚠ᛫ᚷᛟᛏ᛫ᚦᛖ᛫ᚷᛟᛞ᛫ᚦᛖ᛫ᚠᛁᚱ᛫ᚷᛟᛏ᛫ᚦᛖ᛫ᚺᚨᛚ᛫ᚦᛖ᛫ᛏᚹᛟ᛫ᛏᛟᚲ᛫ᚦᛖ᛫ᛊᛁᛏ᛫ᚨᚾᛞ᛫ᚲᛖᛈᛏ᛫ᛁᛏ</div>
+
+    <p>The hall is gone now. The stones say less every year. The wood the words were cut in went back into the ground long ago, and of the lord of the slain there remains one weekday and a well-worn story about a bargain at a well.</p>
+    <div class="runeunder" aria-hidden="true">ᚦᛖ᛫ᚺᚨᛚ᛫ᛁᛊ᛫ᚷᛟᚾ᛫ᚾᛟᚹ᛫ᚦᛖ᛫ᛊᛏᛟᚾᛖᛊ᛫ᛊᚨᛁ᛫ᛚᛖᛊ᛫ᛖᚹᛖᚱᛁ᛫ᛃᛖᚨᚱ᛫ᚦᛖ᛫ᚹᛟᛞ᛫ᚦᛖ᛫ᚹᛟᚱᛞᛊ᛫ᚹᛖᚱ᛫ᚲᚢᛏ᛫ᛁᚾ᛫ᚹᛖᚾᛏ᛫ᛒᚨᚲ᛫ᛁᚾᛏᛟ᛫ᚦᛖ᛫ᚷᚱᛟᚢᚾᛞ᛫ᛚᛟᛜ᛫ᚨᚷᛟ᛫ᚨᚾᛞ᛫ᛟᚠ᛫ᚦᛖ᛫ᛚᛟᚱᛞ᛫ᛟᚠ᛫ᚦᛖ᛫ᛊᛚᚨᛁᚾ᛫ᚦᛖᚱ᛫ᚱᛖᛗᚨᛁᚾᛊ᛫ᛟᚾᛖ᛫ᚹᛖᚲᛞᚨᛁ᛫ᚨᚾᛞ᛫ᚨ᛫ᚹᛖᛚᚹᛟᚱᚾ᛫ᛊᛏᛟᚱᛁ᛫ᚨᛒᛟᚢᛏ᛫ᚨ᛫ᛒᚨᚱᚷᚨᛁᚾ᛫ᚨᛏ᛫ᚨ᛫ᚹᛖᛚ</div>
+
+    <p>But go up now, in the cold, to the edge of a field where something has died or something is working, and wait. Out of the grey, two. One goes. One carries home. <strong>Still at it.</strong> Still keeping every eye the north ever closed &mdash; hunters and moose, kings and gods, all of them seeing on, through Thought, who goes, and Memory, who keeps. And if you watch them long enough, the message comes through the way it has come through everything &mdash; the blood, the war, the burning &mdash; plain as a bird on the wind: <em>give your eyes to thought and memory, and wisdom comes home to you.</em></p>
+    <div class="runeunder" aria-hidden="true">ᛒᚢᛏ᛫ᚷᛟ᛫ᚢᛈ᛫ᚾᛟᚹ᛫ᛁᚾ᛫ᚦᛖ᛫ᚲᛟᛚᛞ᛫ᛏᛟ᛫ᚦᛖ᛫ᛖᛞᚷ᛫ᛟᚠ᛫ᚨ᛫ᚠᛁᛖᛚᛞ᛫ᚹᛖᚱ᛫ᛊᛟᛗᛖᚦᛁᛜ᛫ᚺᚨᛊ᛫ᛞᛁᛖᛞ᛫ᛟᚱ᛫ᛊᛟᛗᛖᚦᛁᛜ᛫ᛁᛊ᛫ᚹᛟᚱᚲᛁᛜ᛫ᚨᚾᛞ᛫ᚹᚨᛁᛏ᛫ᛟᚢᛏ᛫ᛟᚠ᛫ᚦᛖ᛫ᚷᚱᛖᛁ᛫ᛏᚹᛟ᛫ᛟᚾᛖ᛫ᚷᛟᛖᛊ᛫ᛟᚾᛖ᛫ᚲᚨᚱᛁᛖᛊ᛫ᚺᛟᛗ᛫ᛊᛏᛁᛚ᛫ᚨᛏ᛫ᛁᛏ᛫ᛊᛏᛁᛚ᛫ᚲᛖᛈᛁᛜ᛫ᛖᚹᛖᚱᛁ᛫ᛖᛁ᛫ᚦᛖ᛫ᚾᛟᚱᚦ᛫ᛖᚹᛖᚱ᛫ᚲᛚᛟᛊᛖᛞ᛫ᚺᚢᚾᛏᛖᚱᛊ᛫ᚨᚾᛞ᛫ᛗᛟᛊ᛫ᚲᛁᛜᛊ᛫ᚨᚾᛞ᛫ᚷᛟᛞᛊ᛫ᚨᛚ᛫ᛟᚠ᛫ᚦᛖᛗ᛫ᛊᛖᛁᛜ᛫ᛟᚾ᛫ᚦᚱᛟᚢᚷᚺ᛫ᚦᛟᚢᛏ᛫ᚹᛟ᛫ᚷᛟᛖᛊ᛫ᚨᚾᛞ᛫ᛗᛖᛗᛟᚱᛁ᛫ᚹᛟ᛫ᚲᛖᛈᛊ᛫ᚨᚾᛞ᛫ᛁᚠ᛫ᛃᛟᚢ᛫ᚹᚨᛏᚲᚺ᛫ᚦᛖᛗ᛫ᛚᛟᛜ᛫ᛖᚾᛟᚢᚷᚺ᛫ᚦᛖ᛫ᛗᛖᛊᚨᚷ᛫ᚲᛟᛗᛖᛊ᛫ᚦᚱᛟᚢᚷᚺ᛫ᚦᛖ᛫ᚹᚨᛁ᛫ᛁᛏ᛫ᚺᚨᛊ᛫ᚲᛟᛗ᛫ᚦᚱᛟᚢᚷᚺ᛫ᛖᚹᛖᚱᛁᚦᛁᛜ᛫ᚦᛖ᛫ᛒᛚᛟᛞ᛫ᚦᛖ᛫ᚹᚨᚱ᛫ᚦᛖ᛫ᛒᚢᚱᚾᛁᛜ᛫ᛈᛚᚨᛁᚾ᛫ᚨᛊ᛫ᚨ᛫ᛒᛁᚱᛞ᛫ᛟᚾ᛫ᚦᛖ᛫ᚹᛁᚾᛞ᛫ᚷᛁᚹ᛫ᛃᛟᚢᚱ᛫ᛖᛁᛊ᛫ᛏᛟ᛫ᚦᛟᚢᛏ᛫ᚨᚾᛞ᛫ᛗᛖᛗᛟᚱᛁ᛫ᚨᚾᛞ᛫ᚹᛁᛊᛞᛟᛗ᛫ᚲᛟᛗᛖᛊ᛫ᚺᛟᛗ᛫ᛏᛟ᛫ᛃᛟᚢ</div>
+  </section>
+
+  <!-- ============================================================
+       CODA
+       ============================================================ -->
+  <section class="coda">
+    <div class="mark">Coda</div>
+    <p>They were never anyone&rsquo;s birds.</p>
+    <p class="emphatic">Everyone was theirs.</p>
+    <div class="runeline" aria-hidden="true">ᚦᛖᛁ᛫ᚹᛖᚱ᛫ᚾᛖᚹᛖᚱ᛫ᚨᚾᛃᛟᚾᛖᛊ᛫ᛒᛁᚱᛞᛊ᛫ᛖᚹᛖᚱᛃᛟᚾ᛫ᚹᚨᛊ᛫ᚦᛖᛁᚱᛊ</div>
+
+    <span class="close-rule"></span>
+    <p class="sig">End of the telling.</p>
+    <p class="sig sig-name">Andrew Morton</p>
+    <p class="sig">July 2026 &mdash; Palmer Lake, Colorado</p>
+  </section>
+
+</div>
+</body>
+</html>
