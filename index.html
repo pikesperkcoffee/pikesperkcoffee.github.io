@@ -56,7 +56,7 @@ body{
   padding:12px 0 10px;
   border-bottom:1px solid var(--rule-hair);
 }
-.flag .center{color:var(--red);font-weight:500}
+
 
 /* ---------- NAMEPLATE (masthead) ---------- */
 .nameplate{
@@ -78,16 +78,8 @@ body{
   line-height:1;letter-spacing:.02em;
   color:var(--ink);
 }
-.nameplate .strap{
-  margin-top:14px;
-  font-family:'Fraunces',Georgia,serif;
-  font-style:italic;
-  font-variation-settings:"opsz" 24, "SOFT" 100, "wght" 400;
-  font-size:18px;
-  color:var(--ink-2);
-}
 .nameplate .subflag{
-  margin-top:16px;padding-top:12px;
+  margin-top:24px;padding-top:12px;
   border-top:1px solid var(--rule);
   display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;
   font-family:'IBM Plex Mono',monospace;
@@ -930,9 +922,9 @@ body{
        FLAG — thin top strip
        ============================================================ -->
   <div class="flag">
-    <span>Palmer Lake, Colorado &middot; 80133</span>
-    <span class="center">Vol. I &middot; No. 1</span>
-    <span>Monday, July 13, 2026</span>
+    <span>Palmer Lake, Colorado</span>
+    <!-- DATELINE — bump this to the current date on every index update. -->
+    <span>Thursday, July 23, 2026</span>
   </div>
 
   <!-- ============================================================
@@ -940,11 +932,10 @@ body{
        ============================================================ -->
   <header class="nameplate">
     <h1>The Morton</h1>
-    <div class="strap">Coffee, machines, frameworks, and other work &mdash; filed as it lands.</div>
     <div class="subflag">
       <span>Editor &middot; Andrew Morton</span>
       <span>Elevation 7,247 ft</span>
-      <span>Independent &middot; No advertising</span>
+      <span>Independent</span>
     </div>
   </header>
 
@@ -1235,7 +1226,7 @@ body{
 
   <div class="footline">
     <div>&copy; Andrew Morton &middot; Morkat Coffee LLC</div>
-    <div>Set in Fraunces &amp; Source Serif &middot; No advertising</div>
+    <div>Set in Cinzel, Fraunces &amp; Source Serif</div>
   </div>
 
 </div>
