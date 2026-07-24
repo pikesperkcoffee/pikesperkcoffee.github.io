@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About the Editor — The Morton</title>
+<meta name="description" content="Andrew Morton — coffee roaster, CNC machinist, former combined-arms range operator and volunteer fire officer. Palmer Lake, Colorado. The editor behind The Morton.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,400..900,50..100;1,9..144,400..900,50..100&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=IBM+Plex+Mono:wght@400;500;700&family=Cinzel:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#faf7f0;
+    --paper-2:#f2ede1;
+    --ink:#181614;
+    --ink-2:#2a2620;
+    --muted:#6c665c;
+    --rule:#d8d1c1;
+    --rule-hair:#e4dfcf;
+    --red:#b62d24;
+    --blue:#1d4d75;
+    --green:#3d6f4a;
+    --amber:#a17318;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    background-color:var(--paper);
+    background-image:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.045 0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E"),
+      linear-gradient(rgba(30,20,10,0.022) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(30,20,10,0.022) 1px, transparent 1px);
+    background-size:300px 300px, 28px 28px, 28px 28px;
+    color:var(--ink);
+    font-family:'Source Serif 4',Georgia,serif;
+    font-size:17px;line-height:1.62;
+    margin:0;
+    -webkit-font-smoothing:antialiased;
+    font-optical-sizing:auto;
+  }
+  .paper{max-width:820px;margin:0 auto;padding:0 22px 80px}
+
+  /* ---------- FLAG ---------- */
+  .flag{
+    display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px;letter-spacing:.16em;text-transform:uppercase;
+    color:var(--muted);
+    padding:12px 0 10px;
+    border-bottom:1px solid var(--rule-hair);
+  }
+
+  /* ---------- NAMEPLATE ---------- */
+  .nameplate{text-align:center;padding:26px 0 18px;border-bottom:3px double var(--ink)}
+  .nameplate .kicker{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:10.5px;letter-spacing:.28em;text-transform:uppercase;
+    color:var(--red);font-weight:700;margin-bottom:14px;
+  }
+  .nameplate h1{
+    font-family:'Cinzel',Georgia,serif;font-weight:700;
+    font-size:clamp(34px, 6.4vw, 58px);
+    line-height:1.02;letter-spacing:.02em;color:var(--ink);margin:0;
+  }
+  .nameplate .standfirst{
+    margin-top:16px;
+    font-family:'Fraunces',Georgia,serif;font-style:italic;
+    font-variation-settings:"opsz" 24, "SOFT" 100, "wght" 400;
+    font-size:19px;color:var(--ink-2);
+    max-width:46ch;margin-left:auto;margin-right:auto;
+  }
+
+  /* ---------- SECTIONS ---------- */
+  .section{padding:34px 0 4px;border-bottom:1px solid var(--rule-hair)}
+  .section:last-of-type{border-bottom:0}
+  .section h2{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px;letter-spacing:.24em;text-transform:uppercase;
+    color:var(--red);font-weight:700;margin:0 0 14px;
+  }
+  .section p{margin:0 0 15px;color:var(--ink-2)}
+  .section p:last-child{margin-bottom:18px}
+  .section p.lead{font-size:19px;color:var(--ink)}
+  .section em{font-family:'Fraunces',serif;font-style:italic;font-weight:500}
+  .section strong{color:var(--ink);font-weight:600}
+  .section a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--rule)}
+  .section a:hover{color:var(--red);border-bottom-color:var(--red)}
+
+  /* ---------- THE RECORD (compact mono facts) ---------- */
+  .record{
+    margin:8px 0 22px;padding:18px 20px;
+    background:var(--paper-2);
+    border:1px solid var(--rule);
+  }
+  .record h3{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:10px;letter-spacing:.24em;text-transform:uppercase;
+    color:var(--muted);font-weight:700;margin:0 0 12px;
+    padding-bottom:8px;border-bottom:1px solid var(--rule);
+  }
+  .record dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:7px 18px}
+  .record dt{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--muted);white-space:nowrap;padding-top:2px;
+  }
+  .record dd{margin:0;font-size:15.5px;line-height:1.5;color:var(--ink-2)}
+  .record dd b{color:var(--ink);font-weight:600}
+  .record dt.cont::before{content:"\2192";opacity:.35}
+
+  /* ---------- PULL LINE ---------- */
+  .pull{
+    margin:26px 0;padding:18px 0 18px 22px;
+    border-left:3px solid var(--red);
+    font-family:'Fraunces',Georgia,serif;font-style:italic;
+    font-variation-settings:"opsz" 40, "SOFT" 100, "wght" 400;
+    font-size:21px;line-height:1.45;color:var(--ink);
+  }
+
+  /* ---------- CORRESPONDENCE ---------- */
+  .corr{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin:6px 0 20px}
+  .corr h4{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:10px;letter-spacing:.2em;text-transform:uppercase;
+    color:var(--red);font-weight:700;margin:0 0 6px;
+  }
+  .corr p{margin:0 0 3px;font-size:14.5px;color:var(--ink-2)}
+  .corr a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--rule)}
+  .corr a:hover{color:var(--red);border-bottom-color:var(--red)}
+
+  /* ---------- SIG ---------- */
+  .sig-block{margin-top:34px;padding-top:22px;border-top:1px solid var(--rule);text-align:center}
+  .sig-block .rule{display:block;width:44px;height:1px;background:var(--rule);margin:0 auto 14px}
+  .sig-block p{
+    font-family:'Fraunces',Georgia,serif;font-style:italic;
+    font-size:14px;color:var(--muted);margin:0 auto 2px;
+  }
+  .sig-block .name{
+    font-family:'Cinzel',Georgia,serif;font-style:normal;
+    font-size:14px;letter-spacing:.05em;color:var(--ink);
+  }
+
+  @media(max-width:640px){
+    body{font-size:16.5px}
+    .corr{grid-template-columns:1fr;gap:16px}
+    .record dl{grid-template-columns:1fr;gap:3px 0}
+    .record dt{padding-top:8px}
+    .record dt.cont{display:none}
+    .pull{font-size:19px;padding-left:16px}
+  }
+  @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+  /* ---------- SITE NAV ---------- */
+  .sitenav{position:fixed;top:14px;right:14px;z-index:100;
+    display:flex;gap:6px;
+    font-family:'IBM Plex Mono',ui-monospace,monospace;
+    font-size:11px;letter-spacing:.14em}
+  .sitenav a{display:inline-block;padding:6px 10px;
+    background:rgba(250,247,240,.92);backdrop-filter:blur(6px);
+    color:var(--muted);text-decoration:none;
+    border:1px solid var(--rule);
+    transition:color .12s, border-color .12s}
+  .sitenav a:hover{color:var(--red);border-color:var(--red)}
+  @media (max-width:640px){.sitenav{top:10px;right:10px}.sitenav a{padding:5px 8px;font-size:10px}}
+</style>
+</head>
+<body>
+<nav class="sitenav" aria-label="Site navigation">
+  <a href="../index.html" title="Back one page (up one directory)">../</a>
+  <a href="../index.html" title="Site index (root)">/</a>
+</nav>
+
+<div class="paper">
+
+  <div class="flag">
+    <span>Palmer Lake, Colorado</span>
+    <!-- DATELINE — bump on update. -->
+    <span>Thursday, July 23, 2026</span>
+  </div>
+
+  <header class="nameplate">
+    <div class="kicker">The Morton &middot; Masthead</div>
+    <h1>About the Editor</h1>
+    <p class="standfirst">Andrew Morton edits <em>The Morton</em> from Palmer Lake, Colorado &mdash; a workshop, a roastery, and a long stretch of keeping things running where conditions were not favorable.</p>
+  </header>
+
+  <!-- ================= THE SHOP ================= -->
+  <section class="section">
+    <h2>The Shop</h2>
+    <p class="lead">He operates <strong>Morton Millworks</strong> &mdash; a workshop running an apprenticeship on the bench &mdash; under the parent <strong>Morkat Coffee LLC</strong>. <strong>Pikes Perk Coffee Roasters</strong>, purchased in recent years, now operates under the same parent.</p>
+    <p>Roasting and CNC millwork are different trades that reward the same habit: you learn the machine well enough to know what it is telling you before it tells you loudly. A roast curve and a tool path are both records of a process you have to read while it is happening.</p>
+    <p>The apprenticeship runs on the same principle. Real machines at every rung, and nothing signed off that has not been done.</p>
+  </section>
+
+  <!-- ================= BEFORE THE SHOP ================= -->
+  <section class="section">
+    <h2>Before Palmer Lake</h2>
+
+    <div class="record">
+      <h3>Record</h3>
+      <dl>
+        <dt>Origin</dt>
+        <dd>Ukiah &mdash; Mendocino County, California</dd>
+
+        <dt>First trade</dt>
+        <dd>Internship at <b>REBOL Technologies</b>, before enlistment</dd>
+
+        <dt>Service</dt>
+        <dd><b>U.S. Air Force</b> &mdash; <b>3C251</b> tech controller, assigned to the <b>European Technical Center</b> in the early 2000s</dd>
+
+        <dt class="cont" aria-hidden="true"></dt>
+        <dd>Then <b>Buckley</b>, then a deployment to <b>Kandahar</b> in the closing months of active service, mid-2000s</dd>
+
+        <dt>Contract</dt>
+        <dd>Returned to the same mission set as a <b>Raytheon</b> contractor through the following years</dd>
+
+        <dt>Range</dt>
+        <dd>Over a decade running a <b>combined-arms live-fire training range</b> at Donnelly Training Area, Alaska &mdash; working the <b>Richardson Highway</b> corridor from Valdez to Fairbanks</dd>
+
+        <dt>Fire</dt>
+        <dd><b>Assistant chief</b> of the local volunteer fire department across the same years</dd>
+      </dl>
+    </div>
+
+    <p>A decade of range operations is a decade of the same question asked in different weather: what happens if this goes wrong, who gets hurt, and what did we have in place before it started. Live fire does not grade you on intent. The fire service asked the same question with less warning and worse visibility.</p>
+
+    <p>The tech-control background sits underneath both. A message that arrives across a bad channel is not the message that was sent, and the discipline is knowing how to tell how much of it survived. That habit shows up in most of what gets written here.</p>
+
+    <div class="pull">Systems that only work under good conditions were never working. They were being carried by conditions.</div>
+  </section>
+
+  <!-- ================= THE WRITTEN WORK ================= -->
+  <section class="section">
+    <h2>The Written Work</h2>
+    <p>His written work moves across wildland fire policy, industrial history, symbolic inheritance, and the working relationship between operators and the tools they use.</p>
+    <p>Recent essays are filed in the <strong>Register</strong> on the front page. Longer standing work is under <strong>Of Record</strong>. New tiles land as new work does.</p>
+  </section>
+
+  <!-- ================= CORRESPONDENCE ================= -->
+  <section class="section">
+    <h2>Correspondence</h2>
+    <div class="corr">
+      <div>
+        <h4>Enterprises</h4>
+        <p>Morkat Coffee LLC</p>
+        <p>Pikes Perk Coffee Roasters</p>
+        <p>Morton Millworks</p>
+      </div>
+      <div>
+        <h4>Elsewhere</h4>
+        <p><a href="https://github.com/pikesperkcoffee">GitHub</a></p>
+        <p><a href="https://pikesperkcoffee.com">Pikes Perk</a></p>
+      </div>
+      <div>
+        <h4>Location</h4>
+        <p>Palmer Lake, Colorado</p>
+        <p>Elevation 7,247 ft</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="sig-block">
+    <span class="rule"></span>
+    <p>End of masthead note.</p>
+    <p class="name">Andrew Morton</p>
+    <p>July 2026 &mdash; Palmer Lake, Colorado</p>
+  </div>
+
+</div>
+</body>
+</html>
