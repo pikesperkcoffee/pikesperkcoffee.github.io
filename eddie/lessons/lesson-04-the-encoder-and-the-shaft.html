@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lesson 04 — The Encoder and the Shaft</title>
+<meta name="description" content="Bench School Lesson 04 — count clicks of a rotary encoder, then make a stepper shaft follow the knob 1:1, no drift, both directions. Closing the loop between input and motion. Morton Millworks apprenticeship.">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600&family=Public+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --mat:#2F6B5E; --mat-deep:#1E4A40;
+    --paper:#F7F6F2; --ink:#1D2321;
+    --blaze:#DE5A12; --steel:#5C6660;
+    --code-bg:#132621; --code-ink:#D9EAE2;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{background:var(--paper); color:var(--ink);
+    font-family:'Public Sans',system-ui,sans-serif; font-size:16px; line-height:1.55;}
+  .wrap{max-width:720px; margin:0 auto; padding:16px 16px 80px;}
+  header.card{background:var(--mat-deep); color:#fff; border-radius:10px; padding:20px; margin-bottom:20px;}
+  .eyebrow{font-family:'Oswald',Arial Narrow,sans-serif; letter-spacing:.18em; text-transform:uppercase;
+    font-size:12px; color:var(--blaze); font-weight:600;}
+  h1{font-family:'Oswald',Arial Narrow,sans-serif; font-weight:600; font-size:30px; line-height:1.15; margin:6px 0 14px; text-transform:uppercase;}
+  .tcs{display:grid; gap:8px; font-size:14px;}
+  .tcs b{color:var(--blaze); font-family:'Oswald',sans-serif; letter-spacing:.08em; font-weight:500;}
+  .rail{display:flex; gap:6px; margin:22px 0 6px;}
+  .rail span{flex:1; text-align:center; font-family:'Oswald',sans-serif; font-size:12px; letter-spacing:.14em;
+    padding:6px 0; border:2px solid var(--steel); color:var(--steel); border-radius:6px;}
+  .rail span.on{background:var(--blaze); border-color:var(--blaze); color:#fff;}
+  h2.table-head{font-family:'Oswald',sans-serif; font-weight:600; text-transform:uppercase; letter-spacing:.06em;
+    font-size:22px; margin:34px 0 4px; padding-left:12px; border-left:6px solid var(--blaze); color:var(--mat-deep);}
+  .table-sub{font-size:13px; color:var(--steel); margin-bottom:14px; padding-left:18px;}
+  h3{font-family:'Oswald',sans-serif; font-weight:500; font-size:17px; margin:20px 0 8px; color:var(--mat-deep);}
+  p{margin-bottom:12px;}
+  ul,ol{margin:0 0 12px 22px;}
+  li{margin-bottom:6px;}
+  .safety{border:3px solid var(--blaze); border-radius:10px; padding:16px; margin:18px 0; background:#fff;}
+  .safety h3{margin-top:0; color:var(--blaze);}
+  table{width:100%; border-collapse:collapse; font-size:13.5px; margin:12px 0; background:#fff;}
+  th{background:var(--mat); color:#fff; font-family:'Oswald',sans-serif; font-weight:500; letter-spacing:.05em;
+    text-align:left; padding:8px;}
+  td{border:1px solid #cfd4cf; padding:8px; vertical-align:top;}
+  .w-grn{color:var(--mat); font-weight:700;} .w-blu{color:#1F4FA0; font-weight:700;}
+  .w-red{color:#B42318; font-weight:700;} .w-blk{font-weight:700;} .w-yel{color:#8A6D0B; font-weight:700;}
+  .ai{background:#fff; border:2px dashed var(--mat); border-radius:10px; padding:14px 16px; margin:16px 0;}
+  .ai .tag{font-family:'Oswald',sans-serif; font-size:12px; letter-spacing:.16em; color:var(--mat-deep);
+    text-transform:uppercase; margin-bottom:8px;}
+  .ai .prompt{background:var(--paper); border-radius:8px; padding:10px 12px; font-size:14.5px; font-style:italic;
+    border-left:4px solid var(--blaze); margin-top:6px;}
+  .chk{background:#EAF1EC; border-left:6px solid var(--mat); border-radius:0 8px 8px 0; padding:12px 14px; margin:14px 0; font-size:14.5px;}
+  .chk b{font-family:'Oswald',sans-serif; letter-spacing:.08em; color:var(--mat-deep); font-weight:600;}
+  .big-idea{background:var(--mat-deep); color:#fff; border-radius:10px; padding:18px; margin:18px 0; font-size:15.5px;}
+  .big-idea b{color:var(--blaze);}
+  .codewrap{position:relative; margin:14px 0;}
+  pre{background:var(--code-bg); color:var(--code-ink); border-radius:10px; padding:16px 14px;
+    overflow-x:auto; font-family:ui-monospace,'Cascadia Mono',Menlo,monospace; font-size:13px; line-height:1.5;}
+  .copy{position:absolute; top:8px; right:8px; background:var(--blaze); color:#fff; border:none;
+    font-family:'Oswald',sans-serif; letter-spacing:.1em; font-size:11px; padding:6px 12px; border-radius:6px;}
+  .copy:active{background:var(--mat);}
+  .qual-box{background:var(--mat-deep); color:#fff; border-radius:10px; padding:18px; margin:16px 0;}
+  .qual-box h3{color:var(--blaze); margin-top:0;}
+  .qual-box table{background:transparent; color:#fff;}
+  .qual-box td{border-color:#4a6a60;}
+  .stage{background:#fff; border:2px solid var(--mat); border-radius:10px; padding:4px 14px 2px; margin:16px 0;}
+  .stage .sh{font-family:'Oswald',sans-serif; font-size:13px; letter-spacing:.12em; text-transform:uppercase;
+    color:#fff; background:var(--mat); display:inline-block; padding:4px 12px; border-radius:0 0 6px 6px; margin-bottom:10px;}
+  footer{margin-top:40px; font-size:12px; color:var(--steel); text-align:center;
+    font-family:'Oswald',sans-serif; letter-spacing:.12em; text-transform:uppercase;}
+
+  /* site nav — fixed top-right, honest filesystem labels.
+     Two levels deep: ../ goes to the portal; / goes to the site root. */
+  .sitenav{position:fixed;top:14px;right:14px;z-index:100;
+    display:flex;gap:6px;
+    font-family:ui-monospace,'Cascadia Mono',Menlo,Consolas,monospace;
+    font-size:11px;letter-spacing:.14em}
+  .sitenav a{display:inline-block;padding:6px 10px;
+    background:rgba(247,246,242,.92);backdrop-filter:blur(6px);
+    color:var(--steel);text-decoration:none;
+    border:1px solid #cfd4cf;
+    transition:color .12s, border-color .12s}
+  .sitenav a:hover{color:var(--blaze);border-color:var(--blaze)}
+  @media (max-width:640px){.sitenav{top:10px;right:10px}.sitenav a{padding:5px 8px;font-size:10px}}
+</style>
+</head>
+<body>
+<nav class="sitenav" aria-label="Site navigation">
+  <a href="../eddie-portal.html" title="Back to Eddie's portal">../</a>
+  <a href="../../index.html" title="Site index (root)">/</a>
+</nav>
+<div class="wrap">
+
+<header class="card">
+  <div class="eyebrow">Morton Millworks &middot; Bench Qualification</div>
+  <h1>Lesson 04<br>The Encoder and the Shaft</h1>
+  <div class="tcs">
+    <div><b>TASK</b> &mdash; Count clicks of a knob, up and down, 20 to a turn. Then make a stepper motor follow that knob exactly &mdash; one turn of the knob, one turn of the shaft.</div>
+    <div><b>CONDITIONS</b> &mdash; Bench 12&nbsp;V supply. Pico, rotary encoder module, stepper + driver from Lesson 02, Thonny, AI tutor.</div>
+    <div><b>STANDARD</b> &mdash; The count tracks the knob both directions and never drifts. The shaft mirrors the knob 1:1. The serial print shows the number changing on every click.</div>
+  </div>
+</header>
+
+<div class="ai">
+  <div class="tag">&#9889; First move &mdash; set up your AI tutor</div>
+  <p style="font-size:14px">Paste this into your Claude before you touch anything:</p>
+  <div class="prompt">You're my electronics shop tutor today. Rules: never write complete code for me &mdash; the lesson doc has the code. Before I run anything, make me predict what it will do, then question my prediction. When I show a photo or an error, ask me diagnostic questions one at a time instead of answering. Keep replies short. If I try to get you to just solve it, remind me of this deal.</div>
+</div>
+
+<div class="big-idea">
+  <b>The big idea:</b> last lesson the knob told you <b>where it was</b> &mdash; "I'm at 60%." This knob is different. It doesn't know where it is. It only tells you <b>"I just moved one click, this direction."</b> That's an <b>encoder</b>. It reports <i>change</i>, not <i>position</i>. Which means somebody has to remember the running total &mdash; and that somebody is <b>your code</b>. The number doesn't live in the knob. It lives in a variable you keep.
+</div>
+
+<div class="safety">
+  <h3>&#9888; Safety Brief</h3>
+  <ul>
+    <li><b>Still a 12&nbsp;V bench.</b> Friendly. The encoder itself runs on 3.3&nbsp;V logic &mdash; no motor power near it.</li>
+    <li><b>The stepper rule from Lesson 02 still holds:</b> never unplug the motor while the driver is powered. Power down first.</li>
+    <li><b>DIP switches on the driver:</b> full step, 200 per revolution, same as Lesson 02. Current set to match the motor.</li>
+    <li><b>Wire with the 12&nbsp;V off.</b> Build it, look at it, power it.</li>
+  </ul>
+</div>
+
+<h3>The three stages of this lesson</h3>
+<ol>
+  <li><b>Count the knob.</b> No motor. Just the encoder and a number that goes up and down as you turn.</li>
+  <li><b>Do the gear math.</b> The stepper turns in 200 steps. The knob turns in 20 clicks. Figure out how they connect.</li>
+  <li><b>Make the shaft follow.</b> Turn the knob, the motor turns with it. 1:1. The number is the truth they share.</li>
+</ol>
+
+<!-- ============ DRY ============ -->
+<div class="rail"><span class="on">I &middot; DRY</span><span>II &middot; BLANK</span><span>III &middot; LIVE / QUAL</span></div>
+<h2 class="table-head">Table I &mdash; Dry</h2>
+<div class="table-sub">Nothing powered. Read Stage 1's code and think before you touch it.</div>
+
+<p>An encoder has two signal wires, <b>CLK</b> and <b>DT</b>. As you turn the knob, both send pulses &mdash; but one leads the other, and <i>which one leads tells you the direction.</i> Turn one way, CLK moves first. Turn the other way, DT moves first. That's the whole trick.</p>
+<ol>
+  <li>If the code only watched CLK and ignored DT, what could it <i>not</i> tell you?</li>
+  <li>The knob has bumps you can feel as you turn &mdash; detents. This one gives 20 per revolution. If you turn it exactly one full turn clockwise, what should the count read? One turn back?</li>
+  <li>Why does the count have to live in a variable instead of being read off the knob like last lesson's pot?</li>
+</ol>
+
+<div class="ai">
+  <div class="tag">&#128248; Ask your AI</div>
+  <div class="prompt">I'm about to read a rotary encoder that has CLK and DT wires. My understanding of how it knows direction is: [your explanation]. Ask me questions to test whether I really get why it needs two wires and not one.</div>
+</div>
+
+<!-- ============ BLANK ============ -->
+<div class="rail"><span>I &middot; DRY</span><span class="on">II &middot; BLANK</span><span>III &middot; LIVE / QUAL</span></div>
+<h2 class="table-head">Table II &mdash; Blank</h2>
+<div class="table-sub">Sanctioned copy-paste. Wire it, run it, watch the number.</div>
+
+<!-- STAGE 1 -->
+<div class="stage">
+  <div class="sh">Stage 1 &mdash; Count the Knob</div>
+
+  <h3>Wiring &mdash; Stage 1</h3>
+  <table>
+    <tr><th>Encoder pin</th><th>To Pico</th><th>Why</th></tr>
+    <tr><td class="w-grn">CLK</td><td><b>GP16</b></td><td>First signal wire. We watch this one for movement.</td></tr>
+    <tr><td class="w-blu">DT</td><td><b>GP17</b></td><td>Second signal wire. Tells us the direction.</td></tr>
+    <tr><td>SW</td><td><b>nothing</b> (for now)</td><td>That's the push-button in the knob. We're not using it yet.</td></tr>
+    <tr><td class="w-red">+</td><td><b>3V3</b> (pin 36)</td><td>Power for the encoder &mdash; 3.3&nbsp;V, never more.</td></tr>
+    <tr><td class="w-blk">GND</td><td><b>GND</b></td><td>Shared ground.</td></tr>
+  </table>
+
+  <div class="codewrap">
+  <button class="copy" onclick="cp(this)">COPY</button>
+  <pre># Stage 1: count the knob. Up when you turn one way,
+# down the other. 20 clicks makes one full turn.
+#
+# The number lives HERE, in this variable. The knob doesn't
+# remember anything - we do.
+
+from machine import Pin
+import time
+
+clk = Pin(16, Pin.IN, Pin.PULL_UP)   # first signal wire
+dt  = Pin(17, Pin.IN, Pin.PULL_UP)   # second signal wire
+
+count = 0                    # our running total. starts at zero.
+
+# Remember what CLK looked like last time we checked, so we can
+# tell when it CHANGES. Change is the whole game here.
+last_clk = clk.value()
+
+print("Turn the knob. Count starts at 0.")
+
+while True:
+    now_clk = clk.value()            # what is CLK doing right now?
+
+    # Did CLK just change from its last state? That's one step of turn.
+    if now_clk != last_clk:
+
+        # When CLK changes, look at DT. If DT is different from CLK,
+        # we turned one way. If DT matches CLK, we turned the other.
+        # (Which is which depends on your wiring - fix it in Live if
+        #  it counts backwards.)
+        if dt.value() != now_clk:
+            count = count + 1        # one click clockwise
+        else:
+            count = count - 1        # one click counter-clockwise
+
+        print("count:", count)       # show the number every change
+
+    last_clk = now_clk               # remember for next time around</pre>
+  </div>
+  <div class="chk"><b>CHECKPOINT</b> &mdash; Turn slowly. Each detent bumps the number by one. One full revolution should move it by about 20. Turn back and it returns. If it counts <i>down</i> when you turn clockwise, that's fine &mdash; you'll fix the direction in the Live table. If the number jumps by 2s or skips around, note it; that's real and we'll talk about it.</div>
+
+  <div class="ai">
+    <div class="tag">&#128248; Ask your AI</div>
+    <div class="prompt">My encoder count sometimes jumps by 2 or skips a number when I turn fast. I think the reason is [your theory]. Ask me questions until my explanation holds up - don't just tell me.</div>
+  </div>
+</div>
+
+<!-- STAGE 2 -->
+<div class="stage">
+  <div class="sh">Stage 2 &mdash; The Gear Math (no new wiring)</div>
+
+  <p>Now think, before you wire the motor. You have two things that both "turn," but they count differently:</p>
+  <ul>
+    <li>The <b>encoder</b> makes <b>20</b> clicks per revolution.</li>
+    <li>The <b>stepper</b> makes <b>200</b> steps per revolution (full-step, from the DIP switches &mdash; same as Lesson 02).</li>
+  </ul>
+  <p>You want them to agree: one full turn of the knob = one full turn of the shaft. So each single click of the knob has to equal how many steps of the motor?</p>
+
+  <div class="big-idea">
+    <b>200 steps &divide; 20 clicks = 10 steps per click.</b> That's the whole gear ratio, and it's just division. Every time the encoder count changes by 1, the motor needs to move 10 steps. Turn the knob one full revolution (20 clicks &times; 10) and the motor moves 200 steps &mdash; exactly one revolution. They're geared together through a number, not through gears.
+  </div>
+  <p style="font-size:14px">Prove it to yourself with a pencil before you run any code: if you turn the knob 5 clicks, how many steps should the motor take? Half a turn of the knob? Write it down.</p>
+</div>
+
+<!-- ============ LIVE / QUAL ============ -->
+<div class="rail"><span>I &middot; DRY</span><span>II &middot; BLANK</span><span class="on">III &middot; LIVE / QUAL</span></div>
+<h2 class="table-head">Table III &mdash; Live &amp; Qual</h2>
+<div class="table-sub">Wire the motor in. Now the pasted code has to be understood, changed, and proven.</div>
+
+<!-- STAGE 3 -->
+<div class="stage">
+  <div class="sh">Stage 3 &mdash; The Shaft Follows the Knob</div>
+
+  <h3>Add the stepper &mdash; power OFF</h3>
+  <table>
+    <tr><th>Driver pin</th><th>To Pico</th><th>Why</th></tr>
+    <tr><td class="w-grn">PUL&minus; (step)</td><td><b>GP2</b></td><td>The step wire. Same as Lesson 02.</td></tr>
+    <tr><td class="w-blu">DIR&minus; (direction)</td><td><b>GP3</b></td><td>The direction wire. Same as Lesson 02.</td></tr>
+    <tr><td>PUL+ , DIR+</td><td><b>3V3</b></td><td>Common reference, same wiring as Lesson 02.</td></tr>
+    <tr><td class="w-red">VCC / motor coils</td><td>12&nbsp;V + motor</td><td>Muscle power. Encoder stays on 3V3, motor on 12&nbsp;V &mdash; two separate worlds.</td></tr>
+  </table>
+
+  <div class="codewrap">
+  <button class="copy" onclick="cp(this)">COPY</button>
+  <pre># Stage 3: the encoder drives the stepper. Turn the knob,
+# the shaft follows. One turn of the knob = one turn of the shaft.
+
+from machine import Pin
+import time
+
+# --- the encoder (from Stage 1) ---
+clk = Pin(16, Pin.IN, Pin.PULL_UP)
+dt  = Pin(17, Pin.IN, Pin.PULL_UP)
+
+# --- the stepper driver (from Lesson 02) ---
+# active low: resting HIGH, we pull LOW to fire a step.
+step_pin = Pin(2, Pin.OUT, value=1)
+dir_pin  = Pin(3, Pin.OUT, value=1)
+
+STEPS_PER_CLICK = 10         # 200 motor steps / 20 knob clicks. The gear ratio.
+
+count = 0                    # where the knob says we are
+last_clk = clk.value()
+
+def move_stepper(steps, direction):
+    # Point the motor the right way, then fire that many steps.
+    dir_pin.value(direction)
+    for i in range(steps):
+        step_pin.value(0)
+        time.sleep_us(500)
+        step_pin.value(1)
+        time.sleep_us(500)
+
+print("Turn the knob. The shaft follows. count = 0")
+
+while True:
+    now_clk = clk.value()
+
+    if now_clk != last_clk:
+
+        if dt.value() != now_clk:
+            count = count + 1
+            move_stepper(STEPS_PER_CLICK, 1)    # 10 steps, one direction
+        else:
+            count = count - 1
+            move_stepper(STEPS_PER_CLICK, 0)    # 10 steps, the other way
+
+        print("count:", count)                  # the shared truth
+
+    last_clk = now_clk</pre>
+  </div>
+  <div class="chk"><b>CHECKPOINT</b> &mdash; Turn the knob one click, the shaft jumps 10 steps. Turn a full revolution, the shaft turns a full revolution with it. Put a tape flag on the shaft and a mark on the knob &mdash; they should stay locked together. The number in the Shell matches both.</div>
+
+  <p><b>Live modifications &mdash; all of them, proven by the shaft:</b></p>
+  <ol>
+    <li><b>Fix the direction if it's backwards.</b> If turning the knob clockwise spins the shaft the wrong way, make them agree. (Two ways to fix it &mdash; in the counting, or in the motor direction. Either is fine. Know which one you changed and why.)</li>
+    <li><b>Change the gearing.</b> Make one full turn of the knob equal <i>two</i> full turns of the shaft. What number did you change, and why that one?</li>
+    <li><b>Home it.</b> Add a rule: when the count comes back to 0, print <code>"HOME"</code> next to the number. Now the number means something &mdash; a position you can return to.</li>
+    <li><b>Break the ratio on purpose.</b> Set <code>STEPS_PER_CLICK = 7</code>. Turn one full knob revolution. Does the shaft land back where a full turn should? Explain what 7 did.</li>
+  </ol>
+
+  <div class="ai">
+    <div class="tag">&#128248; Ask your AI</div>
+    <div class="prompt">My knob turns the shaft the wrong direction. There are two different lines I could change to fix it. Don't tell me which - ask me what each one would do, so I pick on purpose instead of guessing.</div>
+  </div>
+</div>
+
+<!-- QUAL -->
+<div class="qual-box">
+  <h3>Qual &mdash; book open, phone closed</h3>
+  <ol>
+    <li>Wire the bench from scratch: encoder, stepper, driver, 12&nbsp;V. Instructor watches power-up order.</li>
+    <li>Instructor turns the knob a called number of clicks &mdash; you predict the count and the shaft position <i>before</i> looking, then check.</li>
+    <li>Knob one full turn each way &mdash; shaft tracks 1:1, count returns to start, no drift.</li>
+    <li>Explain why the number lives in the code and not in the knob.</li>
+  </ol>
+  <table>
+    <tr><th>Called</th><th>Predicted count</th><th>Actual</th><th>Pass?</th></tr>
+    <tr><td>&nbsp;</td><td></td><td></td><td></td></tr>
+    <tr><td>&nbsp;</td><td></td><td></td><td></td></tr>
+    <tr><td>&nbsp;</td><td></td><td></td><td></td></tr>
+  </table>
+</div>
+
+<h3>Debrief &mdash; out loud, AI closed</h3>
+<ol>
+  <li>Last lesson's pot told you position. This encoder tells you change. Which one needs your code to keep a running total, and why?</li>
+  <li>Why does an encoder need two wires (CLK and DT) instead of one?</li>
+  <li>Where did the number 10 come from? Show the division.</li>
+  <li>If the count "drifts" &mdash; the shaft slowly gets ahead of or behind the knob over many turns &mdash; what might be happening? (Think about the count jumping by 2 from Stage 1.)</li>
+  <li>The shaft follows the knob. If you unplugged the knob and turned the shaft by hand, would the count know? Why or why not? What does that tell you about who's really in charge of the number?</li>
+</ol>
+<p><b>Bonus for next time:</b> the encoder has a button built in (the SW pin you left unwired). What would be a useful thing to make that button do &mdash; given that you now have a count that means a position?</p>
+
+<footer>Lesson 04 &middot; The Encoder and the Shaft &middot; Dry &middot; Blank &middot; Live/Qual</footer>
+</div>
+<script>
+function cp(btn){
+  var t = btn.parentElement.querySelector('pre').innerText;
+  if(navigator.clipboard){ navigator.clipboard.writeText(t); }
+  else{ var ta=document.createElement('textarea'); ta.value=t; document.body.appendChild(ta);
+        ta.select(); document.execCommand('copy'); document.body.removeChild(ta); }
+  btn.textContent='COPIED'; setTimeout(function(){btn.textContent='COPY';},1500);
+}
+</script>
+</body>
+</html>
