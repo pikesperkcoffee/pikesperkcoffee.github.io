@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Strategic Alignment Map — The Morton</title>
+<meta name="description" content="What the 2025–2026 tariff rounds revealed when read as a sorting mechanism: how 43 countries actually answered the non-monetary questions — Chinese telecom removal, export controls, defense integration, US basing — and what they trade with the world. An interactive map. Andrew Morton, Palmer Lake, Colorado.">
+<style>
+  :root {
+    --bg: #f5f2ec;
+    --bg-elev: #ffffff;
+    --bg-card: #ffffff;
+    --bg-card-hover: #faf7f0;
+    --border: #d8d2c4;
+    --border-strong: #a89f8a;
+    --text: #2a2620;
+    --text-dim: #5a5348;
+    --text-faint: #8a8272;
+    --accent: #8b5a2b;
+    --tier-1: #2d7a4f;
+    --tier-2: #4a8f47;
+    --tier-3: #a67c2e;
+    --tier-4: #a83838;
+    --tier-5: #7a3d68;
+    --tier-6: #556270;
+    --tier-7: #2c6b96;
+    --trajectory-up: #2d7a4f;
+    --trajectory-flat: #a67c2e;
+    --trajectory-down: #a83838;
+    --critical: #a83838;
+    --important: #a67c2e;
+    --standard: #6a6558;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+    padding: 32px 24px;
+    min-height: 100vh;
+  }
+
+  .masthead {
+    max-width: 1400px;
+    margin: 0 auto 32px;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 20px;
+  }
+
+  .eyebrow {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    margin-bottom: 6px;
+  }
+
+  h1 {
+    font-family: 'IBM Plex Serif', Georgia, serif;
+    font-weight: 500;
+    font-size: 32px;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    margin-bottom: 12px;
+  }
+
+  .subhead {
+    color: var(--text-dim);
+    font-size: 14px;
+    max-width: 720px;
+  }
+
+  .legend {
+    max-width: 1400px;
+    margin: 0 auto 20px;
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    padding: 12px 16px;
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    font-size: 12px;
+  }
+
+  .legend-group {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+
+  .legend-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+  }
+
+  .legend-chip {
+    display: inline-block;
+    padding: 2px 8px;
+    font-size: 10px;
+    font-family: 'IBM Plex Mono', monospace;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    border: 1px solid;
+  }
+
+  .legend-chip.critical { color: var(--critical); border-color: var(--critical); }
+  .legend-chip.important { color: var(--important); border-color: var(--important); }
+  .legend-chip.standard { color: var(--standard); border-color: var(--standard); }
+
+  .container {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 400px;
+    gap: 32px;
+  }
+
+  @media (max-width: 1100px) {
+    .container { grid-template-columns: 1fr; }
+    .detail-panel { position: static !important; }
+  }
+
+  .tier-section {
+    margin-bottom: 32px;
+  }
+
+  .tier-header {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .tier-marker {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    padding: 3px 8px;
+    border: 1px solid;
+    border-radius: 2px;
+  }
+
+  .tier-marker.t1 { color: var(--tier-1); border-color: var(--tier-1); }
+  .tier-marker.t2 { color: var(--tier-2); border-color: var(--tier-2); }
+  .tier-marker.t3 { color: var(--tier-3); border-color: var(--tier-3); }
+  .tier-marker.t4 { color: var(--tier-4); border-color: var(--tier-4); }
+  .tier-marker.t5 { color: var(--tier-5); border-color: var(--tier-5); }
+  .tier-marker.t6 { color: var(--tier-6); border-color: var(--tier-6); }
+  .tier-marker.t7 { color: var(--tier-7); border-color: var(--tier-7); }
+
+  .tier-title {
+    font-family: 'IBM Plex Serif', Georgia, serif;
+    font-size: 18px;
+    font-weight: 500;
+  }
+
+  .tier-desc {
+    color: var(--text-dim);
+    font-size: 12px;
+    margin-left: auto;
+    max-width: 400px;
+    text-align: right;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 10px;
+  }
+
+  .tile {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    padding: 14px 14px 14px 22px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    position: relative;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+    overflow: hidden;
+  }
+
+  .tile::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 8px;
+  }
+
+  .tile.t1::before { background: var(--tier-1); }
+  .tile.t2::before { background: var(--tier-2); }
+  .tile.t3::before { background: var(--tier-3); }
+  .tile.t4::before { background: var(--tier-4); }
+  .tile.t5::before { background: var(--tier-5); }
+  .tile.t6::before { background: var(--tier-6); }
+  .tile.t7::before { background: var(--tier-7); }
+
+  .tile:hover {
+    background: var(--bg-card-hover);
+    border-color: var(--border-strong);
+  }
+
+  .tile.selected {
+    background: var(--bg-card-hover);
+    border-color: var(--accent);
+    box-shadow: inset 0 0 0 1px var(--accent);
+  }
+
+  .tile-name {
+    font-family: 'IBM Plex Serif', Georgia, serif;
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 2px;
+  }
+
+  .tile-region {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: var(--text-faint);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .tile-stats {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 5px;
+    margin-bottom: 10px;
+  }
+
+  .stat {
+    display: grid;
+    grid-template-columns: 90px 1fr 24px;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+  }
+
+  .stat-label {
+    color: var(--text-dim);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.03em;
+  }
+
+  .stat-bar {
+    height: 4px;
+    background: rgba(0,0,0,0.08);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .stat-fill {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    background: var(--text-dim);
+  }
+
+  .stat-fill.high { background: var(--tier-1); }
+  .stat-fill.mid { background: var(--tier-3); }
+  .stat-fill.low { background: var(--tier-4); }
+
+  .stat-value {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: var(--text);
+    text-align: right;
+  }
+
+  .tile-indicators {
+    display: flex;
+    gap: 4px;
+    flex-wrap: wrap;
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px solid rgba(0,0,0,0.08);
+  }
+
+  .indicator {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    padding: 2px 5px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    border: 1px solid;
+  }
+
+  .indicator.comms-out { color: var(--tier-1); border-color: var(--tier-1); }
+  .indicator.comms-progress { color: var(--tier-3); border-color: var(--tier-3); }
+  .indicator.comms-restricted { color: var(--tier-2); border-color: var(--tier-2); }
+  .indicator.comms-mixed { color: var(--text-dim); border-color: var(--text-faint); }
+  .indicator.comms-chinese { color: var(--tier-4); border-color: var(--tier-4); }
+  .indicator.comms-own { color: var(--tier-4); border-color: var(--tier-4); }
+
+  .indicator.trajectory-up { color: var(--trajectory-up); border-color: var(--trajectory-up); }
+  .indicator.trajectory-flat { color: var(--trajectory-flat); border-color: var(--trajectory-flat); }
+  .indicator.trajectory-down { color: var(--trajectory-down); border-color: var(--trajectory-down); }
+
+  .detail-panel {
+    position: sticky;
+    top: 32px;
+    height: fit-content;
+    max-height: calc(100vh - 64px);
+    overflow-y: auto;
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    padding: 20px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  }
+
+  .detail-panel::-webkit-scrollbar { width: 6px; }
+  .detail-panel::-webkit-scrollbar-track { background: transparent; }
+  .detail-panel::-webkit-scrollbar-thumb { background: var(--border-strong); }
+
+  .detail-empty {
+    color: var(--text-faint);
+    font-style: italic;
+    text-align: center;
+    padding: 40px 20px;
+    font-size: 13px;
+  }
+
+  .detail-name {
+    font-family: 'IBM Plex Serif', Georgia, serif;
+    font-size: 24px;
+    font-weight: 500;
+    margin-bottom: 4px;
+  }
+
+  .detail-meta {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 16px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+  }
+
+  .detail-section {
+    margin-bottom: 18px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .detail-section:last-child { border-bottom: none; }
+
+  .detail-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    margin-bottom: 8px;
+  }
+
+  .detail-notes {
+    font-size: 13px;
+    line-height: 1.55;
+    color: var(--text);
+  }
+
+  .detail-indicators-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  .detail-indicator {
+    background: rgba(0,0,0,0.04);
+    padding: 8px 10px;
+    border-left: 2px solid var(--border-strong);
+  }
+
+  .detail-indicator-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    margin-bottom: 3px;
+  }
+
+  .detail-indicator-value {
+    font-size: 12px;
+    color: var(--text);
+  }
+
+  .trade-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .trade-item {
+    display: grid;
+    grid-template-columns: 68px 1fr;
+    gap: 10px;
+    align-items: baseline;
+    font-size: 12px;
+    padding: 4px 0;
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+  }
+
+  .trade-item:last-child { border-bottom: none; }
+
+  .trade-rank {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    padding: 2px 5px;
+    border: 1px solid;
+    text-align: center;
+    align-self: start;
+  }
+
+  .trade-rank.critical { color: var(--critical); border-color: var(--critical); }
+  .trade-rank.important { color: var(--important); border-color: var(--important); }
+  .trade-rank.standard { color: var(--standard); border-color: var(--standard); }
+
+  .trade-item-name {
+    color: var(--text);
+    line-height: 1.4;
+  }
+
+  .cml-marker {
+    display: inline-block;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    color: var(--accent);
+    letter-spacing: 0.05em;
+    margin-left: 6px;
+    padding: 0 4px;
+    border: 1px solid var(--accent);
+    vertical-align: middle;
+  }
+
+  .restrictions-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .restrictions-list li {
+    font-size: 12px;
+    color: var(--text-dim);
+    padding-left: 12px;
+    position: relative;
+    line-height: 1.4;
+  }
+
+  .restrictions-list li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: var(--text-faint);
+  }
+
+  .filter-bar {
+    max-width: 1400px;
+    margin: 0 auto 24px;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .filter-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-right: 8px;
+  }
+
+  .filter-btn {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+    padding: 6px 12px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+
+  .filter-btn:hover {
+    border-color: var(--border-strong);
+    color: var(--text);
+  }
+
+  .filter-btn.active {
+    background: var(--accent);
+    color: var(--bg);
+    border-color: var(--accent);
+  }
+
+  .footnote {
+    max-width: 1400px;
+    margin: 40px auto 0;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.05em;
+    color: var(--text-faint);
+    line-height: 1.6;
+  }
+  /* site nav — fixed top-right, honest filesystem labels.
+     One level deep: both pills return to the site index. */
+  .sitenav{position:fixed;top:14px;right:14px;z-index:200;
+    display:flex;gap:6px;
+    font-family:'IBM Plex Mono',ui-monospace,monospace;
+    font-size:11px;letter-spacing:.14em}
+  .sitenav a{display:inline-block;padding:6px 10px;
+    background:rgba(255,255,255,.9);backdrop-filter:blur(6px);
+    color:var(--text-faint);text-decoration:none;
+    border:1px solid #d8d1c1;
+    transition:color .12s, border-color .12s}
+  .sitenav a:hover{color:var(--accent);border-color:var(--accent)}
+  @media (max-width:640px){.sitenav{top:10px;right:10px}.sitenav a{padding:5px 8px;font-size:10px}}
+</style>
+</head>
+<body>
+<nav class="sitenav" aria-label="Site navigation">
+  <a href="../index.html" title="Back one page (up one directory)">../</a>
+  <a href="../index.html" title="Site index (root)">/</a>
+</nav>
+
+<header class="masthead">
+  <div class="eyebrow">Field Notes / Strategic Alignment</div>
+  <h1>What the sorting revealed</h1>
+  <p class="subhead">The tariff rounds through 2025-2026 functioned as a sorting mechanism. Under the visible pressure, countries were being asked non-monetary questions: whether they would remove Chinese communications equipment, participate in export controls, integrate defense industrial base, host US military infrastructure. The answers revealed alignment that formal alliance status had been obscuring. This map organizes what each country actually did when tested, and what they trade with the rest of the world.</p>
+</header>
+
+<div class="legend">
+  <div class="legend-group">
+    <span class="legend-label">Trade importance</span>
+    <span class="legend-chip critical">Critical</span>
+    <span class="legend-chip important">Important</span>
+    <span class="legend-chip standard">Standard</span>
+  </div>
+  <div class="legend-group">
+    <span class="legend-label">Critical minerals marker</span>
+    <span class="cml-marker" style="margin-left:0">CML</span>
+    <span style="color: var(--text-dim); font-size: 11px;">appears on USGS 2025 Critical Minerals List</span>
+  </div>
+</div>
+
+<div class="filter-bar">
+  <span class="filter-label">Filter by tier</span>
+  <button class="filter-btn active" data-filter="all">All</button>
+  <button class="filter-btn" data-filter="1">Aligned</button>
+  <button class="filter-btn" data-filter="2">Aligned with tension</button>
+  <button class="filter-btn" data-filter="3">Hedging</button>
+  <button class="filter-btn" data-filter="4">Adversary</button>
+  <button class="filter-btn" data-filter="5">China-adjacent</button>
+  <button class="filter-btn" data-filter="6">Small-exposed</button>
+  <button class="filter-btn" data-filter="7">Resource producer</button>
+</div>
+
+<div class="container">
+  <main id="tiers"></main>
+
+  <aside class="detail-panel" id="detail">
+    <div class="detail-empty">Select a country to see what the sorting revealed about its position, what it exports and imports, and where its trajectory is heading.</div>
+  </aside>
+</div>
+
+<footer class="footnote">
+  Sorting indicators — TELECOM: physical removal of Chinese telecom equipment (the durable commitment). EXPORT CONTROLS: participation in restricting adversary access to critical technologies. DEFENSE: integration level with US defense industrial base. US BASES: willingness to host US military infrastructure. Trade items ranked Critical (strategic dependency or leverage), Important (major economic or supply role), or Standard (normal trade). CML marker indicates the item appears on the USGS 2025 Critical Minerals List. Compiled July 2026.
+</footer>
+
+<script>
+const CML_2025 = ['aluminum','antimony','arsenic','barite','beryllium','bismuth','boron','cerium','cesium','chromium','cobalt','copper','dysprosium','erbium','europium','fluorspar','gadolinium','gallium','germanium','graphite','hafnium','holmium','indium','iridium','lanthanum','lead','lithium','lutetium','magnesium','manganese','metallurgical coal','neodymium','nickel','niobium','palladium','phosphate','platinum','potash','praseodymium','rhenium','rhodium','rubidium','ruthenium','samarium','scandium','silicon','silver','tantalum','tellurium','terbium','thulium','tin','titanium','tungsten','uranium','vanadium','ytterbium','yttrium','zinc','zirconium','rare earth','rare-earth','rare earths','coltan','bauxite'];
+
+function checkCML(itemName) {
+  const lower = itemName.toLowerCase();
+  for (const mineral of CML_2025) {
+    const regex = new RegExp('\\b' + mineral + '\\b', 'i');
+    if (regex.test(lower)) return true;
+  }
+  return false;
+}
+
+const countries = [
+  {id:'us',name:'United States',tier:1,region:'North America',telecom:'removed',exportControls:'leads-restrictions',defense:'origin',bases:'projects-abroad',materialsControl:3,materialsDependency:8,stockpileDepth:4,trajectory:'declining',notes:'The party running the sorting mechanism. Reserves depleted across categories. Industrial base being rebuilt through Detroit conversion effort and Section 219 integration. Materials position weak but coalition position strong. Everything hinges on whether preparation completes before conditions force decisions.',exports:[{rank:'critical',name:'Refined petroleum products'},{rank:'critical',name:'Natural gas (LNG)'},{rank:'critical',name:'Advanced military technology'},{rank:'critical',name:'Agricultural products (grain, soy, meat)'},{rank:'important',name:'Helium'},{rank:'important',name:'Aerospace equipment'},{rank:'important',name:'Pharmaceuticals'},{rank:'standard',name:'Financial services'}],imports:[{rank:'critical',name:'Rare earths (from China)'},{rank:'critical',name:'Antimony (from China)'},{rank:'critical',name:'Gallium and germanium (from China)'},{rank:'critical',name:'Tungsten (from China)'},{rank:'critical',name:'Battery materials and lithium refining (from China)'},{rank:'important',name:'Consumer electronics (from China, Vietnam)'},{rank:'important',name:'Semiconductors (from Taiwan, Korea)'},{rank:'important',name:'Crude oil (from Canada, Mexico, Middle East)'},{rank:'standard',name:'Consumer goods'}],restrictionsImposed:['Chinese drones added to FCC ban list (Dec 2025)','Chinese consumer routers banned (Mar 2026)','Chinese solar inverters banned (Aug 2026)','Semiconductor exports to China restricted (ongoing)','Critical mineral scrap exports restricted (Jul 2026)'],restrictionsExposed:['Rare earth licensing on 7 elements from China (Apr 2025)','5 more rare earths restricted (Nov 2025)','Antimony shipments cut 97% (Dec 2024)','Gallium and germanium controls (2023)','Tungsten export controls (severe)','Helium restrictions (2026)']},
+  {id:'uk',name:'United Kingdom',tier:1,region:'Europe',telecom:'removed',exportControls:'partial',defense:'deep',bases:'hosts-us',materialsControl:2,materialsDependency:8,stockpileDepth:3,trajectory:'stable',notes:'Committed telecom removal by 2027. AUKUS deep integration. Post-Brexit trade adjustments. Materials position weak, coalition position strong.',exports:[{rank:'critical',name:'Financial services'},{rank:'important',name:'Aerospace components'},{rank:'important',name:'Pharmaceuticals'},{rank:'important',name:'Whisky and specialty foods'},{rank:'standard',name:'Automotive'}],imports:[{rank:'critical',name:'Crude oil and refined products'},{rank:'critical',name:'Natural gas'},{rank:'critical',name:'Rare earths and critical minerals (from China)'},{rank:'important',name:'Food (heavily import-dependent)'},{rank:'standard',name:'Consumer goods'}],restrictionsImposed:['Huawei 5G ban (2020, removal by 2027)'],restrictionsExposed:[]},
+  {id:'australia',name:'Australia',tier:1,region:'Oceania',telecom:'removed',exportControls:'full',defense:'deep',bases:'hosts-us',materialsControl:8,materialsDependency:3,stockpileDepth:6,trajectory:'improving',notes:'First mover on Huawei ban (2018). AUKUS deep integration. Major materials producer with active development of alternative rare earth supply. Strategic position strengthening as materials demand rises.',exports:[{rank:'critical',name:'Iron ore'},{rank:'critical',name:'Coal (metallurgical and thermal)'},{rank:'critical',name:'Natural gas (LNG)'},{rank:'critical',name:'Lithium'},{rank:'critical',name:'Uranium'},{rank:'important',name:'Bauxite and aluminum'},{rank:'important',name:'Rare earths (developing capacity)'},{rank:'important',name:'Agricultural products (beef, wheat, wool)'},{rank:'standard',name:'Gold'}],imports:[{rank:'important',name:'Refined petroleum products'},{rank:'important',name:'Manufactured goods'},{rank:'standard',name:'Consumer electronics'}],restrictionsImposed:['Huawei 5G ban (2018, first mover)'],restrictionsExposed:[]},
+  {id:'japan',name:'Japan',tier:1,region:'East Asia',telecom:'removed',exportControls:'full',defense:'deep',bases:'hosts-us',materialsControl:3,materialsDependency:9,stockpileDepth:7,trajectory:'stable',notes:'Semiconductor equipment cooperation critical (Tokyo Electron and others). $550B US investment commitment in tariff deal. Strategic materials stockpiles substantial. Position depends on Chinese materials continuing to flow. First country hit with China simultaneously activating Control List + Watch List (2026).',exports:[{rank:'critical',name:'Semiconductor manufacturing equipment'},{rank:'critical',name:'Precision manufacturing machinery'},{rank:'important',name:'Automobiles'},{rank:'important',name:'Specialty chemicals'},{rank:'important',name:'Robotics and factory automation'},{rank:'standard',name:'Consumer electronics'}],imports:[{rank:'critical',name:'Crude oil (near-total import dependency)'},{rank:'critical',name:'Natural gas (LNG)'},{rank:'critical',name:'Rare earths and critical minerals (from China)'},{rank:'critical',name:'Coal'},{rank:'critical',name:'Iron ore'},{rank:'important',name:'Food (heavily import-dependent)'}],restrictionsImposed:['Dual-use exports to China (via US coordination)'],restrictionsExposed:['Chinese Control List + Watch List activated against Japan (2026, first ever dual application to single country)']},
+  {id:'netherlands',name:'Netherlands',tier:1,region:'Europe',telecom:'removed',exportControls:'full',defense:'standard',bases:'hosts-us',materialsControl:2,materialsDependency:8,stockpileDepth:3,trajectory:'stable',notes:'ASML lithography cooperation is the load-bearing element for the global semiconductor restriction regime. Small country with outsized strategic position due to single-company monopoly on advanced chip-making equipment.',exports:[{rank:'critical',name:'ASML lithography equipment (global monopoly on advanced chip-making)'},{rank:'important',name:'Natural gas (declining production)'},{rank:'important',name:'Agricultural products (major exporter despite small size)'},{rank:'standard',name:'Chemicals'}],imports:[{rank:'critical',name:'Crude oil and refined products'},{rank:'important',name:'Rare earths and critical minerals'},{rank:'standard',name:'Consumer goods'}],restrictionsImposed:['ASML advanced equipment exports to China restricted'],restrictionsExposed:[]},
+  {id:'korea',name:'South Korea',tier:1,region:'East Asia',telecom:'restricted',exportControls:'partial',defense:'deep',bases:'hosts-us',materialsControl:5,materialsDependency:8,stockpileDepth:6,trajectory:'stable',notes:'Semiconductor cooperation partial. Deep US defense integration through basing and joint operations. Major shipbuilder and battery producer. Managing between US alignment and Chinese trade dependency carefully.',exports:[{rank:'critical',name:'Semiconductors (Samsung, SK Hynix)'},{rank:'critical',name:'Batteries and battery components'},{rank:'critical',name:'Ships and offshore platforms'},{rank:'important',name:'Steel'},{rank:'important',name:'Automobiles'},{rank:'important',name:'Petrochemicals'}],imports:[{rank:'critical',name:'Crude oil'},{rank:'critical',name:'Natural gas'},{rank:'critical',name:'Raw materials for manufacturing'},{rank:'critical',name:'Chinese components and intermediate goods'},{rank:'important',name:'Food'}],restrictionsImposed:['Some semiconductor equipment coordination'],restrictionsExposed:[]},
+  {id:'taiwan',name:'Taiwan',tier:1,region:'East Asia',telecom:'removed',exportControls:'full',defense:'deep',bases:'no-us',materialsControl:6,materialsDependency:8,stockpileDepth:5,trajectory:'stable',notes:'TSMC advanced semiconductor manufacturing is the single most strategically important industrial capability on earth. Existential exposure to Chinese action. Every category of preparation elsewhere assumes TSMC continues functioning.',exports:[{rank:'critical',name:'Advanced semiconductors (TSMC - most strategic industrial capability globally)'},{rank:'critical',name:'Chip packaging and testing'},{rank:'important',name:'Specialty electronics'},{rank:'important',name:'Precision machinery'}],imports:[{rank:'critical',name:'Crude oil (near-total import dependency)'},{rank:'critical',name:'Natural gas'},{rank:'critical',name:'Coal'},{rank:'critical',name:'Food (heavily import-dependent)'},{rank:'important',name:'Raw materials for chip manufacturing'}],restrictionsImposed:['Chinese equipment excluded'],restrictionsExposed:['Various Chinese trade restrictions']},
+  {id:'israel',name:'Israel',tier:1,region:'Middle East',telecom:'removed',exportControls:'full',defense:'deep',bases:'hosts-us',materialsControl:3,materialsDependency:7,stockpileDepth:4,trajectory:'improving',notes:'Section 219 formalizing structural integration with US defense industrial base. Active combat operations sustained since Oct 2023. Deep tech and defense industrial cooperation. Position gaining formal recognition of what has been operational reality.',exports:[{rank:'critical',name:'Defense technology and weapons systems'},{rank:'critical',name:'Cybersecurity products'},{rank:'important',name:'Natural gas (developing exports)'},{rank:'important',name:'Diamonds (cut and polished)'},{rank:'important',name:'Pharmaceuticals (generics)'}],imports:[{rank:'critical',name:'Crude oil'},{rank:'critical',name:'Ammunition and military supplies'},{rank:'critical',name:'Food (heavily import-dependent)'},{rank:'important',name:'Raw materials'}],restrictionsImposed:[],restrictionsExposed:[]},
+  {id:'poland',name:'Poland',tier:1,region:'Europe',telecom:'removed',exportControls:'partial',defense:'deep',bases:'hosts-us',materialsControl:4,materialsDependency:6,stockpileDepth:7,trajectory:'improving',notes:'Most heavily armored country in Europe after aggressive rearmament. Deep integration with US defense industrial base through K2 (Korean) and Abrams (US) purchases. Most active continental commitment to defense buildout.',exports:[{rank:'important',name:'Copper (KGHM operations)'},{rank:'important',name:'Coal'},{rank:'important',name:'Silver'},{rank:'important',name:'Agricultural products'},{rank:'standard',name:'Manufactured goods'}],imports:[{rank:'critical',name:'Crude oil (transitioning off Russian)'},{rank:'critical',name:'Natural gas'},{rank:'important',name:'Advanced weapons systems (US, Korean)'},{rank:'important',name:'Rare earths'}],restrictionsImposed:['Huawei restrictions'],restrictionsExposed:[]},
+  {id:'canada',name:'Canada',tier:1,region:'North America',telecom:'removed',exportControls:'partial',defense:'standard',bases:'norad',materialsControl:8,materialsDependency:4,stockpileDepth:6,trajectory:'declining',notes:'Telecom aligned but hit with 50% Section 338 tariffs Aug 2026 - unusual punishment for a formal ally. Major materials producer with substantial reserves. Relationship under significant strain despite structural alignment.',exports:[{rank:'critical',name:'Crude oil (oil sands, largest US supplier)'},{rank:'critical',name:'Natural gas'},{rank:'critical',name:'Uranium (major producer)'},{rank:'critical',name:'Potash (largest producer globally)'},{rank:'important',name:'Nickel'},{rank:'important',name:'Aluminum'},{rank:'important',name:'Iron ore'},{rank:'important',name:'Lumber'},{rank:'important',name:'Agricultural products (grain, canola)'}],imports:[{rank:'important',name:'Refined petroleum products (partial)'},{rank:'important',name:'Manufactured goods'},{rank:'standard',name:'Consumer electronics'}],restrictionsImposed:['Huawei ban (2022)'],restrictionsExposed:['US Section 338 tariffs Aug 2026 (agriculture, dairy, furniture, alcohol)']},
+  {id:'baltics',name:'Baltic States',tier:1,region:'Europe',telecom:'removed',exportControls:'full',defense:'deep',bases:'hosts-us',materialsControl:1,materialsDependency:8,stockpileDepth:4,trajectory:'improving',notes:'Estonia, Latvia, Lithuania. Frontline against Russia. Full alignment across all indicators. Small in absolute terms but strategically committed at the highest level.',exports:[{rank:'important',name:'IT services and software'},{rank:'standard',name:'Forestry products'},{rank:'standard',name:'Machinery'}],imports:[{rank:'critical',name:'Energy (transitioning off Russian supply)'},{rank:'important',name:'Raw materials'},{rank:'important',name:'Manufactured goods'}],restrictionsImposed:['Comprehensive Chinese equipment restrictions'],restrictionsExposed:[]},
+  {id:'czech',name:'Czech Republic',tier:1,region:'Europe',telecom:'restricted',exportControls:'partial',defense:'standard',bases:'hosts-us',materialsControl:3,materialsDependency:7,stockpileDepth:4,trajectory:'stable',notes:'Telecom restrictions and defense industrial cooperation. Position hardened after 2022.',exports:[{rank:'important',name:'Automotive components'},{rank:'important',name:'Machinery'},{rank:'standard',name:'Glass and specialty products'}],imports:[{rank:'critical',name:'Energy'},{rank:'important',name:'Raw materials'}],restrictionsImposed:['Huawei restrictions'],restrictionsExposed:[]},
+  {id:'nordics',name:'Nordic Countries',tier:2,region:'Europe',telecom:'removed',exportControls:'full',defense:'standard',bases:'partial',materialsControl:6,materialsDependency:4,stockpileDepth:6,trajectory:'stable',notes:'Sweden, Finland, Norway, Denmark. Finland and Sweden NATO accession completed. Strong on telecom removal (Sweden ban 2020). Substantial resources: Norwegian oil/gas, Swedish iron, Finnish forestry, Danish position.',exports:[{rank:'critical',name:'Oil and natural gas (Norway)'},{rank:'critical',name:'Iron ore (Sweden)'},{rank:'important',name:'Specialty steel'},{rank:'important',name:'Forestry products (pulp, paper, lumber)'},{rank:'important',name:'Fish and seafood'},{rank:'important',name:'Hydroelectric power (Norway)'},{rank:'standard',name:'Machinery and industrial goods'}],imports:[{rank:'important',name:'Some raw materials'},{rank:'standard',name:'Manufactured goods'},{rank:'standard',name:'Consumer goods'}],restrictionsImposed:['Sweden Huawei ban (2020)','Denmark restrictions'],restrictionsExposed:[]},
+  {id:'germany',name:'Germany',tier:2,region:'Europe',telecom:'removing',exportControls:'partial',defense:'standard',bases:'hosts-us',materialsControl:3,materialsDependency:9,stockpileDepth:3,trajectory:'declining',notes:'Slower telecom removal timeline (2029). Industrial base under sustained energy pressure since 2022. Manufacturing competitiveness eroding. Political fragmentation making decisions harder.',exports:[{rank:'critical',name:'Industrial machinery'},{rank:'critical',name:'Automotive'},{rank:'important',name:'Chemicals and pharmaceuticals'},{rank:'important',name:'Precision instruments'},{rank:'standard',name:'Consumer goods'}],imports:[{rank:'critical',name:'Natural gas (near-total import dependency)'},{rank:'critical',name:'Crude oil'},{rank:'critical',name:'Rare earths and critical minerals (from China)'},{rank:'important',name:'Raw materials for industry'}],restrictionsImposed:['Huawei restrictions (2024, removal by 2029)'],restrictionsExposed:[]},
+  {id:'france',name:'France',tier:2,region:'Europe',telecom:'removing',exportControls:'partial',defense:'standard',bases:'hosts-us',materialsControl:4,materialsDependency:7,stockpileDepth:5,trajectory:'stable',notes:'Independent defense industrial base. Nuclear energy independence. African supply chain access through historical relationships. Historical yellow vest volatility on fuel prices creates political sensitivity.',exports:[{rank:'critical',name:'Nuclear technology and reactor equipment'},{rank:'critical',name:'Aerospace (Airbus)'},{rank:'important',name:'Luxury goods'},{rank:'important',name:'Wine and agricultural products'},{rank:'important',name:'Defense systems'},{rank:'standard',name:'Chemicals'}],imports:[{rank:'critical',name:'Crude oil'},{rank:'critical',name:'Rare earths and critical minerals (from China)'},{rank:'important',name:'Natural gas'},{rank:'important',name:'Raw materials'}],restrictionsImposed:['Huawei restrictions (2019)'],restrictionsExposed:[]},
+  {id:'italy',name:'Italy',tier:2,region:'Europe',telecom:'removing',exportControls:'partial',defense:'standard',bases:'hosts-us',materialsControl:2,materialsDependency:9,stockpileDepth:3,trajectory:'declining',notes:'Aligned but with significant Chinese trade relationships. Belt and Road original signatory (now withdrawn). Energy dependency severe. Position under continuous strain.',exports:[{rank:'important',name:'Industrial machinery'},{rank:'important',name:'Luxury goods and fashion'},{rank:'important',name:'Automotive'},{rank:'important',name:'Wine and specialty foods'},{rank:'standard',name:'Design and furnishings'}],imports:[{rank:'critical',name:'Natural gas (near-total import dependency)'},{rank:'critical',name:'Crude oil'},{rank:'critical',name:'Raw materials'}],restrictionsImposed:[],restrictionsExposed:[]},
+  {id:'india',name:'India',tier:3,region:'South Asia',telecom:'mixed',exportControls:'none',defense:'growing',bases:'no-us',materialsControl:5,materialsDependency:7,stockpileDepth:4,trajectory:'improving',notes:'BRICS member. Buys Iranian and Russian oil at discount. Growing defense relationship with US but maintains independent posture. Large domestic market provides strategic depth.',exports:[{rank:'critical',name:'Pharmaceuticals (generic drugs, world leader)'},{rank:'critical',name:'IT services and software'},{rank:'important',name:'Refined petroleum products'},{rank:'important',name:'Textiles and garments'},{rank:'important',name:'Agricultural products (rice, spices, tea)'},{rank:'important',name:'Coal'},{rank:'standard',name:'Some rare earths'}],imports:[{rank:'critical',name:'Crude oil (from Russia and Iran at discount)'},{rank:'critical',name:'Coal'},{rank:'important',name:'Natural gas'},{rank:'important',name:'Advanced technology'},{rank:'important',name:'Fertilizer inputs'}],restrictionsImposed:[],restrictionsExposed:[]},
+  {id:'brazil',name:'Brazil',tier:3,region:'South America',telecom:'mixed',exportControls:'none',defense:'minimal',bases:'no-us',materialsControl:7,materialsDependency:4,stockpileDepth:6,trajectory:'stable',notes:'BRICS member. Major resource producer with niobium near-monopoly. Independent foreign policy. Hit with Section 301 tariffs but continues own agenda regardless.',exports:[{rank:'critical',name:'Iron ore (major producer)'},{rank:'critical',name:'Soybeans (largest exporter)'},{rank:'critical',name:'Niobium (near-monopoly)'},{rank:'critical',name:'Beef (largest exporter)'},{rank:'important',name:'Crude oil (developing)'},{rank:'important',name:'Sugar and coffee'},{rank:'important',name:'Some rare earths'},{rank:'standard',name:'Aerospace (Embraer)'}],imports:[{rank:'important',name:'Refined petroleum products'},{rank:'important',name:'Advanced technology'},{rank:'standard',name:'Manufactured goods'}],restrictionsImposed:[],restrictionsExposed:['US Section 301 tariffs']},
+  {id:'turkey',name:'Turkey',tier:3,region:'Middle East',telecom:'mixed',exportControls:'none',defense:'minimal',bases:'hosts-us',materialsControl:4,materialsDependency:7,stockpileDepth:4,trajectory:'stable',notes:'NATO member but ambiguous alignment. S-400 purchase from Russia. Continued Chinese trade. Strategic geographic position lets them play all sides simultaneously.',exports:[{rank:'critical',name:'Boron (major global producer)'},{rank:'important',name:'Chromite'},{rank:'important',name:'Textiles and garments'},{rank:'important',name:'Agricultural products'},{rank:'important',name:'Automotive'},{rank:'standard',name:'Machinery'}],imports:[{rank:'critical',name:'Crude oil'},{rank:'critical',name:'Natural gas'},{rank:'important',name:'Various technology'},{rank:'important',name:'Raw materials for manufacturing'}],restrictionsImposed:['Some Chinese restrictions but no comprehensive removal'],restrictionsExposed:[]},
+  {id:'saudi',name:'Saudi Arabia',tier:3,region:'Middle East',telecom:'mixed',exportControls:'none',defense:'purchases',bases:'partial',materialsControl:8,materialsDependency:5,stockpileDepth:7,trajectory:'declining',notes:'Massive oil producer trapped between two closed corridors (Hormuz and Bab el-Mandeb) for first time in history. East-West Pipeline overwhelmed. Long-standing US relationship strained by Yemen and Iran dynamics.',exports:[{rank:'critical',name:'Crude oil (major global producer)'},{rank:'critical',name:'Natural gas'},{rank:'critical',name:'Petrochemicals'},{rank:'important',name:'Refined products'}],imports:[{rank:'critical',name:'Food (heavily import-dependent)'},{rank:'critical',name:'Advanced weapons systems'},{rank:'important',name:'Advanced technology'},{rank:'important',name:'Labor (foreign workers)'}],restrictionsImposed:[],restrictionsExposed:['Houthi maritime blockade (Jul 2026)','Iranian strait pressure']},
+  {id:'uae',name:'UAE',tier:3,region:'Middle East',telecom:'mixed',exportControls:'none',defense:'purchases',bases:'hosts-us',materialsControl:6,materialsDependency:6,stockpileDepth:6,trajectory:'declining',notes:'Fujairah is the last remaining regional oil export outlet outside Hormuz. Under repeated Iranian drone strikes but absorbing without direct retaliation. BRICS+ member. Trade relationships with all sides.',exports:[{rank:'critical',name:'Crude oil (via Fujairah terminal - last regional bypass)'},{rank:'critical',name:'Natural gas'},{rank:'important',name:'Aluminum'},{rank:'important',name:'Petrochemicals'},{rank:'standard',name:'Re-export trade hub'}],imports:[{rank:'critical',name:'Food (heavily import-dependent)'},{rank:'critical',name:'Advanced technology'},{rank:'important',name:'Labor (foreign workers)'},{rank:'standard',name:'Consumer goods'}],restrictionsImposed:[],restrictionsExposed:['Iranian strikes on Fujairah (Mar, May, Jul 2026)']},
+  {id:'indonesia',name:'Indonesia',tier:3,region:'Southeast Asia',telecom:'chinese',exportControls:'none',defense:'minimal',bases:'no-us',materialsControl:7,materialsDependency:5,stockpileDepth:4,trajectory:'stable',notes:'Major nickel producer with Chinese processing dominance in-country. Palm oil dominant globally. Hit with 32% tariff, negotiated to 19%. BRICS+ member. Independent posture.',exports:[{rank:'critical',name:'Nickel (major producer, Chinese-controlled processing)'},{rank:'critical',name:'Palm oil (largest producer)'},{rank:'critical',name:'Coal'},{rank:'important',name:'Tin'},{rank:'important',name:'Natural gas (LNG)'},{rank:'standard',name:'Textiles'}],imports:[{rank:'important',name:'Refined petroleum products'},{rank:'important',name:'Advanced technology'},{rank:'standard',name:'Manufactured goods'}],restrictionsImposed:[],restrictionsExposed:[]},
+  {id:'vietnam',name:'Vietnam',tier:3,region:'Southeast Asia',telecom:'mixed',exportControls:'none',defense:'minimal',bases:'no-us',materialsControl:5,materialsDependency:6,stockpileDepth:4,trajectory:'improving',notes:'Hit with 46% tariff initially. Benefiting from supply chain diversification from China. Managing between US market access and Chinese proximity. Rare earth potential being explored.',exports:[{rank:'critical',name:'Electronics assembly (major beneficiary of China diversification)'},{rank:'important',name:'Textiles and garments'},{rank:'important',name:'Coffee (major exporter)'},{rank:'important',name:'Seafood'},{rank:'important',name:'Rare earths (potential, developing)'},{rank:'standard',name:'Rice'}],imports:[{rank:'critical',name:'Raw materials from China'},{rank:'important',name:'Various components'},{rank:'important',name:'Fuel'}],restrictionsImposed:[],restrictionsExposed:[]},
+  {id:'philippines',name:'Philippines',tier:3,region:'Southeast Asia',telecom:'mixed',exportControls:'partial',defense:'growing',bases:'hosts-us',materialsControl:4,materialsDependency:7,stockpileDepth:3,trajectory:'improving',notes:'Renewed US basing agreement. Tensions with China over South China Sea driving alignment shift. Current energy crisis declared due to Hormuz closure effects.',exports:[{rank:'important',name:'Nickel'},{rank:'important',name:'Copper'},{rank:'important',name:'Electronics components'},{rank:'important',name:'Agricultural products'}],imports:[{rank:'critical',name:'Crude oil (severe exposure to current crisis)'},{rank:'critical',name:'Refined petroleum products'},{rank:'important',name:'Most manufactured goods'},{rank:'important',name:'Food (rice imports)'}],restrictionsImposed:[],restrictionsExposed:[]},
+  {id:'china',name:'China',tier:4,region:'East Asia',telecom:'own',exportControls:'active-restrictor',defense:'independent',bases:'no-us',materialsControl:10,materialsDependency:4,stockpileDepth:10,trajectory:'improving',notes:'The party running the counter-sorting. Dominates rare earths, antimony, gallium, germanium, tungsten, graphite, processing across categories. Massive strategic reserves. Playing long game with patience. Every month of continued Western reserve depletion improves relative position.',exports:[{rank:'critical',name:'Rare earths (85-90% of global processing)'},{rank:'critical',name:'Antimony (60% of global production)'},{rank:'critical',name:'Gallium (dominant global producer)'},{rank:'critical',name:'Germanium (dominant global producer)'},{rank:'critical',name:'Tungsten (severe global control)'},{rank:'critical',name:'Graphite (dominant producer)'},{rank:'critical',name:'Battery materials (dominant refining)'},{rank:'critical',name:'Solar panels and inverters (70-80% globally)'},{rank:'critical',name:'Drone components (dominant supplier)'},{rank:'critical',name:'Consumer electronics'},{rank:'important',name:'Steel'},{rank:'important',name:'Textiles and manufactured goods'}],imports:[{rank:'critical',name:'Crude oil (30%+ through Strait of Hormuz)'},{rank:'critical',name:'Iron ore (primarily from Australia)'},{rank:'important',name:'Natural gas (LNG)'},{rank:'important',name:'Semiconductors (advanced chips restricted)'},{rank:'important',name:'Soybeans and food'}],restrictionsImposed:['Rare earth licensing on 7 elements (Apr 2025)','5 additional rare earths restricted (Nov 2025)','Antimony shipments to US halted (Dec 2024)','Gallium and germanium controls (2023)','Tungsten export severely limited','10 US entities added to control list (Jun 2026)','Drone export controls (Aug 2026)','Helium export restrictions','Holmium, erbium, thulium, europium, ytterbium restricted (Nov 2025)'],restrictionsExposed:['US semiconductor export controls','US AI chip restrictions','FCC ban on Chinese drones, routers, inverters','Section 889 telecom equipment ban']},
+  {id:'russia',name:'Russia',tier:4,region:'Eurasia',telecom:'own',exportControls:'active-restrictor',defense:'independent',bases:'no-us',materialsControl:8,materialsDependency:5,stockpileDepth:6,trajectory:'declining',notes:'Conventional force badly degraded through Ukraine war. Territorial gains minimal. Refining capacity 21-year low from Ukrainian strikes. Continues energy exports at elevated prices. Not a factor for greater Europe conventionally anymore but retains long-range and nuclear capability.',exports:[{rank:'critical',name:'Crude oil (major global producer)'},{rank:'critical',name:'Natural gas'},{rank:'critical',name:'Wheat (major exporter)'},{rank:'critical',name:'Enriched uranium (nuclear fuel)'},{rank:'critical',name:'Palladium (dominant global producer)'},{rank:'important',name:'Nickel'},{rank:'important',name:'Titanium'},{rank:'important',name:'Fertilizer'},{rank:'important',name:'Weapons systems'}],imports:[{rank:'critical',name:'Advanced technology (constrained by sanctions)'},{rank:'important',name:'Components for manufacturing'},{rank:'important',name:'Consumer goods'}],restrictionsImposed:['Gas restrictions to Europe (ongoing)','Various trade actions'],restrictionsExposed:['Western sanctions since 2022','Ongoing Ukrainian strikes on refineries']},
+  {id:'iran',name:'Iran',tier:4,region:'Middle East',telecom:'own',exportControls:'active-restrictor',defense:'independent',bases:'no-us',materialsControl:6,materialsDependency:5,stockpileDepth:5,trajectory:'improving',notes:'Running the Strait of Hormuz pressure operation. Approximately 50% ballistic missile launcher inventory intact per US assessment. Comprehensive target ranging including Fujairah. Nuclear latency preserved. Structural position stronger than sanctions rhetoric suggests.',exports:[{rank:'critical',name:'Crude oil (to Chinese buyers at discount)'},{rank:'critical',name:'Natural gas'},{rank:'critical',name:'Strait access as leverage'},{rank:'important',name:'Ballistic missile technology'},{rank:'important',name:'Drone systems'},{rank:'standard',name:'Petrochemicals'}],imports:[{rank:'critical',name:'Refined petroleum products (constrained)'},{rank:'important',name:'Advanced technology'},{rank:'important',name:'Food (partial import dependency)'},{rank:'important',name:'Various components'}],restrictionsImposed:['Strait closure (Feb 2026)','Permanent-change declaration (Jul 2026)','Transit fees on Western shipping'],restrictionsExposed:['US comprehensive sanctions','General License X revoked (Jul 2026)','Sustained air strikes']},
+  {id:'north-korea',name:'North Korea',tier:4,region:'East Asia',telecom:'own',exportControls:'active-restrictor',defense:'independent',bases:'no-us',materialsControl:4,materialsDependency:4,stockpileDepth:3,trajectory:'stable',notes:'Nuclear capability since 2006. Supplying Russia with ammunition and personnel. Not a factor in current strategic calculation beyond its established role.',exports:[{rank:'important',name:'Coal (to China)'},{rank:'important',name:'Artillery ammunition (to Russia)'},{rank:'standard',name:'Undeveloped rare earths'}],imports:[{rank:'critical',name:'Food (chronic shortages)'},{rank:'critical',name:'Crude oil (from China)'},{rank:'important',name:'Most manufactured goods'}],restrictionsImposed:[],restrictionsExposed:['Comprehensive Western sanctions']},
+  {id:'belarus',name:'Belarus',tier:4,region:'Europe',telecom:'own',exportControls:'aligned-with-russia',defense:'russia',bases:'no-us',materialsControl:3,materialsDependency:6,stockpileDepth:3,trajectory:'declining',notes:'Russian client state. Providing basing for Russian operations. Comprehensive Western sanctions.',exports:[{rank:'critical',name:'Potash (major producer)'},{rank:'important',name:'Refined petroleum products'},{rank:'standard',name:'Agricultural products'}],imports:[{rank:'critical',name:'Nearly all inputs from Russia'},{rank:'important',name:'Manufactured goods'}],restrictionsImposed:[],restrictionsExposed:['Western sanctions']},
+  {id:'hungary',name:'Hungary',tier:5,region:'Europe',telecom:'chinese',exportControls:'none',defense:'minimal',bases:'partial',materialsControl:2,materialsDependency:8,stockpileDepth:3,trajectory:'stable',notes:'EU/NATO member but maintains Chinese equipment. Orban government closest to China of any NATO country. Belt and Road active participant. Reveals that formal alliance status can mask actual alignment.',exports:[{rank:'important',name:'Automotive components'},{rank:'standard',name:'Machinery'},{rank:'standard',name:'Agricultural products'}],imports:[{rank:'critical',name:'Energy (Russian imports)'},{rank:'important',name:'Raw materials'},{rank:'important',name:'Chinese investment and infrastructure'}],restrictionsImposed:[],restrictionsExposed:[]},
+  {id:'serbia',name:'Serbia',tier:5,region:'Europe',telecom:'chinese',exportControls:'none',defense:'minimal',bases:'no-us',materialsControl:3,materialsDependency:6,stockpileDepth:3,trajectory:'stable',notes:'Not NATO member. Extensive Chinese infrastructure investment including Huawei surveillance systems. Belt and Road active participant.',exports:[{rank:'standard',name:'Some minerals'},{rank:'standard',name:'Agricultural products'},{rank:'standard',name:'Manufactured goods'}],imports:[{rank:'important',name:'Chinese investment'},{rank:'important',name:'Russian energy'},{rank:'standard',name:'Various imports'}],restrictionsImposed:[],restrictionsExposed:[]},
+  {id:'cambodia',name:'Cambodia',tier:6,region:'Southeast Asia',telecom:'chinese',exportControls:'none',defense:'minimal',bases:'chinese',materialsControl:2,materialsDependency:8,stockpileDepth:2,trajectory:'stable',notes:'Extensive Chinese infrastructure and military presence. Hit with 49% tariff, negotiated to 36%. No realistic capacity to shift position.',exports:[{rank:'important',name:'Garments'},{rank:'standard',name:'Agricultural products'},{rank:'standard',name:'Rice'}],imports:[{rank:'critical',name:'Nearly everything imported'},{rank:'important',name:'Fuel'}],restrictionsImposed:[],restrictionsExposed:[]},
+  {id:'laos',name:'Laos',tier:6,region:'Southeast Asia',telecom:'chinese',exportControls:'none',defense:'minimal',bases:'no-us',materialsControl:2,materialsDependency:8,stockpileDepth:2,trajectory:'stable',notes:'Heavy Chinese economic dependency. Belt and Road recipient. Hit with 48% tariff, negotiated to 40%.',exports:[{rank:'standard',name:'Wood furniture'},{rank:'standard',name:'Agricultural products'},{rank:'standard',name:'Some resources'}],imports:[{rank:'critical',name:'Everything imported'}],restrictionsImposed:[],restrictionsExposed:[]},
+  {id:'bangladesh',name:'Bangladesh',tier:6,region:'South Asia',telecom:'chinese',exportControls:'none',defense:'minimal',bases:'no-us',materialsControl:2,materialsDependency:8,stockpileDepth:2,trajectory:'stable',notes:'Garment export dependency. Chinese infrastructure and financing. Vulnerable to tariff pressure but limited options for repositioning.',exports:[{rank:'critical',name:'Garments (industry backbone)'},{rank:'standard',name:'Leather goods'},{rank:'standard',name:'Seafood'}],imports:[{rank:'critical',name:'Everything imported'},{rank:'critical',name:'Food (rice, wheat)'},{rank:'important',name:'Fuel'}],restrictionsImposed:[],restrictionsExposed:[]},
+  {id:'myanmar',name:'Myanmar',tier:6,region:'Southeast Asia',telecom:'chinese',exportControls:'none',defense:'chinese',bases:'no-us',materialsControl:5,materialsDependency:6,stockpileDepth:2,trajectory:'declining',notes:'Military junta with Chinese backing. Rare earth resources being extracted with Chinese processing. Civil war ongoing.',exports:[{rank:'critical',name:'Heavy rare earths (Chinese-controlled extraction)'},{rank:'important',name:'Gems and jade'},{rank:'important',name:'Natural gas'},{rank:'standard',name:'Agricultural products'}],imports:[{rank:'important',name:'Manufactured goods'},{rank:'important',name:'Fuel'}],restrictionsImposed:[],restrictionsExposed:['Western sanctions','US tariffs']},
+  {id:'kazakhstan',name:'Kazakhstan',tier:7,region:'Central Asia',telecom:'chinese',exportControls:'none',defense:'russia-china',bases:'no-us',materialsControl:8,materialsDependency:4,stockpileDepth:5,trajectory:'improving',notes:'Uranium supplies 40% of global production. Oil producer. Rare earth potential. Managing between Russia, China, and West. Position strengthened by resource demand.',exports:[{rank:'critical',name:'Uranium (40% of global production)'},{rank:'critical',name:'Crude oil'},{rank:'important',name:'Ferroalloys'},{rank:'important',name:'Silver'},{rank:'important',name:'Rare earths (developing)'},{rank:'standard',name:'Wheat'}],imports:[{rank:'important',name:'Manufactured goods'},{rank:'important',name:'Some technology'},{rank:'standard',name:'Consumer goods'}],restrictionsImposed:[],restrictionsExposed:[]},
+  {id:'drc',name:'DRC',tier:7,region:'Africa',telecom:'chinese',exportControls:'none',defense:'minimal',bases:'no-us',materialsControl:9,materialsDependency:8,stockpileDepth:2,trajectory:'stable',notes:'Cobalt monopoly (70% global). Copper major. Chinese-controlled mining operations dominant. Continuing conflict conditions. Strategic significance far exceeds economic development.',exports:[{rank:'critical',name:'Cobalt (70% of global production)'},{rank:'critical',name:'Copper (major producer)'},{rank:'critical',name:'Tantalum / coltan (critical for electronics)'},{rank:'important',name:'Diamonds'},{rank:'important',name:'Gold'},{rank:'important',name:'Various critical minerals'}],imports:[{rank:'critical',name:'Everything imported'},{rank:'critical',name:'Food'},{rank:'important',name:'Fuel'}],restrictionsImposed:[],restrictionsExposed:[]},
+  {id:'chile',name:'Chile',tier:7,region:'South America',telecom:'mixed',exportControls:'none',defense:'minimal',bases:'no-us',materialsControl:8,materialsDependency:5,stockpileDepth:5,trajectory:'stable',notes:'Copper largest producer globally. Lithium major with expanding capacity. Position determined by resource demand. Democratic institutions and independent posture.',exports:[{rank:'critical',name:'Copper (largest global producer)'},{rank:'critical',name:'Lithium (major producer)'},{rank:'important',name:'Molybdenum'},{rank:'important',name:'Fruit and wine'},{rank:'standard',name:'Fish and seafood'}],imports:[{rank:'important',name:'Refined petroleum products'},{rank:'important',name:'Manufactured goods'},{rank:'standard',name:'Consumer goods'}],restrictionsImposed:[],restrictionsExposed:[]},
+  {id:'argentina',name:'Argentina',tier:7,region:'South America',telecom:'mixed',exportControls:'none',defense:'minimal',bases:'no-us',materialsControl:7,materialsDependency:5,stockpileDepth:4,trajectory:'improving',notes:'Major lithium producer (part of "lithium triangle" with Chile and Bolivia). BRICS member. Agricultural exports major. Chronic economic instability limits strategic weight.',exports:[{rank:'critical',name:'Lithium (major producer)'},{rank:'critical',name:'Soybeans and soy products (major exporter)'},{rank:'important',name:'Beef'},{rank:'important',name:'Wheat'},{rank:'important',name:'Natural gas'},{rank:'standard',name:'Wine'}],imports:[{rank:'important',name:'Refined petroleum products'},{rank:'important',name:'Various technology'},{rank:'standard',name:'Manufactured goods'}],restrictionsImposed:[],restrictionsExposed:[]},
+  {id:'bolivia',name:'Bolivia',tier:7,region:'South America',telecom:'chinese',exportControls:'none',defense:'minimal',bases:'no-us',materialsControl:6,materialsDependency:6,stockpileDepth:3,trajectory:'stable',notes:'Largest lithium reserves globally but limited production. Chinese and Russian development partnerships preferred over Western. Natural gas producer.',exports:[{rank:'critical',name:'Lithium reserves (largest globally, limited production)'},{rank:'important',name:'Natural gas'},{rank:'important',name:'Silver'},{rank:'important',name:'Tin'},{rank:'standard',name:'Zinc'}],imports:[{rank:'important',name:'Manufactured goods'},{rank:'standard',name:'Refined products'}],restrictionsImposed:[],restrictionsExposed:[]},
+  {id:'mongolia',name:'Mongolia',tier:7,region:'Central Asia',telecom:'mixed',exportControls:'none',defense:'minimal',bases:'no-us',materialsControl:7,materialsDependency:8,stockpileDepth:3,trajectory:'stable',notes:'Rare earths, copper, coal significant. Landlocked between Russia and China. Democratic institutions but geographic constraints on independence.',exports:[{rank:'critical',name:'Coal (major exporter to China)'},{rank:'critical',name:'Copper'},{rank:'important',name:'Rare earths (developing)'},{rank:'important',name:'Gold'},{rank:'standard',name:'Cashmere and livestock'}],imports:[{rank:'critical',name:'Nearly all manufactured goods (through China or Russia)'},{rank:'critical',name:'Refined petroleum products'}],restrictionsImposed:[],restrictionsExposed:[]},
+  {id:'guinea',name:'Guinea',tier:7,region:'Africa',telecom:'chinese',exportControls:'none',defense:'minimal',bases:'no-us',materialsControl:8,materialsDependency:8,stockpileDepth:2,trajectory:'stable',notes:'Bauxite dominance (30% global). Iron ore. Chinese investment dominant. Political instability constant. Strategic significance disproportionate to development.',exports:[{rank:'critical',name:'Bauxite (30% of global production, aluminum ore)'},{rank:'important',name:'Iron ore'},{rank:'important',name:'Gold'},{rank:'important',name:'Diamonds'}],imports:[{rank:'critical',name:'Everything imported'},{rank:'critical',name:'Food'},{rank:'important',name:'Fuel'}],restrictionsImposed:[],restrictionsExposed:[]},
+  {id:'greenland',name:'Greenland',tier:7,region:'Arctic',telecom:'restricted',exportControls:'via-denmark',defense:'via-denmark',bases:'hosts-us',materialsControl:6,materialsDependency:8,stockpileDepth:2,trajectory:'improving',notes:'Rare earth potential very high. Uranium. Strategic Arctic position. Danish sovereignty with US basing. Object of significant US strategic interest.',exports:[{rank:'critical',name:'Rare earths (major potential, developing)'},{rank:'critical',name:'Arctic strategic access'},{rank:'important',name:'Uranium (potential)'},{rank:'important',name:'Fish and seafood'}],imports:[{rank:'critical',name:'Everything imported'},{rank:'important',name:'Fuel and energy'}],restrictionsImposed:[],restrictionsExposed:[]}
+];
+
+const tierMeta = {
+  1: { name: 'Aligned', desc: 'Chinese equipment removed or being removed, export controls in place, defense integration, hosts US bases. Durable commitments made.' },
+  2: { name: 'Aligned with tension', desc: 'Aligned across most indicators but with specific gaps or strain in the relationship.' },
+  3: { name: 'Hedging', desc: 'Playing multiple sides. Positive on some indicators, negative on others. Position not committed.' },
+  4: { name: 'Adversary', desc: 'Structural opposition to US strategic positioning. Own supply chains, own restrictions imposed on others.' },
+  5: { name: 'China-adjacent', desc: 'Formal Western alignment but continued Chinese infrastructure and relationships. Alliance status masks actual alignment.' },
+  6: { name: 'Small-exposed', desc: 'Position determined by what they can afford rather than what they would choose. Limited capacity for independent action.' },
+  7: { name: 'Resource producer', desc: 'Strategic significance determined by specific materials controlled. Position cross-cuts other tiers based on resource demand.' }
+};
+
+const telecomMap = {
+  'removed': { label: 'Chinese gear removed', class: 'comms-out' },
+  'removing': { label: 'Removing Chinese gear', class: 'comms-progress' },
+  'restricted': { label: 'Chinese gear restricted', class: 'comms-restricted' },
+  'mixed': { label: 'Uses both', class: 'comms-mixed' },
+  'chinese': { label: 'Chinese equipment', class: 'comms-chinese' },
+  'own': { label: 'Domestic supply chain', class: 'comms-own' }
+};
+
+const exportControlsMap = {
+  'leads-restrictions': 'Leads global restrictions on China',
+  'full': 'Full participation in China restrictions',
+  'partial': 'Partial participation in China restrictions',
+  'none': 'No restrictions on China',
+  'active-restrictor': 'Actively restricts exports to West',
+  'aligned-with-russia': 'Aligned with Russian restrictions',
+  'via-denmark': 'Through Denmark'
+};
+
+const defenseMap = {
+  'origin': 'Origin of coalition',
+  'deep': 'Deep US defense partnership',
+  'standard': 'Standard US defense partnership',
+  'growing': 'Growing US defense partnership',
+  'purchases': 'US weapons purchases only',
+  'minimal': 'Minimal US defense ties',
+  'independent': 'Independent defense industrial base',
+  'russia': 'Russian client state',
+  'russia-china': 'Russia and China partnerships',
+  'chinese': 'Chinese defense partnership',
+  'via-denmark': 'Through Denmark'
+};
+
+const basesMap = {
+  'projects-abroad': 'Projects force globally',
+  'hosts-us': 'Hosts substantial US bases',
+  'partial': 'Limited US military presence',
+  'norad': 'NORAD partnership',
+  'no-us': 'No US bases',
+  'chinese': 'Hosts Chinese military presence'
+};
+
+const trajectoryMap = {
+  'improving': { label: '↑ Improving', class: 'trajectory-up' },
+  'stable': { label: '→ Stable', class: 'trajectory-flat' },
+  'declining': { label: '↓ Declining', class: 'trajectory-down' }
+};
+
+function getStatClass(val) {
+  if (val >= 7) return 'high';
+  if (val >= 4) return 'mid';
+  return 'low';
+}
+
+function renderTradeItem(item) {
+  const cml = checkCML(item.name) ? '<span class="cml-marker">CML</span>' : '';
+  return `<li class="trade-item"><span class="trade-rank ${item.rank}">${item.rank}</span><span class="trade-item-name">${item.name}${cml}</span></li>`;
+}
+
+function renderTile(c) {
+  const telecomInfo = telecomMap[c.telecom] || { label: c.telecom, class: 'comms-mixed' };
+  const trajInfo = trajectoryMap[c.trajectory] || { label: c.trajectory, class: 'trajectory-flat' };
+  return `<div class="tile t${c.tier}" data-id="${c.id}" data-tier="${c.tier}"><div class="tile-name">${c.name}</div><div class="tile-region">${c.region}</div><div class="tile-stats"><div class="stat"><span class="stat-label">Materials</span><div class="stat-bar"><div class="stat-fill ${getStatClass(c.materialsControl)}" style="width:${c.materialsControl * 10}%"></div></div><span class="stat-value">${c.materialsControl}</span></div><div class="stat"><span class="stat-label">Dependency</span><div class="stat-bar"><div class="stat-fill ${getStatClass(10 - c.materialsDependency)}" style="width:${c.materialsDependency * 10}%"></div></div><span class="stat-value">${c.materialsDependency}</span></div><div class="stat"><span class="stat-label">Reserves</span><div class="stat-bar"><div class="stat-fill ${getStatClass(c.stockpileDepth)}" style="width:${c.stockpileDepth * 10}%"></div></div><span class="stat-value">${c.stockpileDepth}</span></div></div><div class="tile-indicators"><span class="indicator ${telecomInfo.class}">${telecomInfo.label}</span><span class="indicator ${trajInfo.class}">${trajInfo.label}</span></div></div>`;
+}
+
+function renderTiers(filter) {
+  const container = document.getElementById('tiers');
+  const activeTiers = filter === 'all' ? [1,2,3,4,5,6,7] : [parseInt(filter)];
+  container.innerHTML = activeTiers.map(t => {
+    const inTier = countries.filter(c => c.tier === t);
+    if (inTier.length === 0) return '';
+    return `<section class="tier-section"><div class="tier-header"><span class="tier-marker t${t}">Tier ${t}</span><span class="tier-title">${tierMeta[t].name}</span><span class="tier-desc">${tierMeta[t].desc}</span></div><div class="grid">${inTier.map(renderTile).join('')}</div></section>`;
+  }).join('');
+  attachTileHandlers();
+}
+
+function renderDetail(id) {
+  const c = countries.find(x => x.id === id);
+  if (!c) return;
+  const telecomInfo = telecomMap[c.telecom] || { label: c.telecom };
+  const trajInfo = trajectoryMap[c.trajectory] || { label: c.trajectory };
+  const exportInfo = exportControlsMap[c.exportControls] || c.exportControls;
+  const defenseInfo = defenseMap[c.defense] || c.defense;
+  const basesInfo = basesMap[c.bases] || c.bases;
+
+  const detail = document.getElementById('detail');
+  detail.innerHTML = `<div class="detail-name">${c.name}</div><div class="detail-meta"><span>Tier ${c.tier}</span><span>·</span><span>${c.region}</span><span>·</span><span>${trajInfo.label}</span></div><div class="detail-section"><div class="detail-notes">${c.notes}</div></div><div class="detail-section"><div class="detail-label">Where they landed on the sorting</div><div class="detail-indicators-grid"><div class="detail-indicator"><div class="detail-indicator-label">Chinese telecom</div><div class="detail-indicator-value">${telecomInfo.label}</div></div><div class="detail-indicator"><div class="detail-indicator-label">Export controls</div><div class="detail-indicator-value">${exportInfo}</div></div><div class="detail-indicator"><div class="detail-indicator-label">US defense ties</div><div class="detail-indicator-value">${defenseInfo}</div></div><div class="detail-indicator"><div class="detail-indicator-label">US military bases</div><div class="detail-indicator-value">${basesInfo}</div></div></div></div>${c.exports.length > 0 ? `<div class="detail-section"><div class="detail-label">Exports</div><ul class="trade-list">${c.exports.map(renderTradeItem).join('')}</ul></div>` : ''}${c.imports.length > 0 ? `<div class="detail-section"><div class="detail-label">Imports</div><ul class="trade-list">${c.imports.map(renderTradeItem).join('')}</ul></div>` : ''}${c.restrictionsImposed.length > 0 ? `<div class="detail-section"><div class="detail-label">Restrictions they've imposed</div><ul class="restrictions-list">${c.restrictionsImposed.map(x => `<li>${x}</li>`).join('')}</ul></div>` : ''}${c.restrictionsExposed.length > 0 ? `<div class="detail-section"><div class="detail-label">Restrictions imposed on them</div><ul class="restrictions-list">${c.restrictionsExposed.map(x => `<li>${x}</li>`).join('')}</ul></div>` : ''}`;
+}
+
+function attachTileHandlers() {
+  document.querySelectorAll('.tile').forEach(tile => {
+    tile.addEventListener('click', () => {
+      document.querySelectorAll('.tile.selected').forEach(t => t.classList.remove('selected'));
+      tile.classList.add('selected');
+      renderDetail(tile.dataset.id);
+    });
+  });
+}
+
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    renderTiers(btn.dataset.filter);
+  });
+});
+
+renderTiers('all');
+</script>
+</body>
+</html>
