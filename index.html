@@ -505,6 +505,53 @@ body{
 }
 .panel.tile-northsea-mini .foot .cta{color:#d8a34f;text-decoration:none;border-bottom:1px solid #b8823a;padding-bottom:1px}
 
+/* -------- Strategic Alignment Map panel — samples the doc's own
+   aesthetic (warm cream #f5f2ec, IBM Plex family, tier-green #2d7a4f
+   accent, mono tier-strip signature). Field-notes / atlas register. */
+.panel.tile-salmap-mini{
+  background:#f5f2ec;color:#2a2620;
+  border-top:3px solid #2d7a4f;
+  font-family:'IBM Plex Serif',Georgia,serif;
+  padding:20px 22px 22px;position:relative;
+}
+.panel.tile-salmap-mini:hover{background:#efe9dd}
+.panel.tile-salmap-mini .eyebrow{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:10px;letter-spacing:.2em;text-transform:uppercase;
+  color:#8b5a2b;margin-bottom:10px;font-weight:500;
+}
+.panel.tile-salmap-mini h4{
+  font-family:'IBM Plex Serif',Georgia,serif;font-weight:700;
+  font-size:21px;line-height:1.14;letter-spacing:.005em;
+  color:#2a2620;margin-bottom:8px;
+}
+.panel.tile-salmap-mini .deck{
+  font-family:'IBM Plex Serif',Georgia,serif;font-style:italic;
+  font-size:15px;line-height:1.35;color:#5a5348;margin-bottom:10px;
+}
+.panel.tile-salmap-mini .lede{
+  font-size:14px;line-height:1.55;color:#5a5348;margin-bottom:12px;
+}
+.panel.tile-salmap-mini .lede strong{color:#2a2620;font-weight:600}
+.panel.tile-salmap-mini .tierstrip{
+  display:flex;gap:0;height:5px;margin:0 0 12px;border-radius:2px;overflow:hidden;
+}
+.panel.tile-salmap-mini .tierstrip i{flex:1}
+.panel.tile-salmap-mini .tierstrip .t1{background:#2d7a4f}
+.panel.tile-salmap-mini .tierstrip .t2{background:#4a8f47}
+.panel.tile-salmap-mini .tierstrip .t3{background:#a8862c}
+.panel.tile-salmap-mini .tierstrip .t4{background:#a6462c}
+.panel.tile-salmap-mini .tierstrip .t5{background:#7a4a86}
+.panel.tile-salmap-mini .foot{
+  margin-top:auto;padding-top:10px;
+  display:flex;justify-content:space-between;align-items:baseline;gap:10px;
+  font-family:'IBM Plex Mono',monospace;
+  font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;
+  color:#8a8272;font-weight:500;
+  border-top:1px solid #ded7c8;
+}
+.panel.tile-salmap-mini .foot .cta{color:#2d7a4f;text-decoration:none;border-bottom:1px solid #2d7a4f;padding-bottom:1px}
+
 /* -------- Huginn & Muninn panel — samples the doc's own aesthetic
    (aurora-dark night #0b1016, ember #e0662e and aurora #4fd0a6
    accents, Cinzel display + EB Garamond / Cormorant Garamond bodies).
@@ -930,7 +977,7 @@ body{
   <div class="flag">
     <span>Palmer Lake, Colorado</span>
     <!-- DATELINE — bump this to the current date on every index update. -->
-    <span>Friday, July 31, 2026</span>
+    <span>Thursday, August 13, 2026</span>
   </div>
 
   <!-- ============================================================
@@ -1108,6 +1155,18 @@ body{
        maintained by hand during the wash pass.
        ============================================================ -->
   <div class="grid">
+
+    <a class="panel tile-salmap-mini" href="strategic-alignment-map/strategic-alignment-map.html" aria-label="Strategic Alignment Map — what the sorting revealed" data-updated="2026-08-13">
+      <div class="eyebrow">Field Notes &middot; Interactive</div>
+      <h4>Strategic Alignment Map</h4>
+      <div class="deck">What the sorting revealed &mdash; 43 countries, tested.</div>
+      <div class="tierstrip" aria-hidden="true"><i class="t1"></i><i class="t2"></i><i class="t3"></i><i class="t4"></i><i class="t5"></i></div>
+      <div class="lede">The 2025&ndash;2026 tariff rounds read as a sorting mechanism. Under the visible pressure, countries faced non-monetary questions &mdash; strip Chinese telecom, join export controls, integrate defense, host US bases. <strong>The answers revealed alignment that alliance status had obscured.</strong> Filter by tier; select a country to see where it landed and what it trades.</div>
+      <div class="foot">
+        <span>Palmer Lake &middot; July 2026</span>
+        <span class="cta">Open the map &rarr;</span>
+      </div>
+    </a>
 
     <a class="panel tile-eddie-mini" href="eddie/eddie-portal.html" aria-label="Bench School — The Eddie File" data-updated="2026-07-30">
       <div class="eyebrow">Morton Millworks &middot; Bench School</div>
