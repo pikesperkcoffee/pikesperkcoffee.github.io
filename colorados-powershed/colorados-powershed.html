@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Colorado's Powershed — The Morton</title>
+<meta name="description" content="Colorado's Front Range water infrastructure drawn as an energy system — 26 nodes, 25 edges from Palmer Lake's Glen Park reservoirs out to Pueblo. Elevation is the energy layer: every foot of head is 1.0246 kWh per acre-foot. Interactive, with power and demand ledgers and an honest data-gaps register. Andrew Morton, Palmer Lake, Colorado.">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Condensed:wght@600;700&family=IBM+Plex+Sans&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#E9EBE6;--paper2:#DFE2DB;--ink:#16232B;--soft:#4A5A63;--rule:#B6BCB4}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);
+ font:15px/1.5 "IBM Plex Sans",system-ui,sans-serif}
+.wrap{max-width:1680px;margin:0 auto;padding:0 20px 60px}
+header{padding:32px 0 18px;border-bottom:2px solid var(--ink);
+ display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:16px}
+h1{font-family:"IBM Plex Sans Condensed";font-size:38px;margin:0;letter-spacing:-.02em}
+.meta{font-family:"IBM Plex Mono";font-size:11px;color:var(--soft);letter-spacing:.08em;text-transform:uppercase}
+.bar{display:flex;flex-wrap:wrap;border:1px solid var(--ink);margin:18px 0 -1px}
+.bar label{flex:1 1 auto;min-width:150px;display:flex;align-items:center;gap:9px;
+ padding:11px 14px;cursor:pointer;border-right:1px solid var(--rule);background:var(--paper2);
+ font-family:"IBM Plex Mono";font-size:10.5px;letter-spacing:.06em;text-transform:uppercase}
+.bar label:last-child{border-right:none}
+.bar input{position:absolute;opacity:0;width:0;height:0}
+.sw{width:14px;height:14px;border:1.5px solid var(--ink);position:relative;flex:none}
+.bar input:checked+.sw::after{content:"";position:absolute;inset:2px;background:var(--c)}
+.bar label:has(input:not(:checked)){opacity:.42}
+figure{margin:0;border:1px solid var(--ink);background:var(--paper2);overflow-x:auto}
+svg{display:block}
+.gridline{stroke:#C3C8C0;stroke-width:.7}
+.axis{font-family:"IBM Plex Mono";font-size:10px;fill:var(--soft)}
+.aqlabel{font-family:"IBM Plex Mono";font-size:10px;letter-spacing:.14em;fill:#3B3730;opacity:.7}
+.aqedge{font-family:"IBM Plex Mono";font-size:9.5px;letter-spacing:.1em;fill:#8C3A12;opacity:.75}
+.nlabel{font-family:"IBM Plex Sans Condensed";font-size:11.5px;font-weight:600;fill:var(--ink)}
+.elabel{font-family:"IBM Plex Mono";font-size:9.5px;font-weight:600}
+.hidden{display:none}
+.tip{position:fixed;pointer-events:none;background:var(--ink);color:var(--paper);
+ padding:9px 12px;font-family:"IBM Plex Mono";font-size:11px;line-height:1.6;
+ max-width:320px;opacity:0;transition:opacity .1s;z-index:99}
+.tip b{color:#E0A106}
+footer{margin-top:26px;font-family:"IBM Plex Mono";font-size:11px;color:var(--soft);line-height:1.8}
+.scalebar{display:flex;align-items:center;gap:18px;flex-wrap:wrap;margin:18px 0 0;
+ font-family:"IBM Plex Mono";font-size:11px;letter-spacing:.06em;text-transform:uppercase}
+.scalebar .sclabel{color:var(--soft)}
+.scalebar label{display:flex;align-items:center;gap:7px;cursor:pointer}
+.scalebar input{accent-color:#16232B}
+.schint{color:#8C3A12;text-transform:none;letter-spacing:0}
+.power{margin-top:26px;border-top:1.5px solid var(--ink);padding-top:16px}
+.power h2{font-family:"IBM Plex Mono";font-size:11px;letter-spacing:.1em;
+ text-transform:uppercase;color:var(--soft);font-weight:500;margin:0 0 10px}
+.power table{width:100%;border-collapse:collapse;font-family:"IBM Plex Mono";font-size:12px}
+.power td,.power th{padding:7px 8px;border-bottom:1px solid var(--rule);text-align:right}
+.power td:first-child,.power th:first-child{text-align:left}
+.power .barcell{width:38%}
+.power .b{height:11px;background:#E0A106;display:block}
+.dgroup{margin-bottom:16px}
+.dhead{display:flex;justify-content:space-between;font-family:"IBM Plex Mono";
+ font-size:11.5px;margin-bottom:5px}
+.dhead b{font-family:"IBM Plex Sans Condensed";font-size:14px}
+.dbar{display:flex;height:20px;border:1px solid var(--ink);overflow:hidden}
+.dbar span{display:block;position:relative}
+.dkey{display:flex;flex-wrap:wrap;gap:12px;margin-top:5px;
+ font-family:"IBM Plex Mono";font-size:10.5px;color:var(--soft)}
+.dkey i{display:inline-block;width:9px;height:9px;margin-right:5px;font-style:normal}
+.dnone{font-family:"IBM Plex Mono";font-size:11px;color:#8C3A12}
+.power .g{height:11px;background:#1F7A6B;display:block}
+.gaps{margin-top:26px;border-top:1.5px solid var(--ink);padding-top:16px}
+.gaps h2{font-family:"IBM Plex Mono";font-size:11px;letter-spacing:.1em;
+ text-transform:uppercase;color:var(--soft);font-weight:500;margin:0 0 10px}
+.gaps li{font-family:"IBM Plex Mono";font-size:11.5px;margin-bottom:5px;color:var(--soft)}
+.sitenav{position:fixed;top:14px;right:14px;z-index:200;display:flex;gap:6px;font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:11px;letter-spacing:.14em}
+.sitenav a{display:inline-block;padding:6px 10px;background:rgba(233,235,230,.92);backdrop-filter:blur(6px);color:var(--soft);text-decoration:none;border:1px solid var(--rule);transition:color .12s,border-color .12s}
+.sitenav a:hover{color:#E0A106;border-color:#E0A106}
+@media (max-width:640px){.sitenav{top:10px;right:10px}.sitenav a{padding:5px 8px;font-size:10px}}
+</style></head><body><nav class="sitenav" aria-label="Site navigation"><a href="../index.html" title="Back one page (up one directory)">../</a><a href="../index.html" title="Site index (root)">/</a></nav><div class="wrap">
+<header>
+  <h1>Colorado's Powershed</h1>
+  <div class="meta">26 nodes · 25 edges · 4,450–7,560 ft · vertical exaggeration 30× · stroke = kWh per acre-foot</div>
+</header>
+<div class="scalebar">
+  <span class="sclabel">Stroke encodes</span>
+  <label><input type="radio" name="enc" value="rate" checked><span>Rate · kWh per acre-foot</span></label>
+  <label><input type="radio" name="enc" value="tot"><span>Total · kWh per year</span></label>
+  <span class="schint" id="schint"></span>
+</div>
+<div class="bar" id="bar"></div>
+<figure><svg id="svg" viewBox="0 0 4404 1000" width="4404"></svg></figure>
+<div class="power"><h2>Power ledger — annual energy by owner</h2>
+<table id="ledger"></table></div>
+<div class="power"><h2>Demand ledger — who actually uses the water</h2>
+<div id="demand"></div></div>
+<div class="gaps"><h2>Data gaps — fields that would move a value from estimated to measured</h2>
+<ul id="gaps"></ul></div>
+<footer>Colorado water infrastructure drawn as an energy system. Elevation is the energy layer: every foot of head is 1.0246 kWh per acre-foot.<br>Generated from the data tables by render.py — do not hand-edit, regenerate.<br><br>Andrew Morton · Palmer Lake, Colorado</footer>
+</div>
+<div class="tip" id="tip"></div>
+<script>
+const NODES=[{"id": "gp_upper", "name": "Upper Glen Park Reservoir", "type": "reservoir", "owner": "palmer_lake", "elev": 7560.0, "hgl": null, "conf": "est", "notes": "1905", "cap": null, "x": 506.7, "y": 70.0, "sym": "res", "colour": "#E0A106", "ly": 74.0, "leader": false}, {"id": "gp_lower", "name": "Lower Glen Park Reservoir", "type": "reservoir", "owner": "palmer_lake", "elev": 7420.0, "hgl": null, "conf": "est", "notes": "1965; intake 1967", "cap": null, "x": 526.7, "y": 109.2, "sym": "res", "colour": "#E0A106", "ly": 126.2, "leader": true}, {"id": "pl_swtp", "name": "Palmer Lake Surface WTP", "type": "treatment", "owner": "palmer_lake", "elev": 7156.0, "hgl": null, "conf": "derived", "notes": "back-solved from 40HP pumps", "cap": 1232.0, "x": 543.0, "y": 183.0, "sym": "plant", "colour": "#E0A106", "ly": 200.0, "leader": true}, {"id": "pl_tanks", "name": "Palmer Lake High Zone Tanks", "type": "storage", "owner": "palmer_lake", "elev": 7450.0, "hgl": 7450.0, "conf": "est", "notes": "2x250k gal 1985+2019", "cap": null, "x": 553.7, "y": 100.8, "sym": "tank", "colour": "#E0A106", "ly": 104.8, "leader": false}, {"id": "pl_town", "name": "Palmer Lake service area", "type": "demand", "owner": "palmer_lake", "elev": 7162.0, "hgl": null, "conf": "derived", "notes": "1011 taps; 125-210 psi single zone", "cap": 168.0, "x": 516.0, "y": 181.3, "sym": "town", "colour": "#E0A106", "ly": 185.3, "leader": false}, {"id": "pl_d2r", "name": "Well D-2R Denver", "type": "well", "owner": "palmer_lake", "elev": 6601.0, "hgl": null, "conf": "measured", "notes": "1630 ft; static 549 ft 2023; 130 gpm", "cap": 210.0, "x": 573.2, "y": 338.3, "sym": "well", "colour": "#E0A106", "ly": 342.3, "leader": false}, {"id": "pl_a2", "name": "Well A-2 Arapahoe", "type": "well", "owner": "palmer_lake", "elev": 5450.0, "hgl": null, "conf": "measured", "notes": "2233 ft; static 1627 ft 2023; 240 gpm", "cap": 390.0, "x": 572.1, "y": 660.3, "sym": "well", "colour": "#E0A106", "ly": 664.3, "leader": false}, {"id": "mon_town", "name": "Monument service area", "type": "demand", "owner": "monument", "elev": 6960.0, "hgl": null, "conf": "est", "notes": "2100 customers; no surface rights", "cap": 350.0, "x": 784.6, "y": 237.8, "sym": "town", "colour": "#2E6E8E", "ly": 254.8, "leader": true}, {"id": "mon_arap", "name": "Monument Arapahoe wells 8-9", "type": "well", "owner": "monument", "elev": 4860.0, "hgl": null, "conf": "est", "notes": "depths not published", "cap": 520.0, "x": 788.1, "y": 825.3, "sym": "well", "colour": "#2E6E8E", "ly": 829.3, "leader": false}, {"id": "wm_town", "name": "Woodmoor service area", "type": "demand", "owner": "woodmoor", "elev": 7050.0, "hgl": null, "conf": "est", "notes": "~3200 homes", "cap": 900.0, "x": 866.7, "y": 212.7, "sym": "town", "colour": "#5E9DB8", "ly": 216.7, "leader": false}, {"id": "wm_lake", "name": "Lake Woodmoor", "type": "reservoir", "owner": "woodmoor", "elev": 7020.0, "hgl": null, "conf": "est", "notes": "acquired 2001; exchange credit storage", "cap": null, "x": 839.7, "y": 221.1, "sym": "res", "colour": "#5E9DB8", "ly": 238.1, "leader": true}, {"id": "wm_arap", "name": "Woodmoor Arapahoe field", "type": "well", "owner": "woodmoor", "elev": 4950.0, "hgl": null, "conf": "est", "notes": "16 wells total", "cap": 1100.0, "x": 871.5, "y": 800.1, "sym": "well", "colour": "#5E9DB8", "ly": 804.1, "leader": false}, {"id": "tlwwtf", "name": "Tri-Lakes WWTF", "type": "wwtp", "owner": "joint_plsd_msd_wm", "elev": 6880.0, "hgl": null, "conf": "est", "notes": "4.2 MGD rated; 1.24 treated", "cap": 4704.0, "x": 758.5, "y": 260.2, "sym": "plant", "colour": "#6B7F3E", "ly": 290.2, "leader": true}, {"id": "mon_creek_div", "name": "Monument Creek Exchange diversion", "type": "diversion", "owner": "woodmoor", "elev": 6930.0, "hgl": null, "conf": "est", "notes": "above the TLWWTF outfall", "cap": null, "x": 731.5, "y": 246.2, "sym": "div", "colour": "#5E9DB8", "ly": 276.2, "leader": true}, {"id": "pueblo_res", "name": "Pueblo Reservoir", "type": "reservoir", "owner": "reclamation", "elev": 4880.0, "hgl": null, "conf": "known", "notes": "Fry-Ark terminal storage", "cap": null, "x": 3456.5, "y": 819.7, "sym": "res", "colour": "#8E4A6E", "ly": 823.7, "leader": false}, {"id": "csu_hwy83", "name": "CSU Highway 83 Tank", "type": "storage", "owner": "csu", "elev": 7200.0, "hgl": null, "conf": "est", "notes": "NDS take point", "cap": null, "x": 1405.8, "y": 170.7, "sym": "tank", "colour": "#B4682A", "ly": 174.7, "leader": false}, {"id": "jv_ranch", "name": "JV Ranch / Fountain Creek", "type": "source", "owner": "woodmoor", "elev": 5500.0, "hgl": null, "conf": "est", "notes": "changed to municipal 2014", "cap": 3000.0, "x": 2677.9, "y": 646.3, "sym": "res", "colour": "#5E9DB8", "ly": 650.3, "leader": false}, {"id": "cr_plum", "name": "Plum Creek Purification Facility", "type": "treatment", "owner": "castle_rock", "elev": 6180.0, "hgl": null, "conf": "est", "notes": "6->12 MGD; ASR wells with down-hole turbines", "cap": 6720.0, "x": 90.0, "y": 456.0, "sym": "plant", "colour": "#1F7A6B", "ly": 460.0, "leader": false}, {"id": "csu_town", "name": "Colorado Springs", "type": "demand", "owner": "csu", "elev": 6035.0, "hgl": null, "conf": "known", "notes": "SDS partner; Fountain Ck watershed", "cap": null, "x": 1678.4, "y": 496.6, "sym": "town", "colour": "#B4682A", "ly": 500.6, "leader": false}, {"id": "ft_carson", "name": "Fort Carson", "type": "demand", "owner": "army", "elev": 5856.0, "hgl": null, "conf": "known", "notes": "", "cap": null, "x": 2071.6, "y": 546.7, "sym": "town", "colour": "#A32E1C", "ly": 550.7, "leader": false}, {"id": "sec_wide", "name": "Security-Widefield", "type": "demand", "owner": "security_wd", "elev": 5850.0, "hgl": null, "conf": "known", "notes": "SDS partner", "cap": null, "x": 2318.8, "y": 548.4, "sym": "town", "colour": "#4B5D8A", "ly": 552.4, "leader": false}, {"id": "fountain_town", "name": "Fountain", "type": "demand", "owner": "fountain", "elev": 5558.0, "hgl": null, "conf": "known", "notes": "SDS partner", "cap": null, "x": 2609.7, "y": 630.0, "sym": "town", "colour": "#7A6A3E", "ly": 634.0, "leader": false}, {"id": "pueblo_west", "name": "Pueblo West", "type": "demand", "owner": "pueblo_west", "elev": 5033.0, "hgl": null, "conf": "known", "notes": "SDS partner", "cap": null, "x": 3483.7, "y": 776.9, "sym": "town", "colour": "#E0A106", "ly": 780.9, "leader": false}, {"id": "pueblo_town", "name": "Pueblo", "type": "demand", "owner": "pueblo", "elev": 4692.0, "hgl": null, "conf": "known", "notes": "", "cap": null, "x": 4086.5, "y": 872.3, "sym": "town", "colour": "#2E6E8E", "ly": 876.3, "leader": false}, {"id": "fountain_conf", "name": "Fountain Ck / Arkansas confluence", "type": "diversion", "owner": "natural", "elev": 4636.0, "hgl": null, "conf": "known", "notes": "Fountain Ck terminus", "cap": null, "x": 4164.0, "y": 888.0, "sym": "div", "colour": "#5E9DB8", "ly": 892.0, "leader": false}, {"id": "csu_bailey", "name": "Edward Bailey WTP", "type": "treatment", "owner": "csu", "elev": 6100.0, "hgl": null, "conf": "est", "notes": "SDS 50 MGD ozone-biofiltration", "cap": 56000.0, "x": 2158.1, "y": 478.4, "sym": "plant", "colour": "#B4682A", "ly": 482.4, "leader": false}], EDGES=[{"id": "e01", "a": "gp_upper", "b": "gp_lower", "kind": "gravity", "head": -140.0, "kwh": 0, "fric": null, "exists": "yes", "conf": "est", "notes": "", "owner": "palmer_lake", "colour": "#E0A106", "flow": 85.0, "kwhyr": 0, "kw": 0.0, "w_rate": 1.5, "w_tot": 1.5, "w": 1.5, "off": 0.0}, {"id": "e02", "a": "gp_lower", "b": "pl_swtp", "kind": "gravity", "head": -264.0, "kwh": 0, "fric": null, "exists": "yes", "conf": "est", "notes": "", "owner": "palmer_lake", "colour": "#E0A106", "flow": 85.0, "kwhyr": 0, "kw": 0.0, "w_rate": 1.5, "w_tot": 1.5, "w": 1.5, "off": 0.0}, {"id": "e03", "a": "pl_swtp", "b": "pl_tanks", "kind": "pump", "head": 294.0, "kwh": 464, "fric": 0.3, "exists": "yes", "conf": "derived", "notes": "3x40HP boosters", "owner": "palmer_lake", "colour": "#E0A106", "flow": 85.0, "kwhyr": 39428, "kw": 4.5, "w_rate": 6.2, "w_tot": 1.8, "w": 6.2, "off": 17.0}, {"id": "e04", "a": "pl_tanks", "b": "pl_town", "kind": "gravity", "head": -288.0, "kwh": 0, "fric": null, "exists": "yes", "conf": "derived", "notes": "125 psi at town center", "owner": "palmer_lake", "colour": "#E0A106", "flow": 168.0, "kwhyr": 0, "kw": 0.0, "w_rate": 1.5, "w_tot": 1.5, "w": 1.5, "off": 0.0}, {"id": "e05", "a": "pl_d2r", "b": "pl_tanks", "kind": "pump", "head": 849.0, "kwh": 1406, "fric": 2.1, "exists": "yes", "conf": "measured", "notes": "lift from pumping level to HGL", "owner": "palmer_lake", "colour": "#E0A106", "flow": 83.0, "kwhyr": 116736, "kw": 13.3, "w_rate": 9.8, "w_tot": 2.1, "w": 9.8, "off": 4.0}, {"id": "e06", "a": "pl_a2", "b": "pl_tanks", "kind": "pump", "head": 2000.0, "kwh": 3309, "fric": 2.2, "exists": "yes", "conf": "measured", "notes": "lift from pumping level to HGL", "owner": "palmer_lake", "colour": "#E0A106", "flow": 85.0, "kwhyr": 281242, "kw": 32.1, "w_rate": 14.2, "w_tot": 2.4, "w": 14.2, "off": -13.0}, {"id": "e07", "a": "mon_arap", "b": "mon_town", "kind": "pump", "head": 2100.0, "kwh": 3479, "fric": 5.4, "exists": "yes", "conf": "est", "notes": "tank elevation unknown", "owner": "monument", "colour": "#2E6E8E", "flow": 350.0, "kwhyr": 1217768, "kw": 139.0, "w_rate": 14.5, "w_tot": 3.4, "w": 14.5, "off": 0.0}, {"id": "e08", "a": "wm_arap", "b": "wm_town", "kind": "pump", "head": 2100.0, "kwh": 3490, "fric": 12.0, "exists": "yes", "conf": "est", "notes": "tank elevation unknown", "owner": "woodmoor", "colour": "#5E9DB8", "flow": 600.0, "kwhyr": 2094129, "kw": 239.1, "w_rate": 14.5, "w_tot": 4.0, "w": 14.5, "off": 0.0}, {"id": "e09", "a": "pl_town", "b": "tlwwtf", "kind": "sewer", "head": -282.0, "kwh": 0, "fric": null, "exists": "yes", "conf": "est", "notes": "PLSD collection", "owner": "palmer_lake", "colour": "#E0A106", "flow": 120.0, "kwhyr": 0, "kw": 0.0, "w_rate": 1.5, "w_tot": 1.5, "w": 1.5, "off": 0.0}, {"id": "e10", "a": "mon_town", "b": "tlwwtf", "kind": "sewer", "head": -80.0, "kwh": 0, "fric": null, "exists": "yes", "conf": "est", "notes": "", "owner": "monument", "colour": "#2E6E8E", "flow": 280.0, "kwhyr": 0, "kw": 0.0, "w_rate": 1.5, "w_tot": 1.5, "w": 1.5, "off": 0.0}, {"id": "e11", "a": "wm_town", "b": "tlwwtf", "kind": "sewer", "head": -170.0, "kwh": 0, "fric": null, "exists": "yes", "conf": "est", "notes": "", "owner": "woodmoor", "colour": "#5E9DB8", "flow": 700.0, "kwhyr": 0, "kw": 0.0, "w_rate": 1.5, "w_tot": 1.5, "w": 1.5, "off": 0.0}, {"id": "e12", "a": "tlwwtf", "b": "mon_creek_div", "kind": "credit", "head": 50.0, "kwh": 83, "fric": null, "exists": "yes", "conf": "est", "notes": "paper flows upstream; nontributary reuse", "owner": "joint_plsd_msd_wm", "colour": "#6B7F3E", "flow": 300.0, "kwhyr": 24789, "kw": 2.8, "w_rate": 3.5, "w_tot": 1.8, "w": 3.5, "off": 0.0}, {"id": "e13", "a": "mon_creek_div", "b": "wm_lake", "kind": "pump", "head": 90.0, "kwh": 165, "fric": 10.0, "exists": "yes", "conf": "est", "notes": "Monument Creek Exchange pipeline", "owner": "woodmoor", "colour": "#5E9DB8", "flow": 300.0, "kwhyr": 49558, "kw": 5.7, "w_rate": 4.3, "w_tot": 1.9, "w": 4.3, "off": 0.0}, {"id": "e14", "a": "pl_tanks", "b": "mon_town", "kind": "gravity", "head": -490.0, "kwh": 0, "fric": null, "exists": "yes", "conf": "derived", "notes": "BUILT BUT UNMEASURED", "owner": "palmer_lake", "colour": "#E0A106", "flow": 0, "kwhyr": 0, "kw": 0, "w_rate": 1.5, "w_tot": 1.5, "w": 1.5, "off": 0.0}, {"id": "e15", "a": "pl_tanks", "b": "wm_town", "kind": "gravity", "head": -400.0, "kwh": 0, "fric": null, "exists": "no", "conf": "derived", "notes": "gravity feasible; no pipe", "owner": "palmer_lake", "colour": "#E0A106", "flow": 0, "kwhyr": 0, "kw": 0, "w_rate": 1.5, "w_tot": 1.5, "w": 1.5, "off": 9.1}, {"id": "e16", "a": "pueblo_res", "b": "csu_hwy83", "kind": "pump", "head": 2320.0, "kwh": 2975, "fric": 2.8, "exists": "yes", "conf": "est", "notes": "SDS 3 stations | flow est, actual deliveries not sourced", "owner": "reclamation", "colour": "#8E4A6E", "flow": 3000.0, "kwhyr": 8924857, "kw": 1018.8, "w_rate": 13.5, "w_tot": 6.8, "w": 13.5, "off": -12.4}, {"id": "e17", "a": "csu_hwy83", "b": "mon_town", "kind": "pump", "head": -240.0, "kwh": 0, "fric": 96.4, "exists": "yes", "conf": "est", "notes": "NDS 16-in north | flow est, actual deliveries not sourced", "owner": "csu", "colour": "#B4682A", "flow": 1500.0, "kwhyr": 0, "kw": 0.0, "w_rate": 1.5, "w_tot": 1.5, "w": 1.5, "off": 0.0}, {"id": "e18", "a": "jv_ranch", "b": "wm_town", "kind": "pump", "head": 1550.0, "kwh": 2837, "fric": 166.9, "exists": "no", "conf": "est", "notes": "The Loop; Chilcott-Calhan-Sundance | flow est, actual deliveries not sourced", "owner": "woodmoor", "colour": "#5E9DB8", "flow": 2000.0, "kwhyr": 5674609, "kw": 647.8, "w_rate": 13.2, "w_tot": 5.7, "w": 13.2, "off": -3.2}, {"id": "e19", "a": "pueblo_res", "b": "csu_bailey", "kind": "pump", "head": 1220.0, "kwh": 1823, "fric": 203.7, "exists": "yes", "conf": "est", "notes": "SDS raw water to Bailey WTP | flow est, actual deliveries not sourced", "owner": "reclamation", "colour": "#8E4A6E", "flow": 30000.0, "kwhyr": 54701990, "kw": 6244.5, "w_rate": 10.9, "w_tot": 14.5, "w": 10.9, "off": -14.2}, {"id": "e20", "a": "csu_bailey", "b": "csu_town", "kind": "gravity", "head": -65.0, "kwh": 0, "fric": null, "exists": "yes", "conf": "est", "notes": "flow est, actual deliveries not sourced", "owner": "csu", "colour": "#B4682A", "flow": 25000.0, "kwhyr": 0, "kw": 0.0, "w_rate": 1.5, "w_tot": 1.5, "w": 1.5, "off": 0.0}, {"id": "e21", "a": "csu_bailey", "b": "pueblo_west", "kind": "pump", "head": -1067.0, "kwh": 0, "fric": 225.2, "exists": "yes", "conf": "est", "notes": "SDS partner delivery | flow est, actual deliveries not sourced", "owner": "csu", "colour": "#B4682A", "flow": 2500.0, "kwhyr": 0, "kw": 0.0, "w_rate": 1.5, "w_tot": 1.5, "w": 1.5, "off": 6.0}, {"id": "e22", "a": "csu_bailey", "b": "fountain_town", "kind": "gravity", "head": -542.0, "kwh": 0, "fric": 44.5, "exists": "yes", "conf": "est", "notes": "SDS partner delivery | flow est, actual deliveries not sourced", "owner": "csu", "colour": "#B4682A", "flow": 2000.0, "kwhyr": 0, "kw": 0.0, "w_rate": 1.5, "w_tot": 1.5, "w": 1.5, "off": 12.5}, {"id": "e23", "a": "csu_bailey", "b": "sec_wide", "kind": "gravity", "head": -250.0, "kwh": 0, "fric": 19.5, "exists": "yes", "conf": "est", "notes": "SDS partner delivery | flow est, actual deliveries not sourced", "owner": "csu", "colour": "#B4682A", "flow": 1500.0, "kwhyr": 0, "kw": 0.0, "w_rate": 1.5, "w_tot": 1.5, "w": 1.5, "off": 19.0}, {"id": "e24", "a": "csu_town", "b": "fountain_conf", "kind": "sewer", "head": -1399.0, "kwh": 0, "fric": null, "exists": "yes", "conf": "est", "notes": "Fountain Ck carries return flows south | flow est, actual deliveries not sourced", "owner": "csu", "colour": "#B4682A", "flow": 40000.0, "kwhyr": 0, "kw": 0.0, "w_rate": 1.5, "w_tot": 1.5, "w": 1.5, "off": 0.0}, {"id": "e25", "a": "pueblo_res", "b": "csu_bailey", "kind": "generation", "head": -180.0, "kwh": -128, "fric": 2.0, "exists": "yes", "conf": "est", "notes": "Broderick hydro at North Outlet Works; 7.5 MW rated; head est", "owner": "reclamation", "colour": "#8E4A6E", "flow": 30000.0, "kwhyr": -3829159, "kw": 437.1, "w_rate": 4.0, "w_tot": 4.9, "w": 4.0, "off": 17.2}], TICKS=[{"v": 4500, "y": 926.0}, {"v": 5000, "y": 786.1}, {"v": 5500, "y": 646.3}, {"v": 6000, "y": 506.4}, {"v": 6500, "y": 366.5}, {"v": 7000, "y": 226.7}, {"v": 7500, "y": 86.8}], COLOUR={"palmer_lake": "#E0A106", "monument": "#2E6E8E", "woodmoor": "#5E9DB8", "joint_plsd_msd_wm": "#6B7F3E", "reclamation": "#8E4A6E", "csu": "#B4682A", "castle_rock": "#1F7A6B", "army": "#A32E1C", "security_wd": "#4B5D8A", "fountain": "#7A6A3E", "pueblo_west": "#E0A106", "pueblo": "#2E6E8E", "natural": "#5E9DB8"},
+      GAPS=["gp_upper: elevation is est", "gp_lower: elevation is est", "pl_tanks: elevation is est", "pl_town: no grade line \u2014 pump head unsolvable", "mon_town: no grade line \u2014 pump head unsolvable", "mon_town: elevation is est", "mon_tank: no grade line \u2014 pump head unsolvable", "mon_tank: elevation is unknown", "mon_arap: elevation is est", "wm_town: no grade line \u2014 pump head unsolvable", "wm_town: elevation is est", "wm_lake: elevation is est", "wm_arap: elevation is est", "tlwwtf: elevation is est", "mon_creek_div: elevation is est", "csu_hwy83: no grade line \u2014 pump head unsolvable", "csu_hwy83: elevation is est", "jv_ranch: elevation is est", "cr_plum: elevation is est", "csu_town: no grade line \u2014 pump head unsolvable", "ft_carson: no grade line \u2014 pump head unsolvable", "sec_wide: no grade line \u2014 pump head unsolvable", "fountain_town: no grade line \u2014 pump head unsolvable", "pueblo_west: no grade line \u2014 pump head unsolvable", "pueblo_town: no grade line \u2014 pump head unsolvable", "csu_bailey: elevation is est", "e07: >1000 kWh/AF resting on an estimate", "e08: >1000 kWh/AF resting on an estimate", "e12: pumped edge with no diameter", "e16: >1000 kWh/AF resting on an estimate", "e18: >1000 kWh/AF resting on an estimate", "e19: >1000 kWh/AF resting on an estimate"], TERRAIN=[{"x": 506.7, "y": 70.0, "elev": 7560.0, "label": "Rampart Range flank"}, {"x": 518.5, "y": 160.4, "elev": 7237.0, "label": "Palmer Lake / divide crest"}, {"x": 771.1, "y": 237.8, "elev": 6960.0, "label": "Monument"}, {"x": 1107.3, "y": 282.6, "elev": 6800.0, "label": "Monument Hill"}, {"x": 1392.2, "y": 394.5, "elev": 6400.0, "label": "Air Force Academy"}, {"x": 1678.4, "y": 496.6, "elev": 6035.0, "label": "Colorado Springs"}, {"x": 2318.8, "y": 548.4, "elev": 5850.0, "label": "Security-Widefield"}, {"x": 2609.7, "y": 630.0, "elev": 5558.0, "label": "Fountain"}, {"x": 3254.6, "y": 730.2, "elev": 5200.0, "label": "Fountain Ck valley"}, {"x": 3483.7, "y": 776.9, "elev": 5033.0, "label": "Pueblo West"}, {"x": 4086.5, "y": 872.3, "elev": 4692.0, "label": "Pueblo"}, {"x": 4164.0, "y": 888.0, "elev": 4636.0, "label": "Arkansas confluence"}], AQUIFERS=[{"name": "Dawson", "note": "to ~1400 ft depth at the divide; <50 gpm", "colour": "#C9B79C", "top": 156.7, "base": 548.4, "x_end": 1678.4, "top_ft": 7250.0, "base_ft": 5850.0}, {"name": "Denver", "note": "1400-1700 ft; base altitude 4600-6300 ft basin-wide", "colour": "#A9A492", "top": 548.4, "base": 632.3, "x_end": 1678.4, "top_ft": 5850.0, "base_ft": 5550.0}, {"name": "Arapahoe", "note": "2100-2400 ft; 150-300 gpm; most developed", "colour": "#B9906F", "top": 632.3, "base": 828.1, "x_end": 1678.4, "top_ft": 5550.0, "base_ft": 4850.0}, {"name": "Laramie-Fox Hills", "note": "2500-2800 ft; undeveloped here", "colour": "#8C8578", "top": 828.1, "base": 940.0, "x_end": 1678.4, "top_ft": 4850.0, "base_ft": 4450.0}],
+      LEDGER=[{"owner": "reclamation", "consumed": 63626847, "generated": 3829159}, {"owner": "woodmoor", "consumed": 7818296, "generated": 0}, {"owner": "monument", "consumed": 1217768, "generated": 0}, {"owner": "palmer_lake", "consumed": 437406, "generated": 0}, {"owner": "joint_plsd_msd_wm", "consumed": 24789, "generated": 0}, {"owner": "csu", "consumed": 0, "generated": 0}], DEMAND=[{"owner": "monument", "rows": [{"cat": "commercial", "af": 117.0, "accts": null, "conf": "measured", "notes": "~one third of billed use per water conservation plan", "colour": "#E0A106"}, {"cat": "residential", "af": 198.0, "accts": null, "conf": "derived", "notes": "balance of billed use", "colour": "#2E6E8E"}, {"cat": "non_revenue", "af": 35.0, "accts": null, "conf": "est", "notes": "~10% assumed", "colour": "#9AA29B"}], "total": 350.0, "unknown": 0}, {"owner": "palmer_lake", "rows": [{"cat": "residential", "af": 133.0, "accts": 975.0, "conf": "derived", "notes": "3714 gal/mo avg x accounts", "colour": "#2E6E8E"}, {"cat": "commercial", "af": 12.0, "accts": 32.0, "conf": "est", "notes": "32 accts incl 12 restaurants; volume not published", "colour": "#E0A106"}, {"cat": "institutional", "af": 3.0, "accts": 1.0, "conf": "est", "notes": "one school", "colour": "#6B7F3E"}, {"cat": "irrigation", "af": 3.0, "accts": 1.0, "conf": "est", "notes": "single 1-in irrigation account; board flagged it as a strain", "colour": "#1F7A6B"}, {"cat": "non_revenue", "af": 17.0, "accts": null, "conf": "est", "notes": "~10% assumed; no AWWA water audit published", "colour": "#9AA29B"}], "total": 168.0, "unknown": 0}, {"owner": "woodmoor", "rows": [{"cat": "residential", "af": null, "accts": null, "conf": "unknown", "notes": "not published", "colour": "#2E6E8E"}, {"cat": "commercial", "af": null, "accts": null, "conf": "unknown", "notes": "not published", "colour": "#E0A106"}], "total": 0, "unknown": 2}], POWER={"draw": "#4C3A8C", "gen": "#12897B", "line": "#F2D33C"};
+const svg=document.getElementById('svg'), NS='http://www.w3.org/2000/svg';
+const el=(t,a={})=>{const e=document.createElementNS(NS,t);
+  for(const k in a)e.setAttribute(k,a[k]);return e;};
+const byId=Object.fromEntries(NODES.map(n=>[n.id,n]));
+
+// stroke weight: sqrt so a 3300 doesn't drown a 500
+
+TICKS.forEach(t=>{
+  svg.appendChild(el('line',{class:'gridline',x1:90,x2:4404-240,y1:t.y,y2:t.y}));
+  const x=el('text',{class:'axis',x:14,y:t.y+3});x.textContent=t.v.toLocaleString();
+  svg.appendChild(x);
+});
+
+const tip=document.getElementById('tip');
+const show=(ev,html)=>{tip.innerHTML=html;tip.style.opacity=1;
+  tip.style.left=Math.min(ev.clientX+14,innerWidth-340)+'px';
+  tip.style.top=(ev.clientY+14)+'px';};
+const hide=()=>tip.style.opacity=0;
+
+// ---- context layers, drawn first so the network sits on top ----------
+const gAq=el('g'),gTerr=el('g');svg.appendChild(gAq);svg.appendChild(gTerr);
+
+// aquifer bands: horizontal in elevation space, truncated where the
+// Denver Basin actually ends (Greeley to Colorado Springs, no further)
+AQUIFERS.forEach(a=>{
+  const g=el('g');g.dataset.owner='_geology';
+  g.appendChild(el('rect',{x:90,y:a.top,width:Math.max(a.x_end-90,0),
+    height:Math.max(a.base-a.top,0),fill:a.colour,'fill-opacity':.22}));
+  g.appendChild(el('line',{x1:90,x2:a.x_end,y1:a.top,y2:a.top,
+    stroke:a.colour,'stroke-width':1,'stroke-opacity':.55}));
+  // feathered southern termination
+  g.appendChild(el('rect',{x:a.x_end,y:a.top,width:34,
+    height:Math.max(a.base-a.top,0),fill:a.colour,'fill-opacity':.09}));
+  const t=el('text',{class:'aqlabel',x:90+10,y:(a.top+a.base)/2+3.5});
+  t.textContent=a.name.toUpperCase()+'  '+a.top_ft.toLocaleString()+
+                '–'+a.base_ft.toLocaleString()+' ft';
+  g.appendChild(t);
+  const e=el('text',{class:'aqedge',x:a.x_end+40,y:(a.top+a.base)/2+3.5});
+  e.textContent='basin edge';
+  g.appendChild(e);
+  gAq.appendChild(g);
+});
+
+// terrain profile
+if(TERRAIN.length>1){
+  const d='M'+TERRAIN.map(p=>`${p.x} ${p.y}`).join(' L');
+  gTerr.appendChild(el('path',{d:d+` L${TERRAIN[TERRAIN.length-1].x} ${1000} L${TERRAIN[0].x} ${1000} Z`,
+    fill:'#16232B','fill-opacity':.05}));
+  gTerr.appendChild(el('path',{d:d,fill:'none',stroke:'#16232B',
+    'stroke-width':1.6,'stroke-opacity':.7}));
+  TERRAIN.forEach(p=>{
+    const g=el('g');g.style.cursor='crosshair';
+    g.appendChild(el('circle',{cx:p.x,cy:p.y,r:2,fill:'#16232B','fill-opacity':.55}));
+    g.addEventListener('mousemove',ev=>show(ev,
+      `<b>${p.label}</b><br>ground ${p.elev.toLocaleString()} ft`));
+    g.addEventListener('mouseleave',hide);
+    gTerr.appendChild(g);
+  });
+}
+
+const gEdge=el('g'),gNode=el('g');svg.appendChild(gEdge);svg.appendChild(gNode);
+// Edges draw as three coincident elements: a solid pipe body, a thin dark
+// centreline, and chevrons riding along it in the direction of flow. Dash
+// is reserved for semantics (unbuilt / paper-only), never for direction.
+const CHEV_GAP=34;
+let ENC='rate';
+
+const fmtE=k=>Math.abs(k)>=1e6?(k/1e6).toFixed(1)+' GWh/yr'
+              :Math.abs(k)>=1e3?(k/1e3).toFixed(1)+' MWh/yr'
+              :k.toLocaleString()+' kWh/yr';
+
+function drawEdges(){
+  gEdge.textContent='';
+  EDGES.forEach(e=>{
+  const a=byId[e.a],b=byId[e.b];if(!a||!b)return;
+  const dx=b.x-a.x, dy=b.y-a.y, len=Math.hypot(dx,dy)||1;
+  const ux=dx/len, uy=dy/len;
+  const ox=-uy*(e.off||0), oy=ux*(e.off||0);
+  const trim=13;
+  const x1=a.x+ox+ux*trim, y1=a.y+oy+uy*trim;
+  const x2=b.x+ox-ux*trim, y2=b.y+oy-uy*trim;
+  const run=Math.hypot(x2-x1,y2-y1);
+  // generation is its own colour: this edge returns energy
+  const gen=e.kwh<0||e.kind==='generation';
+  const pw=ENC==='tot';
+  const c=pw?(gen?POWER.gen:POWER.draw)
+           :(gen?'#1F7A6B':(e.kwh>0?e.colour:'#2E6E8E'));
+  const w=pw?e.w_tot:e.w_rate;
+
+  const g=el('g');g.dataset.owner=e.owner;g.style.cursor='crosshair';
+
+  const pipe=el('path',{d:`M${x1} ${y1} L${x2} ${y2}`,fill:'none',stroke:c,
+    'stroke-width':w,'stroke-linecap':'round',
+    'stroke-opacity':e.exists==='no'?.34:.82});
+  if(e.exists==='no')pipe.setAttribute('stroke-dasharray','11 7');
+  if(e.kind==='credit'){pipe.setAttribute('stroke-dasharray','3 7');
+    pipe.setAttribute('stroke-opacity',.75);}
+  g.appendChild(pipe);
+
+  // centreline: dark ink for water, a thin filament for power
+  if(w>3)g.appendChild(el('path',{d:`M${x1} ${y1} L${x2} ${y2}`,fill:'none',
+    stroke:pw?POWER.line:'#16232B','stroke-width':pw?1.3:.9,
+    'stroke-opacity':pw?.95:.5,
+    'stroke-dasharray':pw?'1 5':null,'stroke-linecap':'round'}));
+
+  const size=Math.max(3.4,Math.min(w*0.42,7));
+  const n=Math.max(1,Math.floor(run/CHEV_GAP));
+  const ang=Math.atan2(uy,ux)*180/Math.PI;
+  for(let i=0;i<n;i++){
+    const t=(i+0.5)/n;
+    const cx=x1+(x2-x1)*t, cy=y1+(y2-y1)*t;
+    g.appendChild(el('path',{
+      d:`M${-size} ${-size*0.8} L${size*0.55} 0 L${-size} ${size*0.8}`,
+      fill:'none',stroke:pw?(gen?'#0A5F55':'#241C4A'):'#16232B',
+      'stroke-width':Math.max(1.1,size*0.32),
+      'stroke-linecap':'round','stroke-linejoin':'round',
+      'stroke-opacity':e.exists==='no'?.45:.85,
+      transform:`translate(${cx.toFixed(1)} ${cy.toFixed(1)}) rotate(${ang.toFixed(1)})`}));
+  }
+
+  g.addEventListener('mousemove',ev=>show(ev,
+    `<b>${e.a} → ${e.b}</b><br>${e.kind}${e.exists==='no'?' · NOT BUILT':''}`+
+    `<br>head ${e.head>0?'+':''}${e.head} ft`+
+    (e.fric!==null?`<br>friction ${e.fric} ft`:'')+
+    `<br><b>${e.kwh.toLocaleString()} kWh/AF</b>`+
+    (e.flow?`<br>${e.flow.toLocaleString()} AF/yr → <b>${fmtE(e.kwhyr)}</b>`
+           :'<br><i>no flow data — energy total unknown</i>')+
+    (e.kw?`<br>${e.kw>=1000?(e.kw/1000).toFixed(1)+' MW':e.kw+' kW'} continuous`:'')+
+    `<br>confidence: ${e.conf}`+
+    (e.notes?`<br>${e.notes}`:'')));
+  g.addEventListener('mouseleave',hide);
+  gEdge.appendChild(g);
+  });
+  const missing=EDGES.filter(e=>!e.flow&&e.kwh).length;
+  document.getElementById('schint').textContent = ENC==='tot'&&missing
+    ? `${missing} edge${missing>1?'s':''} have no flow data and render at minimum weight`
+    : '';
+}
+drawEdges();
+document.querySelectorAll('input[name=enc]').forEach(r=>
+  r.addEventListener('change',()=>{ENC=r.value;drawEdges();
+    document.querySelectorAll('.bar input').forEach(cb=>{
+      if(!cb.checked)document.querySelectorAll(`[data-owner="${cb.dataset.owner}"]`)
+        .forEach(n=>n.classList.add('hidden'));});}));
+
+NODES.forEach(n=>{
+  const g=el('g');g.dataset.owner=n.owner;g.style.cursor='crosshair';
+  if(n.sym==='res'){g.appendChild(el('ellipse',{cx:n.x,cy:n.y,rx:15,ry:5,fill:'#2E6E8E'}));}
+  else if(n.sym==='tank'){g.appendChild(el('rect',{x:n.x-9,y:n.y-8,width:18,height:16,fill:n.colour}));}
+  else if(n.sym==='well'){g.appendChild(el('circle',{cx:n.x,cy:n.y,r:6,fill:'none',stroke:n.colour,'stroke-width':2.5}));}
+  else if(n.sym==='plant'){g.appendChild(el('rect',{x:n.x-11,y:n.y-8,width:22,height:16,fill:'none',stroke:n.colour,'stroke-width':2}));}
+  else if(n.sym==='div'){g.appendChild(el('path',{d:`M${n.x} ${n.y-8} L${n.x+8} ${n.y+6} L${n.x-8} ${n.y+6} Z`,fill:n.colour}));}
+  else{g.appendChild(el('rect',{x:n.x-8,y:n.y-9,width:16,height:18,fill:'#16232B'}));}
+  if(n.conf==='est'||n.conf==='unknown')
+    g.appendChild(el('circle',{cx:n.x+13,cy:n.y-11,r:3.5,fill:'#A32E1C'}));
+  const ly=n.ly||(n.y+4);
+  if(n.leader)g.appendChild(el('path',{d:`M${n.x+11} ${n.y} L${n.x+16} ${ly-4}`,
+    stroke:'#8A928A','stroke-width':.8,fill:'none'}));
+  const t=el('text',{class:'nlabel',x:n.x+18,y:ly});t.textContent=n.name;
+  g.appendChild(t);
+  g.addEventListener('mousemove',ev=>show(ev,
+    `<b>${n.name}</b><br>${n.type} · ${n.owner}`+
+    `<br>elevation ${n.elev?n.elev.toLocaleString():'—'} ft (${n.conf})`+
+    (n.hgl?`<br>grade line ${n.hgl.toLocaleString()} ft`:'')+
+    (n.cap?`<br>capacity ${n.cap.toLocaleString()} AF/yr`:'')+
+    (n.notes?`<br>${n.notes}`:'')));
+  g.addEventListener('mouseleave',hide);
+  gNode.appendChild(g);
+});
+
+const bar=document.getElementById('bar');
+[['_geology','#B9906F']].concat(Object.entries(COLOUR)).forEach(([owner,c])=>{
+  const l=document.createElement('label');l.style.setProperty('--c',c);
+  l.innerHTML=`<input type="checkbox" checked data-owner="${owner}"><span class="sw"></span>${owner.replace(/_/g,' ')}`;
+  l.querySelector('input').addEventListener('change',e=>{
+    document.querySelectorAll(`[data-owner="${owner}"]`).forEach(n=>
+      n.classList.toggle('hidden',!e.target.checked));});
+  bar.appendChild(l);
+});
+
+document.getElementById('gaps').innerHTML=GAPS.map(g=>`<li>${g}</li>`).join('');
+
+// ---- side panels last: a panel error must not take the map with it
+// demand ledger
+(()=>{
+  const fmtAF=v=>v.toLocaleString(undefined,{maximumFractionDigits:0})+' AF';
+  document.getElementById('demand').innerHTML=DEMAND.map(d=>{
+    if(!d.total)return `<div class="dgroup"><div class="dhead"><b>`+
+      `${d.owner.replace(/_/g,' ')}</b></div>`+
+      `<div class="dnone">sector breakdown not published — `+
+      `${d.rows.length} categor${d.rows.length>1?'ies':'y'} unknown</div></div>`;
+    const seg=d.rows.filter(r=>r.af).sort((a,b)=>b.af-a.af).map(r=>
+      `<span style="width:${(r.af/d.total*100).toFixed(2)}%;background:${r.colour}"`+
+      ` title="${r.cat} · ${r.af} AF · ${r.conf}"></span>`).join('');
+    const key=d.rows.filter(r=>r.af).sort((a,b)=>b.af-a.af).map(r=>
+      `<span><i style="background:${r.colour}"></i>${r.cat.replace(/_/g,' ')} `+
+      `${(r.af/d.total*100).toFixed(0)}%${r.conf==='est'?'*':''}</span>`).join('');
+    return `<div class="dgroup"><div class="dhead">`+
+      `<b>${d.owner.replace(/_/g,' ')}</b><span>${fmtAF(d.total)}/yr</span></div>`+
+      `<div class="dbar">${seg}</div><div class="dkey">${key}`+
+      `<span>* estimated</span></div></div>`;
+  }).join('');
+})();
+
+// power ledger
+(()=>{
+  const max=Math.max(...LEDGER.map(d=>d.consumed),1);
+  const tot=LEDGER.reduce((s,d)=>s+d.consumed,0);
+  const gen=LEDGER.reduce((s,d)=>s+d.generated,0);
+  const rows=LEDGER.filter(d=>d.consumed||d.generated).map(d=>
+    `<tr><td>${d.owner.replace(/_/g,' ')}</td>`+
+    `<td class="barcell"><span class="b" style="width:${(d.consumed/max*100).toFixed(1)}%"></span>`+
+    (d.generated?`<span class="g" style="width:${(d.generated/max*100).toFixed(1)}%"></span>`:'')+
+    `</td><td>${fmtE(d.consumed)}</td>`+
+    `<td>${d.generated?'−'+fmtE(d.generated):''}</td></tr>`).join('');
+  document.getElementById('ledger').innerHTML=
+    `<tr><th>Owner</th><th class="barcell"></th><th>Consumed</th><th>Recovered</th></tr>`+rows+
+    `<tr><td><b>network</b></td><td class="barcell"></td><td><b>${fmtE(tot)}</b></td>`+
+    `<td><b>${gen?'−'+fmtE(gen):''}</b></td></tr>`;
+})();
+</script></body></html>
