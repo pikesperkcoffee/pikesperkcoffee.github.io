@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The Morton — Palmer Lake, Colorado</title>
+<title>Elevation 7,247 — Palmer Lake, Colorado</title>
 <meta name="description" content="A one-page broadsheet indexing the active work of Andrew Morton — Morkat Coffee LLC, Pikes Perk Coffee Roasters, Morton Millworks.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -74,7 +74,7 @@ body{
 .nameplate h1{
   font-family:'Cinzel',Georgia,serif;
   font-weight:700;
-  font-size:clamp(46px, 8vw, 84px);
+  font-size:clamp(44px, 7.6vw, 82px);
   line-height:1;letter-spacing:.02em;
   color:var(--ink);
 }
@@ -91,6 +91,31 @@ body{
   font-family:'IBM Plex Mono',monospace;
   font-size:11px;letter-spacing:.14em;text-transform:uppercase;
   color:var(--muted);
+}
+
+/* ---------- VENTURES STRIP (permanent enterprise links) ----------
+   Sits directly under the masthead. The paper's two public-facing
+   concerns, linked out. Permanent furniture — not a dated feed item. */
+.ventures{
+  display:flex;align-items:baseline;justify-content:center;
+  gap:10px 18px;flex-wrap:wrap;
+  padding:13px 0 15px;
+  border-bottom:1px solid var(--rule);
+  font-family:'IBM Plex Mono',monospace;
+  font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--muted);
+}
+.ventures .vlabel{letter-spacing:.22em;color:var(--muted)}
+.ventures a{
+  color:var(--ink);text-decoration:none;font-weight:500;
+  border-bottom:1px solid var(--rule);padding-bottom:2px;
+  transition:color .12s,border-color .12s;
+}
+.ventures a:hover{color:var(--red);border-bottom-color:var(--red)}
+.ventures a .ext{font-size:9px;opacity:.55;margin-left:3px;letter-spacing:0}
+.ventures .vsep{color:#c9c0ad}
+@media(max-width:520px){
+  .ventures{font-size:10.5px;gap:8px 12px;letter-spacing:.1em}
 }
 
 /* ---------- SPLIT LEAD PANEL (above the fold) ----------
@@ -1011,7 +1036,7 @@ body{
 }
 @media (max-width:520px){
   .paper{padding:0 16px 60px}
-  .nameplate h1{font-size:52px}
+  .nameplate h1{font-size:46px}
   .grid{grid-template-columns:1fr}
   .wire-empty{grid-template-columns:1fr}
   .lead-veil .wip-stamp{font-size:15px;padding:7px 14px;letter-spacing:.10em}
@@ -1027,20 +1052,30 @@ body{
   <div class="flag">
     <span>Palmer Lake, Colorado</span>
     <!-- DATELINE — bump this to the current date on every index update. -->
-    <span>Friday, August 14, 2026</span>
+    <span>Saturday, October 10, 2026</span>
   </div>
 
   <!-- ============================================================
        NAMEPLATE — the masthead
        ============================================================ -->
   <header class="nameplate">
-    <h1>The Morton</h1>
+    <h1>Elevation 7,247</h1>
     <div class="subflag">
       <span>Editor &middot; <a href="about/about-the-editor.html">Andrew Morton</a></span>
-      <span>Elevation 7,247 ft</span>
+      <span>Feet above sea level</span>
       <span>Independent</span>
     </div>
   </header>
+
+  <!-- ============================================================
+       VENTURES — permanent enterprise links (Morkat Coffee LLC)
+       ============================================================ -->
+  <nav class="ventures" aria-label="Enterprises">
+    <span class="vlabel">Enterprises</span>
+    <a href="https://mortonmillworks.com" target="_blank" rel="noopener">Morton Millworks<span class="ext">&#8599;</span></a>
+    <span class="vsep">&middot;</span>
+    <a href="https://pikesperkcoffee.com" target="_blank" rel="noopener">Pikes Perk Coffee Roasters<span class="ext">&#8599;</span></a>
+  </nav>
 
   <!-- ============================================================
        SPLIT LEAD PANEL — above the fold
@@ -1355,8 +1390,8 @@ body{
     <div class="col">
       <h5>Enterprises</h5>
       <p>Morkat Coffee LLC</p>
-      <p>Pikes Perk Coffee Roasters</p>
-      <p>Morton Millworks</p>
+      <p><a href="https://pikesperkcoffee.com" target="_blank" rel="noopener">Pikes Perk Coffee Roasters</a></p>
+      <p><a href="https://mortonmillworks.com" target="_blank" rel="noopener">Morton Millworks</a></p>
     </div>
     <div class="col">
       <h5>Correspondence</h5>
