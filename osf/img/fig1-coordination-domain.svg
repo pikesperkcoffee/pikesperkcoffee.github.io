@@ -1,0 +1,357 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1420" height="1340" viewBox="0 0 1420 1340" xmlns:c2pa="http://c2pa.org/manifest"><metadata><c2pa:manifest>AAAWgmp1bWIAAAAeanVtZGMycGEAEQAQgAAAqgA4m3EDYzJwYQAAABZcanVtYgAAAEdqdW1kYzJtYQARABCAAACqADibcQN1cm46YzJwYToxYTRlNDJkOC02NzBmLTRlN2ItOWQ2MC0yYjNmMzdiMmNlNTEAAAADl2p1bWIAAAApanVtZGMyYXMAEQAQgAAAqgA4m3EDYzJwYS5hc3NlcnRpb25zAAAAALxqdW1iAAAARGp1bWRjYm9yABEAEIAAAKoAOJtxE2MycGEuaW5ncmVkaWVudC52MwAAAAAYYzJzaDWdHaKIZldIjdNcCBbjAU0AAABwY2JvcqNpZGM6Zm9ybWF0bWltYWdlL3N2Zyt4bWxqaW5zdGFuY2VJRHgseG1wOmlpZDoyMmIzNzZkOC1iOWYzLTQyMzAtYTRjMi1jOTk4NmVhNjNmZGFscmVsYXRpb25zaGlwaHBhcmVudE9mAAAB4mp1bWIAAABBanVtZGNib3IAEQAQgAAAqgA4m3ETYzJwYS5hY3Rpb25zLnYyAAAAABhjMnNob7jxKjgUfLM9PKd82CRdMAAAAZljYm9yomdhY3Rpb25zgqJmYWN0aW9ua2MycGEub3BlbmVkanBhcmFtZXRlcnOha2luZ3JlZGllbnRzgaJjdXJseC1zZWxmI2p1bWJmPWMycGEuYXNzZXJ0aW9ucy9jMnBhLmluZ3JlZGllbnQudjNkaGFzaFggTpuToRcjAUyD5pfLqvYCFXui0vNWqxT1ESfSIRFrWkOkZmFjdGlvbngdY29tLmFudGhyb3BpYy5jbGF1ZGUucHJvdmlkZWRqcGFyYW1ldGVyc6F4H2NvbS5hbnRocm9waWMub3JpZ2luLWNvbmZpZGVuY2VndW5rbm93bmtkZXNjcmlwdGlvbnhmQ2xhdWRlIHByb3ZpZGVkIHRoaXMgZmlsZSBhdCB0aGUgcmVxdWVzdCBvZiBhIHVzZXIgYW5kIG1heSBoYXZlIGNyZWF0ZWQgb3IgbW9kaWZpZWQgdGhlIGZpbGUgY29udGVudHMubXNvZnR3YXJlQWdlbnShZG5hbWVmQ2xhdWRlcmFsbEFjdGlvbnNJbmNsdWRlZPUAAADIanVtYgAAAEBqdW1kY2JvcgARABCAAACqADibcRNjMnBhLmhhc2guZGF0YQAAAAAYYzJzaBJ32Rrowe91yhJR+LTKeAkAAACAY2JvcqVjYWxnZnNoYTI1NmNwYWRNAAAAAAAAAAAAAAAAAGRoYXNoWCD1VC8Vr92BczLrJ4guxkPLxmLrYAwHdrxYdWJQl/4QpGRuYW1lbmp1bWJmIG1hbmlmZXN0amV4Y2x1c2lvbnOBomVzdGFydBiaZmxlbmd0aBkeBAAAAj5qdW1iAAAAJ2p1bWRjMmNsABEAEIAAAKoAOJtxA2MycGEuY2xhaW0udjIAAAACD2Nib3KlY2FsZ2ZzaGEyNTZpc2lnbmF0dXJleE1zZWxmI2p1bWJmPS9jMnBhL3VybjpjMnBhOjFhNGU0MmQ4LTY3MGYtNGU3Yi05ZDYwLTJiM2YzN2IyY2U1MS9jMnBhLnNpZ25hdHVyZWppbnN0YW5jZUlEeCx4bXA6aWlkOmQ0YjFlM2Q2LTY5MDMtNDhmMi1iNDIyLWIzZWU0MGQ1ZDY2NHJjcmVhdGVkX2Fzc2VydGlvbnODomN1cmx4LXNlbGYjanVtYmY9YzJwYS5hc3NlcnRpb25zL2MycGEuaW5ncmVkaWVudC52M2RoYXNoWCBOm5OhFyMBTIPml8uq9gIVe6LS81arFPURJ9IhEWtaQ6JjdXJseCpzZWxmI2p1bWJmPWMycGEuYXNzZXJ0aW9ucy9jMnBhLmFjdGlvbnMudjJkaGFzaFggl287dbsEXhzG2nvPQGj4YL/WAilzUIkD61d9vBEKOayiY3VybHgpc2VsZiNqdW1iZj1jMnBhLmFzc2VydGlvbnMvYzJwYS5oYXNoLmRhdGFkaGFzaFggkKcvUG+/nB/EGrV+A2yzJoTcDbc/tSBpemzNSXRHy0t0Y2xhaW1fZ2VuZXJhdG9yX2luZm+jZG5hbWVvQW50aHJvcGljIEZpbGVzZ3ZlcnNpb25lMS4wLjBrc3BlY1ZlcnNpb25lMi40LjAAABA4anVtYgAAAChqdW1kYzJjcwARABCAAACqADibcQNjMnBhLnNpZ25hdHVyZQAAABAIY2JvctKEWQISogEmGCFZAgowggIGMIIBjaADAgECAhRA5aAK7sI50L64g/oGQgU9Z1UTADAKBggqhkjOPQQDAzBJMRcwFQYDVQQKEw5BbnRocm9waWMsIFBCQzEuMCwGA1UEAxMlQW50aHJvcGljIENvbnRlbnQgQ3JlZGVudGlhbHMgUm9vdCBDQTAeFw0yNjA4MDcxODQzNTZaFw0yODA4MDYxOTQzNTZaMEQxFzAVBgNVBAoTDkFudGhyb3BpYywgUEJDMSkwJwYDVQQDEyBBbnRocm9waWMgQ2xhdWRlIENvbnRlbnQgU2lnbmluZzBZMBMGByqGSM49AgEGCCqGSM49AwEHA0IABJh6CmvLUBgFFNU0vUKlOVtE6djd17L5SuwX0LemFisBM3dkd/3cyjxFA3Qo5S46fX0/ihY0VZ7mfb9KF703t5OjWDBWMA4GA1UdDwEB/wQEAwIHgDAVBgNVHSUEDjAMBgorBgEEAYPoXgIBMAwGA1UdEwEB/wQCMAAwHwYDVR0jBBgwFoAUzlHiBIFOZFsj+OPEz5o+nMHXXMIwCgYIKoZIzj0EAwMDZwAwZAIwMXMdFJ4BetLLVY7ORuE9noqbbAZOZn/aArXyTwFAZfKrPzxF2vPoJNf1+UCdg1XGAjBwX1zd9WGqYkqmL5SFqw1QySjr1zJfpJM9+1rdDwSPLMOPOjKuiXjoU/pUUeG9RwmhY3BhZFkNngAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPZYQLEBAUgpCwAYsAl9c455yPeICMn39ox5zOEshU0DfMSGBnx9ByYX1GW48NeVpjxGLvotkmaja+HLsesy8tiAq/8=</c2pa:manifest></metadata>
+<rect width="1420" height="1230" fill="#f7f5f0"/>
+<text x="58" y="56" font-family="'Barlow Condensed','Arial Narrow',Arial,sans-serif" font-size="31" font-weight="700" fill="#20262b" letter-spacing="1">FIG. 1 — THE COORDINATION DOMAIN</text>
+<text x="58" y="82" font-family="'IBM Plex Mono','DejaVu Sans Mono',monospace" font-size="13" fill="#55636e" letter-spacing="1.4">A NEIGHBORHOOD SHARING ONE SUPPLY · PLAN VIEW · PARTIAL ADOPTION</text>
+<line x1="58" y1="96" x2="1362" y2="96" stroke="#20262b" stroke-width="2"/>
+<path d="M1362 110 L1362 300 Q1150 200 1000 150 Q880 112 700 110 Z" fill="#e4e8de" stroke="none"/>
+<path d="M913.7296247898871 147.51083506819228 L908.2549335075323 147.51083506819228 L913.7296247898871 132.30335928387345 L919.2043160722419 147.51083506819228 Z" fill="#8fa08a" opacity="0.75"/>
+<path d="M941.3546851623064 129.75954401607842 L936.2932702507209 129.75954401607842 L941.3546851623064 115.70005815056307 L946.4161000738919 129.75954401607842 Z" fill="#8fa08a" opacity="0.75"/>
+<path d="M980.1826648340592 270.4628509089256 L976.2261151859482 270.4628509089256 L980.1826648340592 259.4724352197285 L984.1392144821702 270.4628509089256 Z" fill="#8fa08a" opacity="0.75"/>
+<path d="M1325.4879020216238 225.35076739284037 L1320.7454622546295 225.35076739284037 L1325.4879020216238 212.17732359563414 L1330.230341788618 225.35076739284037 Z" fill="#8fa08a" opacity="0.75"/>
+<path d="M1344.3283696913272 129.05166975047962 L1338.255980529267 129.05166975047962 L1344.3283696913272 112.18392207809019 L1350.4007588533875 129.05166975047962 Z" fill="#8fa08a" opacity="0.75"/>
+<path d="M891.1421289789064 144.1583593734394 L887.2028873332407 144.1583593734394 L891.1421289789064 133.21602146881247 L895.0813706245721 144.1583593734394 Z" fill="#8fa08a" opacity="0.75"/>
+<path d="M1121.6828894912815 188.08452326709852 L1116.505385430038 188.08452326709852 L1121.6828894912815 173.70256754142207 L1126.860393552525 188.08452326709852 Z" fill="#8fa08a" opacity="0.75"/>
+<path d="M982.2109217418059 177.45947397373698 L976.924503574904 177.45947397373698 L982.2109217418059 162.7749790656759 L987.4973399087079 177.45947397373698 Z" fill="#8fa08a" opacity="0.75"/>
+<path d="M999.1016884047117 175.6344123458712 L993.2138754979269 175.6344123458712 L999.1016884047117 159.27937649369127 L1004.9895013114965 175.6344123458712 Z" fill="#8fa08a" opacity="0.75"/>
+<path d="M1161.3363262615171 164.45554932463295 L1156.0819859759722 164.45554932463295 L1161.3363262615171 149.8601596425636 L1166.590666547062 164.45554932463295 Z" fill="#8fa08a" opacity="0.75"/>
+<path d="M1046.629692515558 281.8182178388412 L1040.9288900819731 281.8182178388412 L1046.629692515558 265.9826555233275 L1052.3304949491428 281.8182178388412 Z" fill="#8fa08a" opacity="0.75"/>
+<path d="M1199.7130135130647 147.0729913140966 L1194.7047997836944 147.0729913140966 L1199.7130135130647 133.16128651029015 L1204.721227242435 147.0729913140966 Z" fill="#8fa08a" opacity="0.75"/>
+<path d="M1204.6167717004566 226.5117101986396 L1198.4953956023837 226.5117101986396 L1204.6167717004566 209.50788770399248 L1210.7381477985296 226.5117101986396 Z" fill="#8fa08a" opacity="0.75"/>
+<path d="M1092.2841188893121 226.1054341174667 L1087.370247535164 226.1054341174667 L1092.2841188893121 212.4557914670554 L1097.1979902434603 226.1054341174667 Z" fill="#8fa08a" opacity="0.75"/>
+<path d="M1254.3787351382773 293.662395944647 L1249.4133319265088 293.662395944647 L1254.3787351382773 279.86960924528984 L1259.3441383500458 293.662395944647 Z" fill="#8fa08a" opacity="0.75"/>
+<path d="M1138.340455613285 131.02981219070335 L1132.7201585919283 131.02981219070335 L1138.340455613285 115.41787602026795 L1143.9607526346417 131.02981219070335 Z" fill="#8fa08a" opacity="0.75"/>
+<path d="M1127.1050439882615 304.0104479477661 L1121.1379006028255 304.0104479477661 L1127.1050439882615 287.4350496548884 L1133.0721873736975 304.0104479477661 Z" fill="#8fa08a" opacity="0.75"/>
+<path d="M887.8330511821384 191.04602771617826 L882.307331360392 191.04602771617826 L887.8330511821384 175.69680598910477 L893.3587710038848 191.04602771617826 Z" fill="#8fa08a" opacity="0.75"/>
+<path d="M1062.6303400350648 283.7031272430227 L1056.670814102098 283.7031272430227 L1062.6303400350648 267.1488885403368 L1068.5898659680317 283.7031272430227 Z" fill="#8fa08a" opacity="0.75"/>
+<path d="M1270.22975000102 170.16908300391776 L1265.4336960314504 170.16908300391776 L1270.22975000102 156.84671086622416 L1275.0258039705895 170.16908300391776 Z" fill="#8fa08a" opacity="0.75"/>
+<path d="M1332.1025946162342 145.62523848531663 L1327.995087558182 145.62523848531663 L1332.1025946162342 134.21549665739366 L1336.2101016742865 145.62523848531663 Z" fill="#8fa08a" opacity="0.75"/>
+<path d="M1020.0754020252954 227.03883466766143 L1015.7186917617156 227.03883466766143 L1020.0754020252954 214.93686171327312 L1024.4321122888753 227.03883466766143 Z" fill="#8fa08a" opacity="0.75"/>
+<path d="M943.7073581105187 225.5855180877829 L937.3624360850065 225.5855180877829 L943.7073581105187 207.96073468358216 L950.052280136031 225.5855180877829 Z" fill="#8fa08a" opacity="0.75"/>
+<path d="M1155.7258137097454 214.8362861157305 L1150.347146591447 214.8362861157305 L1155.7258137097454 199.8955441204575 L1161.1044808280437 214.8362861157305 Z" fill="#8fa08a" opacity="0.75"/>
+<path d="M1146.292054416671 130.586817286633 L1140.101399347704 130.586817286633 L1146.292054416671 113.39055320616939 L1152.4827094856378 130.586817286633 Z" fill="#8fa08a" opacity="0.75"/>
+<text x="1350" y="322" text-anchor="end" font-family="'IBM Plex Mono','DejaVu Sans Mono',monospace" font-size="11.5" fill="#6d7d69" letter-spacing="1.4">WILDLAND EDGE</text>
+<polyline points="95,700 215,697 335,690 452,676 556,652 648,618 728,574 798,522 858,464 908,404 950,344 990,300 1058,272 1140,260 1205,258" fill="none" stroke="#d9d4c8" stroke-width="34" stroke-linejoin="round" stroke-linecap="round"/>
+<circle cx="1205" cy="258" r="52" fill="#d9d4c8"/>
+<circle cx="1205" cy="258" r="21" fill="#f7f5f0"/>
+<polyline points="95,700 215,697 335,690 452,676 556,652 648,618 728,574 798,522 858,464 908,404 950,344 990,300 1058,272 1140,260 1205,258" fill="none" stroke="#c9c3b4" stroke-width="1.5" stroke-dasharray="12 12"/>
+<polyline points="95,700 215,697 335,690 452,676 556,652 648,618 728,574 798,522 858,464 908,404 950,344 990,300 1058,272 1140,260 1205,258" fill="none" stroke="#2f6e6a" stroke-width="4.5" stroke-linejoin="round" opacity="0.95"/>
+<circle cx="1205" cy="258" r="36" fill="none" stroke="#2f6e6a" stroke-width="4.5"/>
+<circle cx="95" cy="700" r="15" fill="#f7f5f0" stroke="#20262b" stroke-width="3"/><circle cx="95" cy="700" r="6" fill="#2f6e6a"/>
+<line x1="151.55154230665835" y1="698.5862114423336" x2="149.6021513961625" y2="620.6105750225" stroke="#d9d4c8" stroke-width="9"/>
+<line x1="151.55154230665835" y1="698.5862114423336" x2="149.6021513961625" y2="620.6105750225" stroke="#2f6e6a" stroke-width="5" opacity="1"/>
+<g transform="translate(149.6021513961625,620.6105750225) rotate(-1.4320961841646465)">
+<rect x="-27.0" y="-20.0" width="54" height="40" fill="#8fbdb8" stroke="#2f6e6a" stroke-width="3"/>
+<text x="0" y="6" text-anchor="middle" font-family="'Barlow Condensed','Arial Narrow',Arial,sans-serif" font-size="20" font-weight="700" fill="#20262b">A</text>
+</g>
+<circle cx="149.6021513961625" cy="620.6105750225" r="49.68" fill="#2f6e6a" opacity="0.16"/>
+<line x1="151.55154230665835" y1="698.5862114423336" x2="153.6508863641154" y2="782.5599737406159" stroke="#d9d4c8" stroke-width="9"/>
+<g transform="translate(153.6508863641154,782.5599737406159) rotate(-1.4320961841646465)">
+<rect x="-27.0" y="-20.0" width="54" height="40" fill="#f7f5f0" stroke="#d9d4c8" stroke-width="2"/>
+</g>
+<text x="153.6508863641154" y="786.5599737406159" text-anchor="middle" font-family="'IBM Plex Mono','DejaVu Sans Mono',monospace" font-size="9" fill="#b3ab99">NO NODE</text>
+<line x1="252.03624604495852" y1="694.8395523140441" x2="247.78513935486882" y2="621.9634376267924" stroke="#d9d4c8" stroke-width="9"/>
+<line x1="252.03624604495852" y1="694.8395523140441" x2="247.78513935486882" y2="621.9634376267924" stroke="#55636e" stroke-width="2.2" stroke-dasharray="6 6" opacity="1"/>
+<g transform="translate(247.78513935486882,621.9634376267924) rotate(-3.3384705437643523)">
+<rect x="-27.0" y="-20.0" width="54" height="40" fill="#dfe2e0" stroke="#55636e" stroke-width="2.6"/>
+<text x="0" y="6" text-anchor="middle" font-family="'Barlow Condensed','Arial Narrow',Arial,sans-serif" font-size="20" font-weight="700" fill="#20262b">B</text>
+</g>
+<line x1="252.03624604495852" y1="694.8395523140441" x2="256.81146177903184" y2="776.7003934695872" stroke="#d9d4c8" stroke-width="9"/>
+<g transform="translate(256.81146177903184,776.7003934695872) rotate(-3.3384705437643523)">
+<rect x="-27.0" y="-20.0" width="54" height="40" fill="#f7f5f0" stroke="#d9d4c8" stroke-width="2"/>
+</g>
+<text x="256.81146177903184" y="780.7003934695872" text-anchor="middle" font-family="'IBM Plex Mono','DejaVu Sans Mono',monospace" font-size="9" fill="#b3ab99">NO NODE</text>
+<line x1="352.3390107661712" y1="687.925246574988" x2="343.9034600203937" y2="617.4281439138473" stroke="#d9d4c8" stroke-width="9"/>
+<line x1="352.3390107661712" y1="687.925246574988" x2="343.9034600203937" y2="617.4281439138473" stroke="#2f6e6a" stroke-width="5" opacity="1"/>
+<g transform="translate(343.9034600203937,617.4281439138473) rotate(-6.823462399033519)">
+<rect x="-27.0" y="-20.0" width="54" height="40" fill="#8fbdb8" stroke="#2f6e6a" stroke-width="3"/>
+<text x="0" y="6" text-anchor="middle" font-family="'Barlow Condensed','Arial Narrow',Arial,sans-serif" font-size="20" font-weight="700" fill="#20262b">C</text>
+</g>
+<circle cx="343.9034600203937" cy="617.4281439138473" r="49.68" fill="#2f6e6a" opacity="0.16"/>
+<line x1="352.3390107661712" y1="687.925246574988" x2="361.9626672507906" y2="768.3515186250218" stroke="#d9d4c8" stroke-width="9"/>
+<line x1="352.3390107661712" y1="687.925246574988" x2="361.9626672507906" y2="768.3515186250218" stroke="#55636e" stroke-width="2.2" stroke-dasharray="6 6" opacity="1"/>
+<g transform="translate(361.9626672507906,768.3515186250218) rotate(-6.823462399033519)">
+<rect x="-27.0" y="-20.0" width="54" height="40" fill="#dfe2e0" stroke="#55636e" stroke-width="2.6"/>
+<text x="0" y="6" text-anchor="middle" font-family="'Barlow Condensed','Arial Narrow',Arial,sans-serif" font-size="20" font-weight="700" fill="#20262b">D</text>
+</g>
+<line x1="464.4395594122964" y1="673.1293324433162" x2="445.10164183620316" y2="589.3316896135789" stroke="#d9d4c8" stroke-width="9"/>
+<g transform="translate(445.10164183620316,589.3316896135789) rotate(-12.994616791916505)">
+<rect x="-27.0" y="-20.0" width="54" height="40" fill="#f7f5f0" stroke="#d9d4c8" stroke-width="2"/>
+</g>
+<text x="445.10164183620316" y="593.3316896135789" text-anchor="middle" font-family="'IBM Plex Mono','DejaVu Sans Mono',monospace" font-size="9" fill="#b3ab99">NO NODE</text>
+<line x1="464.4395594122964" y1="673.1293324433162" x2="481.0791629080045" y2="745.2342809247181" stroke="#d9d4c8" stroke-width="9"/>
+<line x1="464.4395594122964" y1="673.1293324433162" x2="481.0791629080045" y2="745.2342809247181" stroke="#9d3226" stroke-width="2.2" stroke-dasharray="6 6" opacity="0.45"/>
+<line x1="463.75936116015043" y1="700.1818066840171" x2="481.75936116015043" y2="718.1818066840171" stroke="#9d3226" stroke-width="3"/><line x1="481.75936116015043" y1="700.1818066840171" x2="463.75936116015043" y2="718.1818066840171" stroke="#9d3226" stroke-width="3"/>
+<g transform="translate(481.0791629080045,745.2342809247181) rotate(-12.994616791916505)">
+<rect x="-27.0" y="-20.0" width="54" height="40" fill="#e9d3cf" stroke="#9d3226" stroke-width="3"/>
+<text x="0" y="6" text-anchor="middle" font-family="'Barlow Condensed','Arial Narrow',Arial,sans-serif" font-size="20" font-weight="700" fill="#20262b">E</text>
+</g>
+<line x1="573.9828603555076" y1="645.3541603033993" x2="546.2508490857773" y2="570.3146003970703" stroke="#d9d4c8" stroke-width="9"/>
+<line x1="573.9828603555076" y1="645.3541603033993" x2="546.2508490857773" y2="570.3146003970703" stroke="#2f6e6a" stroke-width="5" opacity="1"/>
+<g transform="translate(546.2508490857773,570.3146003970703) rotate(-20.282559088916607)">
+<rect x="-27.0" y="-20.0" width="54" height="40" fill="#8fbdb8" stroke="#2f6e6a" stroke-width="3"/>
+<text x="0" y="6" text-anchor="middle" font-family="'Barlow Condensed','Arial Narrow',Arial,sans-serif" font-size="20" font-weight="700" fill="#20262b">F</text>
+</g>
+<circle cx="546.2508490857773" cy="570.3146003970703" r="49.68" fill="#2f6e6a" opacity="0.16"/>
+<line x1="573.9828603555076" y1="645.3541603033993" x2="598.9416704982649" y2="712.8897642190955" stroke="#d9d4c8" stroke-width="9"/>
+<g transform="translate(598.9416704982649,712.8897642190955) rotate(-20.282559088916607)">
+<rect x="-27.0" y="-20.0" width="54" height="40" fill="#f7f5f0" stroke="#d9d4c8" stroke-width="2"/>
+</g>
+<text x="598.9416704982649" y="716.8897642190955" text-anchor="middle" font-family="'IBM Plex Mono','DejaVu Sans Mono',monospace" font-size="9" fill="#b3ab99">NO NODE</text>
+<line x1="677.9914953140079" y1="601.5046775772956" x2="637.992239082919" y2="528.7787571571339" stroke="#d9d4c8" stroke-width="9"/>
+<line x1="677.9914953140079" y1="601.5046775772956" x2="637.992239082919" y2="528.7787571571339" stroke="#55636e" stroke-width="2.2" stroke-dasharray="6 6" opacity="1"/>
+<g transform="translate(637.992239082919,528.7787571571339) rotate(-28.810793742973058)">
+<rect x="-27.0" y="-20.0" width="54" height="40" fill="#dfe2e0" stroke="#55636e" stroke-width="2.6"/>
+<text x="0" y="6" text-anchor="middle" font-family="'Barlow Condensed','Arial Narrow',Arial,sans-serif" font-size="20" font-weight="700" fill="#20262b">G</text>
+</g>
+<line x1="677.9914953140079" y1="601.5046775772956" x2="714.1354015469196" y2="667.2208707280441" stroke="#d9d4c8" stroke-width="9"/>
+<g transform="translate(714.1354015469196,667.2208707280441) rotate(-28.810793742973058)">
+<rect x="-27.0" y="-20.0" width="54" height="40" fill="#f7f5f0" stroke="#d9d4c8" stroke-width="2"/>
+</g>
+<text x="714.1354015469196" y="671.2208707280441" text-anchor="middle" font-family="'IBM Plex Mono','DejaVu Sans Mono',monospace" font-size="9" fill="#b3ab99">NO NODE</text>
+<line x1="773.005959545605" y1="540.5670014804077" x2="722.3184194319095" y2="472.3337744042792" stroke="#d9d4c8" stroke-width="9"/>
+<line x1="773.005959545605" y1="540.5670014804077" x2="722.3184194319095" y2="472.3337744042792" stroke="#55636e" stroke-width="2.2" stroke-dasharray="6 6" opacity="1"/>
+<g transform="translate(722.3184194319095,472.3337744042792) rotate(-36.6070748126075)">
+<rect x="-27.0" y="-20.0" width="54" height="40" fill="#dfe2e0" stroke="#55636e" stroke-width="2.6"/>
+<text x="0" y="6" text-anchor="middle" font-family="'Barlow Condensed','Arial Narrow',Arial,sans-serif" font-size="20" font-weight="700" fill="#20262b">H</text>
+</g>
+<line x1="856.958961488012" y1="465.00633722825506" x2="804.137282127604" y2="410.36322064852254" stroke="#d9d4c8" stroke-width="9"/>
+<line x1="856.958961488012" y1="465.00633722825506" x2="804.137282127604" y2="410.36322064852254" stroke="#2f6e6a" stroke-width="5" opacity="1"/>
+<g transform="translate(804.137282127604,410.36322064852254) rotate(-44.028978068920836)">
+<rect x="-27.0" y="-20.0" width="54" height="40" fill="#8fbdb8" stroke="#2f6e6a" stroke-width="3"/>
+<text x="0" y="6" text-anchor="middle" font-family="'Barlow Condensed','Arial Narrow',Arial,sans-serif" font-size="20" font-weight="700" fill="#20262b">I</text>
+</g>
+<circle cx="804.137282127604" cy="410.36322064852254" r="49.68" fill="#2f6e6a" opacity="0.16"/>
+<line x1="856.958961488012" y1="465.00633722825506" x2="913.950773429505" y2="523.9633840642822" stroke="#d9d4c8" stroke-width="9"/>
+<g transform="translate(913.950773429505,523.9633840642822) rotate(-44.028978068920836)">
+<rect x="-27.0" y="-20.0" width="54" height="40" fill="#f7f5f0" stroke="#d9d4c8" stroke-width="2"/>
+</g>
+<text x="913.950773429505" y="527.9633840642822" text-anchor="middle" font-family="'IBM Plex Mono','DejaVu Sans Mono',monospace" font-size="9" fill="#b3ab99">NO NODE</text>
+<line x1="930.8659357844139" y1="371.3343774508373" x2="871.0620055865239" y2="329.4716263123143" stroke="#d9d4c8" stroke-width="9"/>
+<line x1="930.8659357844139" y1="371.3343774508373" x2="871.0620055865239" y2="329.4716263123143" stroke="#55636e" stroke-width="2.2" stroke-dasharray="6 6" opacity="1"/>
+<g transform="translate(871.0620055865239,329.4716263123143) rotate(-55.00797980144134)">
+<rect x="-27.0" y="-20.0" width="54" height="40" fill="#dfe2e0" stroke="#55636e" stroke-width="2.6"/>
+<text x="0" y="6" text-anchor="middle" font-family="'Barlow Condensed','Arial Narrow',Arial,sans-serif" font-size="20" font-weight="700" fill="#20262b">J</text>
+</g>
+<line x1="149.6021513961625" y1="620.6105750225" x2="247.78513935486882" y2="621.9634376267924" stroke="#2f6e6a" stroke-width="1.8" stroke-dasharray="6 5" opacity="0.72"/>
+<line x1="149.6021513961625" y1="620.6105750225" x2="343.9034600203937" y2="617.4281439138473" stroke="#2f6e6a" stroke-width="1.8" stroke-dasharray="6 5" opacity="0.72"/>
+<line x1="247.78513935486882" y1="621.9634376267924" x2="343.9034600203937" y2="617.4281439138473" stroke="#2f6e6a" stroke-width="1.8" stroke-dasharray="6 5" opacity="0.72"/>
+<line x1="247.78513935486882" y1="621.9634376267924" x2="361.9626672507906" y2="768.3515186250218" stroke="#2f6e6a" stroke-width="1.8" stroke-dasharray="6 5" opacity="0.72"/>
+<line x1="343.9034600203937" y1="617.4281439138473" x2="361.9626672507906" y2="768.3515186250218" stroke="#2f6e6a" stroke-width="1.8" stroke-dasharray="6 5" opacity="0.72"/>
+<line x1="343.9034600203937" y1="617.4281439138473" x2="481.0791629080045" y2="745.2342809247181" stroke="#2f6e6a" stroke-width="1.8" stroke-dasharray="6 5" opacity="0.72"/>
+<line x1="343.9034600203937" y1="617.4281439138473" x2="546.2508490857773" y2="570.3146003970703" stroke="#2f6e6a" stroke-width="1.8" stroke-dasharray="6 5" opacity="0.72"/>
+<line x1="361.9626672507906" y1="768.3515186250218" x2="481.0791629080045" y2="745.2342809247181" stroke="#2f6e6a" stroke-width="1.8" stroke-dasharray="6 5" opacity="0.72"/>
+<line x1="481.0791629080045" y1="745.2342809247181" x2="546.2508490857773" y2="570.3146003970703" stroke="#2f6e6a" stroke-width="1.8" stroke-dasharray="6 5" opacity="0.72"/>
+<line x1="546.2508490857773" y1="570.3146003970703" x2="637.992239082919" y2="528.7787571571339" stroke="#2f6e6a" stroke-width="1.8" stroke-dasharray="6 5" opacity="0.72"/>
+<line x1="546.2508490857773" y1="570.3146003970703" x2="722.3184194319095" y2="472.3337744042792" stroke="#2f6e6a" stroke-width="1.8" stroke-dasharray="6 5" opacity="0.72"/>
+<line x1="637.992239082919" y1="528.7787571571339" x2="722.3184194319095" y2="472.3337744042792" stroke="#2f6e6a" stroke-width="1.8" stroke-dasharray="6 5" opacity="0.72"/>
+<line x1="637.992239082919" y1="528.7787571571339" x2="804.137282127604" y2="410.36322064852254" stroke="#2f6e6a" stroke-width="1.8" stroke-dasharray="6 5" opacity="0.72"/>
+<line x1="722.3184194319095" y1="472.3337744042792" x2="804.137282127604" y2="410.36322064852254" stroke="#2f6e6a" stroke-width="1.8" stroke-dasharray="6 5" opacity="0.72"/>
+<line x1="722.3184194319095" y1="472.3337744042792" x2="871.0620055865239" y2="329.4716263123143" stroke="#2f6e6a" stroke-width="1.8" stroke-dasharray="6 5" opacity="0.72"/>
+<line x1="804.137282127604" y1="410.36322064852254" x2="871.0620055865239" y2="329.4716263123143" stroke="#2f6e6a" stroke-width="1.8" stroke-dasharray="6 5" opacity="0.72"/>
+<rect x="640" y="128" width="250" height="52" fill="#f7f5f0" stroke="#b98a2f" stroke-width="2.6"/>
+<text x="765" y="152" text-anchor="middle" font-family="'Barlow Condensed','Arial Narrow',Arial,sans-serif" font-size="19" font-weight="600" fill="#20262b">INCIDENT COMMAND</text>
+<text x="765" y="170" text-anchor="middle" font-family="'IBM Plex Mono','DejaVu Sans Mono',monospace" font-size="9.5" fill="#55636e">OUTBOUND ONLY · RENDERED AT GATEWAY</text>
+<path d="M546.2508490857773 546.3146003970703 Q615.6254245428886 380.3146003970703 765 182" fill="none" stroke="#b98a2f" stroke-width="2.4"/>
+<polygon points="765,182 757,196 774,195" fill="#b98a2f"/>
+<text x="546.2508490857773" y="612.3146003970703" text-anchor="middle" font-family="'IBM Plex Mono','DejaVu Sans Mono',monospace" font-size="9.5" fill="#b98a2f">GATEWAY</text>
+<line x1="58" y1="806" x2="1362" y2="806" stroke="#d9d4c8" stroke-width="1.5"/>
+<rect x="64" y="822" width="22" height="16" fill="#8fbdb8" stroke="#2f6e6a" stroke-width="2"/>
+<text x="95" y="835" font-family="'IBM Plex Mono','DejaVu Sans Mono',monospace" font-size="10.5" fill="#55636e">ACTIVE — DRAWING AND WETTING</text>
+<rect x="64" y="848" width="22" height="16" fill="#dfe2e0" stroke="#55636e" stroke-width="2"/>
+<text x="95" y="861" font-family="'IBM Plex Mono','DejaVu Sans Mono',monospace" font-size="10.5" fill="#55636e">YIELDED — HOLDING ITS TURN</text>
+<rect x="394" y="822" width="22" height="16" fill="#e9d3cf" stroke="#9d3226" stroke-width="2"/>
+<text x="425" y="835" font-family="'IBM Plex Mono','DejaVu Sans Mono',monospace" font-size="10.5" fill="#55636e">DEGRADED — NO WATER, RELAYS ONLY</text>
+<rect x="394" y="848" width="22" height="16" fill="#f7f5f0" stroke="#d9d4c8" stroke-width="2"/>
+<text x="425" y="861" font-family="'IBM Plex Mono','DejaVu Sans Mono',monospace" font-size="10.5" fill="#55636e">NO NODE — UNEQUIPPED STRUCTURE</text>
+<line x1="740" y1="830" x2="790" y2="830" stroke="#2f6e6a" stroke-width="2" stroke-dasharray="6 5"/>
+<text x="800" y="834" font-family="'IBM Plex Mono','DejaVu Sans Mono',monospace" font-size="10.5" fill="#2f6e6a">COORDINATION MESH — PEER TO PEER, NO HUB</text>
+<line x1="740" y1="856" x2="790" y2="856" stroke="#2f6e6a" stroke-width="4.5"/>
+<text x="800" y="860" font-family="'IBM Plex Mono','DejaVu Sans Mono',monospace" font-size="10.5" fill="#20262b">SHARED SUPPLY MAIN — SUSTAINS FOUR NODES AT FULL DRAW; TEN PRESENT</text>
+<line x1="58" y1="904" x2="1362" y2="904" stroke="#20262b" stroke-width="2"/>
+<text x="58" y="932" font-family="'Barlow Condensed','Arial Narrow',Arial,sans-serif" font-size="23" font-weight="600" fill="#20262b" letter-spacing="0.6">THE ROTATING SCHEDULE</text>
+<text x="58" y="951" font-family="'IBM Plex Mono','DejaVu Sans Mono',monospace" font-size="11" fill="#55636e">EACH NODE DECIDES LOCALLY FROM SHARED STATE · NO COORDINATOR · NO ELECTION · FOUR MAY DRAW AT ONCE</text>
+<text x="162" y="985" text-anchor="end" font-family="'IBM Plex Mono','DejaVu Sans Mono',monospace" font-size="12" fill="#20262b">NODE A</text>
+<rect x="177.0" y="972" width="64.5" height="18" fill="#2f6e6a" opacity="0.84"/>
+<rect x="244.5" y="972" width="64.5" height="18" fill="none" stroke="#d9d4c8" stroke-width="1.1"/>
+<rect x="312.0" y="972" width="64.5" height="18" fill="#2f6e6a" opacity="0.84"/>
+<rect x="379.5" y="972" width="64.5" height="18" fill="none" stroke="#d9d4c8" stroke-width="1.1"/>
+<rect x="447.0" y="972" width="64.5" height="18" fill="#2f6e6a" opacity="0.84"/>
+<rect x="514.5" y="972" width="64.5" height="18" fill="none" stroke="#d9d4c8" stroke-width="1.1"/>
+<rect x="582.0" y="972" width="64.5" height="18" fill="#2f6e6a" opacity="0.84"/>
+<rect x="649.5" y="972" width="64.5" height="18" fill="none" stroke="#d9d4c8" stroke-width="1.1"/>
+<rect x="717.0" y="972" width="64.5" height="18" fill="none" stroke="#d9d4c8" stroke-width="1.1"/>
+<rect x="784.5" y="972" width="64.5" height="18" fill="#2f6e6a" opacity="0.84"/>
+<rect x="852.0" y="972" width="64.5" height="18" fill="none" stroke="#d9d4c8" stroke-width="1.1"/>
+<rect x="919.5" y="972" width="64.5" height="18" fill="#2f6e6a" opacity="0.84"/>
+<rect x="987.0" y="972" width="64.5" height="18" fill="none" stroke="#d9d4c8" stroke-width="1.1"/>
+<rect x="1054.5" y="972" width="64.5" height="18" fill="#2f6e6a" opacity="0.84"/>
+<rect x="1122.0" y="972" width="64.5" height="18" fill="none" stroke="#d9d4c8" stroke-width="1.1"/>
+<rect x="1189.5" y="972" width="64.5" height="18" fill="#2f6e6a" opacity="0.84"/>
+<text x="162" y="1010" text-anchor="end" font-family="'IBM Plex Mono','DejaVu Sans Mono',monospace" font-size="12" fill="#20262b">NODE B</text>
+<rect x="177.0" y="997" width="64.5" height="18" fill="#2f6e6a" opacity="0.84"/>
+<rect x="244.5" y="997" width="64.5" height="18" fill="none" stroke="#d9d4c8" stroke-width="1.1"/>
+<rect x="312.0" y="997" width="64.5" height="18" fill="#2f6e6a" opacity="0.84"/>
+<rect x="379.5" y="997" width="64.5" height="18" fill="none" stroke="#d9d4c8" stroke-width="1.1"/>
+<rect x="447.0" y="997" width="64.5" height="18" fill="#2f6e6a" opacity="0.84"/>
+<rect x="514.5" y="997" width="64.5" height="18" fill="none" stroke="#d9d4c8" stroke-width="1.1"/>
+<rect x="582.0" y="997" width="64.5" height="18" fill="none" stroke="#d9d4c8" stroke-width="1.1"/>
+<rect x="649.5" y="997" width="64.5" height="18" fill="#2f6e6a" opacity="0.84"/>
+<rect x="717.0" y="997" width="64.5" height="18" fill="none" stroke="#d9d4c8" stroke-width="1.1"/>
+<rect x="784.5" y="997" width="64.5" height="18" fill="#2f6e6a" opacity="0.84"/>
+<rect x="852.0" y="997" width="64.5" height="18" fill="none" stroke="#d9d4c8" stroke-width="1.1"/>
+<rect x="919.5" y="997" width="64.5" height="18" fill="#2f6e6a" opacity="0.84"/>
+<rect x="987.0" y="997" width="64.5" height="18" fill="none" stroke="#d9d4c8" stroke-width="1.1"/>
+<rect x="1054.5" y="997" width="64.5" height="18" fill="#2f6e6a" opacity="0.84"/>
+<rect x="1122.0" y="997" width="64.5" height="18" fill="none" stroke="#d9d4c8" stroke-width="1.1"/>
+<rect x="1189.5" y="997" width="64.5" height="18" fill="none" stroke="#d9d4c8" stroke-width="1.1"/>
+<text x="162" y="1035" text-anchor="end" font-family="'IBM Plex Mono','DejaVu Sans Mono',monospace" font-size="12" fill="#20262b">NODE C</text>
+<rect x="177.0" y="1022" width="64.5" height="18" fill="#2f6e6a" opacity="0.84"/>
+<rect x="244.5" y="1022" width="64.5" height="18" fill="none" stroke="#d9d4c8" stroke-width="1.1"/>
+<rect x="312.0" y="1022" width="64.5" height="18" fill="#2f6e6a" opacity="0.84"/>
+<rect x="379.5" y="1022" width="64.5" height="18" fill="none" stroke="#d9d4c8" stroke-width="1.1"/>
+<rect x="447.0" y="1022" width="64.5" height="18" fill="none" stroke="#d9d4c8" stroke-width="1.1"/>
+<rect x="514.5" y="1022" width="64.5" height="18" fill="#2f6e6a" opacity="0.84"/>
+<rect x="582.0" y="1022" width="64.5" height="18" fill="none" stroke="#d9d4c8" stroke-width="1.1"/>
+<rect x="649.5" y="1022" width="64.5" height="18" fill="#2f6e6a" opacity="0.84"/>
+<rect x="717.0" y="1022" width="64.5" height="18" fill="none" stroke="#d9d4c8" stroke-width="1.1"/>
+<rect x="784.5" y="1022" width="64.5" height="18" fill="#2f6e6a" opacity="0.84"/>
+<rect x="852.0" y="1022" width="64.5" height="18" fill="none" stroke="#d9d4c8" stroke-width="1.1"/>
+<rect x="919.5" y="1022" width="64.5" height="18" fill="#2f6e6a" opacity="0.84"/>
+<rect x="987.0" y="1022" width="64.5" height="18" fill="none" stroke="#d9d4c8" stroke-width="1.1"/>
+<rect x="1054.5" y="1022" width="64.5" height="18" fill="none" stroke="#d9d4c8" stroke-width="1.1"/>
+<rect x="1122.0" y="1022" width="64.5" height="18" fill="#2f6e6a" opacity="0.84"/>
+<rect x="1189.5" y="1022" width="64.5" height="18" fill="none" stroke="#d9d4c8" stroke-width="1.1"/>
+<text x="162" y="1060" text-anchor="end" font-family="'IBM Plex Mono','DejaVu Sans Mono',monospace" font-size="12" fill="#20262b">NODE D</text>
+<rect x="177.0" y="1047" width="64.5" height="18" fill="#2f6e6a" opacity="0.84"/>
+<rect x="244.5" y="1047" width="64.5" height="18" fill="none" stroke="#d9d4c8" stroke-width="1.1"/>
+<rect x="312.0" y="1047" width="64.5" height="18" fill="none" stroke="#d9d4c8" stroke-width="1.1"/>
+<rect x="379.5" y="1047" width="64.5" height="18" fill="#2f6e6a" opacity="0.84"/>
+<rect x="447.0" y="1047" width="64.5" height="18" fill="none" stroke="#d9d4c8" stroke-width="1.1"/>
+<rect x="514.5" y="1047" width="64.5" height="18" fill="#2f6e6a" opacity="0.84"/>
+<rect x="582.0" y="1047" width="64.5" height="18" fill="none" stroke="#d9d4c8" stroke-width="1.1"/>
+<rect x="649.5" y="1047" width="64.5" height="18" fill="#2f6e6a" opacity="0.84"/>
+<rect x="717.0" y="1047" width="64.5" height="18" fill="none" stroke="#d9d4c8" stroke-width="1.1"/>
+<rect x="784.5" y="1047" width="64.5" height="18" fill="#2f6e6a" opacity="0.84"/>
+<rect x="852.0" y="1047" width="64.5" height="18" fill="none" stroke="#d9d4c8" stroke-width="1.1"/>
+<rect x="919.5" y="1047" width="64.5" height="18" fill="none" stroke="#d9d4c8" stroke-width="1.1"/>
+<rect x="987.0" y="1047" width="64.5" height="18" fill="#2f6e6a" opacity="0.84"/>
+<rect x="1054.5" y="1047" width="64.5" height="18" fill="none" stroke="#d9d4c8" stroke-width="1.1"/>
+<rect x="1122.0" y="1047" width="64.5" height="18" fill="#2f6e6a" opacity="0.84"/>
+<rect x="1189.5" y="1047" width="64.5" height="18" fill="none" stroke="#d9d4c8" stroke-width="1.1"/>
+<text x="162" y="1085" text-anchor="end" font-family="'IBM Plex Mono','DejaVu Sans Mono',monospace" font-size="12" fill="#20262b">NODE E</text>
+<rect x="177.0" y="1072" width="64.5" height="18" fill="none" stroke="#d9d4c8" stroke-width="1.1"/>
+<rect x="244.5" y="1072" width="64.5" height="18" fill="none" stroke="#d9d4c8" stroke-width="1.1"/>
+<rect x="312.0" y="1072" width="64.5" height="18" fill="none" stroke="#d9d4c8" stroke-width="1.1"/>
+<rect x="379.5" y="1072" width="64.5" height="18" fill="none" stroke="#d9d4c8" stroke-width="1.1"/>
+<rect x="447.0" y="1072" width="64.5" height="18" fill="none" stroke="#d9d4c8" stroke-width="1.1"/>
+<rect x="514.5" y="1072" width="64.5" height="18" fill="none" stroke="#d9d4c8" stroke-width="1.1"/>
+<rect x="582.0" y="1072" width="64.5" height="18" fill="none" stroke="#d9d4c8" stroke-width="1.1"/>
+<rect x="649.5" y="1072" width="64.5" height="18" fill="none" stroke="#d9d4c8" stroke-width="1.1"/>
+<rect x="717.0" y="1072" width="64.5" height="18" fill="none" stroke="#d9d4c8" stroke-width="1.1"/>
+<rect x="784.5" y="1072" width="64.5" height="18" fill="none" stroke="#d9d4c8" stroke-width="1.1"/>
+<rect x="852.0" y="1072" width="64.5" height="18" fill="none" stroke="#d9d4c8" stroke-width="1.1"/>
+<rect x="919.5" y="1072" width="64.5" height="18" fill="none" stroke="#d9d4c8" stroke-width="1.1"/>
+<rect x="987.0" y="1072" width="64.5" height="18" fill="none" stroke="#d9d4c8" stroke-width="1.1"/>
+<rect x="1054.5" y="1072" width="64.5" height="18" fill="none" stroke="#d9d4c8" stroke-width="1.1"/>
+<rect x="1122.0" y="1072" width="64.5" height="18" fill="none" stroke="#d9d4c8" stroke-width="1.1"/>
+<rect x="1189.5" y="1072" width="64.5" height="18" fill="none" stroke="#d9d4c8" stroke-width="1.1"/>
+<text x="1268" y="1085" font-family="'IBM Plex Mono','DejaVu Sans Mono',monospace" font-size="10.5" fill="#9d3226">NO WATER — RELAYS ONLY</text>
+<text x="162" y="1110" text-anchor="end" font-family="'IBM Plex Mono','DejaVu Sans Mono',monospace" font-size="12" fill="#20262b">NODE F</text>
+<rect x="177.0" y="1097" width="64.5" height="18" fill="none" stroke="#d9d4c8" stroke-width="1.1"/>
+<rect x="244.5" y="1097" width="64.5" height="18" fill="#2f6e6a" opacity="0.84"/>
+<rect x="312.0" y="1097" width="64.5" height="18" fill="none" stroke="#d9d4c8" stroke-width="1.1"/>
+<rect x="379.5" y="1097" width="64.5" height="18" fill="#2f6e6a" opacity="0.84"/>
+<rect x="447.0" y="1097" width="64.5" height="18" fill="none" stroke="#d9d4c8" stroke-width="1.1"/>
+<rect x="514.5" y="1097" width="64.5" height="18" fill="#2f6e6a" opacity="0.84"/>
+<rect x="582.0" y="1097" width="64.5" height="18" fill="none" stroke="#d9d4c8" stroke-width="1.1"/>
+<rect x="649.5" y="1097" width="64.5" height="18" fill="#2f6e6a" opacity="0.84"/>
+<rect x="717.0" y="1097" width="64.5" height="18" fill="none" stroke="#d9d4c8" stroke-width="1.1"/>
+<rect x="784.5" y="1097" width="64.5" height="18" fill="none" stroke="#d9d4c8" stroke-width="1.1"/>
+<rect x="852.0" y="1097" width="64.5" height="18" fill="#2f6e6a" opacity="0.84"/>
+<rect x="919.5" y="1097" width="64.5" height="18" fill="none" stroke="#d9d4c8" stroke-width="1.1"/>
+<rect x="987.0" y="1097" width="64.5" height="18" fill="#2f6e6a" opacity="0.84"/>
+<rect x="1054.5" y="1097" width="64.5" height="18" fill="none" stroke="#d9d4c8" stroke-width="1.1"/>
+<rect x="1122.0" y="1097" width="64.5" height="18" fill="#2f6e6a" opacity="0.84"/>
+<rect x="1189.5" y="1097" width="64.5" height="18" fill="none" stroke="#d9d4c8" stroke-width="1.1"/>
+<text x="162" y="1135" text-anchor="end" font-family="'IBM Plex Mono','DejaVu Sans Mono',monospace" font-size="12" fill="#20262b">NODE G</text>
+<rect x="177.0" y="1122" width="64.5" height="18" fill="none" stroke="#d9d4c8" stroke-width="1.1"/>
+<rect x="244.5" y="1122" width="64.5" height="18" fill="#2f6e6a" opacity="0.84"/>
+<rect x="312.0" y="1122" width="64.5" height="18" fill="none" stroke="#d9d4c8" stroke-width="1.1"/>
+<rect x="379.5" y="1122" width="64.5" height="18" fill="#2f6e6a" opacity="0.84"/>
+<rect x="447.0" y="1122" width="64.5" height="18" fill="none" stroke="#d9d4c8" stroke-width="1.1"/>
+<rect x="514.5" y="1122" width="64.5" height="18" fill="#2f6e6a" opacity="0.84"/>
+<rect x="582.0" y="1122" width="64.5" height="18" fill="none" stroke="#d9d4c8" stroke-width="1.1"/>
+<rect x="649.5" y="1122" width="64.5" height="18" fill="none" stroke="#d9d4c8" stroke-width="1.1"/>
+<rect x="717.0" y="1122" width="64.5" height="18" fill="#2f6e6a" opacity="0.84"/>
+<rect x="784.5" y="1122" width="64.5" height="18" fill="none" stroke="#d9d4c8" stroke-width="1.1"/>
+<rect x="852.0" y="1122" width="64.5" height="18" fill="#2f6e6a" opacity="0.84"/>
+<rect x="919.5" y="1122" width="64.5" height="18" fill="none" stroke="#d9d4c8" stroke-width="1.1"/>
+<rect x="987.0" y="1122" width="64.5" height="18" fill="#2f6e6a" opacity="0.84"/>
+<rect x="1054.5" y="1122" width="64.5" height="18" fill="none" stroke="#d9d4c8" stroke-width="1.1"/>
+<rect x="1122.0" y="1122" width="64.5" height="18" fill="#2f6e6a" opacity="0.84"/>
+<rect x="1189.5" y="1122" width="64.5" height="18" fill="none" stroke="#d9d4c8" stroke-width="1.1"/>
+<text x="162" y="1160" text-anchor="end" font-family="'IBM Plex Mono','DejaVu Sans Mono',monospace" font-size="12" fill="#20262b">NODE H</text>
+<rect x="177.0" y="1147" width="64.5" height="18" fill="none" stroke="#d9d4c8" stroke-width="1.1"/>
+<rect x="244.5" y="1147" width="64.5" height="18" fill="#2f6e6a" opacity="0.84"/>
+<rect x="312.0" y="1147" width="64.5" height="18" fill="none" stroke="#d9d4c8" stroke-width="1.1"/>
+<rect x="379.5" y="1147" width="64.5" height="18" fill="#2f6e6a" opacity="0.84"/>
+<rect x="447.0" y="1147" width="64.5" height="18" fill="none" stroke="#d9d4c8" stroke-width="1.1"/>
+<rect x="514.5" y="1147" width="64.5" height="18" fill="none" stroke="#d9d4c8" stroke-width="1.1"/>
+<rect x="582.0" y="1147" width="64.5" height="18" fill="#2f6e6a" opacity="0.84"/>
+<rect x="649.5" y="1147" width="64.5" height="18" fill="none" stroke="#d9d4c8" stroke-width="1.1"/>
+<rect x="717.0" y="1147" width="64.5" height="18" fill="#2f6e6a" opacity="0.84"/>
+<rect x="784.5" y="1147" width="64.5" height="18" fill="none" stroke="#d9d4c8" stroke-width="1.1"/>
+<rect x="852.0" y="1147" width="64.5" height="18" fill="#2f6e6a" opacity="0.84"/>
+<rect x="919.5" y="1147" width="64.5" height="18" fill="none" stroke="#d9d4c8" stroke-width="1.1"/>
+<rect x="987.0" y="1147" width="64.5" height="18" fill="#2f6e6a" opacity="0.84"/>
+<rect x="1054.5" y="1147" width="64.5" height="18" fill="none" stroke="#d9d4c8" stroke-width="1.1"/>
+<rect x="1122.0" y="1147" width="64.5" height="18" fill="none" stroke="#d9d4c8" stroke-width="1.1"/>
+<rect x="1189.5" y="1147" width="64.5" height="18" fill="#2f6e6a" opacity="0.84"/>
+<text x="162" y="1185" text-anchor="end" font-family="'IBM Plex Mono','DejaVu Sans Mono',monospace" font-size="12" fill="#20262b">NODE I</text>
+<rect x="177.0" y="1172" width="64.5" height="18" fill="none" stroke="#d9d4c8" stroke-width="1.1"/>
+<rect x="244.5" y="1172" width="64.5" height="18" fill="#2f6e6a" opacity="0.84"/>
+<rect x="312.0" y="1172" width="64.5" height="18" fill="none" stroke="#d9d4c8" stroke-width="1.1"/>
+<rect x="379.5" y="1172" width="64.5" height="18" fill="none" stroke="#d9d4c8" stroke-width="1.1"/>
+<rect x="447.0" y="1172" width="64.5" height="18" fill="#2f6e6a" opacity="0.84"/>
+<rect x="514.5" y="1172" width="64.5" height="18" fill="none" stroke="#d9d4c8" stroke-width="1.1"/>
+<rect x="582.0" y="1172" width="64.5" height="18" fill="#2f6e6a" opacity="0.84"/>
+<rect x="649.5" y="1172" width="64.5" height="18" fill="none" stroke="#d9d4c8" stroke-width="1.1"/>
+<rect x="717.0" y="1172" width="64.5" height="18" fill="#2f6e6a" opacity="0.84"/>
+<rect x="784.5" y="1172" width="64.5" height="18" fill="none" stroke="#d9d4c8" stroke-width="1.1"/>
+<rect x="852.0" y="1172" width="64.5" height="18" fill="#2f6e6a" opacity="0.84"/>
+<rect x="919.5" y="1172" width="64.5" height="18" fill="none" stroke="#d9d4c8" stroke-width="1.1"/>
+<rect x="987.0" y="1172" width="64.5" height="18" fill="none" stroke="#d9d4c8" stroke-width="1.1"/>
+<rect x="1054.5" y="1172" width="64.5" height="18" fill="#2f6e6a" opacity="0.84"/>
+<rect x="1122.0" y="1172" width="64.5" height="18" fill="none" stroke="#d9d4c8" stroke-width="1.1"/>
+<rect x="1189.5" y="1172" width="64.5" height="18" fill="#2f6e6a" opacity="0.84"/>
+<text x="162" y="1210" text-anchor="end" font-family="'IBM Plex Mono','DejaVu Sans Mono',monospace" font-size="12" fill="#20262b">NODE J</text>
+<rect x="177.0" y="1197" width="64.5" height="18" fill="none" stroke="#d9d4c8" stroke-width="1.1"/>
+<rect x="244.5" y="1197" width="64.5" height="18" fill="none" stroke="#d9d4c8" stroke-width="1.1"/>
+<rect x="312.0" y="1197" width="64.5" height="18" fill="#2f6e6a" opacity="0.84"/>
+<rect x="379.5" y="1197" width="64.5" height="18" fill="none" stroke="#d9d4c8" stroke-width="1.1"/>
+<rect x="447.0" y="1197" width="64.5" height="18" fill="#2f6e6a" opacity="0.84"/>
+<rect x="514.5" y="1197" width="64.5" height="18" fill="none" stroke="#d9d4c8" stroke-width="1.1"/>
+<rect x="582.0" y="1197" width="64.5" height="18" fill="#2f6e6a" opacity="0.84"/>
+<rect x="649.5" y="1197" width="64.5" height="18" fill="none" stroke="#d9d4c8" stroke-width="1.1"/>
+<rect x="717.0" y="1197" width="64.5" height="18" fill="#2f6e6a" opacity="0.84"/>
+<rect x="784.5" y="1197" width="64.5" height="18" fill="none" stroke="#d9d4c8" stroke-width="1.1"/>
+<rect x="852.0" y="1197" width="64.5" height="18" fill="none" stroke="#d9d4c8" stroke-width="1.1"/>
+<rect x="919.5" y="1197" width="64.5" height="18" fill="#2f6e6a" opacity="0.84"/>
+<rect x="987.0" y="1197" width="64.5" height="18" fill="none" stroke="#d9d4c8" stroke-width="1.1"/>
+<rect x="1054.5" y="1197" width="64.5" height="18" fill="#2f6e6a" opacity="0.84"/>
+<rect x="1122.0" y="1197" width="64.5" height="18" fill="none" stroke="#d9d4c8" stroke-width="1.1"/>
+<rect x="1189.5" y="1197" width="64.5" height="18" fill="#2f6e6a" opacity="0.84"/>
+<line x1="176" y1="1228" x2="1256" y2="1228" stroke="#20262b" stroke-width="1.6"/>
+<polygon points="1256,1228 1245,1223 1245,1233" fill="#20262b"/>
+<text x="176" y="1245" font-family="'IBM Plex Mono','DejaVu Sans Mono',monospace" font-size="10.5" fill="#55636e">EMBER-CAST WINDOW</text>
+<text x="1256" y="1245" text-anchor="end" font-family="'IBM Plex Mono','DejaVu Sans Mono',monospace" font-size="10.5" fill="#55636e">TIME →</text>
+<rect x="176" y="1268" width="348" height="46" fill="none" stroke="#2f6e6a" stroke-width="2"/>
+<text x="189" y="1288" font-family="'IBM Plex Mono','DejaVu Sans Mono',monospace" font-size="11.5" font-weight="500" fill="#2f6e6a">SUPPLY SAFETY</text>
+<text x="189" y="1304" font-family="'IBM Plex Mono','DejaVu Sans Mono',monospace" font-size="9.2" fill="#55636e">AGGREGATE DRAW NEVER EXCEEDS SUSTAINABLE CAPACITY</text>
+<rect x="542" y="1268" width="348" height="46" fill="none" stroke="#b98a2f" stroke-width="2"/>
+<text x="555" y="1288" font-family="'IBM Plex Mono','DejaVu Sans Mono',monospace" font-size="11.5" font-weight="500" fill="#b98a2f">COVERAGE FLOOR</text>
+<text x="555" y="1304" font-family="'IBM Plex Mono','DejaVu Sans Mono',monospace" font-size="9.2" fill="#55636e">NO STRUCTURE EXCEEDS ITS MAXIMUM DRY INTERVAL</text>
+<rect x="908" y="1268" width="348" height="46" fill="none" stroke="#55636e" stroke-width="2"/>
+<text x="921" y="1288" font-family="'IBM Plex Mono','DejaVu Sans Mono',monospace" font-size="11.5" font-weight="500" fill="#55636e">PARTIAL ADOPTION</text>
+<text x="921" y="1304" font-family="'IBM Plex Mono','DejaVu Sans Mono',monospace" font-size="9.2" fill="#55636e">UNEQUIPPED STRUCTURES DO NOT STOP THE DOMAIN WORKING</text>
+</svg>

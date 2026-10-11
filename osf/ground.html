@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ground and Program</title>
+<meta name="description" content="Where people learn this at scale, and where the specification family goes next — instrumented range land, and the shared-configuration community that makes installing a node ordinary.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap">
+<link rel="stylesheet" href="css/site.css">
+<style>
+.pagehead{border-bottom:3px solid var(--ink);padding-block:38px 30px}
+.pagehead h1{font-size:clamp(40px,7.2vw,72px)}
+.pagehead .kicker{font-family:var(--mono);font-size:12px;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--brass);margin-bottom:12px}
+.pagehead .standfirst{margin-top:18px;max-width:66ch;font-size:clamp(17px,2vw,20px);line-height:1.5}
+
+.layout{display:grid;grid-template-columns:1fr;gap:34px;padding-block:clamp(34px,5vw,54px)}
+@media(min-width:1020px){.layout{grid-template-columns:230px minmax(0,1fr);gap:48px}}
+.wrap.layout{max-width:1250px}
+.toc{min-width:0}
+@media(min-width:1020px){
+  .toc{position:sticky;top:calc(env(safe-area-inset-top,0px) + 62px);align-self:start;
+       max-height:calc(100vh - 100px);overflow-y:auto}
+}
+.toc .lab{font-family:var(--mono);font-size:11px;letter-spacing:.17em;text-transform:uppercase;
+  color:var(--slate);border-bottom:1px solid var(--hair);padding-bottom:7px;margin-bottom:10px}
+.toc ol{list-style:none;counter-reset:t}
+.toc li{counter-increment:t;margin-bottom:3px}
+.toc a{display:block;text-decoration:none;color:var(--ink);font-size:14.5px;
+  padding:4px 0 4px 26px;position:relative;line-height:1.35}
+.toc a::before{content:counter(t,decimal-leading-zero);position:absolute;left:0;top:6px;
+  font-family:var(--mono);font-size:10.5px;color:var(--brass)}
+.toc a:hover{color:var(--oxide)}
+.toc .div{font-family:var(--mono);font-size:10px;letter-spacing:.15em;text-transform:uppercase;
+  color:var(--brass);margin:14px 0 6px;border-top:1px solid var(--hair);padding-top:10px}
+.body{min-width:0}
+.body section{border-bottom:1px solid var(--hair);padding-block:0 clamp(28px,4vw,42px);
+  margin-bottom:clamp(28px,4vw,42px)}
+.body section:last-of-type{border-bottom:none}
+.body p{max-width:68ch;font-size:17.5px}
+.body h3{margin:26px 0 8px}
+
+.partmark{font-family:var(--mono);font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--brass);border-bottom:2px solid var(--brass);display:inline-block;
+  padding-bottom:5px;margin-bottom:8px}
+.caution{border:2px solid var(--brass);background:color-mix(in srgb,var(--brass) 7%,transparent);
+  padding:18px 22px;margin:22px 0}
+.caution .cl{font-family:var(--display);font-weight:700;font-size:16px;letter-spacing:.07em;
+  text-transform:uppercase;color:#8a6420;margin-bottom:6px}
+.caution p{font-size:16px;max-width:70ch}
+
+/* the availability inversion */
+.invert{display:grid;grid-template-columns:1fr;gap:1px;background:var(--hair);
+  border:2px solid var(--ink);margin:26px 0}
+@media(min-width:700px){.invert{grid-template-columns:1fr 1fr}}
+.invert > div{background:var(--card);padding:22px;min-width:0}
+.invert .cond{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--slate);margin-bottom:10px}
+.invert h3{margin:0 0 14px;font-size:21px}
+.invert.lo h3{color:var(--water)}
+.invert ul{list-style:none;margin:0}
+.invert li{padding:7px 0;border-bottom:1px dashed var(--hair);font-size:15.5px;
+  display:flex;gap:10px;align-items:baseline}
+.invert li:last-child{border-bottom:none}
+.invert li .st{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;
+  white-space:nowrap;padding:2px 7px;flex-shrink:0}
+.st.go{background:var(--water);color:#fff}
+.st.stop{background:var(--oxide);color:#fff}
+.invert .punch{margin-top:14px;font-size:16px;font-style:italic;color:#3a4248}
+
+/* two formations */
+.forms{display:grid;grid-template-columns:1fr;gap:1px;background:var(--hair);
+  border:1px solid var(--hair);margin:26px 0}
+@media(min-width:720px){.forms{grid-template-columns:1fr 1fr}}
+.forms > div{background:var(--card);padding:20px 22px;min-width:0}
+.forms h3{margin:0 0 4px;font-size:18px}
+.forms .src{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--brass);margin-bottom:10px}
+.forms p{font-size:15.5px;margin:0}
+.bridge{border:2px solid var(--water);background:color-mix(in srgb,var(--water) 7%,transparent);
+  padding:18px 22px;margin-top:-1px}
+.bridge .bl{font-family:var(--display);font-weight:700;font-size:16px;letter-spacing:.07em;
+  text-transform:uppercase;color:var(--water);margin-bottom:6px}
+.bridge p{font-size:16.5px;max-width:70ch}
+
+/* access avenues */
+.avenues{list-style:none;margin-top:18px}
+.avenues li{padding:13px 0 13px 30px;border-bottom:1px dashed var(--hair);
+  position:relative;font-size:16px;max-width:70ch}
+.avenues li:last-child{border-bottom:none}
+.avenues li::before{content:"→";position:absolute;left:0;top:13px;color:var(--brass);
+  font-family:var(--mono)}
+.avenues li b{font-weight:600}
+
+/* configuration template */
+.cfg{border:2px solid var(--ink);background:var(--card);margin:26px 0}
+.cfg .top{background:var(--ink);color:var(--paper);padding:14px 20px;
+  display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
+.cfg .top b{font-family:var(--display);font-weight:700;font-size:18px;text-transform:uppercase;
+  letter-spacing:.05em}
+.cfg .top span{font-family:var(--mono);font-size:11px;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--brass)}
+.cfg .rows{padding:4px 20px 16px}
+.cfg .row{display:grid;grid-template-columns:1fr;gap:2px;padding:12px 0;
+  border-bottom:1px solid var(--hair)}
+@media(min-width:640px){.cfg .row{grid-template-columns:190px minmax(0,1fr);gap:4px 20px}}
+.cfg .row:last-child{border-bottom:none}
+.cfg .k{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--brass);padding-top:3px}
+.cfg .v{font-size:15.5px}
+.cfg .flag{margin:0 20px 18px;border:2px solid var(--oxide);padding:13px 16px;
+  background:color-mix(in srgb,var(--oxide) 5%,transparent)}
+.cfg .flag b{font-family:var(--display);font-weight:700;font-size:14px;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--oxide);display:block;margin-bottom:4px}
+.cfg .flag p{font-size:15.5px;margin:0;max-width:66ch}
+
+.arche{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1px;
+  background:var(--hair);border:1px solid var(--hair);margin:22px 0}
+.arche div{background:var(--card);padding:14px 16px;font-size:15px;min-width:0}
+.arche div span{display:block;font-family:var(--mono);font-size:10.5px;letter-spacing:.09em;
+  text-transform:uppercase;color:var(--slate);margin-top:4px}
+
+.infra{list-style:none;margin-top:16px}
+.infra li{padding:12px 0;border-bottom:1px dashed var(--hair);max-width:72ch}
+.infra li:last-child{border-bottom:none}
+.infra li b{display:block;font-family:var(--display);font-weight:600;font-size:17px;
+  text-transform:uppercase;letter-spacing:.03em;margin-bottom:3px}
+.infra li p{font-size:15.5px;margin:0;max-width:none}
+
+.rule{border-left:4px solid var(--water);padding:4px 0 4px 18px;margin:20px 0;
+  font-size:17px;max-width:66ch}
+.rule b{color:var(--water)}
+.pull{border-left:4px solid var(--brass);padding:6px 0 6px 22px;margin:22px 0;
+  font-size:19px;line-height:1.45;max-width:62ch;font-style:italic;color:#3a4248}
+.pull b{font-style:normal;color:var(--ink)}
+.getdoc{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-top:22px}
+.getdoc a{font-family:var(--display);font-weight:600;font-size:16px;letter-spacing:.05em;
+  text-transform:uppercase;text-decoration:none;border:2px solid var(--oxide);color:var(--oxide);padding:8px 16px}
+.getdoc a:hover{background:var(--oxide);color:var(--paper)}
+.getdoc span{font-family:var(--mono);font-size:12.5px;color:var(--slate)}
+</style>
+</head>
+<body>
+
+<div class="statusbar">
+  <div class="wrap">
+    <span>Published <b>October 11, 2026</b></span>
+    <span>Provisional application <b>64/173,890</b> · filed October 10, 2026</span>
+    <span>Open specification · <b>free forever</b></span>
+  </div>
+</div>
+
+<nav>
+  <div class="wrap">
+    <a class="brand" href="index.html">OSF</a>
+    <a href="tactics.html" class="hidesm">Tactics</a>
+    <a href="deadman.html" class="hidesm">Deadman</a>
+    <a href="network.html" class="hidesm">Network</a>
+    <a href="acceptance.html" class="hidesm">Acceptance</a>
+    <a href="adoption.html" class="hidesm">Adoption</a>
+    <a href="ground.html" class="hidesm" style="color:var(--oxide)">Ground</a>
+    <a href="index.html#library" class="hidesm">Documents</a>
+    <a href="docs/osf-as-filed-2026-10-10.pdf" class="cta">The filing</a>
+    <span class="updir"><a href="index.html" title="Back one page (Open Source Firefighter index)" aria-label="Back one page, Open Source Firefighter index">../</a><a href="https://pikesperkcoffee.github.io/index.html" title="Site index (root)" aria-label="Site index, root">/</a></span>
+  </div>
+</nav>
+
+<header class="pagehead">
+  <div class="wrap">
+    <div class="kicker">For forestry, range, departments, and program officers</div>
+    <h1>Ground and Program</h1>
+    <p class="standfirst">Two unfinished things. Where people learn to run this at scale — on instrumented land that already exists and sits idle on exactly the wrong days. And what the community has to build for installing a node to become ordinary.</p>
+  </div>
+</header>
+
+<div class="wrap layout">
+
+  <aside class="toc">
+    <div class="lab">On this page</div>
+    <div class="div">Part one — the ground</div>
+    <ol>
+      <li><a href="#campus">The campus already exists</a></li>
+      <li><a href="#rent">The rent is the fuels backlog</a></li>
+      <li><a href="#gap">Deconfliction is not integration</a></li>
+      <li><a href="#formations">Two formations</a></li>
+      <li><a href="#standing">What standing capability unlocks</a></li>
+      <li><a href="#stakeholder">You are a stakeholder</a></li>
+      <li><a href="#money">Different colors of the same money</a></li>
+    </ol>
+    <div class="div">Part two — the program</div>
+    <ol start="8" style="counter-reset:t 7">
+      <li><a href="#configs">Known-good configurations</a></li>
+      <li><a href="#card">What a configuration carries</a></li>
+      <li><a href="#infra">The infrastructure</a></li>
+      <li><a href="#mark">The name as the instrument</a></li>
+      <li><a href="#succession">Roles and succession</a></li>
+    </ol>
+  </aside>
+
+  <main class="body">
+
+    <section id="campus">
+      <span class="partmark">Part one — the ground</span>
+      <h2>The campus already exists</h2>
+
+      <div class="caution">
+        <div class="cl">This program does not exist yet</div>
+        <p>What follows is a vision document, published with the rest of the family because the ground it describes already exists, sits idle at the exact moments it is most relevant, and belongs — in the ways that matter — to more people than currently realize they are its stakeholders. It requests no facility, no construction, no program office, and no budget line.</p>
+      </div>
+
+      <p>The rest of this family specifies a system: the box, the mesh, the water, the doctrine. This part answers the question that follows every good box onto the pallet — <strong>how do people at every level learn to use it?</strong> The homeowner's answer is easy. The installer's answer is the default, because the trades read specifications for a living. This is written for the harder and more valuable audience: the fire and forestry professional, the district office, the volunteer department, the burn boss, the range manager.</p>
+
+      <p>The Department of Defense operates the largest inventory of instrumented, maintained, fire-relevant training land in the country. Every terrain type. Every fuel condition. Every size, from a pistol range to maneuver areas the size of counties. Roads, water points, impact-area discipline, and — on modern instrumented ranges — installed thermal camera networks and observation towers, maintained on someone else's budget, watching ground where fires start routinely because starting fires is what tracer, artillery, and demolition training does.</p>
+
+      <p>And here is the fact the whole argument turns on.</p>
+
+      <div class="invert">
+        <div>
+          <div class="cond">Normal conditions</div>
+          <h3>The range is working</h3>
+          <ul>
+            <li><span class="st go">Open</span> Live fire, maneuver, demolition</li>
+            <li><span class="st go">Open</span> Full training schedule, booked</li>
+            <li><span class="st stop">Low</span> Realism available for fire training</li>
+            <li><span class="st stop">Low</span> Urgency — it is not a bad fire day</li>
+          </ul>
+          <p class="punch">The ground is busy and fire training has nowhere to be.</p>
+        </div>
+        <div class="lo">
+          <div class="cond">Red flag · high fire danger</div>
+          <h3>The range shuts down</h3>
+          <ul>
+            <li><span class="st stop">Closed</span> Live fire stops. Some years even blanks stop</li>
+            <li><span class="st stop">Closed</span> Training capacity goes idle</li>
+            <li><span class="st go">Peak</span> Realism — the conditions are the curriculum</li>
+            <li><span class="st go">Peak</span> Urgency — this is the day it matters</li>
+          </ul>
+          <p class="punch">Crews reduced to dry-fire theater on a silent range are sitting in the middle of the best wildland-fire classroom in the country, on the exact days it can teach.</p>
+        </div>
+      </div>
+
+      <p>A range that cannot shoot can host node emplacement drills, wet-line lays, buffered-supply-point exercises, drone patrol circuits, mock-fire coordination problems, and the full surveillance-and-release curriculum — none of which require a single live round or an open burn window.</p>
+      <div class="rule">The fire restriction that suspends the range's primary mission <b>creates its availability.</b></div>
+    </section>
+
+    <section id="rent">
+      <h2>The rent is the fuels backlog</h2>
+      <p>Every range in the system is behind on land management. Grass and fuels work is the orphan task of range operations — the busy-work everyone pretends is not their responsibility, deferred every year because the people and money are never there. Meanwhile the interagency burn crews that could treat it arrive on a schedule set months in advance: a few days per facility per spring, weather permitting. Some years the grass is wet and the visit produces nothing. The good years, the crew burns what is reachable in the time available — the flat infield grass, the course roads — and moves to the next post. The hard ground stays hard forever: the draws, the tracer fans under the gun-target lines, the terrain that actually sets fires all summer.</p>
+      <p>The arithmetic is the problem, not the people.</p>
+      <div class="pull">The scarce resource is not the burn crew. It is <b>the burnable window</b> — the scattered handful of days each year when a given problem area is safely treatable — and a traveling crew scheduled months ahead almost never overlaps it.</div>
+      <p>A defense that must be present when the window opens cannot be built from a scarce expert resource that travels. It has to be standing, local, and ready, which is this specification's entire thesis pointed at prescribed fire.</p>
+      <p>So the school pays its rent in the host's own currency: <strong>every training evolution leaves the range with fuels work done.</strong> Wet-line exercises hold real burns on real backlog. Node emplacement drills pre-position real terrain defense. The range's thousand-acre problem is the curriculum, and the range officer stops tolerating the program and starts requesting it.</p>
+    </section>
+
+    <section id="gap">
+      <h2>Deconfliction is not integration</h2>
+      <p>Coordination between the fire world and the range world exists today — but as deconfliction, not integration. The burn crew takes the range for its scheduled days; range control clears the space and steps back; everyone follows the process. The information flows one way.</p>
+      <p>Nobody asks the range office where the fires usually start, which draws always get away, or what instrumentation is buried under which grass. And so target pits and lifters have burned under professionally executed prescribed fire — not because anyone failed, but because the professional-courtesy structure defined the locals as a scheduling entity rather than a knowledge source. <strong>Every range manager can draw the ignition map of his own ground from memory. Almost no one from the fire side has ever asked.</strong></p>
+      <p>The missing piece is not a coordinator; that slot is filled. The missing piece is <em>standing</em>: someone the fire side recognizes as a peer, who can put local ground truth inside the burn plan instead of outside the tape. Credentials are the carrier wave for knowledge — the same warning lands differently from "a local" than from a dual-qualified professional whose input the burn boss must weight.</p>
+      <div class="rule">That is the school's product. Not a facility. Not a technology. <b>A profession</b> — operators fluent in both dialects, minted deliberately instead of occurring by accident.</div>
+    </section>
+
+    <section id="formations">
+      <h2>Two formations that never overlapped</h2>
+      <div class="forms">
+        <div>
+          <div class="src">The wildland fire tradition</div>
+          <h3>The ground-reader</h3>
+          <p>Professionals who read fuel, weather, slope, and fire behavior as a first language, formed by seasons on the line. The formation is analog and terrestrial by lineage, and it is honorable. What it never includes — because the equipment does not exist in that world — is the instrumented battlespace.</p>
+        </div>
+        <div>
+          <div class="src">The range world</div>
+          <h3>The grid operator</h3>
+          <p>Operators who run multi-camera thermal networks as a daily instrument, who detect a developing situation in a wood line before it becomes a problem, and who live inside the loop of detect, correlate, decide, task — with positive identification across independent sensors and consequential action released only by a human voice, held the instant anything is ambiguous.</p>
+        </div>
+      </div>
+      <div class="bridge">
+        <div class="bl">The curriculum, in one line</div>
+        <p>Hand the ground-reader the grid. Take the fire professional who already reads the land and teach the surveillance picture, the correlation call, the release discipline, and the coordinated water employment this specification defines — talk the student onto the thermal signature, require agreement across independent sensors, require the words said out loud, and teach that holding everything when unsatisfied is not caution but the job.</p>
+      </div>
+      <p>That reflex cannot be read out of a book. It is built by running it, and the only places it can be run are exactly the ranges described above. The military spent a century writing this pedagogy. The school ports it to fire — dry, then rehearsed, then live — and the dry tier runs on any instrumented range on any red flag day, when nothing else can train at all.</p>
+    </section>
+
+    <section id="standing">
+      <h2>What standing local capability unlocks</h2>
+      <p>A range operating this specification's terrain layer — pre-surveyed node sites, reversible wet line, buffered supply points fed by ordinary porta-tank orders through local departments and forestry, the installed thermal net as overwatch, and a resident cadre of dual-fluent operators — can prosecute its own fuels program opportunistically. Hit the hard draw on the exact right Tuesday in November, one problem area at a time, all year, with the traveling professional crews reserved for the genuinely difficult prescriptions where their depth is irreplaceable.</p>
+      <p><strong>The lighting was never the hard part of prescribed fire; the holding is.</strong> Pre-positioned water collapses holding risk on exactly the ground nobody will otherwise touch: the deep masticated mats, the smoldering-prone cleared units where grass grows through years-old hydroaxe work, the category of ground that needs fire most and receives it least.</p>
+      <p>The sequence is deliberately modest: <strong>assist first.</strong> The program shows up as the holding and safety element that makes the interagency crew's scheduled days count. Capability migrates the way it always migrates — toward whoever does the work best with the least friction — and nobody needs to be displaced for the backlog to start shrinking.</p>
+    </section>
+
+    <section id="stakeholder">
+      <h2>You are a stakeholder in that ground</h2>
+      <p>This part is written directly to the reader in the forestry office and the volunteer fire station. The access avenues exist now.</p>
+      <ul class="avenues">
+        <li><b>Any volunteer fire department in the country has a path onto a military installation.</b> Mutual aid relationships, installation support agreements, and joint training arrangements are established machinery, exercised routinely.</li>
+        <li><b>Federal and cooperating agencies have partnership avenues</b> to installation ranges as a matter of standing policy. The ground is government ground, and cooperative use is what the machinery is for.</li>
+        <li><b>The specialized facilities sit empty.</b> Urban training complexes — dozens of varied structures, furnished, built for search and maneuver training — stand unused the overwhelming majority of the year, while departments an hour away improvise structure-search training in whatever they can borrow.</li>
+        <li><b>The ranges' fire problem is real and unowned</b>, which means the agency or department that shows up with capability is not competing for a resource. It is answering a need the host cannot currently meet.</li>
+      </ul>
+      <div class="pull">The next time you drive past the installation boundary, do not think of it as someone else's fence. Think of it as <b>the best-instrumented fire classroom in your county</b> — idle on red flag days, behind on the exact work your profession exists to do, reachable through agreements your organization is already entitled to pursue.</div>
+      <p>The coordinated defense this family specifies will be run, at scale, by people, and the people will be trained somewhere. The somewhere already exists. It is waiting for its stakeholders to recognize themselves.</p>
+    </section>
+
+    <section id="money">
+      <h2>Different colors of the same money</h2>
+      <p>One more thing the reader in the district office already knows, said out loud. The volunteer department, the range, the Army, city fire, EMS, police, forestry, the hotshot crew, land management, state fire, federal fire, county fire, the HOA, and the water and power companies are <strong>different colors of the same public money.</strong> The citizen writes one check, and it comes back wearing twenty uniforms that each defend a slice as though it were separate funds. It never was.</p>
+      <p>The fragmentation everyone treats as natural law is accounting made visible as turf — and the public that pays for all the sleeves does not care whose patch is on one when the ridge is burning.</p>
+      <p>This specification's coordination layer is built for exactly that reality, in exactly one role: <strong>the box is the secretary.</strong> Not a commander, not a new agency, not anyone's boss — the secretary that did the interagency coordinating in advance, mechanically, so that every professional simply does their job. The hydrant, the tender, the terrain node, the range's thermal net, and the incident commander's tablet cooperate through a protocol that already reconciled what the org charts never will: without a memorandum summit, without a turf negotiation, without anyone yielding authority to anyone.</p>
+      <div class="rule"><b>Coordination as infrastructure instead of meetings.</b></div>
+      <p>This part of the family proposes tenancy, not ownership, conducted in the tenant ethic its author practiced for eleven years as a range manager: honor the host's load-bearing rules absolutely, leave the ground better than found, and pay rent in solved problems.</p>
+    </section>
+
+    <section id="configs">
+      <span class="partmark">Part two — the program</span>
+      <h2>Known-good configurations</h2>
+      <p>The specification can be finished by one person. The thing that makes it <em>usable</em> cannot be, and it is worth naming precisely what the community is for, because "build a community" is not a plan.</p>
+      <p>The target state is that installing a node on a common structure is <strong>trivial</strong> — not because the system got simpler, but because someone already worked out that configuration, published it, and a hundred people refined it.</p>
+      <p>The precedent worth studying is the open engine-management community. An open engine controller is a general-purpose device and, on its own, an expert-only proposition: you would have to derive fueling and timing from theory for your specific engine. What made it ordinary was not the hardware. It was that the community produced and maintained <strong>per-platform base configurations</strong> — a tested starting map for one car, then another, then whatever you had. A newcomer stopped starting from theory and started from something that already ran, then tuned from there.</p>
+      <div class="rule">That is exactly what this project needs, and <b>the axis is structure and site rather than engine.</b></div>
+
+      <h3>The archetypes to converge on</h3>
+      <div class="arche">
+        <div>Single-wide manufactured home<span>Municipal supply · hose-bib class</span></div>
+        <div>Ranch house<span>Well and cistern · with pump control</span></div>
+        <div>Hillside home<span>Gravity-fed tank · no pump</span></div>
+        <div>Manufactured-home park<span>Multiple nodes · shared supply · coordinated</span></div>
+        <div>Outbuilding<span>Barn or detached shop</span></div>
+        <div>Expeditionary case<span>Tactical class</span></div>
+        <div>Utility right-of-way<span>Corridor segment</span></div>
+      </div>
+      <p>With regional variants layered on top, because radio allocation, freeze exposure, and water-supply practice all differ by jurisdiction.</p>
+    </section>
+
+    <section id="card">
+      <h2>What a configuration carries</h2>
+      <p>A configuration is a citable artifact, not folklore. This is the template, not a published configuration — none exist yet. The first two or three are seeded by the author; <strong>every one after that is the community's</strong>, which is the point.</p>
+
+      <div class="cfg">
+        <div class="top"><b>Configuration — template</b><span>No configurations published yet</span></div>
+        <div class="rows">
+          <div class="row"><div class="k">Archetype</div><div class="v">Which of the structures above, and its assumptions — roof geometry, supply class, climate, jurisdiction.</div></div>
+          <div class="row"><div class="k">Coverage layout</div><div class="v">Head placement and count, zone division.</div></div>
+          <div class="row"><div class="k">Supply math</div><div class="v">Worked against the planning table, with the measured figures that back it.</div></div>
+          <div class="row"><div class="k">Parts list at a price tier</div><div class="v">With the substitutions someone has actually verified — not the ones that look equivalent on paper.</div></div>
+          <div class="row"><div class="k">Panel layout</div><div class="v">And the wiring variant used.</div></div>
+          <div class="row"><div class="k">Firmware configuration</div><div class="v">Zone count, timings, regional radio parameters.</div></div>
+          <div class="row"><div class="k">Its evidence</div><div class="v">Who built it, what was tested, what failed, and any thermal-verification pass.</div></div>
+          <div class="row"><div class="k">Known gotchas</div><div class="v">The things that bit the people who built it.</div></div>
+          <div class="row"><div class="k">Test status</div><div class="v"><strong>Tested, partially tested, or untested</strong> — stated in the same breath as the parts list, never below the fold.</div></div>
+        </div>
+        <div class="flag">
+          <b>Why test status is the load-bearing field</b>
+          <p>The real hazard is not a missing configuration. It is a plausible-looking one that under-waters and gives a homeowner false confidence. A configuration that has never been run must say so. Thermal-signature verification is the field check that closes the loop: a configuration is proven when the roof reads wet.</p>
+        </div>
+      </div>
+      <p>Two properties are non-negotiable. Configurations are <strong>versioned and attributed</strong>, so a builder knows what they are trusting and can go ask the person who wrote it. And configurations <strong>carry their test status honestly</strong>, including untested.</p>
+    </section>
+
+    <section id="infra">
+      <h2>The infrastructure that produces them</h2>
+      <p>Functions, not products — platforms change, these do not.</p>
+      <ul class="infra">
+        <li><b>A canonical record no single company owns</b><p>The documents are plain text and version-controlled already, which is most of the work. Mirror it. The charter says the <em>system</em> carries no mandatory external dependency, and the same discipline applies to the project: if a forge disappears, the standard must not.</p></li>
+        <li><b>A change-proposal process</b><p>The most important item on this list, because interoperability is the product and the charter routes vocabulary additions through governance. It needs a template, a discussion window, and a decisions-of-record log. Without one, governance is one person answering threads.</p></li>
+        <li><b>An archived asynchronous forum</b><p>The record. Real-time chat is for velocity and is ephemeral by design; a decision that lives only in chat did not happen.</p></li>
+        <li><b>A build registry</b><p>What people built, what they substituted, what broke. This is the feedback loop that fills in both the parts catalogue and the configuration library — and it is the item most easily forgotten, because it has no software analogue.</p></li>
+        <li><b>A conformance suite and a way to claim conformance</b><p>The anti-fork instrument. It defines what <em>is</em> a node built to this specification, and it makes contributing easier than forking.</p></li>
+        <li><b>A private safety-defect channel</b><p>With coordinated disclosure. Most projects add one after an incident. Safety-adjacent hardware does not get that grace.</p></li>
+        <li><b>Regional working groups</b><p>Because compliance, climate, and supply practice are local, and no central maintainer can hold them all.</p></li>
+      </ul>
+      <div class="caution">
+        <div class="cl">None of this gets pre-built</div>
+        <p>An empty forum is worse than no forum, and infrastructure without people is a maintenance burden that signals abandonment. This is a specification for what to stand up when there is traffic to justify it — in roughly the order listed, since the record and the change process must exist before the first outside contribution arrives, and everything else can wait for demand.</p>
+      </div>
+    </section>
+
+    <section id="mark">
+      <h2>The name as the conformance instrument</h2>
+      <p>The design is free. The <strong>name</strong> is the thing that carries a promise, and it is the only practical lever for keeping that promise honest.</p>
+      <p>This is the structure mature open-hardware projects converge on, and it separates two things that are usually confused. The specification, the drawings, and the reference implementation are open under their licences: anyone may build, modify, sell, and fork without asking. The <strong>mark</strong> — the project name and its identifying logo — is held, and its use is granted on stated terms. A builder who meets the conformance suite may say the thing is an OSF node. A builder who does not may still build, sell, and ship whatever they like; they simply may not call it that.</p>
+      <div class="rule">Why this matters more here than in most projects: a non-conforming node in a coordination domain does not merely underperform, <b>it draws water out of turn.</b> A device that ignores the schedule and calls itself compliant is a hazard to every neighbor on the supply. Conformance is a safety property, and a conformance claim needs something behind it.</div>
+      <p>Two provisions distinguish a workable mark from a hollow one.</p>
+      <p><strong>The grant is objective, not discretionary.</strong> Meet the published conformance suite and the grant follows; fail it and the grant lapses. It is not a relationship to be managed, a fee to be paid, or a favor to be granted. Discretionary marks become gatekeeping, and gatekeeping is the failure this project is built to avoid.</p>
+      <p><strong>The grant is not revocable at will.</strong> Revocable-at-any-time marks are the same failure as revocable patent pledges: they look like a commitment and function as leverage. A conformance grant that can be withdrawn without cause is worth nothing to the builder relying on it.</p>
+      <p>A secondary mark for compatibility — <em>works with</em>, <em>interoperates with</em> — costs nothing to offer and lets adjacent projects state a relationship without claiming conformance they have not tested for.</p>
+      <p>What this is not: a licence fee, an approval queue, an endorsement, or a warranty. It is a claim about testable behavior, and nothing more.</p>
+    </section>
+
+    <section id="succession">
+      <h2>Roles and succession</h2>
+      <p>Written down, publicly, in ordinary language: who decides, how a contributor becomes a maintainer, how disputes resolve, and what happens when a maintainer — including the author — is unavailable.</p>
+      <p><strong>Founder-led projects most reliably fail at the transition from founder to community, and the failure is social rather than technical.</strong></p>
+      <p>The succession question and the estate instrument are the same problem, and belong in the same conversation with counsel: the instrument that guarantees the work stays open should also say who carries it.</p>
+      <p>A code of conduct belongs here too, and is best understood as a safety brief rather than an administrative formality — the same document type as the briefing given before anyone steps onto a live range.</p>
+
+      <h3>Licensing — three decisions of record</h3>
+      <p>Hardware, documentation, and software are different licence families and need separate, deliberate choices, recorded with their reasoning. Ambiguity here is the most common reason a willing contributor walks away.</p>
+
+      <div class="pull">The twelve-month window exists precisely because the remaining work is designed to be done in the open, by many hands, against a published standard. <b>Everything on this list is buildable by strangers from the documents. That is the point of the documents.</b></div>
+
+      <div class="getdoc">
+        <a href="docs/osf-training-range.pdf">The Training Range</a>
+        <a href="docs/osf-development-path.pdf">Development Path</a>
+        <span>5 and 7 sheets · a vision document and a work list</span>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<footer class="sitefoot">
+  <div class="wrap fgrid">
+    <div>
+      <div class="free">Free like a fire code.</div>
+      <p style="margin-top:8px;max-width:42ch">Build one. Improve it. Propose changes.<br>It belongs to everyone it protects.</p>
+    </div>
+    <div class="mono">
+      The Open Source Firefighter<br>
+      Andrew Morton · Palmer Lake, Colorado<br>
+      U.S. Provisional Application 64/173,890<br>
+      Filed October 10, 2026 · published October 11, 2026
+    </div>
+    <div class="mono">
+      External standards named in this family are adopted<br>
+      by reference to their current edition as amended.<br>
+      The issuing authority's text always governs.
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

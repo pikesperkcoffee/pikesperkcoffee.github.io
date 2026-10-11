@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>The Deadman Fire</title>
+<meta name="description" content="A constructed operational scenario used to stress coordinated ember and terrain defense against a realistic fire. Not a case study. A design-review instrument.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap">
+<link rel="stylesheet" href="css/site.css">
+<style>
+.pagehead{border-bottom:3px solid var(--ink);padding-block:38px 30px}
+.pagehead h1{font-size:clamp(42px,8vw,78px)}
+.pagehead .kicker{font-family:var(--mono);font-size:12px;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--oxide);margin-bottom:12px}
+.pagehead .standfirst{margin-top:18px;max-width:64ch;font-size:clamp(17px,2vw,20px);line-height:1.5}
+
+/* the notice has to be impossible to miss or skim past */
+.fiction{border:3px solid var(--oxide);background:color-mix(in srgb,var(--oxide) 6%,transparent);
+  padding:20px 24px;margin-top:26px;max-width:none}
+.fiction .flag{font-family:var(--display);font-weight:700;font-size:clamp(19px,3vw,25px);
+  text-transform:uppercase;letter-spacing:.07em;color:var(--oxide);margin-bottom:9px;line-height:1.1}
+.fiction p{font-size:16px;max-width:76ch}
+.fiction p+p{margin-top:10px}
+
+.layout{display:grid;grid-template-columns:1fr;gap:34px;padding-block:clamp(34px,5vw,54px)}
+@media(min-width:1020px){.layout{grid-template-columns:230px minmax(0,1fr);gap:48px}}
+.wrap.layout{max-width:1250px}
+.toc{min-width:0}
+@media(min-width:1020px){
+  .toc{position:sticky;top:calc(env(safe-area-inset-top,0px) + 62px);align-self:start;
+       max-height:calc(100vh - 100px);overflow-y:auto}
+}
+.toc .lab{font-family:var(--mono);font-size:11px;letter-spacing:.17em;text-transform:uppercase;
+  color:var(--slate);border-bottom:1px solid var(--hair);padding-bottom:7px;margin-bottom:10px}
+.toc ol{list-style:none;counter-reset:t}
+.toc li{counter-increment:t;margin-bottom:3px}
+.toc a{display:block;text-decoration:none;color:var(--ink);font-size:14.5px;
+  padding:4px 0 4px 26px;position:relative;line-height:1.35}
+.toc a::before{content:counter(t,decimal-leading-zero);position:absolute;left:0;top:6px;
+  font-family:var(--mono);font-size:10.5px;color:var(--brass)}
+.toc a:hover{color:var(--oxide)}
+.body{min-width:0}
+.body section{border-bottom:1px solid var(--hair);padding-block:0 clamp(28px,4vw,42px);
+  margin-bottom:clamp(28px,4vw,42px)}
+.body section:last-of-type{border-bottom:none}
+.body p{max-width:68ch;font-size:17.5px}
+.body h3{margin:24px 0 8px}
+.body .narrative > p:first-of-type::first-letter{font-family:var(--display);font-weight:700;
+  font-size:3.1em;float:left;line-height:.82;margin:4px 9px 0 0;color:var(--oxide)}
+
+/* ---- visual 1: the nine days ---- */
+.days{border:1px solid var(--hair);background:var(--card);padding:20px 22px;margin:26px 0}
+.days .vlab{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--slate);margin-bottom:16px}
+.track{display:grid;gap:0}
+.beat{display:grid;grid-template-columns:86px 14px minmax(0,1fr);gap:0 14px;align-items:start}
+.beat .when{font-family:var(--mono);font-size:11.5px;color:var(--slate);text-align:right;
+  padding-top:11px;letter-spacing:.03em}
+/* stretch the rule column so the spine runs unbroken through all twelve beats */
+.beat .mark{position:relative;display:flex;justify-content:center;align-self:stretch}
+.beat .mark::before{content:"";position:absolute;top:0;bottom:0;width:2px;background:var(--hair)}
+.beat:first-child .mark::before{top:16px}
+.beat:last-child .mark::before{bottom:calc(100% - 16px)}
+.beat .dot{position:relative;width:11px;height:11px;border-radius:50%;background:var(--card);
+  border:2.5px solid var(--slate);margin-top:11px;z-index:1}
+.beat .what{padding:8px 0 8px 0;font-size:15.5px;max-width:58ch}
+.beat .what b{display:block;font-family:var(--display);font-weight:600;font-size:16px;
+  text-transform:uppercase;letter-spacing:.03em}
+.beat.fail .dot{border-color:var(--oxide);background:var(--oxide)}
+.beat.fail .what b{color:var(--oxide)}
+.beat.burn .dot{border-color:var(--brass);background:var(--brass);width:15px;height:15px;margin-top:9px}
+.beat.burn .what b{color:var(--brass)}
+@media(max-width:560px){
+  .beat{grid-template-columns:62px 14px minmax(0,1fr);gap:0 10px}
+  .beat .when{font-size:10.5px}
+}
+
+/* ---- visual 2: the causal chain ---- */
+.chain{border:2px solid var(--oxide);background:var(--card);padding:22px;margin:26px 0}
+.chain .vlab{font-family:var(--display);font-weight:700;font-size:18px;text-transform:uppercase;
+  letter-spacing:.05em;color:var(--oxide);margin-bottom:4px}
+.chain .vsub{font-family:var(--mono);font-size:11.5px;letter-spacing:.07em;text-transform:uppercase;
+  color:var(--slate);margin-bottom:18px}
+.links{display:grid;gap:0}
+.lnk{display:grid;grid-template-columns:30px minmax(0,1fr);gap:14px;align-items:start;
+  padding:9px 0}
+.lnk .n{font-family:var(--mono);font-size:11px;color:var(--oxide);padding-top:4px;text-align:right}
+.lnk .txt{font-size:15.5px;max-width:58ch}
+.lnk .txt b{font-weight:600}
+/* .links is a single-column grid — the arrow just indents to the text column */
+.arrow{font-family:var(--mono);font-size:14px;color:var(--oxide);
+  padding-left:44px;line-height:1;opacity:.75}
+.chain .verdict{border-top:1px solid var(--hair);margin-top:14px;padding-top:14px;
+  font-size:15.5px;max-width:62ch;font-style:italic}
+
+/* ---- visual 3: the park ---- */
+.park{border:1px solid var(--hair);background:var(--card);padding:20px 22px;margin:26px 0}
+.park .vlab{font-family:var(--display);font-weight:700;font-size:18px;text-transform:uppercase;
+  letter-spacing:.05em;margin-bottom:3px}
+.park .vsub{font-family:var(--mono);font-size:11.5px;letter-spacing:.07em;text-transform:uppercase;
+  color:var(--slate);margin-bottom:16px}
+.lots{display:grid;grid-template-columns:repeat(12,1fr);gap:4px}
+@media(max-width:620px){.lots{grid-template-columns:repeat(8,1fr)}}
+.lot{aspect-ratio:1;border:1px solid var(--hair);background:transparent;position:relative}
+.lot.eq{background:var(--water);border-color:var(--water)}
+.lot.her{background:var(--water);border:2.5px solid var(--brass)}
+.lot.lost{background:var(--oxide);border:2.5px solid var(--oxide)}
+.parkkey{display:flex;flex-wrap:wrap;gap:8px 20px;margin-top:14px;
+  font-family:var(--mono);font-size:11.5px;letter-spacing:.04em;color:var(--slate)}
+.parkkey span{display:flex;align-items:center;gap:7px}
+.parkkey i{width:13px;height:13px;display:inline-block;border:1px solid var(--hair)}
+.parkkey i.eq{background:var(--water);border-color:var(--water)}
+.parkkey i.her{background:var(--water);border:2px solid var(--brass)}
+.parkkey i.lost{background:var(--oxide);border-color:var(--oxide)}
+.parknote{margin-top:14px;font-size:15.5px;max-width:64ch;font-style:italic;color:#3a4248}
+
+/* ---- visual 4: the tally ---- */
+.tally{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1px;
+  background:var(--hair);border:1px solid var(--hair);margin:26px 0}
+.tally div{background:var(--card);padding:16px 18px;min-width:0}
+.tally .num{font-family:var(--display);font-weight:700;font-size:38px;line-height:1;
+  color:var(--ink);font-variant-numeric:tabular-nums}
+.tally .num.zero{color:var(--water)}
+.tally .lbl{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--slate);margin-top:7px;line-height:1.5}
+
+.pull{border-left:4px solid var(--brass);padding:6px 0 6px 22px;margin:22px 0;
+  font-size:19px;line-height:1.45;max-width:60ch;font-style:italic;color:#3a4248}
+.pull b{font-style:normal;color:var(--ink)}
+.coord{border:1px solid var(--hair);background:var(--card);padding:20px 22px;margin:22px 0;
+  font-size:16px;max-width:none}
+.coord .src{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--brass);margin-bottom:10px}
+.coord p{max-width:68ch;font-style:italic}
+
+.getdoc{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-top:22px}
+.getdoc a{font-family:var(--display);font-weight:600;font-size:16px;letter-spacing:.05em;
+  text-transform:uppercase;text-decoration:none;border:2px solid var(--oxide);
+  color:var(--oxide);padding:8px 16px}
+.getdoc a:hover{background:var(--oxide);color:var(--paper)}
+.getdoc span{font-family:var(--mono);font-size:12.5px;color:var(--slate)}
+</style>
+</head>
+<body>
+
+<div class="statusbar">
+  <div class="wrap">
+    <span>Published <b>October 11, 2026</b></span>
+    <span>Provisional application <b>64/173,890</b> · filed October 10, 2026</span>
+    <span>Open specification · <b>free forever</b></span>
+  </div>
+</div>
+
+<nav>
+  <div class="wrap">
+    <a class="brand" href="index.html">OSF</a>
+    <a href="tactics.html" class="hidesm">Tactics</a>
+    <a href="deadman.html" class="hidesm" style="color:var(--oxide)">Deadman</a>
+    <a href="network.html" class="hidesm">Network</a>
+    <a href="acceptance.html" class="hidesm">Acceptance</a>
+    <a href="adoption.html" class="hidesm">Adoption</a>
+    <a href="ground.html" class="hidesm">Ground</a>
+    <a href="index.html#library" class="hidesm">Documents</a>
+    <a href="docs/osf-as-filed-2026-10-10.pdf" class="cta">The filing</a>
+    <span class="updir"><a href="index.html" title="Back one page (Open Source Firefighter index)" aria-label="Back one page, Open Source Firefighter index">../</a><a href="https://pikesperkcoffee.github.io/index.html" title="Site index (root)" aria-label="Site index, root">/</a></span>
+  </div>
+</nav>
+
+<header class="pagehead">
+  <div class="wrap">
+    <div class="kicker">A constructed scenario · design-review instrument</div>
+    <h1>The Deadman Fire</h1>
+    <p class="standfirst">Nine days in a town that does not exist, during a fire season that has not happened, told to find out where a mature deployment holds and where it gaps.</p>
+
+    <div class="fiction">
+      <div class="flag">This fire is fiction</div>
+      <p>There is no Deadman Fire. There is no town, no millpond, no manufactured-home park, and no terrain-defense coordinator. Every name, place, date, and event below was invented for one purpose: to stress the Open Source Firefighter concept against a realistic event and see what breaks.</p>
+      <p>What is <strong>not</strong> invented is the physics, the fire behavior, the logistics, and the failures. Those are drawn from how fires actually run in the Colorado interface and how field equipment actually fails. The scenario is a tool — the same kind of tool a tabletop exercise is — and it is published as part of the specification family so that anyone evaluating the system can argue with it.</p>
+      <p>The gaps in this account are not hidden and not annotated. They are where a reader who understands the system should look hardest.</p>
+    </div>
+  </div>
+</header>
+
+<div class="wrap layout">
+
+  <aside class="toc">
+    <div class="lab">On this page</div>
+    <ol>
+      <li><a href="#why">Why read it</a></li>
+      <li><a href="#days">The nine days</a></li>
+      <li><a href="#town">The town</a></li>
+      <li><a href="#february">The quiet season</a></li>
+      <li><a href="#ignition">Ignition and buildup</a></li>
+      <li><a href="#tank">The first failure</a></li>
+      <li><a href="#water">The water ballet</a></li>
+      <li><a href="#tender">The second failure</a></li>
+      <li><a href="#chain">What actually caused it</a></li>
+      <li><a href="#burn">The burn</a></li>
+      <li><a href="#park">The park</a></li>
+      <li><a href="#count">Final count</a></li>
+      <li><a href="#ledger">The ledger</a></li>
+      <li><a href="#morning">Morning</a></li>
+    </ol>
+  </aside>
+
+  <main class="body">
+
+    <section id="why">
+      <h2>Why read it</h2>
+      <p>A specification tells you what equipment does. It cannot tell you what a bad night feels like, or which of its careful provisions turn out to matter at three in the morning on the ninth day. This does.</p>
+      <p>It was written as a design-review instrument, to be argued with by fire officers. It turns out to serve a second audience just as well: the community deciding whether any of this is worth doing. A town reading this recognizes itself — the park on the low ground, the grant that covered some lots and not others, the tank nobody really inspected. That recognition is the point, and it is also why the fictional frame has to stay loud. Nobody should ever cite this as something that happened.</p>
+      <div class="pull">The fire only ever finds what was already broken. <b>Fix it in February.</b></div>
+    </section>
+
+    <section id="days">
+      <h2>The nine days</h2>
+      <p>The fire takes nine days from strike to the saddle. The decisions that settle it were made five months earlier.</p>
+
+      <div class="days">
+        <div class="vlab">Timeline · red marks the two failures</div>
+        <div class="track">
+          <div class="beat"><div class="when">February</div><div class="mark"><span class="dot"></span></div>
+            <div class="what"><b>The quiet season</b>Corridors mapped off a century of perimeters. Sixteen node sites staked, three caches stocked, six green islands surveyed, four static tanks placed. Two of the tanks are second-hand.</div></div>
+          <div class="beat"><div class="when">Late June · Tue</div><div class="mark"><span class="dot"></span></div>
+            <div class="what"><b>Eleven strikes</b>A dry thunderstorm walks the divide. Ten die in rock and wet timber. The eleventh lands in heavy dead-and-down eleven miles out, where no truck can reach.</div></div>
+          <div class="beat"><div class="when">Sunday</div><div class="mark"><span class="dot"></span></div>
+            <div class="what"><b>Two thousand acres</b>Zero containment, backing down its namesake drainage exactly as the 1934 perimeter says it must. Eight to ten days to the saddle.</div></div>
+          <div class="beat"><div class="when">That week</div><div class="mark"><span class="dot"></span></div>
+            <div class="what"><b>The terrain line goes in</b>Logged as construction, not suppression. Two defense modules arrive; the town's mesh hands them its census and the load plans write themselves.</div></div>
+          <div class="beat fail"><div class="when">Thursday</div><div class="mark"><span class="dot"></span></div>
+            <div class="what"><b>Failure one — the split tank</b>Site D-7, the saddle. Twenty-five hundred gallons on the card, nine hundred in the tank. Nine years of high-plains sun before the district ever owned it. D-7 goes onto daily tender fill.</div></div>
+          <div class="beat"><div class="when">Weekend</div><div class="mark"><span class="dot"></span></div>
+            <div class="what"><b>The water ballet</b>Millpond draft points, a continuous tender loop, nodes sequencing on the drying model. In single-digit humidity the fine fuels re-dry toward hazard in under two hours.</div></div>
+          <div class="beat"><div class="when">Sun – Mon</div><div class="mark"><span class="dot"></span></div>
+            <div class="what"><b>Green islands wet</b>Four of six approved as helicopter landing zones off the February survey data, without touching a skid.</div></div>
+          <div class="beat fail"><div class="when">Wed night</div><div class="mark"><span class="dot"></span></div>
+            <div class="what"><b>Failure two — the tender</b>Ninth climb of a fourteen-hour shift. A shoulder chewed soft by nine days of heavy cycles lets go on the third switchback. Driver unhurt. Road closed. The only heavy route to D-5 through D-9.</div></div>
+          <div class="beat fail"><div class="when">Thu 0700</div><div class="mark"><span class="dot"></span></div>
+            <div class="what"><b>D-7 runs dry</b>Empty arcs at the saddle — the crossing point the hundred-year maps have always named. The road reopens at 0910. Four dry hours.</div></div>
+          <div class="beat burn"><div class="when">Thu evening</div><div class="mark"><span class="dot"></span></div>
+            <div class="what"><b>The burn</b>The fire comes off the saddle on the outflow. It holds everywhere the line is wet. It crosses in the one place it is not.</div></div>
+          <div class="beat"><div class="when">Dawn</div><div class="mark"><span class="dot"></span></div>
+            <div class="what"><b>One occupied structure lost</b>In the park, among the fifty-five. Zero deaths, zero injuries beyond a twisted ankle.</div></div>
+          <div class="beat"><div class="when">The fall</div><div class="mark"><span class="dot"></span></div>
+            <div class="what"><b>Two more tanks condemned</b>Both nine-year stock, both looking fine from three feet. The district writes traffic budgets for its fire roads.</div></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="town" class="narrative">
+      <h2>The town</h2>
+      <p>Call it eight thousand people in a valley that opens east onto plains and closes west against the forest. The old residential grid under mature cottonwoods where the town started. A manufactured-home park on the low south ground by the creek, ninety-six units on rented lots. Newer stucco ranch subdivisions on the northeast bench, built defensible-space-aware. A longer commercial strip than the town used to have, a second school with a ballfield complex, and the golf course lots on the west edge, big houses set back in the ponderosa. And the millpond: twelve acres of water behind an old earthen dam at the base of the west slope — a strategic asset most towns would never notice they had.</p>
+      <p>By 2036 the boxes are furniture. The old grid runs them at roughly eighty percent, the mesh so dense the coverage map shows those blocks as one unbroken green mass. The benches came pre-plumbed. The commercial strip runs maintained commercial units. The park is the honest ground it always is: a county cost-share program, forced along by the absentee owner's insurer, has put boxes on forty-one of ninety-six units.</p>
+
+      <div class="park">
+        <div class="vlab">The park — forty-one of ninety-six</div>
+        <div class="vsub">Each square is one unit on a rented lot</div>
+        <div class="lots" id="lots" aria-hidden="true"></div>
+        <div class="parkkey">
+          <span><i class="eq"></i> Equipped — 41 units</span>
+          <span><i></i> Not equipped — 55 units</span>
+          <span><i class="her"></i> Space 14 — bought her own</span>
+          <span><i class="lost"></i> The unit lost that night</span>
+        </div>
+        <p class="parknote">Forty-one reads as progress in an annual report and reads as a coin flip if you live in the other fifty-five. Renters always know exactly who has what.</p>
+      </div>
+    </section>
+
+    <section id="february" class="narrative">
+      <h2>The quiet season</h2>
+      <p>The work that decides this fire happens in February, which is the correct month, because in February nobody is afraid.</p>
+      <p>The district's terrain-defense coordinator — a part-time position invented for a retired fuels-and-fire-planning hand who failed twice at retirement — pulls every fire perimeter back to 1910 from the state archive. They tell the story terrain always tells: the fires come out of the west and northwest, down three drainages that funnel toward town like the fingers of a hand. Deadman Draw in the center, the big one, the corridor of the 1934 and 1987 fires. Sawmill Gulch to the south, feeding toward the millpond, the creek, and the park beyond it. Bracken Draw to the north, shallow and wide, opening onto the golf course that has been an accidental fuel break since it was seeded in 1961. A hundred years of fires and they all take the same three roads. The fire doesn't choose; the ground chooses. The only unknown is when.</p>
+      <p>Sixteen node sites are surveyed and staked along the three corridors — the chokepoints where the draws narrow, the saddle crossings, the field edges where fine fuel meets timber. Hardware is cached in three conex boxes, one per corridor, inventoried on laminated cards. Water is where the budget goes and where it isn't enough: the millpond covers Sawmill and lower Deadman through pre-graded draft points; upper Deadman and Bracken get static storage — four secondhand 2,500-gallon poly tanks on graded pads, filled by tender in spring, inspected, in theory, annually. Two of the tanks are new-old-stock. Two spent nine years in a field near Calhan before the district bought them, and in February, with snow on the sidewalls and the sun low, they look fine.</p>
+      <p>Six green islands are surveyed — a hay meadow above the millpond, the school ballfields, an irrigated pivot corner under a signed landowner agreement, three clearings along the corridor lines — each pre-sited for wetting and each surveyed for helicopter approach and departure. Wetted ahead of a fire, a green island does two jobs: it breaks the fire's run, and once the fire is past, it is the safest ground in the county, which is where the helicopters land. The plan is not just building fire line. It is building the airport the incident will need, out of grass and water.</p>
+      <p>All of it goes into the Community Wildfire Protection Plan revision as a terrain-defense annex — corridors named, sites staked, islands surveyed, draft points marked, cache inventories attached — and the federal grant that follows pays for more nodes than the district could otherwise buy in a decade. The plan is drawn when the ground is quiet.</p>
+    </section>
+
+    <section id="ignition" class="narrative">
+      <h2>Ignition and buildup</h2>
+      <p>A dry thunderstorm walks the divide on a Tuesday evening in late June and throws eleven strikes. The detection network logs and triages all of them; ten die in rock and wet north-slope timber. The eleventh lands in heavy dead-and-down in upper Deadman Draw, eleven miles out, in country a truck cannot reach. It smolders two days, is confirmed at forty acres with an organizing column, and takes retardant, a hotshot crew, and hope, in that order. By Sunday the Deadman Fire is two thousand acres at zero containment, backing and flanking down its namesake drainage exactly as a century of perimeter maps says it must. Laid over the 1934 perimeter, the match is close enough to trace. Eight to ten days to the saddle if the weather holds.</p>
+      <p>The terrain line goes in that week — and the argument for starting early is made in one sentence at the incident briefing: the ground doesn't get wet in an afternoon, and in eight days there will be no water trucks to spare. It is logged not as suppression but as construction. The town is building line where the fire has to cross; the line happens to be made of water.</p>
+      <p>The community meeting fills the second school's gym. The fire behavior analyst talks about the ridge over the Great Basin, failing overnight humidity recovery, and the two-word forecast that moves every firefighter's weight to the other foot: dry thunderstorms — outflow boundaries, wind from a direction the fire hasn't been coming from, at speeds the briefing didn't promise, for twenty minutes that rearrange everything. The operations chief shows the town its own coverage map — the green mass of the grid, the benches, the strip, and the park's forty-one green dots against fifty-five gray — and beside it the three corridors with sixteen staked sites, and explains that crews and water trucks will spend the week working land that isn't burning and isn't near a house, and that this is the line being built where the fire must cross it, days early, out of water instead of bulldozers, on ground that will still be there afterward.</p>
+      <p>Asked from the back what it costs if the fire doesn't come, he answers: wet grass. That is the whole bill. Nobody asks what the other kind of line costs when the fire doesn't come; a man in the room had a precautionary dozer line cut across his pasture in 2029 for a fire that turned north, and the scar is still visible from the road.</p>
+      <p>Two Coordinated Defense Modules arrive — two, because a community with a terrain-defense annex in its protection plan now carries a resource-ordering priority: a module multiplies in a town that knows itself. Each is one Type 6 engine, a trailer of cases, a small element, a drone pilot. The town's mesh hands the modules its census the moment their nodes power on — coverage, gaps, cache inventories, draft points — and the load plans write themselves from it. Behind the modules comes the holding force: a seasonal hand-crew detail under qualified leaders, the same labor pool that cuts hand line, assigned to lighter and safer work — carrying cases to the staked sites, running voice-guided commissioning in gloves, laying wetting arcs, and then patrolling the line in pairs with hand tools and radios. A crew boss with nine seasons of hand line, walking the finished wet line at dusk, calls it line construction where the line builds itself and the crew is just the maintenance.</p>
+    </section>
+
+    <section id="tank" class="narrative">
+      <h2>The first failure</h2>
+      <p>The first sun-faded tank is discovered on Thursday, at site D-7 — the saddle site, the one the plan considers load-bearing.</p>
+      <p>It is one of the Calhan tanks. Nine years of high-plains sun cooked the UV inhibitors out of its south face before the district ever owned it; the winter's freeze-thaw found the weakness; and at some point in the intervening months a seam along the lower third began to weep, then seep, then quietly fail. Twenty-five hundred gallons on the inventory card are nine hundred in the tank, the difference long since drunk by the gravel pad. The annual inspection was a walk-around, and from three feet the tank looked fine, the way it looked fine in February with snow on it.</p>
+      <p>The failure is logged to the record the same hour it is found — while it stings — and the disposition is arithmetic: D-7 moves onto the tender rotation for daily fill, running like a checking account instead of a savings account. The second Calhan tank, on Bracken, is pressure-checked the same afternoon and found sound, which proves nothing except that coin flips land both ways. It is a solvable problem on Thursday, with the fire eight miles out. It is also, though nobody can see it yet, the first domino.</p>
+    </section>
+
+    <section id="water" class="narrative">
+      <h2>The water ballet</h2>
+      <p>By the weekend the terrain line is a living thing running on a logistics tempo the public never sees. The boxes are the simple part; the water is the machine. The millpond feeds Sawmill and lower Deadman through the draft points, a portable pump on the pre-graded pad running lift on a duty cycle the nodes coordinate themselves. Upper Deadman and Bracken run on the static tanks and a continuous tender loop — fill at the millpond or the municipal standpipe, climb the fire roads, top the tanks, descend, repeat. The nodes stretch every gallon — sequencing, one zone at a time, re-wetting on the drying model's arithmetic instead of on fear — but they cannot make water appear. In single-digit afternoon humidity the fine fuels re-dry toward hazard in under two hours, and the corridors settle into their rhythm: wet, dry, wet, dry, tanks falling, tenders climbing, the ledger logging every gallon against every zone.</p>
+      <p>The green islands go wet on Sunday and hold on maintenance passes. The helicopter manager flies them Monday and approves four of six as landing zones without touching a skid, off the February survey data alone.</p>
+      <p>Evacuations run staged and orderly — pre-notice, voluntary west side, mandatory for the golf-course lots and upper bench — and the exposed edges empty in daylight, which is the entire point of staging them early. The park goes to pre-evacuation notice. In space 14, a resident who bought her own box before the county program existed runs its monthly self-test one day early and gets the flat voice's READY, which is what she keeps it for.</p>
+    </section>
+
+    <section id="tender" class="narrative">
+      <h2>The second failure</h2>
+      <p>Wednesday night, twenty-one hours before the fire reaches the saddle, a contract tender goes off the Deadman fire road.</p>
+      <p>Nothing dramatic, and then everything. Eleven hours into a fourteen-hour shift, ninth climb of the day, dark, smoke settled into the drainage with the evening inversion, and a north shoulder that had been fine all week but has been chewed soft by nine days of heavy truck cycles. The tender takes the third switchback a half-foot wide — the same half-foot it survived twice earlier in the shift — and the shoulder that held twice does not hold the third time. The truck does not roll; it slides, settles into the ditch frame-down with 3,800 gallons pinning it exactly where it stopped, and the driver climbs out the high-side door shaken and unhurt.</p>
+      <p>The cascade is the lesson. The load is lost — pumped into the ditch to lighten the truck. The road is blocked: the only heavy-vehicle route to sites D-5 through D-9, closed until a rotator wrecker can come from the city, four hours out plus three working. The remaining tenders reroute onto the Bracken road and a ranch two-track that adds forty minutes to every upper-corridor cycle. And the tempo the whole upper line runs on begins, quietly, arithmetically, to lose. D-7 goes dry first — it has been living on the daily fill since Thursday because of the split tank. The nodes feel the falling levels and stretch their cycles, but stretching buys hours, not days.</p>
+      <p>The rotator opens the road at 0910. Site D-7 — the saddle, the crossing point the hundred-year maps have always named — goes functionally dry at 0700 and sits with empty arcs for four hours.</p>
+    </section>
+
+    <section id="chain">
+      <h2>What actually caused it</h2>
+      <p>The after-action states the causal chain plainly, because the obvious culprit is the wrong one. The shoulder did not do this.</p>
+
+      <div class="chain">
+        <div class="vlab">The chain from February to the saddle</div>
+        <div class="vsub">Nine years · one shortcut · four dry hours</div>
+        <div class="links">
+          <div class="lnk"><span class="n">01</span><span class="txt">A poly tank spends <b>nine years in a field near Calhan</b>. High-plains sun cooks the UV inhibitors out of its south face.</span></div>
+          <div class="arrow">↓</div>
+          <div class="lnk"><span class="n">02</span><span class="txt">The district buys it second-hand. In February, with snow on the sidewalls, <b>it looks fine from three feet</b>. The annual inspection is a walk-around.</span></div>
+          <div class="arrow">↓</div>
+          <div class="lnk"><span class="n">03</span><span class="txt">Freeze-thaw finds the weakness. A seam weeps, then seeps, then fails. <b>Twenty-five hundred gallons on the card are nine hundred in the tank.</b></span></div>
+          <div class="arrow">↓</div>
+          <div class="lnk"><span class="n">04</span><span class="txt">Found Thursday. D-7 goes onto <b>daily tender fill</b> — a solvable problem, with the fire eight miles out.</span></div>
+          <div class="arrow">↓</div>
+          <div class="lnk"><span class="n">05</span><span class="txt">Six days of extra fills put <b>thirty extra truck-cycles</b> on one fire road.</span></div>
+          <div class="arrow">↓</div>
+          <div class="lnk"><span class="n">06</span><span class="txt">The north shoulder of the third switchback is chewed soft. On the ninth climb of a fourteen-hour shift, <b>it lets go</b>.</span></div>
+          <div class="arrow">↓</div>
+          <div class="lnk"><span class="n">07</span><span class="txt">The only heavy route to D-5 through D-9 is blocked for <b>seven hours</b>. Reroutes add forty minutes a cycle.</span></div>
+          <div class="arrow">↓</div>
+          <div class="lnk"><span class="n">08</span><span class="txt">D-7 — already living hand to mouth — <b>runs dry at 0700</b> and sits with empty arcs for four hours.</span></div>
+          <div class="arrow">↓</div>
+          <div class="lnk"><span class="n">09</span><span class="txt">The fire comes off the saddle that evening and crosses <b>in the one place the water did not reach</b>.</span></div>
+        </div>
+        <p class="verdict">Water logistics fail in ordinary ways. The plan was sound. The tender still went in the ditch — and the failure was cached in February. The difference between a new tank and a nine-year-old tank is eleven hundred dollars, and the town now knows precisely what the eleven hundred dollars was for.</p>
+      </div>
+    </section>
+
+    <section id="burn" class="narrative">
+      <h2>The burn</h2>
+      <p>The fire comes off the saddle Thursday evening on the outflow, because of course it does. The forward weather nodes — ridge-sited, expendable by doctrine — read the thunderstorm collapse before any eye does: wind veer, gust spike, humidity crash, on the mesh and the incident display in the same second. The whole west-side defense tightens at once — corridors shortening cycles, the millpond pump stepping up, the green islands running saturation passes.</p>
+      <p>Where the wet line is wet, the physics does the least dramatic thing imaginable. The surface fire reaches fuel that will not carry it, shortens, lies down, and quits. The front turns along the wetted edge like water finding a channel, flanks south, meets the saturated hay meadow — forty acres, uncrossable — and stalls against it, burning out of fine fuel while crews watch from the black.</p>
+      <div class="pull">A wall of nothing: <b>wet grass, drying in the heat of the fire it is stopping.</b></div>
+      <p>At the saddle, where the arcs have been dry four hours, the fire crosses — a hundred-yard front through the exact gap the maps always named, dropping down the upper draw with the outflow behind it. For ninety minutes the Deadman Fire has a finger inside the line, and the bounding conditions live or die: doctrine says the wet line holds surface and flanking fire and says a wind-driven run is a different animal, and this run is trying hard to become the different animal. It doesn't — because the mid-corridor sites were sited where the draw pinches between rock, and they are fully wet and fully fed off the restored tender loop. The finger hits the second line at the pinch, splits against it, flanks into rock on one side and the green pivot corner on the other, and dies of fuel starvation over two hours while the drone — flying now, the outflow spent — walks its thermal eye along the perimeter calling spots for the hand crew.</p>
+      <p>The after-shift analysis is one sentence: the line held everywhere it was wet, and it failed only where the water didn't reach — and the place the water didn't reach traces, link by link, to a tank that split in a field near Calhan nine years before anyone staked the site. The fire found the town's one dry hundred yards with the indifference of arithmetic. It was never outsmarted. It was out-supplied, everywhere but there.</p>
+      <p>What reaches the town is not the front. It is the ember cast and the leftovers — exactly the fight the boxes on the houses were built for, arriving pre-shrunk. The old grid runs its rotation and shrugs. The commercial strip never trips a zone, and its ledgers prove health rather than silence, again. The structure crews hold an eight-thousand-person town with four engines in motion, because the boxes are the line and the engines are the exceptions: a woodpile spot, a pre-code shake garage, a cedar fence taking fire at the alley end.</p>
+    </section>
+
+    <section id="park" class="narrative">
+      <h2>The park</h2>
+      <p>And the park is the honest ground, again. The ember cast comes over the creek with the last of the outflow and falls on the coin flip. Forty-one units run their rotations; fifty-five have what they always had — the engines, the neighbors, and luck. Two engine crews work the park all night, more than the rest of the town requires together, and they are good and fast and not everywhere.</p>
+      <p>The box at space 14 wets its own roof and, by a zone aimed with intent years ago, six feet of the neighbor's. Four rows down, an ember bed takes hold in the skirting of an un-boxed unit whose owner is out of town. The nearest engine is on it in six minutes. Six minutes is fast; it is not instant. The unit loses its skirting, its deck, and a bathroom wall, and is tagged uninhabitable at dawn — the fire's only occupied-structure loss inside town limits, in the place everyone always knew, among the fifty-five.</p>
+    </section>
+
+    <section id="count">
+      <h2>Final count</h2>
+      <div class="tally">
+        <div><div class="num zero">0</div><div class="lbl">Deaths</div></div>
+        <div><div class="num zero">0</div><div class="lbl">Injuries beyond a twisted ankle and a tender driver's pride</div></div>
+        <div><div class="num">1</div><div class="lbl">Occupied home damaged, family displaced — in the park, among the fifty-five</div></div>
+        <div><div class="num">4</div><div class="lbl">Other structures: two sheds, a fence line, a shake garage, a hay barn east of town</div></div>
+        <div><div class="num">4</div><div class="lbl">Engines in motion holding a town of eight thousand</div></div>
+        <div><div class="num">4</div><div class="lbl">Dry hours at the saddle — the only place the line failed</div></div>
+      </div>
+      <p>The line held everywhere it was wet. It failed only where the water did not reach, and both failures were logistics, and both were ordinary.</p>
+    </section>
+
+    <section id="ledger" class="narrative">
+      <h2>The ledger</h2>
+      <p>The record afterward is the town's honest mirror. It holds the nine days entire: every gallon banked and spent; the split tank logged the hour it was found; the tender rotation strained, reroute times and all; D-7's decline written hour by hour in falling levels and stretching cycles; four dry hours at the saddle; the crossing; the pinch that held. It holds the islands' saturation curves, the landing-zone approvals, the drone's spot calls, the park's coin flip in green and gray, and the six minutes at the un-boxed unit. Nobody reconstructs anything and nobody shades anything; the after-action writes itself out of a record that does not care whose fault anything was, which is the only way after-actions get honest.</p>
+
+      <div class="coord">
+        <div class="src">From the terrain coordinator's appended page</div>
+        <p>The line performed as doctrine — it held surface and flanking fire everywhere water reached it and failed only where water did not, and both failures were logistics, and both were ordinary. A nine-year-old tank split because a walk-around is not an inspection. A tender left a chewed shoulder because six days of extra fills put thirty extra truck-cycles on one road, and the extra fills existed because of the tank. One February shortcut cost the saddle four dry hours, and the fire, which does not miss appointments, arrived inside the window.</p>
+        <p>Recommendations: static water storage shall be pressure-tested at fill and inspected by means that touch the tank; tender routes shall be graded into the plan as consumable infrastructure with traffic budgets; and the district should buy new tanks — the difference between a new tank and a nine-year-old tank is eleven hundred dollars, and we now know precisely what the eleven hundred dollars was for.</p>
+        <p>Everything else held. The ground the fire crossed is wet grass and black. The ground it didn't cross is a town. No apologies for the water bill.</p>
+      </div>
+    </section>
+
+    <section id="morning" class="narrative">
+      <h2>Morning</h2>
+      <p>The modules reload at the athletic field over two days — cases inventoried against their cards, signed, stacked, the damaged units set aside with faults logged — and roll south toward the next name on the board, because it is that kind of season. The crews recover heads and roll supply line, and the wet line does what reversible line does, which is disappear. By September the only signs the town was ever defended at terrain scale are sixteen graded pads, one new tank at the saddle, and a hay meadow that came back thicker for the watering. The millpond drops four feet and refills by October. The pivot corner is cut for hay in August like every August. Nothing looks like a battlefield. That was the point since February.</p>
+      <p>In the fall the district pressure-tests every static tank in the county and condemns two more — both nine-year stock, both looking fine from three feet — and writes traffic budgets for its fire roads. At the state fire conference in November, the slide that stays on screen longest is not the drone footage of the wet line holding, spectacular as it is. It is the logistics slide: the tender loops, the tank levels, the four dry hours, the eleven-hundred-dollar difference. The boxes are the easy part now; anyone can buy the boxes. What cannot be bought is February — and the fire will find a town's February shortcuts with a precision that has to be watched to be believed.</p>
+      <div class="pull">The fire only ever finds what was already broken. <b>Fix it in February.</b></div>
+      <p style="font-style:italic;color:var(--slate);font-size:16px">End of scenario. The gaps in this account are not hidden, and several are not failures of the box at all — which remains the point worth sitting with: at the coin flip in the park, at the tank in the field, at the ninth climb of a fourteen-hour shift, and at everything that was decided, or not decided, in February.</p>
+
+      <div class="getdoc">
+        <a href="docs/osf-deadman-fire.pdf">The Deadman Fire, PDF</a>
+        <a href="tactics.html">The doctrine it tests</a>
+        <span>7 sheets · the scenario as filed</span>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<footer class="sitefoot">
+  <div class="wrap fgrid">
+    <div>
+      <div class="free">Free like a fire code.</div>
+      <p style="margin-top:8px;max-width:42ch">Build one. Improve it. Propose changes.<br>It belongs to everyone it protects.</p>
+    </div>
+    <div class="mono">
+      The Open Source Firefighter<br>
+      Andrew Morton · Palmer Lake, Colorado<br>
+      U.S. Provisional Application 64/173,890<br>
+      Filed October 10, 2026 · published October 11, 2026
+    </div>
+    <div class="mono">
+      The Deadman Fire is a constructed scenario.<br>
+      No such fire, town, or event exists.<br>
+      Physics, fire behavior, and failure modes are real.
+    </div>
+  </div>
+</footer>
+
+<script>
+/* The park: ninety-six lots, forty-one equipped. Laid out deterministically so the
+   picture is the same for every reader — this is a stated fact from the scenario,
+   not a simulation. Space 14 is hers; the lost unit is four rows down from it. */
+(function(){
+  const host = document.getElementById('lots');
+  if(!host) return;
+  const TOTAL = 96, COLS = 12, HER = 14, LOST = 62;  // four rows down from hers
+  // 41 equipped lots, scattered the way a voluntary cost-share program scatters
+  const EQUIPPED = new Set([1,2,5,6,9,12,14,15,18,20,23,24,26,29,31,34,36,37,40,42,
+                            45,47,50,53,55,58,60,61,64,67,69,72,74,77,80,83,86,89,91,94,96]);
+  for(let i=1;i<=TOTAL;i++){
+    const d=document.createElement('div');
+    d.className='lot'+(i===HER?' her':i===LOST?' lost':EQUIPPED.has(i)?' eq':'');
+    d.title='Space '+i+(i===HER?' — bought her own box':i===LOST?' — lost that night':
+            EQUIPPED.has(i)?' — equipped':' — not equipped');
+    host.appendChild(d);
+  }
+  console.log('park: '+EQUIPPED.size+' equipped of '+TOTAL);
+})();
+</script>
+</body>
+</html>

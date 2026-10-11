@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Tactics</title>
+<meta name="description" content="How coordinated ember and terrain defense fights — three tiers, the combined operation, and the supply and coverage math. Written for fire officers and planners.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap">
+<link rel="stylesheet" href="css/site.css">
+<style>
+/* page shell: a reading column with a sticky contents rail on wide screens */
+.pagehead{border-bottom:3px solid var(--ink);padding-block:38px 30px}
+.pagehead h1{font-size:clamp(42px,8vw,78px)}
+.pagehead .kicker{font-family:var(--mono);font-size:12px;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--oxide);margin-bottom:12px}
+.pagehead .standfirst{margin-top:18px;max-width:66ch;font-size:clamp(17px,2vw,20px);line-height:1.5}
+
+.layout{display:grid;grid-template-columns:1fr;gap:34px;padding-block:clamp(34px,5vw,54px)}
+@media(min-width:1020px){.layout{grid-template-columns:230px minmax(0,1fr);gap:48px}}
+.wrap.layout{max-width:1250px}
+.toc{min-width:0}
+@media(min-width:1020px){
+  .toc{position:sticky;top:calc(env(safe-area-inset-top,0px) + 62px);align-self:start;
+       max-height:calc(100vh - 100px);overflow-y:auto}
+}
+.toc .lab{font-family:var(--mono);font-size:11px;letter-spacing:.17em;
+  text-transform:uppercase;color:var(--slate);border-bottom:1px solid var(--hair);
+  padding-bottom:7px;margin-bottom:10px}
+.toc ol{list-style:none;counter-reset:t}
+.toc li{counter-increment:t;margin-bottom:3px}
+.toc a{display:block;text-decoration:none;color:var(--ink);font-size:14.5px;
+  padding:4px 0 4px 26px;position:relative;line-height:1.35}
+.toc a::before{content:counter(t,decimal-leading-zero);position:absolute;left:0;
+  font-family:var(--mono);font-size:10.5px;color:var(--brass);top:6px}
+.toc a:hover{color:var(--oxide)}
+.body{min-width:0}
+.body h2{margin-top:6px}
+.body section{border-bottom:1px solid var(--hair);padding-block:0 clamp(30px,4vw,44px);
+  margin-bottom:clamp(30px,4vw,44px)}
+.body section:last-of-type{border-bottom:none}
+.body p{max-width:68ch}
+.body h3{margin:24px 0 8px}
+
+/* the hurried-officer box */
+.onepage{border:2px solid var(--ink);background:var(--card);padding:22px 24px;margin-bottom:34px}
+.onepage h2{font-size:26px;margin-bottom:4px}
+.onepage .sub{font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--slate);margin-bottom:14px}
+.onepage ul{list-style:none}
+.onepage li{padding:9px 0;border-bottom:1px dashed var(--hair);font-size:15.5px;max-width:none}
+.onepage li:last-child{border-bottom:none}
+.onepage li b{font-family:var(--display);font-weight:700;text-transform:uppercase;
+  letter-spacing:.03em;color:var(--oxide);margin-right:6px}
+
+/* doctrinal tier cards */
+.tier{border-left:4px solid var(--brass);padding-left:22px;margin-top:26px}
+.tier .tname{font-family:var(--mono);font-size:11.5px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--brass);margin-bottom:4px}
+.tier h3{margin:0 0 14px;font-size:25px}
+.field{display:grid;grid-template-columns:1fr;gap:3px;margin-bottom:14px}
+@media(min-width:720px){.field{grid-template-columns:168px minmax(0,1fr);gap:4px 20px}}
+.field dt{font-family:var(--mono);font-size:11px;letter-spacing:.11em;
+  text-transform:uppercase;color:var(--slate);padding-top:4px}
+.field dd{font-size:16px;max-width:64ch}
+
+/* bounding — the credibility mechanism, always visible */
+.bound{border:1px solid var(--oxide);background:color-mix(in srgb,var(--oxide) 5%,transparent);
+  padding:14px 18px;margin-top:4px}
+.bound .blab{font-family:var(--display);font-weight:700;font-size:14px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--oxide);margin-bottom:5px}
+.bound p{font-size:15.5px;max-width:64ch}
+
+/* phases of the combined operation */
+.phase{margin-top:26px;padding-left:22px;border-left:2px solid var(--hair)}
+.phase h3{font-size:20px;color:var(--water);margin:0 0 7px}
+.phase .when{font-family:var(--mono);font-size:11px;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--slate);margin-bottom:4px}
+
+/* tables */
+.tbl{overflow-x:auto;margin:16px 0 8px;border:1px solid var(--hair)}
+.tbl table{width:100%;border-collapse:collapse;font-size:14.5px;background:var(--card);
+  min-width:520px}
+.tbl th{font-family:var(--display);font-weight:600;font-size:14px;text-transform:uppercase;
+  letter-spacing:.06em;text-align:left;border-bottom:2px solid var(--ink);padding:9px 11px;
+  white-space:nowrap}
+.tbl td{border-bottom:1px solid var(--hair);padding:9px 11px;vertical-align:top;
+  font-variant-numeric:tabular-nums}
+.tbl tr:last-child td{border-bottom:none}
+.tbl td:first-child{font-weight:600}
+.tcap{font-family:var(--mono);font-size:12px;color:var(--slate);line-height:1.6;
+  margin-bottom:2px;max-width:70ch}
+.rule{border-left:4px solid var(--water);padding:4px 0 4px 18px;margin:16px 0;
+  font-size:15.5px;max-width:66ch}
+.rule b{color:var(--water)}
+
+/* rules box */
+.rules{counter-reset:r;list-style:none;margin-top:16px}
+.rules li{counter-increment:r;position:relative;padding:11px 0 11px 42px;
+  border-bottom:1px dashed var(--hair);font-size:15.5px;max-width:70ch}
+.rules li:last-child{border-bottom:none}
+.rules li::before{content:counter(r);position:absolute;left:0;top:11px;
+  font-family:var(--display);font-weight:700;font-size:19px;color:var(--brass);
+  width:28px;text-align:right}
+
+/* embedded tool */
+.toolwrap{border:2px solid var(--ink);background:var(--card);margin-top:24px}
+.toolbar{display:flex;flex-wrap:wrap;gap:8px 16px;align-items:baseline;
+  padding:12px 16px;border-bottom:1px solid var(--hair);background:var(--paper)}
+.toolbar .tt{font-family:var(--display);font-weight:700;font-size:18px;
+  text-transform:uppercase;letter-spacing:.03em;margin-right:auto}
+.toolbar a{font-family:var(--mono);font-size:12px;letter-spacing:.06em;
+  text-transform:uppercase;color:var(--water);text-decoration:none;
+  border:1px solid var(--hair);padding:5px 10px}
+.toolbar a:hover{background:var(--water);color:var(--card);border-color:var(--water)}
+.toolwrap iframe{width:100%;height:860px;border:0;display:block;background:var(--paper)}
+/* the content column must clear the tool's own 900px two-column breakpoint,
+   so the layout runs wider than the reading measure; prose stays at 68ch */
+@media(max-width:900px){.toolwrap iframe{height:1500px}}
+
+/* source footer */
+.srcnote{font-family:var(--mono);font-size:12px;color:var(--slate);line-height:1.75;
+  border-top:1px solid var(--hair);padding-top:14px;margin-top:8px;max-width:76ch}
+.getdoc{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-top:22px}
+.getdoc a{font-family:var(--display);font-weight:600;font-size:16px;letter-spacing:.05em;
+  text-transform:uppercase;text-decoration:none;border:2px solid var(--oxide);
+  color:var(--oxide);padding:8px 16px}
+.getdoc a:hover{background:var(--oxide);color:var(--paper)}
+.getdoc span{font-family:var(--mono);font-size:12.5px;color:var(--slate)}
+</style>
+</head>
+<body>
+
+<div class="statusbar">
+  <div class="wrap">
+    <span>Published <b>October 11, 2026</b></span>
+    <span>Provisional application <b>64/173,890</b> · filed October 10, 2026</span>
+    <span>Open specification · <b>free forever</b></span>
+  </div>
+</div>
+
+<nav>
+  <div class="wrap">
+    <a class="brand" href="index.html">OSF</a>
+    <a href="tactics.html" class="hidesm" style="color:var(--oxide)">Tactics</a>
+    <a href="deadman.html" class="hidesm">Deadman</a>
+    <a href="network.html" class="hidesm">Network</a>
+    <a href="acceptance.html" class="hidesm">Acceptance</a>
+    <a href="adoption.html" class="hidesm">Adoption</a>
+    <a href="ground.html" class="hidesm">Ground</a>
+    <a href="coverage.html" class="hidesm">Coverage tool</a>
+    <a href="index.html#library" class="hidesm">Documents</a>
+    <a href="docs/osf-as-filed-2026-10-10.pdf" class="cta">The filing</a>
+    <span class="updir"><a href="index.html" title="Back one page (Open Source Firefighter index)" aria-label="Back one page, Open Source Firefighter index">../</a><a href="https://pikesperkcoffee.github.io/index.html" title="Site index (root)" aria-label="Site index, root">/</a></span>
+  </div>
+</nav>
+
+<header class="pagehead">
+  <div class="wrap">
+    <div class="kicker">For fire officers, company officers, and planners</div>
+    <h1>Tactics</h1>
+    <p class="standfirst">How coordinated ember and terrain defense fights — alone at each tier, and combined with the arms the fire service already has. This is doctrine, not requirement. The specification says what the equipment does. This says how the fight uses it.</p>
+  </div>
+</header>
+
+<div class="wrap layout">
+
+  <aside class="toc">
+    <div class="lab">On this page</div>
+    <ol>
+      <li><a href="#hands">What it hands you</a></li>
+      <li><a href="#premise">The premise</a></li>
+      <li><a href="#tier1">Tier One — the structure</a></li>
+      <li><a href="#tier2">Tier Two — the community</a></li>
+      <li><a href="#tier3">Tier Three — the terrain</a></li>
+      <li><a href="#combined">The combined operation</a></li>
+      <li><a href="#eyes">Experienced eyes</a></li>
+      <li><a href="#planning">Supply and coverage</a></li>
+      <li><a href="#tool">Run your own numbers</a></li>
+      <li><a href="#rules">Rules box</a></li>
+    </ol>
+  </aside>
+
+  <main class="body">
+
+    <div class="onepage">
+      <h2>The one-page version</h2>
+      <div class="sub">For the officer in a hurry</div>
+      <ul>
+        <li><b>Tier One</b> The box holds the structure. Every structure that holds itself releases a crew.</li>
+        <li><b>Tier Two</b> The mesh holds the town's water math; the module fills the gaps and moves on. Crews-per-site becomes sites-per-crew. Participation density is the controlling variable.</li>
+        <li><b>Tier Three</b> The wet line holds the ground the fire must cross — reversible, pre-surveyed, passive until triggered, human-commanded, honest about crown fire.</li>
+        <li><b>Combined</b> Shape days out, fight at the corridor, mop the shrunken fight in town, read the whole thing off one ledger afterward. Water logistics is the campaign. February is where the fire is actually fought.</li>
+        <li><b>The point</b> Not machines replacing firefighters. Reach and leverage handed to the people who already do the work, so fewer of the places on fire require a person standing there.</li>
+      </ul>
+    </div>
+
+    <section id="hands">
+      <h2>What it hands you</h2>
+      <p>You already run combined arms. Hand crews cut line, engines hold it, dozers build it faster, aviation cools what the ground cannot reach, and command orchestrates the pieces against a fire that gets a vote. This does not replace any of that. It adds one arm: <strong>ground that defends itself</strong> — water, timed and placed by machines that never get tired, commanded by people who do.</p>
+      <p>Concretely, what arrives in your district is a population of small weatherproof boxes on walls and on ground, each able to wet its own surfaces on a rotating schedule, each able to talk to its neighbors over a license-free radio so the shared water supply is never over-drawn, and all of them presenting to you as one picture you can read and direct. A node yields the instant an engine drafts. A node that loses its network keeps protecting its own structure. None of it requires an account, a subscription, or a cell signal.</p>
+      <p>The three tiers below are the same idea at three sizes — the structure, the community, the terrain. Each section states what the tier fights, how it fights, what it buys you, and, in red, what it does not do. The bounding statements are not disclaimers. They are the part you would need to work out yourself on a bad night, written down in advance.</p>
+    </section>
+
+    <section id="premise">
+      <h2>The premise</h2>
+      <p>One idea runs through every tier: <strong>the receiving surface is the battle.</strong> Structures are lost to embers landing on dry fuel; ground is lost to fire crossing dry fuel. Keep the receiving surface wet during the window when it matters, and the fire arrives at a place that will not have it.</p>
+      <p>Everything below is that one idea at three different sizes.</p>
+    </section>
+
+    <section id="tier1">
+      <h2>Tier One — the structure</h2>
+      <div class="tier">
+        <div class="tname">The box on the wall</div>
+        <h3>One node, one structure, one to three zones</h3>
+        <dl class="field">
+          <dt>Unit of action</dt>
+          <dd>The residential wall unit or its commercial sibling, wetting roofs, gutters, wall lines, fences, and the vegetation ring on a rotating cycle driven by live drying conditions.</dd>
+          <dt>What it fights</dt>
+          <dd>Ember cast — the attack that destroys most structures in an interface fire. Firebrands landing on dry receiving surfaces, ahead of and behind the front, in quantities no crew can chase. A wet roof sheds the attack that a dry roof accepts.</dd>
+          <dt>How it fights</dt>
+          <dd>Sequencing. One zone at a time, so an ordinary household supply protects a whole structure. Re-wet intervals computed from the fuel's actual drying rate under actual weather, so water is spent exactly as fast as the physics demands and no faster. The node fights alone if it must — no network, no command, no grid.</dd>
+          <dt>Tactical effect</dt>
+          <dd>A defended structure is subtracted from the list of places a person must stand. That is the whole effect, and it is the most important sentence on this page. Every structure that holds itself releases the crew that would have held it.</dd>
+        </dl>
+        <div class="bound">
+          <div class="blab">Bounding</div>
+          <p>A node defends against ember ignition and surface-fuel attack. It does not defeat direct flame impingement or radiant load from a crowning slope at close range. A structure inside that geometry is defended at Tier Three or evacuated, not promised a miracle.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="tier2">
+      <h2>Tier Two — the community</h2>
+      <div class="tier">
+        <div class="tname">The mesh and the module</div>
+        <h3>The coordination domain, plus a deployable element</h3>
+        <dl class="field">
+          <dt>Unit of action</dt>
+          <dd>A street, a neighborhood, a town — plus the Coordinated Defense Module: one Type 6 engine, a trailer of prepositioned cases, a small element, a drone pilot. Ordered and typed like any other resource.</dd>
+          <dt>What it fights</dt>
+          <dd>The mathematics of simultaneous demand. Every structure needs water in the same hour; the shared supply cannot feed them all at once; uncoordinated defense collapses the main and protects no one. And it fights the coverage gap — the unprotected parcel, the unarmed house, the vacant lot that turns one ignition into a block.</dd>
+          <dt>How it fights</dt>
+          <dd>The domain schedules itself. Structures take turns on the shared supply automatically, holding total draw within what the mains deliver, yielding instantly when an engine company needs the water — a pressure sag is an order every node obeys without being told. The module extends and repairs the domain: it arrives reading the town's own census off the mesh, seeds nodes into the mapped gaps at open-lid tempo, adds detection overwatch and command presence, and moves on, leapfrogging cluster to cluster, because the nodes hold ground after the module leaves.</dd>
+          <dt>Tactical effect</dt>
+          <dd>The staffing arithmetic inverts from crews-per-site to sites-per-crew. A town that would have consumed twenty engines in static structure protection is held by its own boxes plus a handful of engines working exceptions. The exceptions are where people belong: the woodpile spot, the pre-code roof, the un-boxed unit.</dd>
+        </dl>
+        <div class="bound">
+          <div class="blab">Bounding</div>
+          <p>Participation density is the controlling variable at suburban spacing. Below roughly thirty feet of separation, structures ignite each other: one protected home in five is a wet spot where three in five is a firebreak. The community tier is only as strong as its adoption map, and the gaps concentrate exactly where money is thinnest. Doctrine must say so, because the fire will.</p>
+        </div>
+      </div>
+
+      <figure class="fig" style="margin-top:28px">
+        <img src="img/fig1-coordination-domain.svg" alt="Plan view of a neighborhood of sixteen structures along a road at the wildland edge. Ten carry nodes; six are unequipped. Nodes are shown drawing, yielding, or degraded, linked by a peer-to-peer coordination mesh, with a gateway publishing outward to incident command. Below, a rotation schedule shows which of the ten nodes draws water in each time window, never more than four at once.">
+        <figcaption><b>FIG. 1</b> — The coordination domain. Sixteen structures, ten equipped, one shared supply main. Partial adoption is the normal case, not the failure case.</figcaption>
+      </figure>
+    </section>
+
+    <section id="tier3">
+      <h2>Tier Three — the terrain</h2>
+      <div class="tier">
+        <div class="tname">The wet line</div>
+        <h3>Nodes on the ground the fire must cross</h3>
+        <dl class="field">
+          <dt>Unit of action</dt>
+          <dd>The pre-surveyed defensive network — nodes emplaced on the drainages, chokepoints, saddles, and field edges that a century of fire history names in advance. Sited in the quiet season, written into the community's protection plan, cached against the corridors they will hold.</dd>
+          <dt>What it fights</dt>
+          <dd>The approach itself. Not the fire at the walls — the fire three drainages out, funneling toward town on the same roads it has always used.</dd>
+          <dt>How it fights</dt>
+          <dd>The reversible fireline. A continuous wetted strip is a constructed line that builds itself faster than hand or dozer line and is held by nodes instead of crews. Its tactical function is identical to fuel-removal line — deny the fire the next foot of receiving fuel — achieved by temporarily raising fuel moisture instead of permanently destroying vegetation. The network is passive until triggered: emplaced at negligible standing cost, dormant most days of most years, deploying alongside the resident mesh only when conditions and a front arrive.</dd>
+          <dt>Green islands</dt>
+          <dd>The tier's signature move. A pre-wetted patch ahead of the front is a break point where the fire arrives with less energy — and once committed and safe, it is a helicopter landing zone. The same water builds the line and the airport the incident will need.</dd>
+          <dt>Tactical effect</dt>
+          <dd>The fight moves off the structures entirely. A front broken or steered at the corridor never becomes a thousand simultaneous ember problems in town. And when it is over the line evaporates: the vegetation lives, the ground is unscarred, the community was not destroyed to be saved — which dissolves the political resistance that limits destructive precautionary line.</dd>
+        </dl>
+        <div class="bound">
+          <div class="blab">Bounding — mandatory, always stated</div>
+          <p>The wet line holds surface fire and flanking and backing fire, which is most of a fire's perimeter most of the time, and where most acres are actually held. It does <strong>not</strong> hold a wind-driven crown run spreading by radiant heat and long-range spotting. No crew stakes its egress on a wet line. The line is best-effort infrastructure that buys probability, not certainty, and employment is human-commanded at every step. The system is a tool a qualified officer wields. It does not fight fire on its own.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="combined">
+      <h2>The combined operation</h2>
+      <p>No tier fights alone in a real event, and the tiers were designed to compose. What follows is the shape of the combined fight — the new arm integrated with the old ones.</p>
+
+      <div class="phase">
+        <div class="when">Days out</div>
+        <h3>Shaping the battlefield</h3>
+        <p>The terrain tier deploys first, because ground does not get wet in an afternoon. Corridors go active off the pre-survey. Static sources are verified — <em>verified</em>, because a walk-around is not an inspection, and the fire will find the February shortcut with terrible precision. The tender loop stands up. Green islands saturate and become tomorrow's landing zones. Residents arm and self-test; the mesh reports the town's readiness as one picture; modules arrive against the protection-plan priority and seed the mapped gaps. Aviation gets its fill points and landing zones from the same survey.</p>
+        <div class="rule"><b>Water logistics is the campaign.</b> The boxes are the easy part. The tender driver on the ninth climb of a fourteen-hour shift is the hard part, and the plan must budget roads, fills, and fatigue like the consumables they are.</div>
+      </div>
+
+      <div class="phase">
+        <div class="when">The grid</div>
+        <h3>Smart water, sparse by design</h3>
+        <p>The manual water-handling layer remains the backbone. Remotely commanded appliances — the hydrant valve actuator, smart gates and wyes, the multi-port manifold — are placed only at selected key junctions where command flexibility pays, chosen by the incident commander and advised by hydraulics and the system's own ledger history.</p>
+        <p>The signature employment is the <strong>buffered supply point</strong>: portable tanks, a smart manifold in a case, and an observation node watching levels turn a tender shuttle into managed standing storage — a water tower assembled from shuttle loads, with refills and tank swaps triggered on observed actuals. Supply state becomes visible on the command surface, a withdrawing crew can close the hydrant behind itself from the truck, and the supply officer commands the grid instead of driving to its valves. Every smart appliance works manually when dead; the smart version is a powered hand, never a replacement for one.</p>
+      </div>
+
+      <div class="phase">
+        <div class="when">The approach</div>
+        <h3>Fighting at the corridor</h3>
+        <p>The wet line meets the front at the tier-three ground: holds it where the water reached, turns it along the wetted edges, stalls it against the islands. Crews do not stand at this line — they patrol it, tend it, and chase what spots over it, with the drone walking the perimeter when the air allows and the fixed detection carrying the watch when it does not. Engines and dozers work where doctrine still needs them: anchor points, contingency line, the places wet line is the wrong tool.</p>
+        <p>Command watches one picture — every node, every tank level, every corridor, live. The forward weather nodes buy the minutes that matter when the outflow comes, and the outflow will come. A second picture is available on demand: a thermal pass over the domain reads protection state directly off the ground, cool roofs holding and hot roofs not, so command sees which structures are actually wet without pulling a crew off the line to check. Where the map says wet and the roof reads hot, that is the next problem, and command knows it before the fire does.</p>
+      </div>
+
+      <div class="phase">
+        <div class="when">The arrival</div>
+        <h3>The shrunken fight in town</h3>
+        <p>What crosses the corridors arrives at the community tier pre-shrunk — ember cast and leftovers instead of a front. The domain runs its rotation, the mains hold because the schedule holds, and municipal-supplied nodes yield the instant an engine drafts. Structure crews, a fraction of what static protection would have consumed, spread out and monitor the whole defense while working the exceptions: the gaps in the adoption map, the pre-code construction, the ember bed the rotation reached one beat late.</p>
+        <div class="rule">This is combined arms at its purest: <b>the boxes are the line, the engines are the maneuver element</b>, and each is free to be excellent at its half because the other half is covered.</div>
+      </div>
+
+      <div class="phase">
+        <div class="when">After</div>
+        <h3>The honest accounting</h3>
+        <p>The ledger holds the whole event — every gallon, every cycle, every yield, every failure logged the hour it happened. The after-action writes itself from a record that cannot be shaded. The wet line disappears into ordinary ground, the cases go home signed against their cards, and the findings — the split tank, the chewed shoulder, the coin-flip coverage map — go back into February, where the next fire is already being decided.</p>
+      </div>
+
+      <h3 style="margin-top:34px">Command integration, stated once</h3>
+      <p>The system presents one command surface at every tier. A residential node and a terrain-line node appear in the same picture, distinguished by capability and never by separate applications, and it publishes into the mapping tools commanders already run. Above it, any battle-management layer the era provides can task and read the network through the same closed vocabulary, because the box is control-system agnostic by construction.</p>
+      <p>The security is self-sorting by prior design: a node cannot execute a command for hardware it does not carry — the capability bits define each node's executable subset — so the attack surface of any node is exactly its installed equipment and nothing more. Operators prevail over automation at every tier, always, per the charter. The machines hold the water. The people hold the judgment.</p>
+    </section>
+
+    <section id="eyes">
+      <h2>The experienced-eyes doctrine</h2>
+      <p>The common operating picture makes seasoned judgment deployable at the cost of a glance, and the service is full of judgment currently trapped behind desks and knees. Three postures, one mechanism.</p>
+
+      <div class="phase">
+        <div class="when">Posture one</div>
+        <h3>The desk assist</h3>
+        <p>The fire management officer or staff officer who came up on the jumps and now runs a small department cannot peel off for every little start. With the picture already rendering beside the budget spreadsheets, assisting collapses from a half-day drive to a two-minute look and one radio call — "watch that draw, it spots across every time; set your trigger point now" — delivered to every initial attack in the district at zero marginal staffing, in exactly the window where one experienced set of eyes has always been worth the most: small fire, thin resources, green IC deciding alone.</p>
+      </div>
+
+      <div class="phase">
+        <div class="when">Posture two</div>
+        <h3>The defensive seat</h3>
+        <p>The coordinated defense renders as a screen-runnable domain — nodes, corridors, tank levels, coverage, the wet line; allocation and timing, not chainsaws. Doctrine assigns it as a defensive group under a seasoned officer, including the retired or limited-mobility chief who knows the county better than anyone but can no longer run the woods. The incident commander concentrates on the main attack, and span of control improves for both.</p>
+      </div>
+
+      <div class="phase">
+        <div class="when">Posture three</div>
+        <h3>The consultation</h3>
+        <p>The old hand in front of the live picture, opinion on request. The profession that consumed his knees keeps his judgment.</p>
+      </div>
+
+      <div class="bound" style="margin-top:22px">
+        <div class="blab">The boundary, in every posture</div>
+        <p>The system does not create the expertise or the responsibility. It deletes the travel between them. Augmentation, never command transfer; on-scene authority retained, per the charter, always.</p>
+      </div>
+    </section>
+
+    <section id="planning">
+      <h2>Supply and coverage</h2>
+      <p>What follows is the planning method — Appendix A of the Tactics Paper. Conservative figures only. Everything is site-specific: wind, slope, elevation gain, and obstructions shrink every number below. The unit's commissioning self-calibration measures your actual supply and governs. This is for planning, not performance guarantees.</p>
+
+      <h3>Table 1 — What your supply run honestly delivers</h3>
+      <p class="tcap">Assumes 50 psi municipal or well pressure at the spigot, level ground. Figures rounded down on purpose.</p>
+      <div class="tbl"><table>
+        <thead><tr><th>Supply run</th><th>50 ft</th><th>100 ft</th><th>200 ft</th></tr></thead>
+        <tbody>
+          <tr><td>1/2" garden hose</td><td>~3 GPM @ ~30 psi</td><td>~2–3 GPM @ ~22 psi</td><td>~2 GPM @ ~15 psi</td></tr>
+          <tr><td>5/8" garden hose</td><td>~5 GPM @ ~40 psi</td><td>~4 GPM @ ~32 psi</td><td>~3 GPM @ ~22 psi</td></tr>
+          <tr><td>3/4" garden hose</td><td>~6 GPM @ ~44 psi</td><td>~5–6 GPM @ ~38 psi</td><td>~4–5 GPM @ ~30 psi</td></tr>
+          <tr><td>3/4" poly / PEX / pipe</td><td>~7 GPM @ ~45 psi</td><td>~6 GPM @ ~40 psi</td><td>~5 GPM @ ~34 psi</td></tr>
+          <tr><td>1" pipe</td><td>~8+ GPM @ ~47 psi</td><td>~8 GPM @ ~44 psi</td><td>~7 GPM @ ~40 psi</td></tr>
+        </tbody>
+      </table></div>
+      <div class="rule"><b>Rule that teaches itself:</b> over distance, hose diameter is everything. Borrowing supply across the lot line? Borrow the fat hose. Subtract about 5 psi per 10 ft of elevation gain.</div>
+
+      <h3>Table 2 — What each sprinkler class needs and covers</h3>
+      <p class="tcap">Derated field figures, not catalog still-air numbers. Effective wetted radius assumes light wind.</p>
+      <div class="tbl"><table>
+        <thead><tr><th>Head class</th><th>Needs (min)</th><th>Appetite</th><th>Effective radius</th><th>Use for</th></tr></thead>
+        <tbody>
+          <tr><td>Micro / low-flow spray or mini-impact</td><td>~15 psi</td><td>0.5–2 GPM</td><td>8–15 ft</td><td>Gutter line, deck, fence line, spot targets</td></tr>
+          <tr><td>Half-pattern spray head</td><td>~20 psi</td><td>1–2 GPM</td><td>10–12 ft</td><td>Wall line, roof edge from below</td></tr>
+          <tr><td>Small plastic impact</td><td>~25 psi</td><td>2–3 GPM</td><td>15–25 ft</td><td>Small roofs, yard corners, thin supply runs</td></tr>
+          <tr><td>Brass impact, forestry standard (25PJ class)</td><td>~40 psi</td><td>3–5 GPM</td><td>25–35 ft</td><td>Roof ridge, broad coverage — the structure-protection workhorse</td></tr>
+        </tbody>
+      </table></div>
+
+      <h3>Table 3 — Spacing: how far apart to put them</h3>
+      <p class="tcap">Table 2 gives each head's reach. This one says where the next head goes. Wildland guidance says to place heads so adjacent patterns overlap; irrigation practice states the same rule as a number.</p>
+      <div class="tbl"><table>
+        <thead><tr><th>Spacing rule</th><th>Distance between heads</th><th>When to use</th></tr></thead>
+        <tbody>
+          <tr><td>Head-to-head (the standard)</td><td>Equal to the effective radius</td><td>Baseline. Each head throws to the base of the next; patterns overlap by half.</td></tr>
+          <tr><td>Wind-derated</td><td>~90% of the effective radius</td><td>Any exposed site, any forecast wind — which is most fire days.</td></tr>
+          <tr><td>Hard wind</td><td>~80% of the effective radius</td><td>Ridge tops, canyon mouths, sustained wind.</td></tr>
+        </tbody>
+      </table></div>
+      <div class="rule"><b>Do not space at the full diameter of throw.</b> Two heads set a full diameter apart leave a dry hole between them, and the dry hole is where embers sit. Spacing equal to <em>radius</em>, not diameter, is the whole rule.</div>
+      <p><strong>Design pressure is 50 psi.</strong> Cache-standard structure-protection heads are built around it. Below roughly 40 psi the radius collapses and every spacing figure above becomes wrong — the layout that overlapped on paper no longer overlaps on the ground. Check Table 1 for what your run actually delivers before trusting a spacing.</p>
+      <p><strong>Trunk and laterals, not one long hose.</strong> Avoid feeding several heads from a single straight run of 3/4 in. hose; the last head starves. Run the largest line you have as a trunk and branch laterals off it. On a single-property install that means the fat line to a manifold near the structure, short laterals to each head.</p>
+
+      <h3>Table 4 — Match line</h3>
+      <p class="tcap">One zone runs at a time. Plan heads per zone, not per system.</p>
+      <div class="tbl"><table>
+        <thead><tr><th>Your supply (Table 1)</th><th>Workable head classes</th><th>Heads per zone</th></tr></thead>
+        <tbody>
+          <tr><td>~2 GPM at low psi (long thin run)</td><td>Micro / low-flow only</td><td>1–2</td></tr>
+          <tr><td>~3–4 GPM @ ~20–30 psi</td><td>Micro, half-pattern, small plastic impact</td><td>1–2</td></tr>
+          <tr><td>~5–6 GPM @ ~35–45 psi</td><td>Any above; one brass impact</td><td>1 brass or 2–3 small</td></tr>
+          <tr><td>~7+ GPM @ ~40+ psi</td><td>Full forestry pattern</td><td>2 brass impacts</td></tr>
+        </tbody>
+      </table></div>
+    </section>
+
+    <section id="tool">
+      <h2>Run your own numbers</h2>
+      <p>The tables give the method. This runs it for your site — supply, head class, pressure, spacing, and wind derating, drawn to scale so you can see where the dry holes land.</p>
+      <div class="toolwrap">
+        <div class="toolbar">
+          <span class="tt">Coverage &amp; spacing</span>
+          <a href="coverage.html" target="_blank" rel="noopener">Open full size</a>
+        </div>
+        <iframe src="coverage.html#embed" title="Coverage and spacing planning tool"></iframe>
+      </div>
+    </section>
+
+    <section id="rules">
+      <h2>Rules box</h2>
+      <ol class="rules">
+        <li><strong>Receiving sites beat area.</strong> Wet the gutters, roof valleys, fence line, and the junk pile — not the lawn. Embers land on things.</li>
+        <li><strong>Rotation is the design.</strong> One zone at a time is how a garden spigot protects a whole structure. Do not plan for simultaneous zones.</li>
+        <li><strong>The forestry anchor.</strong> The brass impact class is the same sprinkler wildland crews deploy for structure protection. If it reaches your ridge line at your pressure, use it there.</li>
+        <li><strong>The thin-supply anchor.</strong> If Table 1 puts you in the top rows, small plastic impacts and micro-heads placed <em>at the targets</em> out-protect one starving brass head every time.</li>
+        <li><strong>The undefended parcel next door is coverable.</strong> Two hundred feet of 3/4" hose and two well-chosen small heads will keep it wet. Not well — enough.</li>
+        <li><strong>Site specifics govern.</strong> Wind, slope, trees, and your actual measured pressure override every figure on this page. The unit measures truth at commissioning.</li>
+      </ol>
+
+      <div class="getdoc">
+        <a href="docs/osf-tactics.pdf">Tactics Paper, PDF</a>
+        <a href="docs/osf-deadman-fire.pdf">The Deadman Fire</a>
+        <span>8 and 7 sheets · the paper and the scenario it was written against</span>
+      </div>
+
+      <p class="srcnote">Supply figures derive from published hose and pipe friction-loss tables and manufacturer minimum operating specifications, derated for field conditions. Head classes, placement practice, and the overlap rule adopt published wildland structure-protection sprinkler guidance — the national cache kit standards and the structure-protection field literature — by reference to their current editions. Spacing and precipitation-rate relations follow standard irrigation design practice. This page is a planning aid and is not a substitute for the specification.</p>
+    </section>
+
+  </main>
+</div>
+
+<footer class="sitefoot">
+  <div class="wrap fgrid">
+    <div>
+      <div class="free">Free like a fire code.</div>
+      <p style="margin-top:8px;max-width:42ch">Build one. Improve it. Propose changes.<br>It belongs to everyone it protects.</p>
+    </div>
+    <div class="mono">
+      The Open Source Firefighter<br>
+      Andrew Morton · Palmer Lake, Colorado<br>
+      U.S. Provisional Application 64/173,890<br>
+      Filed October 10, 2026 · published October 11, 2026
+    </div>
+    <div class="mono">
+      External standards named in this family are adopted<br>
+      by reference to their current edition as amended.<br>
+      The issuing authority's text always governs.
+    </div>
+  </div>
+</footer>
+
+<script>
+/* the embedded tool reports its own height so the frame never clips or leaves a gap */
+addEventListener('message', function(e){
+  var h = e.data && e.data.osfToolHeight;
+  if (!h) return;
+  var f = document.querySelector('.toolwrap iframe');
+  if (f) f.style.height = Math.max(420, Math.min(2200, h + 8)) + 'px';
+});
+</script>
+</body>
+</html>

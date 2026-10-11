@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>The Open Source Firefighter</title>
+<meta name="description" content="An open specification for coordinated ember and terrain defense at the wildland-urban interface. Free forever, built from commodity parts.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap">
+<link rel="stylesheet" href="css/site.css">
+</head>
+<body>
+
+<div class="statusbar">
+  <div class="wrap">
+    <span>Published <b>October 11, 2026</b></span>
+    <span>Provisional application <b>64/173,890</b> · filed October 10, 2026</span>
+    <span>Open specification · <b>free forever</b></span>
+  </div>
+</div>
+
+<nav>
+  <div class="wrap">
+    <a class="brand" href="index.html">OSF</a>
+    <a href="tactics.html" class="hidesm">Tactics</a>
+    <a href="deadman.html" class="hidesm">Deadman</a>
+    <a href="network.html" class="hidesm">Network</a>
+    <a href="acceptance.html" class="hidesm">Acceptance</a>
+    <a href="adoption.html" class="hidesm">Adoption</a>
+    <a href="ground.html" class="hidesm">Ground</a>
+    <a href="index.html#library" class="hidesm">Documents</a>
+    <a href="docs/osf-as-filed-2026-10-10.pdf" class="cta">The filing</a>
+    <span class="updir"><a href="https://pikesperkcoffee.github.io/index.html" title="Back one page (up one directory)" aria-label="Back one page, up one directory">../</a><a href="https://pikesperkcoffee.github.io/index.html" title="Site index (root)" aria-label="Site index, root">/</a></span>
+  </div>
+</nav>
+
+<div class="hero">
+  <figure class="heroimg">
+    <img src="img/node-installed.jpg" alt="A single-storey house at dusk with three sprinklers running along its roof ridge, wetting the roof plane, as a smoke column rises from a ridge behind it. A small enclosure marked OSF is mounted on the exterior wall with a supply line running up to the roof.">
+    <figcaption>Concept rendering · reference installation under ember cast</figcaption>
+  </figure>
+  <div class="wrap masthead">
+    <div class="pending">PATENT PENDING</div>
+    <h1>The Open Source<br><span class="gold">Firefighter</span></h1>
+    <p class="mission">A treatise on a new interface firefighting technology that enables the incident commander with <em>a strategic resource at the line of contact.</em></p>
+    <div class="byline">
+      Andrew Morton · Palmer Lake, Colorado<br>
+      Former: City of Delta Junction VFD Assistant Chief · Donnelly Training Area (DMPBAX) Range Manager · U.S. Air Force Tech Control
+    </div>
+  </div>
+</div>
+
+<section id="problem">
+  <div class="wrap">
+    <div class="sechead"><span class="secnum">01</span><h2>The problem is embers</h2></div>
+    <div class="col">
+      <p class="lede">When a wildfire destroys a neighborhood, it is usually not the wall of flame that does it. It is embers — burning fragments carried on the wind, sometimes a mile or more ahead of the fire itself.</p>
+      <p>They land on roofs, in gutters, in the dry mulch beside a wall, and they start small fires that become house fires while the main fire is still far away. In a bad wind event, thousands of embers land across a neighborhood at once, and there are never enough firefighters to stand at every house.</p>
+      <p>There is a well-understood answer: keep the surfaces wet. A roof that stays damp through the ember window does not ignite. Sprinkler systems that wet roofs and perimeters during fire events have protected individual homes and cabins for years. The engineering is not exotic — water, pipes, and timing.</p>
+      <p>At ordinary suburban spacing, fire science has a blunt finding: once one house lights, the next house is the fuel. Your survival is partly a function of parcels you do not control. Three protected homes out of five is a firebreak. One is a wet spot.</p>
+    </div>
+  </div>
+</section>
+
+<section id="coordination">
+  <div class="wrap">
+    <div class="sechead"><span class="secnum">02</span><h2>What is missing is coordination</h2></div>
+    <div class="col">
+      <p class="lede">If every house on a street turns its sprinklers on at full blast at the same time, the water system that supplies all of them collapses. Pressure drops, and nobody's sprinklers work.</p>
+      <p>A neighborhood that wants to defend itself has to share its water intelligently — houses taking turns, surfaces staying wet, the supply never exhausted. No product on the market does this. That is the gap this specification fills, and it is the whole invention.</p>
+    </div>
+
+    <div class="demo">
+      <h3>Ten houses, one water main</h3>
+      <div class="demosub">The main sustains four nodes at full draw · ten are present · no coordinator, no election</div>
+      <div class="street" id="street" aria-hidden="true"></div>
+      <div class="gauge">
+        <div class="gaugelab"><span>Aggregate draw on the shared main</span><span id="drawtxt">0 of 10 drawing</span></div>
+        <div class="gaugebar"><div class="gaugefill" id="gaugefill"></div><div class="gaugecap" title="Sustainable capacity"></div></div>
+      </div>
+      <p class="demofoot">Each node decides locally from shared state. The red mark is the point where the main gives out — aggregate draw never crosses it, and no house goes unprotected. A wet roof stays protective for many minutes between passes, so taking turns costs nothing that matters.</p>
+      <div class="democtl">
+        <button class="btn" id="toggle" aria-pressed="true">Pause</button>
+        <button class="btn" id="flood" aria-pressed="false">Show all-at-once</button>
+      </div>
+    </div>
+
+    <figure class="fig">
+      <img src="img/fig1-coordination-domain.svg" alt="Plan view of a neighborhood of sixteen structures along a road at the wildland edge. Ten carry nodes; six are unequipped. Nodes are shown drawing, yielding, or degraded, linked by a peer-to-peer coordination mesh, with a gateway publishing outward to incident command. Below, a rotation schedule shows which of the ten nodes draws water in each time window, never more than four at once.">
+      <figcaption><b>FIG. 1</b> — The coordination domain. Sixteen structures, ten equipped, one shared supply main. Partial adoption is the normal case, not the failure case.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section id="box">
+  <div class="wrap">
+    <div class="sechead"><span class="secnum">03</span><h2>What the box does</h2></div>
+    <div class="col">
+      <p>The heart of the system is a weatherproof enclosure about the size of a breaker panel, mounted on a wall. Inside: an industrial controller, a small mesh radio, a battery, and motorized water valves. A garden hose or pipe comes in one side; zones go out the other, feeding ordinary lawn sprinklers on the roof line and around the house.</p>
+    </div>
+    <div class="prims">
+      <div class="prim">
+        <h3>It takes turns</h3>
+        <p>One zone at a time, rotating on a schedule, so an ordinary household water connection can keep a whole house wet. It works with as little as one sprinkler from the hardware store. Two or three protect a mobile home or a cabin.</p>
+      </div>
+      <div class="prim">
+        <h3>It talks to the neighbors</h3>
+        <p>A license-free mesh radio in every box. The same taking-turns logic that runs inside one box runs across the whole street. No internet. No subscription. No account. The boxes talk directly to each other.</p>
+      </div>
+      <div class="prim">
+        <h3>It works alone</h3>
+        <p>If a box is the only one on the street, or the radio network is down, it protects its own house on its own schedule. Coordination makes it better. Nothing makes it stop. Every failure has a defined destination and a way back.</p>
+      </div>
+      <div class="prim">
+        <h3>It talks to you</h3>
+        <p>Every unit speaks its status aloud in plain language, the way a fire alarm panel does. No manual, no app. A volunteer who has never seen one can put it into service in minutes, in the dark, in gloves.</p>
+      </div>
+      <div class="prim">
+        <h3>It keeps its own records</h3>
+        <p>A tamper-evident log of what it did and when — activations, water used, conditions. After a fire the neighborhood holds a verifiable record, useful for insurance, for investigators, and for making the system better.</p>
+      </div>
+      <div class="prim">
+        <h3>The firefighter is in charge</h3>
+        <p>Arriving crews get one unified picture of every participating home and can direct it. A homeowner always retains control of their own equipment. Automation manages resources; it never overrules people.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="not">
+  <div class="wrap">
+    <div class="sechead"><span class="secnum">04</span><h2>What it deliberately is not</h2></div>
+    <div class="nots">
+      <p>The Open Source Firefighter is not a smart home system, not a security camera, and not a surveillance network. Its radio carries only short, defined messages about fire defense — activations, water status, coordination. Video, audio, and personal data have no place in its language at all; the system is architecturally incapable of transmitting them.</p>
+      <p>A homeowner's data stays home. This is not a policy promise that could be revised later. It is built into how the system works, and the program's charter forbids changing it.</p>
+    </div>
+  </div>
+</section>
+
+<section id="packages">
+  <div class="wrap">
+    <div class="sechead"><span class="secnum">05</span><h2>One system, three packages</h2></div>
+    <div class="col"><p>Identical firmware, identical coordination protocol, identical message categories. The classes differ in packaging, connectors, power sourcing, and environmental rating only. A government installation is not a smarter unit; it is the same unit in harder packaging.</p></div>
+    <div class="packs">
+      <div class="pack">
+        <div class="tier">Class 1</div>
+        <h3>Residential</h3>
+        <p>The wall-mounted box. Built entirely from standard industrial parts — the same controllers, valves, and batteries used in water treatment plants and alarm panels, from ordinary suppliers. A capable homeowner, electrician, or irrigation contractor can build and install it.</p>
+        <div class="cost">Parts roughly $800–1,500 · every wear item a commodity</div>
+      </div>
+      <div class="pack">
+        <div class="tier">Class 2</div>
+        <h3>Government / Commercial</h3>
+        <p>The same unit in tougher packaging — sealed connectors, marine-grade fittings, higher-end radios where agencies need them, and integration with the mapping and command tools firefighters already use.</p>
+        <div class="cost">Appears on a crew's tablet as a known asset at a fixed point</div>
+      </div>
+      <div class="pack">
+        <div class="tier">Class 3</div>
+        <h3>Tactical</h3>
+        <p>The same system in a rugged transit case with battery and solar, stored on a pallet and dropped where needed. It watches the pump by listening to it, schedules water so the fuel lasts the whole event, and reports back — so a crew does not drive two hours to find the pump quit six hours ago.</p>
+        <div class="cost">Add weather and thermal and it becomes a fire lookout that defends its own ground</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="doors">
+  <div class="wrap">
+    <div class="sechead"><span class="secnum">06</span><h2>Where do you stand?</h2></div>
+    <div class="col"><p>This is a family of documents, not a reading assignment. Each door below leads to a section written for one kind of reader. Where a section page is still in preparation, the documents that serve that reader are listed and available now.</p></div>
+    <div class="doors">
+
+      <div class="door">
+        <span class="who">Fire officers · company officers · planners</span>
+        <h3>Tactics</h3>
+        <p>What this gives you at the line of contact: the three deployment tiers, the combined operation, supply and coverage math, and the doctrine under a realistic fire. Written so a new lieutenant can read it once and employ it.</p>
+        <div class="avail"><a href="tactics.html"><strong>Read the Tactics section &rarr;</strong></a><br>
+          <a href="coverage.html">Coverage &amp; spacing tool</a> ·
+          <a href="deadman.html">The Deadman Fire</a> ·
+          <a href="docs/osf-tactics.pdf">PDF</a></div>
+      </div>
+
+      <div class="door">
+        <span class="who">Network · software · hardware</span>
+        <h3>The network</h3>
+        <p>Starting at zero: why unlicensed spectrum, what LoRa trades away, why there is no hub, why Meshtastic, and where the substitution line sits. Then the layer model, the closed verb vocabulary, the state machine, and enough to start building.</p>
+        <div class="avail"><a href="network.html"><strong>Read the Network section &rarr;</strong></a><br>
+          <a href="docs/osf-main-specification.pdf">Main Specification</a> ·
+          <a href="docs/osf-software-requirements.pdf">Software Requirements</a> ·
+          <a href="docs/osf-hardware-annex-a.pdf">Hardware Annex A</a></div>
+      </div>
+
+      <div class="door">
+        <span class="who">AHJ · code officials · government</span>
+        <h3>Acceptance and code</h3>
+        <p>How this integrates with construction that already exists: the codes it adopts by reference, the boundaries it deliberately stays outside, the trust layer and what it does and does not assert, and the system expressed as numbered installation requirements for plan check.</p>
+        <div class="avail"><a href="acceptance.html"><strong>Read the Acceptance section &rarr;</strong></a><br>
+          <a href="docs/osf-inspectors-review.pdf">Inspector's Review Draft</a> ·
+          <a href="docs/osf-hardware-annex-a.pdf">Hardware Annex A</a></div>
+      </div>
+
+      <div class="door">
+        <span class="who">Homeowners · councils · HOAs</span>
+        <h3>Adoption</h3>
+        <p>What a community actually decides, asks, and funds. What one street can do that one house cannot, and what it costs to find out.</p>
+        <div class="avail"><a href="adoption.html"><strong>Read the Adoption section &rarr;</strong></a><br>
+          <a href="docs/osf-community-adoption.pdf">Adoption Briefing</a> ·
+          <a href="docs/osf-overview.pdf">Public Overview</a></div>
+      </div>
+
+      <div class="door">
+        <span class="who">Builders · makers · electricians</span>
+        <h3>Build one</h3>
+        <p>The rules the box obeys, the buildable system, the terminal schedule, and a known-good configuration to start from. Everything is a commodity part by requirement, not by preference.</p>
+        <div class="avail"><a href="network.html"><strong>Start with the Network section &rarr;</strong></a> ·
+          <a href="ground.html">known-good configurations</a><br>
+          <a href="docs/osf-design-philosophy.pdf">Design Philosophy</a> ·
+          <a href="docs/osf-hardware-annex-a.pdf">Hardware Annex A</a> ·
+          <a href="docs/osf-drawings.pdf">Drawings</a></div>
+      </div>
+
+      <div class="door">
+        <span class="who">Forestry · range · program officers</span>
+        <h3>Ground and program</h3>
+        <p>Deployment on instrumented range land, the terrain layer, and where the specification family goes next — the development path and how a shared-configuration community reproduces known-good deployments.</p>
+        <div class="avail"><a href="ground.html"><strong>Read the Ground and Program section &rarr;</strong></a><br>
+          <a href="docs/osf-training-range.pdf">The Training Range</a> ·
+          <a href="docs/osf-development-path.pdf">Development Path</a></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section id="library">
+  <div class="wrap">
+    <div class="sechead"><span class="secnum">07</span><h2>The library</h2></div>
+    <div class="col"><p>Every public document, as filed and as published. The complete filing is one file at the top; everything else is a section of it, split out for reading. Nothing here requires a license, an account, or permission.</p></div>
+
+    <div class="libctl">
+      <label for="libsearch" class="eyebrow" style="flex:0 0 auto">Filter</label>
+      <input id="libsearch" type="search" placeholder="Search titles and descriptions…" autocomplete="off">
+    </div>
+    <div class="chips" id="chips">
+      <button class="chip" data-tag="all" aria-pressed="true">All documents</button>
+      <button class="chip" data-tag="start" aria-pressed="false">Start here</button>
+      <button class="chip" data-tag="fire" aria-pressed="false">Fire service</button>
+      <button class="chip" data-tag="tech" aria-pressed="false">Technical</button>
+      <button class="chip" data-tag="code" aria-pressed="false">Code and AHJ</button>
+      <button class="chip" data-tag="community" aria-pressed="false">Community</button>
+    </div>
+
+    <div class="shelf" id="shelf"></div>
+    <p class="demofoot" id="libcount"></p>
+  </div>
+</section>
+
+<section id="free">
+  <div class="wrap">
+    <div class="sechead"><span class="secnum">08</span><h2>Why it is free</h2></div>
+    <div class="col">
+      <p class="lede">This is not a product competing for a budget. It is a safety primitive, like the seatbelt or the smoke detector — something whose worth is categorical, whose mechanism is legible from first principles, and whose delay is paid in lives.</p>
+      <p>Safety primitives used to get a grace period: time to become culture before anyone worked out how to meter them. The smoke detector arrived before the subscription business model that would have eaten it. That grace period is gone. Invented today, the smoke detector would arrive as a platform, with a monthly fee, a proprietary battery, a cloud dependency, and an insurance partnership — and the enclosure would masquerade as the safety.</p>
+      <p>The coordination primitive for ember defense is being born right now, and whichever form entrenches first is what ember defense means for the next fifty years. The openness here is not idealism. It is a replacement for the historical luck that seatbelts got for free.</p>
+    </div>
+    <div class="cov">
+      <div>
+        <h3>The specification is the invention, and it is given away</h3>
+        <p>A provisional application was filed on October 10, 2026 and the complete disclosure was published. The filing exists to keep the coordination system permanently open, so that nobody can fence it off and sell it back as a subscription.</p>
+      </div>
+      <div>
+        <h3>Everything is a standard part</h3>
+        <p>Every component must be available from multiple manufacturers through normal supply channels. Equipment depending on a single company for parts is, in the specification's own words, expressly non-compliant.</p>
+      </div>
+      <div>
+        <h3>Governed like an internet standard</h3>
+        <p>Anyone may propose improvements, judged in public against a short charter with two unbreakable rules: the system must never require an outside service to do its job, and automation must never overrule the person standing at the equipment. A box built in 2026 and one built in 2046 will still work together.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="dedication">
+  <div class="wrap">
+    <div class="dedication">
+      This work is dedicated to <strong>Emily Barker, Nick Hutcherson, and Sydney Watson</strong> of the Rifle Helitack crew, killed in a burnover during initial attack on the Knowles Fire, western Colorado, June 27, 2026 — and to the two crewmates who survived it, and to all wildland firefighters who stand between fire and the rest of us.
+      <span class="second">They were the first to arrive. This system exists so that the ground they arrive on is already fighting back.</span>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap fgrid">
+    <div>
+      <div class="free">Free like a fire code.</div>
+      <p style="margin-top:8px;max-width:42ch">Build one. Improve it. Propose changes.<br>It belongs to everyone it protects.</p>
+    </div>
+    <div class="mono">
+      The Open Source Firefighter<br>
+      Andrew Morton · Palmer Lake, Colorado<br>
+      U.S. Provisional Application 64/173,890<br>
+      Filed October 10, 2026 · published October 11, 2026
+    </div>
+    <div class="mono">
+      External standards named in this family are adopted<br>
+      by reference to their current edition as amended.<br>
+      The issuing authority's text always governs.
+    </div>
+  </div>
+</footer>
+
+<script>
+/* ---------- rotation demo: four of ten draw at once ---------- */
+(function(){
+  const N = 10, CAP = 4;
+  const street = document.getElementById('street');
+  const fill = document.getElementById('gaugefill');
+  const txt = document.getElementById('drawtxt');
+  const toggle = document.getElementById('toggle');
+  const flood = document.getElementById('flood');
+  if(!street) return;
+
+  const cells = [];
+  for(let i=0;i<N;i++){
+    const d = document.createElement('div');
+    d.className = 'house';
+    d.textContent = String.fromCharCode(65+i);
+    street.appendChild(d); cells.push(d);
+  }
+
+  let offset = 0, running = true, floodMode = false;
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function paint(){
+    let wet = 0;
+    for(let i=0;i<N;i++){
+      const on = floodMode ? true : ((i - offset + N) % N) < CAP;
+      cells[i].classList.toggle('wet', on);
+      cells[i].classList.toggle('dry', !on);
+      if(on) wet++;
+    }
+    const pct = Math.min(100, (wet / N) * 100);
+    fill.style.width = pct + '%';
+    fill.style.background = wet > CAP ? 'var(--oxide)' : 'var(--water)';
+    txt.textContent = floodMode
+      ? wet + ' of ' + N + ' drawing — main collapsed, nobody is protected'
+      : wet + ' of ' + N + ' drawing — within capacity';
+  }
+
+  function step(){ if(running && !floodMode){ offset = (offset + CAP) % N; paint(); } }
+  paint();
+  let timer = reduce ? null : setInterval(step, 1600);
+  if(reduce){ running = false; toggle.setAttribute('aria-pressed','false'); toggle.textContent = 'Step'; }
+
+  toggle.addEventListener('click', function(){
+    if(reduce){ step(); return; }
+    running = !running;
+    toggle.setAttribute('aria-pressed', String(running));
+    toggle.textContent = running ? 'Pause' : 'Resume';
+  });
+
+  flood.addEventListener('click', function(){
+    floodMode = !floodMode;
+    flood.setAttribute('aria-pressed', String(floodMode));
+    flood.textContent = floodMode ? 'Show coordinated' : 'Show all-at-once';
+    paint();
+  });
+})();
+
+/* ---------- document library ---------- */
+(function(){
+  const DOCS = [
+    {id:'AS FILED', t:'The complete filing, as filed', f:'docs/osf-as-filed-2026-10-10.pdf',
+     s:'91 sheets', primary:true, tags:['start','fire','tech','code','community'],
+     d:'Provisional application 64/173,890 in one file: cover, the specification and all eleven exhibits, and FIG. 1 through FIG. 7. This is the fixed archival record of what was filed on October 10, 2026, and it is never revised.'},
+
+    {id:'OVERVIEW', t:'Public Overview', f:'docs/osf-overview.pdf', s:'6 sheets', tags:['start','community','fire'],
+     d:'The whole picture in about fifteen minutes, in plain language. If you read one document, read this one.'},
+
+    {id:'DEADMAN', t:'The Deadman Fire', f:'docs/osf-deadman-fire.pdf', s:'7 sheets', tags:['start','fire','community'],
+     d:'An end-to-end worked scenario anchored to real fire behavior, including the things that break. Hose burn-through, clogged heads, a bad battery — none of it tanks the system, which is the point.'},
+
+    {id:'TACTICS', t:'Tactics Paper', f:'docs/osf-tactics.pdf', s:'8 sheets', tags:['fire'],
+     d:'Employment doctrine: the three deployment tiers, the combined operation, and the supply, coverage, and head-spacing planning method in Appendix A.'},
+
+    {id:'SPEC', t:'Main Specification', f:'docs/osf-main-specification.pdf', s:'28 sheets', tags:['tech','code'],
+     d:'The spine. System architecture, the layered model, coordination protocol, event interface, command broadcast, gateway and backhaul, the cryptographic event log, the governance charter, and at Appendix C the wire format and closed verb vocabulary.'},
+
+    {id:'ANNEX A', t:'Hardware Annex A', f:'docs/osf-hardware-annex-a.pdf', s:'30 sheets', tags:['tech','code'],
+     d:'The buildable system. Enclosure and wet/dry cohabitation, wire-color and control discipline, the local operator interface, water appliances, radio classes and power budget, thermal-signature verification, and the common parts catalogue at Appendix A.'},
+
+    {id:'SOFTWARE', t:'Software Requirements', f:'docs/osf-software-requirements.pdf', s:'22 sheets', tags:['tech'],
+     d:'The layered software model against a rough OSI stack, eight fixed invariants, the node state machine, coordination properties, trust-layer enforcement, the degradation ladder, and the compliance boundaries worth knowing before you write code.'},
+
+    {id:'PHILOSOPHY', t:'Design Philosophy', f:'docs/osf-design-philosophy.pdf', s:'3 sheets', tags:['tech','start'],
+     d:'The rules every part of the system obeys: structural safety, operator supremacy, commodity sourcing, and comprehensibility. Short, and load-bearing.'},
+
+    {id:'INSPECTOR', t:"Inspector's Review Draft", f:'docs/osf-inspectors-review.pdf', s:'7 sheets', tags:['code'],
+     d:'The system expressed as numbered installation requirements in code-adoption language, for plan-check style review. Written to be marked up like a submittal.'},
+
+    {id:'ADOPTION', t:'Community Adoption Briefing', f:'docs/osf-community-adoption.pdf', s:'5 sheets', tags:['community','fire'],
+     d:'How a community actually adopts this: what gets decided, what gets asked, and proof of function by thermal overflight.'},
+
+    {id:'PATH', t:'Development Path', f:'docs/osf-development-path.pdf', s:'7 sheets', tags:['tech','community'],
+     d:'Where the specification family goes next, and the shared-configuration model by which known-good deployments get reproduced instead of reinvented.'},
+
+    {id:'RANGE', t:'The Training Range', f:'docs/osf-training-range.pdf', s:'5 sheets', tags:['fire','community'],
+     d:'Deployment and employment on instrumented range land, and the argument for treating coordination as infrastructure.'},
+
+    {id:'DRAWINGS', t:'Drawings, FIG. 1 – FIG. 7', f:'docs/osf-drawings.pdf', s:'7 sheets', tags:['tech','code','fire'],
+     d:'The coordination domain, the layer model and trust boundary, the node state machine, the control flow, the node master schematic, the terminal schedule, and a reference installation.'},
+
+    {id:'REGISTER', t:'Family Map and Register', f:'docs/osf-register.pdf', s:'5 sheets', tags:['start','tech'],
+     d:'The front door to the family: how the documents relate, who each one is for, and which edition governs. Where a copy in hand disagrees with the register, the register governs.'}
+  ];
+
+  const shelf = document.getElementById('shelf');
+  const count = document.getElementById('libcount');
+  const search = document.getElementById('libsearch');
+  const chips = [...document.querySelectorAll('#chips .chip')];
+  let tag = 'all', q = '';
+
+  function esc(s){ return s.replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+
+  function render(){
+    const needle = q.trim().toLowerCase();
+    const list = DOCS.filter(d =>
+      (tag === 'all' || d.tags.includes(tag)) &&
+      (!needle || (d.t + ' ' + d.d + ' ' + d.id).toLowerCase().includes(needle)));
+
+    shelf.innerHTML = list.length ? list.map(d =>
+      '<div class="item' + (d.primary ? ' primary' : '') + '">' +
+        '<span class="did">' + esc(d.id) + '</span>' +
+        '<div class="meta"><div class="t">' + esc(d.t) + '</div>' +
+        '<div class="d">' + esc(d.d) + '</div></div>' +
+        '<a class="get" href="' + d.f + '">PDF</a>' +
+        '<span class="sheets">' + esc(d.s) + '</span>' +
+      '</div>').join('')
+      : '<div class="empty">No document matches that filter.</div>';
+
+    count.textContent = list.length + ' of ' + DOCS.length +
+      ' documents shown. All files are PDF and open in a new tab.';
+  }
+
+  chips.forEach(c => c.addEventListener('click', () => {
+    tag = c.dataset.tag;
+    chips.forEach(o => o.setAttribute('aria-pressed', String(o === c)));
+    render();
+  }));
+  search.addEventListener('input', e => { q = e.target.value; render(); });
+  render();
+})();
+</script>
+</body>
+</html>

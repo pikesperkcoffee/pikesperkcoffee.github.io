@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Adoption</title>
+<meta name="description" content="What a community actually decides, asks and funds. Why participation density is the controlling variable, what it costs, and the five things a council can do.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap">
+<link rel="stylesheet" href="css/site.css">
+<style>
+.pagehead{border-bottom:3px solid var(--ink);padding-block:38px 30px}
+.pagehead h1{font-size:clamp(44px,8.4vw,82px)}
+.pagehead .kicker{font-family:var(--mono);font-size:12px;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--water);margin-bottom:12px}
+.pagehead .standfirst{margin-top:18px;max-width:64ch;font-size:clamp(17px,2vw,20px);line-height:1.5}
+
+.layout{display:grid;grid-template-columns:1fr;gap:34px;padding-block:clamp(34px,5vw,54px)}
+@media(min-width:1020px){.layout{grid-template-columns:230px minmax(0,1fr);gap:48px}}
+.wrap.layout{max-width:1250px}
+.toc{min-width:0}
+@media(min-width:1020px){
+  .toc{position:sticky;top:calc(env(safe-area-inset-top,0px) + 62px);align-self:start;
+       max-height:calc(100vh - 100px);overflow-y:auto}
+}
+.toc .lab{font-family:var(--mono);font-size:11px;letter-spacing:.17em;text-transform:uppercase;
+  color:var(--slate);border-bottom:1px solid var(--hair);padding-bottom:7px;margin-bottom:10px}
+.toc ol{list-style:none;counter-reset:t}
+.toc li{counter-increment:t;margin-bottom:3px}
+.toc a{display:block;text-decoration:none;color:var(--ink);font-size:14.5px;
+  padding:4px 0 4px 26px;position:relative;line-height:1.35}
+.toc a::before{content:counter(t,decimal-leading-zero);position:absolute;left:0;top:6px;
+  font-family:var(--mono);font-size:10.5px;color:var(--brass)}
+.toc a:hover{color:var(--oxide)}
+.body{min-width:0}
+.body section{border-bottom:1px solid var(--hair);padding-block:0 clamp(28px,4vw,42px);
+  margin-bottom:clamp(28px,4vw,42px)}
+.body section:last-of-type{border-bottom:none}
+.body p{max-width:68ch;font-size:17.5px}
+.body h3{margin:26px 0 8px}
+
+.opening{border:2px solid var(--ink);background:var(--card);padding:22px 24px;margin-bottom:30px}
+.opening p{font-size:17px;max-width:70ch}
+.opening p+p{margin-top:12px}
+
+/* the street */
+.streetview{border:2px solid var(--ink);background:var(--card);padding:22px;margin:26px 0}
+.streetview .vlab{font-family:var(--display);font-weight:700;font-size:19px;text-transform:uppercase;
+  letter-spacing:.04em;margin-bottom:3px}
+.streetview .vsub{font-family:var(--mono);font-size:11.5px;letter-spacing:.07em;text-transform:uppercase;
+  color:var(--slate);margin-bottom:18px}
+.houses{display:grid;grid-template-columns:repeat(20,1fr);gap:4px;align-items:end;margin-bottom:6px}
+@media(max-width:700px){.houses{grid-template-columns:repeat(10,1fr);gap:3px}}
+.hz{aspect-ratio:3/4;border:1.5px solid var(--hair);background:transparent;position:relative;
+  transition:background .3s ease,border-color .3s ease}
+.hz.on{background:var(--water);border-color:var(--water)}
+.hz.gap{border-color:var(--oxide);border-width:2px}
+.roadline{height:7px;background:repeating-linear-gradient(90deg,var(--hair),var(--hair) 14px,transparent 14px,transparent 26px);
+  margin-bottom:16px}
+.sctl{display:grid;grid-template-columns:1fr;gap:12px;align-items:center;margin-bottom:16px}
+@media(min-width:620px){.sctl{grid-template-columns:minmax(0,1fr) auto}}
+.sctl label{font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--slate);display:block;margin-bottom:6px}
+.sctl input[type=range]{width:100%;accent-color:var(--water);height:24px}
+.readout{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:1px;
+  background:var(--hair);border:1px solid var(--hair)}
+.readout div{background:var(--card);padding:12px 14px;min-width:0}
+.readout .n{font-family:var(--display);font-weight:700;font-size:28px;line-height:1;
+  font-variant-numeric:tabular-nums}
+.readout .n.good{color:var(--water)} .readout .n.bad{color:var(--oxide)}
+.readout .l{font-family:var(--mono);font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;
+  color:var(--slate);margin-top:6px;line-height:1.5}
+.verdict{margin-top:14px;font-size:16px;max-width:66ch;border-left:4px solid var(--brass);
+  padding-left:18px}
+.skey{display:flex;flex-wrap:wrap;gap:8px 20px;margin-top:14px;font-family:var(--mono);
+  font-size:11.5px;color:var(--slate)}
+.skey span{display:flex;align-items:center;gap:7px}
+.skey i{width:13px;height:16px;display:inline-block;border:1.5px solid var(--hair)}
+.skey i.on{background:var(--water);border-color:var(--water)}
+.skey i.gap{border-color:var(--oxide);border-width:2px}
+
+/* cost */
+.cost{border:1px solid var(--hair);background:var(--card);padding:22px;margin:26px 0}
+.cost .vlab{font-family:var(--display);font-weight:700;font-size:19px;text-transform:uppercase;
+  letter-spacing:.04em;margin-bottom:3px}
+.cost .vsub{font-family:var(--mono);font-size:11.5px;letter-spacing:.07em;text-transform:uppercase;
+  color:var(--slate);margin-bottom:18px}
+.cbar{margin-bottom:16px}
+.cbar .cl{display:flex;justify-content:space-between;align-items:baseline;gap:12px;
+  font-family:var(--mono);font-size:12px;margin-bottom:5px;flex-wrap:wrap}
+.cbar .cl b{font-family:var(--display);font-weight:700;font-size:16px;text-transform:uppercase;
+  letter-spacing:.04em}
+.cbar .track{height:30px;border:1.5px solid var(--ink);position:relative;overflow:hidden}
+.cbar .fillw{height:100%;background:var(--water)}
+.cbar .fillo{height:100%;background:var(--oxide)}
+.cbar .note{font-family:var(--mono);font-size:11.5px;color:var(--slate);margin-top:5px}
+.costnote{font-size:16px;max-width:66ch;margin-top:4px}
+
+/* asks */
+.asks{counter-reset:a;list-style:none;margin-top:20px}
+.asks li{counter-increment:a;position:relative;padding:16px 0 16px 52px;
+  border-bottom:1px dashed var(--hair);max-width:72ch}
+.asks li:last-child{border-bottom:none}
+.asks li::before{content:counter(a);position:absolute;left:0;top:14px;font-family:var(--display);
+  font-weight:700;font-size:30px;line-height:1;color:var(--brass);width:34px;text-align:right}
+.asks li b{display:block;font-family:var(--display);font-weight:600;font-size:19px;
+  text-transform:uppercase;letter-spacing:.03em;margin-bottom:5px}
+.asks li p{font-size:16px;margin:0;max-width:none}
+
+.points{display:grid;grid-template-columns:repeat(auto-fit,minmax(255px,1fr));gap:1px;
+  background:var(--hair);border:1px solid var(--hair);margin-top:24px}
+.points > div{background:var(--card);padding:20px;min-width:0}
+.points h3{margin:0 0 7px;font-size:17px;color:var(--oxide)}
+.points p{font-size:15.5px;margin:0}
+
+.rule{border-left:4px solid var(--water);padding:4px 0 4px 18px;margin:20px 0;
+  font-size:17px;max-width:66ch}
+.rule b{color:var(--water)}
+.getdoc{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-top:22px}
+.getdoc a{font-family:var(--display);font-weight:600;font-size:16px;letter-spacing:.05em;
+  text-transform:uppercase;text-decoration:none;border:2px solid var(--oxide);color:var(--oxide);padding:8px 16px}
+.getdoc a:hover{background:var(--oxide);color:var(--paper)}
+.getdoc span{font-family:var(--mono);font-size:12.5px;color:var(--slate)}
+</style>
+</head>
+<body>
+
+<div class="statusbar">
+  <div class="wrap">
+    <span>Published <b>October 11, 2026</b></span>
+    <span>Provisional application <b>64/173,890</b> · filed October 10, 2026</span>
+    <span>Open specification · <b>free forever</b></span>
+  </div>
+</div>
+
+<nav>
+  <div class="wrap">
+    <a class="brand" href="index.html">OSF</a>
+    <a href="tactics.html" class="hidesm">Tactics</a>
+    <a href="deadman.html" class="hidesm">Deadman</a>
+    <a href="network.html" class="hidesm">Network</a>
+    <a href="acceptance.html" class="hidesm">Acceptance</a>
+    <a href="adoption.html" class="hidesm" style="color:var(--oxide)">Adoption</a>
+    <a href="ground.html" class="hidesm">Ground</a>
+    <a href="index.html#library" class="hidesm">Documents</a>
+    <a href="docs/osf-as-filed-2026-10-10.pdf" class="cta">The filing</a>
+    <span class="updir"><a href="index.html" title="Back one page (Open Source Firefighter index)" aria-label="Back one page, Open Source Firefighter index">../</a><a href="https://pikesperkcoffee.github.io/index.html" title="Site index (root)" aria-label="Site index, root">/</a></span>
+  </div>
+</nav>
+
+<header class="pagehead">
+  <div class="wrap">
+    <div class="kicker">For homeowners, councils, boards, and fire districts</div>
+    <h1>Adoption</h1>
+    <p class="standfirst">What a community actually decides, asks, and funds. Why your neighbors' choices are part of your own protection, and what it costs to find out.</p>
+  </div>
+</header>
+
+<div class="wrap layout">
+
+  <aside class="toc">
+    <div class="lab">On this page</div>
+    <ol>
+      <li><a href="#notselling">Nobody is selling you anything</a></li>
+      <li><a href="#problem">The problem you already know</a></li>
+      <li><a href="#street">What one street can do</a></li>
+      <li><a href="#what">What it is</a></li>
+      <li><a href="#department">What it changes for your department</a></li>
+      <li><a href="#budget">Why open matters to your budget</a></li>
+      <li><a href="#asks">Five things to consider</a></li>
+      <li><a href="#proof">The question of proof</a></li>
+      <li><a href="#cost">What it costs</a></li>
+    </ol>
+  </aside>
+
+  <main class="body">
+
+    <section id="notselling">
+      <h2>Nobody is selling you anything</h2>
+      <div class="opening">
+        <p>You have seen documents like this before. A company arrives with a product, a subscription, and a model ordinance, and asks your community to adopt something you will then depend on them for. This page follows that format because the format works — but it is asking for something different, because there is nothing for sale.</p>
+        <p>The Open Source Firefighter is a published open standard for coordinated neighborhood ember defense. There is no company behind it. No subscription, no licence fee, no vendor to depend on, and no data leaving your community. The specification is free, permanent, and belongs to everyone it protects.</p>
+        <p>What it needs from your community is not a purchase order. It is <strong>recognition, a pilot, and a place in your planning.</strong></p>
+      </div>
+    </section>
+
+    <section id="problem">
+      <h2>The problem you already know</h2>
+      <p>When wildfire reaches a community, most homes are not lost to the wall of flame. They are lost to embers — burning debris blown ahead of the fire, sometimes by miles — landing on roofs, in gutters, in dry landscaping, starting small fires that become house fires while the front is still distant. In a wind event, thousands of embers fall across a neighborhood at once. No department anywhere has enough crews to stand at every house.</p>
+      <p>The defense is simple and proven: surfaces that stay wet during the ember window do not ignite. Home sprinkler protection has existed for years. What has never existed is coordination — because if every house on a street opens its sprinklers at once, the water system supplying all of them collapses, and then nobody is protected.</p>
+      <p>If your community is in Colorado you do not need the theory; you have Black Forest. Nearly five hundred homes, two lives, and a lesson the research has since made explicit: mitigated homes survived at higher rates and it still was not enough, because at neighborhood spacing homes ignite each other.</p>
+      <div class="rule"><b>The community, not the house, is the unit of survival</b> — and until now no infrastructure existed for a community to defend itself as one.</div>
+    </section>
+
+    <section id="street">
+      <h2>What one street can do</h2>
+      <p>This is the part that makes adoption different from every other home-improvement decision your residents make. A new roof protects one house. A box on a wall protects one house too — until the neighbors have them, at which point something else starts happening.</p>
+      <p>At ordinary suburban spacing, once one house lights, the next house is the fuel. Your survival is partly a function of parcels you do not control. Move the slider and watch what changes.</p>
+
+      <div class="streetview">
+        <div class="vlab">Twenty houses on one street</div>
+        <div class="vsub">Shared supply · one zone at a time · nobody over-draws the main</div>
+        <div class="houses" id="houses" aria-hidden="true"></div>
+        <div class="roadline"></div>
+        <div class="sctl">
+          <div>
+            <label for="rate">Homes with a box — <span id="rateTxt">8 of 20</span></label>
+            <input id="rate" type="range" min="0" max="20" value="8" step="1">
+          </div>
+        </div>
+        <div class="readout">
+          <div><div class="n good" id="nEq">8</div><div class="l">Homes protected</div></div>
+          <div><div class="n" id="nPct">40%</div><div class="l">Participation</div></div>
+          <div><div class="n bad" id="nGap">2</div><div class="l">Longest unbroken run of unequipped homes</div></div>
+        </div>
+        <p class="verdict" id="verdict"></p>
+        <div class="skey">
+          <span><i class="on"></i> Equipped</span>
+          <span><i></i> Not equipped</span>
+          <span><i class="gap"></i> Inside the longest gap</span>
+        </div>
+      </div>
+
+      <p>The slider shows coverage, not a prediction. No model here says who survives — that depends on wind, fuel, construction, and luck. What it does show is the thing a council can actually act on: <strong>gaps are the unit of risk, and gaps shrink faster than participation rises.</strong></p>
+      <div class="rule">Three protected homes in five is a firebreak. <b>One in five is a wet spot.</b> That is why participation matters more than perfection — and why the gaps concentrate exactly where money is thinnest, which is a thing doctrine has to say out loud, because the fire will.</div>
+      <p>Coverage does not have to stop at the property line either. Two hundred feet of good garden hose and a couple of well-chosen small sprinklers will keep the vacant lot between neighbors wet. Not well — enough. The gap in the neighborhood's defense is the neighborhood's problem, and now the neighborhood has a tool shaped like the gap.</p>
+    </section>
+
+    <section id="what">
+      <h2>What it is</h2>
+      <p>A weatherproof box the size of a breaker panel, mounted on a wall. Water in one side, up to three zones of ordinary lawn sprinklers out the other. Built entirely from standard industrial parts — the same controllers, valves, and batteries in your water plant and your fire alarm panels — for roughly $800 to $1,500 in components, by any competent electrician, irrigation contractor, or capable homeowner.</p>
+
+      <div class="points">
+        <div><h3>It takes turns</h3><p>One zone at a time, rotating, so an ordinary household water connection protects a whole structure. The minimum installation is one garden hose and one hardware-store sprinkler. Two or three protect a mobile home — the housing your most vulnerable residents live in, and the housing proprietary systems ignore.</p></div>
+        <div><h3>It coordinates the street</h3><p>A small licence-free radio in each box. Boxes schedule around the shared water supply automatically — no internet, no cloud, no account. They talk directly to each other, and they work alone if they have to.</p></div>
+        <div><h3>It answers to your firefighters</h3><p>Arriving crews see every participating home as one picture, with command authority — including a one-button order for all municipal-supplied units to yield the mains when an engine company needs the water. Homeowners always keep physical control of their own equipment.</p></div>
+        <div><h3>It keeps records</h3><p>Every unit maintains a tamper-evident log. After an event your community has a verifiable account of what ran, when, and with what water — for your review, your residents' insurers, and your planning.</p></div>
+        <div><h3>It speaks</h3><p>Every unit announces its status in plain language, like a fire panel. The rugged field version talks a first-time user through its own setup — a mutual-aid volunteer can put one in service in minutes, in the dark, in gloves.</p></div>
+        <div><h3>It is not a surveillance system</h3><p>This deserves plain words, because your community has been asked to adopt camera networks before. The radio protocol has a short, fixed vocabulary of fire-defense messages. Video, audio, and personal data have no message type — the network is physically incapable of carrying them. That is architecture, not policy, and the governance charter forbids changing it.</p></div>
+      </div>
+    </section>
+
+    <section id="department">
+      <h2>What it changes for your department</h2>
+      <p>A few dozen participating homes, a small drone overhead, and a crew coordinating from a truck at a safe anchor point can hold a neighborhood: the boxes are the hands, the drone is the eyes, and your people stay out of the ember cast.</p>
+      <p>That same drone, flown with a thermal camera, shows you <em>whether it is working</em> without anyone leaving the truck. A wetted roof reads cold and a dry one reads hot, so a pass over the neighborhood is a live map of which homes are protected and which have a problem — the coordination picture confirmed against the actual heat coming off the actual roofs.</p>
+      <p>The deployable form has a shape your department already understands: a <strong>coordinated defense module</strong> — one Type 6, a trailer of cased units, three or four people, and a drone operator, seeding persistent protection at a threatened community in about an hour and then moving to the next, because the boxes hold the ground after the crew leaves. Nothing about it is new equipment doctrine. It is a new resource type built from resources you already have.</p>
+      <div class="rule">Where homes already run their own units, the arriving module's radios join their network automatically. <b>A prepared community is a cheaper community to defend, measurably.</b></div>
+      <p>No system prevents every tragedy, and this one claims no such thing. What it changes is the arithmetic — how many burning places require a person standing there. The West is drying, fire seasons are lengthening, and there will never be enough crews. Ground that defends itself is the honest answer, and every home that holds is a home your people do not stand in front of.</p>
+    </section>
+
+    <section id="budget">
+      <h2>Why open matters to your budget</h2>
+      <p>Commercial coordinated-defense systems are entering the market at twenty to eighty thousand dollars per home with subscriptions, sold through insurance partnerships, priced for your wealthiest residents and nobody else. The engineering inside them is standard industrial equipment.</p>
+
+      <div class="cost">
+        <div class="vlab">Per protected home</div>
+        <div class="vsub">Component cost · the same industrial parts in both cases</div>
+        <div class="cbar">
+          <div class="cl"><b>Open standard</b><span>$800 – $1,500 in components, plus labor</span></div>
+          <div class="track"><div class="fillw" style="width:1.9%"></div></div>
+          <div class="note">No subscription · no licence · every replacement part from a normal supply house</div>
+        </div>
+        <div class="cbar">
+          <div class="cl"><b>Proprietary systems entering the market</b><span>$20,000 – $80,000 per home</span></div>
+          <div class="track"><div class="fillo" style="width:100%"></div></div>
+          <div class="note">Plus subscription · sold through insurance partnerships · priced for the wealthiest residents</div>
+        </div>
+        <p class="costnote">Bars are to scale against the upper figure of each range. The difference is not engineering. It is enclosure.</p>
+      </div>
+
+      <p>An open standard means your residents build or contract protection at parts-plus-labor cost; your local electricians and irrigation contractors do the work and keep the money in town; every replacement part comes from a normal supply house forever; and no company's bankruptcy, acquisition, or pricing decision can ever strand your community's investment.</p>
+      <p>The charter makes single-source dependency <strong>non-compliant by definition</strong>. A unit built in 2026 and one built in 2046 will work together.</p>
+    </section>
+
+    <section id="asks">
+      <h2>Five things to consider</h2>
+      <ol class="asks">
+        <li><b>Recognize the standard in your permitting</b>
+          <p>Installations are ordinary plumbing and electrical work under existing codes — backflow prevention, electrical compliance, standard permits. A council or district resolution recognizing the specification as an accepted basis for ember-defense installations removes ambiguity for your building department and your residents. The <a href="acceptance.html">Acceptance and Code section</a> is written for that conversation.</p></li>
+        <li><b>Pilot it</b>
+          <p>One street, one water district conversation, one season. The specification includes everything your public works department needs to evaluate coordinated draw against your supply — and the coordination exists precisely to protect your system, not stress it.</p></li>
+        <li><b>Put the field version in your continuity planning</b>
+          <p>Prepositioned units are a line item, not a program: no subscription, no activation service, commodity batteries on a shelf-inspection cycle, deployable by whoever is available. And verifying a whole neighborhood of installed units before a season is one overflight, not one property visit at a time — a thermal pass during a test cycle turns the hot roofs into the work order, so maintenance scales to the community instead of the calendar.</p></li>
+        <li><b>Connect it to your existing programs</b>
+          <p>Firewise communities, community wildfire protection plans, and mitigation grant applications all have natural places for neighborhood-scale coordinated defense. The verifiable event logs are the documentation those programs and your residents' insurers increasingly want.</p></li>
+        <li><b>Send your firefighters' knowledge back</b>
+          <p>The standard is governed publicly. Anyone may propose improvements, and the people who fight fire are exactly who it needs to hear from. Your department's experience is worth more to this standard than any purchase order.</p></li>
+      </ol>
+    </section>
+
+    <section id="proof">
+      <h2>The question of proof</h2>
+      <p>Someone at your table will ask — correctly, it is their job — where the studies and certifications are.</p>
+      <p>The direct answer: this is a safety primitive, not a product, and the seatbelt and the smoke detector already ran this experiment. Both were held to proof-before-existence, and the studies that eventually arrived mostly measured the cost of the waiting.</p>
+      <p>Two things make the cautious path even safer here. First, <strong>the failure mode is the status quo.</strong> A unit that faults degrades to exactly the unprotected house you have today. The baseline is zero, so a pilot risks nothing your community is not already living with. Second, <strong>the proof instrument ships inside every unit.</strong> The verifiable event log makes each deployment a public experiment your department can read.</p>
+      <div class="rule">The rigorous move is not to wait for someone else's study. <b>It is to run a pilot street and generate your own.</b></div>
+      <p>If you want to see what a mature deployment looks like under a bad fire — including the two things that go wrong and why — the <a href="deadman.html">Deadman Fire scenario</a> is a constructed exercise written for exactly that purpose.</p>
+    </section>
+
+    <section id="cost">
+      <h2>What it costs your community</h2>
+      <p>The specification, all documentation, and the governance process: nothing, permanently, by design.</p>
+      <p>A resident's installation: roughly the cost of a good appliance. A pilot street: the cost of the units plus your staff's attention.</p>
+      <p>The alternative — waiting for the proprietary version to entrench — costs your community the difference between fifteen hundred dollars and forty thousand per protected home, forever, and protects only the homes that can pay it.</p>
+
+      <h3>Who is behind this</h3>
+      <p>The Open Source Firefighter was developed in Colorado by a former firefighter and fire officer with a background in military communications, range operations, and industrial fabrication, and is maintained as a public standard under an open governance charter. It is dedicated to three Colorado firefighters killed on the Knowles Fire during the development of this work. It is free because the people it is built to protect — and the crews it is built to relieve — are not a market. They are the point.</p>
+
+      <div class="getdoc">
+        <a href="docs/osf-community-adoption.pdf">Adoption Briefing</a>
+        <a href="docs/osf-overview.pdf">Public Overview</a>
+        <a href="coverage.html">Plan your own coverage</a>
+        <span>5 and 6 sheets · bring either one to a council meeting</span>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<footer class="sitefoot">
+  <div class="wrap fgrid">
+    <div>
+      <div class="free">Free like a fire code.</div>
+      <p style="margin-top:8px;max-width:42ch">Build one. Improve it. Propose changes.<br>It belongs to everyone it protects.</p>
+    </div>
+    <div class="mono">
+      The Open Source Firefighter<br>
+      Andrew Morton · Palmer Lake, Colorado<br>
+      U.S. Provisional Application 64/173,890<br>
+      Filed October 10, 2026 · published October 11, 2026
+    </div>
+    <div class="mono">
+      External standards named in this family are adopted<br>
+      by reference to their current edition as amended.<br>
+      The issuing authority's text always governs.
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  const N=20;
+  const houses=document.getElementById('houses'), rate=document.getElementById('rate');
+  if(!houses) return;
+  const cells=[];
+  for(let i=0;i<N;i++){const d=document.createElement('div');d.className='hz';houses.appendChild(d);cells.push(d);}
+  const nEq=document.getElementById('nEq'), nPct=document.getElementById('nPct'),
+        nGap=document.getElementById('nGap'), rateTxt=document.getElementById('rateTxt'),
+        verdict=document.getElementById('verdict');
+
+  /* Spread k boxes as evenly as a coordinated program would place them. Voluntary
+     adoption clumps worse than this; even spacing is the favourable case. */
+  function placed(k){
+    const on=new Array(N).fill(false);
+    if(k<=0) return on;
+    for(let j=0;j<k;j++) on[Math.min(N-1, Math.round((j+0.5)*N/k - 0.5))]=true;
+    return on;
+  }
+  function longestGap(on){
+    let best=0,run=0,bestEnd=-1;
+    for(let i=0;i<N;i++){
+      if(on[i]){run=0;} else {run++; if(run>best){best=run;bestEnd=i;}}
+    }
+    return {len:best,start:bestEnd-best+1};
+  }
+  function render(){
+    const k=+rate.value, on=placed(k), g=longestGap(on);
+    cells.forEach((c,i)=>{
+      c.classList.toggle('on',on[i]);
+      c.classList.toggle('gap', !on[i] && g.len>0 && i>=g.start && i<g.start+g.len);
+    });
+    const pct=Math.round(k/N*100);
+    nEq.textContent=k; nPct.textContent=pct+'%'; nGap.textContent=g.len;
+    rateTxt.textContent=k+' of '+N;
+    nGap.className='n '+(g.len>=3?'bad':'good');
+    let v;
+    if(k===0) v='Nobody has one. This is the baseline every community already accepts without asking for a study.';
+    else if(pct<20) v='Isolated wet spots. Each box protects its own house, and the street is still a street of fuel between them.';
+    else if(pct<40) v='The boxes are starting to find each other on the radio and share the main, but the gaps are still long enough to carry fire house to house.';
+    else if(pct<60) v='Around the threshold where a street stops being a row of individual decisions and starts behaving like one defended block.';
+    else if(pct<85) v='A defended street. The remaining gaps are short, and they are where the engines should be working.';
+    else v='Near-complete coverage. The shared main is the binding constraint now, not participation — which is exactly the problem the coordination was built to solve.';
+    verdict.textContent=v;
+  }
+  rate.addEventListener('input',render);
+  render();
+})();
+</script>
+</body>
+</html>

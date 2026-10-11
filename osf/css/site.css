@@ -1,0 +1,233 @@
+/* The Open Source Firefighter — shared site stylesheet.
+   Paper and ink, single theme. Tokens at :root; every page links this file. */
+
+/* Layout concept: a field specification that became a website — full-bleed evidence
+   up top, then a measured reading column carrying technical marginalia in the margins. */
+:root{
+  --paper:#f7f5f0; --card:#fffef9; --ink:#20262b; --slate:#55636e;
+  --hair:#d9d4c8; --brass:#b98a2f; --oxide:#9d3226; --water:#2f6e6a;
+  --shadow:rgba(32,38,43,.07);
+  --display:'Barlow Condensed','Arial Narrow',Helvetica,sans-serif;
+  --body:'Source Serif 4',Georgia,'Times New Roman',serif;
+  --mono:'IBM Plex Mono','SFMono-Regular',Consolas,monospace;
+  /* The identity is paper and ink. The page stays light whatever the
+     viewer's machine is set to, so color-scheme is pinned and there is
+     no dark palette to inherit. */
+  color-scheme:light;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important;animation:none!important}}
+body{background:var(--paper);color:var(--ink);font-family:var(--body);
+     font-size:17px;line-height:1.62;overflow-x:hidden}
+img,svg{max-width:100%}
+a{color:var(--water)}
+:focus-visible{outline:3px solid var(--brass);outline-offset:2px}
+.wrap{max-width:1080px;margin:0 auto;padding-inline:20px}
+.col{max-width:70ch}
+h2{font-family:var(--display);font-weight:700;font-size:clamp(28px,4.2vw,40px);
+   line-height:1.04;text-transform:uppercase;letter-spacing:.015em;text-wrap:balance}
+h3{font-family:var(--display);font-weight:600;font-size:21px;text-transform:uppercase;
+   letter-spacing:.03em;text-wrap:balance}
+p+p{margin-top:14px}
+.lede{font-size:clamp(18px,2.1vw,20.5px);line-height:1.55}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.2em;
+         text-transform:uppercase;color:var(--slate)}
+
+/* ---------- status bar ---------- */
+.statusbar{background:var(--ink);color:var(--paper);font-family:var(--mono);
+  font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;
+  padding-block:8px;padding-inline:20px}
+.statusbar .wrap{display:flex;flex-wrap:wrap;gap:6px 22px;justify-content:center;
+  align-items:center;padding-inline:0}
+.statusbar b{color:var(--brass);font-weight:500}
+
+/* ---------- nav ---------- */
+nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:40;
+  background:color-mix(in srgb,var(--paper) 92%,transparent);
+  backdrop-filter:blur(8px);border-bottom:1px solid var(--hair)}
+nav .wrap{display:flex;align-items:center;gap:8px 20px;flex-wrap:wrap;
+  padding-block:10px;font-family:var(--mono);font-size:12.5px;letter-spacing:.07em}
+nav .brand{font-family:var(--display);font-weight:700;font-size:17px;
+  text-transform:uppercase;letter-spacing:.05em;margin-right:auto;white-space:nowrap}
+nav a{color:var(--ink);text-decoration:none;text-transform:uppercase}
+nav a:hover{color:var(--oxide)}
+nav .cta{border:1.5px solid var(--oxide);color:var(--oxide);padding:5px 11px}
+nav .cta:hover{background:var(--oxide);color:var(--paper)}
+@media(max-width:620px){nav .hidesm{display:none}}
+
+/* ---------- hero ---------- */
+.hero{position:relative;border-bottom:3px solid var(--ink)}
+.heroimg{position:relative;width:100%;height:clamp(260px,46vw,580px);overflow:hidden;
+  background:var(--ink)}
+.heroimg img{width:100%;height:100%;object-fit:cover;display:block;opacity:.92}
+.heroimg figcaption{position:absolute;right:0;bottom:0;background:var(--ink);
+  color:var(--paper);font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;
+  text-transform:uppercase;padding:5px 11px;opacity:.88}
+.masthead{padding-block:34px 30px}
+.pending{display:inline-block;border:2.5px solid var(--oxide);color:var(--oxide);
+  font-family:var(--display);font-weight:700;font-size:15px;letter-spacing:.16em;
+  padding:5px 13px 4px;line-height:1;margin-bottom:18px}
+h1{font-family:var(--display);font-weight:700;font-size:clamp(46px,9vw,92px);
+   line-height:.92;text-transform:uppercase;letter-spacing:.008em}
+h1 .gold{color:var(--brass)}
+.mission{margin-top:20px;max-width:30ch;font-size:clamp(18px,2.4vw,23px);
+  font-weight:600;line-height:1.4;max-width:62ch}
+.mission em{font-style:italic;color:var(--water)}
+.byline{margin-top:20px;font-family:var(--mono);font-size:12.5px;
+  color:var(--slate);line-height:1.85}
+
+/* ---------- sections ---------- */
+section{padding-block:clamp(44px,6vw,72px);border-bottom:1px solid var(--hair)}
+.sechead{display:flex;gap:10px 26px;align-items:baseline;flex-wrap:wrap;margin-bottom:22px}
+.secnum{font-family:var(--mono);font-size:12px;letter-spacing:.16em;color:var(--brass)}
+
+/* ---------- rotation demo ---------- */
+.demo{border:2px solid var(--ink);background:var(--card);padding:22px;margin-top:28px}
+.demo h3{margin-bottom:4px}
+.demosub{font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--slate);margin-bottom:18px}
+.street{display:grid;grid-template-columns:repeat(10,1fr);gap:6px}
+@media(max-width:560px){.street{grid-template-columns:repeat(5,1fr)}}
+.house{aspect-ratio:1;border:1.5px solid var(--hair);background:transparent;
+  display:flex;align-items:flex-end;justify-content:center;
+  font-family:var(--mono);font-size:10px;color:var(--slate);padding-bottom:3px;
+  transition:background .45s ease,border-color .45s ease,color .45s ease}
+.house.wet{background:var(--water);border-color:var(--water);color:var(--card)}
+.house.dry{opacity:.5}
+.gauge{margin-top:16px}
+.gaugelab{display:flex;justify-content:space-between;font-family:var(--mono);
+  font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:var(--slate);
+  margin-bottom:5px}
+.gaugebar{height:12px;border:1.5px solid var(--ink);position:relative;overflow:hidden}
+.gaugefill{height:100%;background:var(--water);width:0;transition:width .45s ease}
+.gaugecap{position:absolute;top:-4px;bottom:-4px;width:3px;background:var(--oxide);
+  left:40%;z-index:2;box-shadow:0 0 0 1px var(--card)}
+.demofoot{margin-top:14px;font-size:15px;color:var(--slate)}
+.democtl{margin-top:14px;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.btn{font-family:var(--display);font-weight:600;font-size:15px;letter-spacing:.06em;
+  text-transform:uppercase;border:2px solid var(--ink);background:transparent;
+  color:var(--ink);padding:6px 14px;cursor:pointer;transition:all .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn[aria-pressed="true"]{background:var(--oxide);border-color:var(--oxide);color:#fff}
+
+/* ---------- primitives ---------- */
+/* six cards: 3+3, 2+2+2, or stacked — never a part-empty row */
+.prims{display:grid;grid-template-columns:1fr;
+  gap:1px;background:var(--hair);border:1px solid var(--hair);margin-top:26px}
+@media(min-width:560px){.prims{grid-template-columns:repeat(2,1fr)}}
+@media(min-width:880px){.prims{grid-template-columns:repeat(3,1fr)}}
+.prim{background:var(--paper);padding:22px 20px;min-width:0}
+.prim h3{color:var(--oxide);margin-bottom:8px}
+.prim p{font-size:15.5px}
+
+/* ---------- figure block ---------- */
+figure.fig{margin-top:30px;border:1px solid var(--hair);background:var(--card);padding:16px}
+figure.fig img{width:100%;display:block}
+figure.fig figcaption{margin-top:12px;font-size:14.5px;color:var(--slate);
+  font-family:var(--mono);line-height:1.65}
+figure.fig figcaption b{color:var(--brass);font-weight:500}
+
+/* ---------- not-this list ---------- */
+.nots{margin-top:22px;border-left:4px solid var(--oxide);padding:4px 0 4px 22px;max-width:70ch}
+
+/* ---------- packages ---------- */
+.packs{display:grid;grid-template-columns:repeat(auto-fit,minmax(265px,1fr));gap:18px;margin-top:26px}
+.pack{border:1px solid var(--hair);background:var(--card);padding:20px;min-width:0;
+  box-shadow:0 1px 2px var(--shadow)}
+.pack .tier{font-family:var(--mono);font-size:11px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--brass);margin-bottom:6px}
+.pack h3{margin-bottom:8px}
+.pack p{font-size:15px}
+.pack .cost{margin-top:12px;font-family:var(--mono);font-size:12.5px;color:var(--slate);
+  border-top:1px solid var(--hair);padding-top:10px}
+
+/* ---------- router ---------- */
+.doors{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:16px;margin-top:26px}
+.door{border:2px solid var(--ink);background:var(--card);padding:20px;min-width:0;
+  display:flex;flex-direction:column;gap:9px}
+.door .who{font-family:var(--mono);font-size:11px;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--slate)}
+.door h3{color:var(--ink)}
+.door p{font-size:15px;flex-grow:1}
+.door .avail{font-family:var(--mono);font-size:12.5px;line-height:1.95;
+  border-top:1px solid var(--hair);padding-top:10px}
+.door .avail a{color:var(--water);text-decoration:none;border-bottom:1px solid var(--hair)}
+.door .avail a:hover{border-color:var(--water)}
+.soon{display:inline-block;font-family:var(--mono);font-size:10.5px;letter-spacing:.11em;
+  text-transform:uppercase;color:var(--brass);border:1px solid var(--brass);
+  padding:2px 7px;white-space:nowrap}
+
+/* ---------- library ---------- */
+.libctl{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:24px}
+.libctl input{font-family:var(--mono);font-size:14px;padding:9px 12px;
+  border:2px solid var(--hair);background:var(--card);color:var(--ink);
+  min-width:0;flex:1 1 230px}
+.libctl input:focus{border-color:var(--brass);outline:none}
+.chips{display:flex;gap:7px;flex-wrap:wrap;margin-top:12px}
+.chip{font-family:var(--mono);font-size:12px;letter-spacing:.04em;
+  border:1px solid var(--hair);background:var(--card);color:var(--ink);
+  padding:5px 10px;cursor:pointer;transition:all .15s}
+.chip:hover{border-color:var(--ink)}
+.chip[aria-pressed="true"]{background:var(--brass);border-color:var(--brass);color:#fff}
+
+.shelf{margin-top:20px;max-height:min(70vh,620px);overflow-y:auto;
+  border:1px solid var(--hair);background:var(--card)}
+.item{display:grid;grid-template-columns:auto 1fr auto;gap:4px 18px;align-items:baseline;
+  padding:14px 18px;border-bottom:1px solid var(--hair);min-width:0}
+.item:last-child{border-bottom:none}
+.item.primary{background:color-mix(in srgb,var(--brass) 11%,transparent);
+  border-bottom:2px solid var(--brass)}
+.item .did{font-family:var(--mono);font-size:11.5px;color:var(--brass);
+  letter-spacing:.06em;white-space:nowrap}
+.item .meta{min-width:0}
+.item .t{font-weight:600;font-size:16.5px}
+.item .d{font-size:14.5px;color:var(--slate);line-height:1.5}
+.item .get{font-family:var(--mono);font-size:12px;letter-spacing:.07em;
+  text-transform:uppercase;text-decoration:none;color:var(--water);
+  border:1px solid var(--hair);padding:5px 10px;white-space:nowrap}
+.item .get:hover{border-color:var(--water);background:var(--water);color:var(--card)}
+.item .sheets{font-family:var(--mono);font-size:11px;color:var(--slate);
+  grid-column:2;font-variant-numeric:tabular-nums}
+@media(max-width:620px){
+  .item{grid-template-columns:1fr;gap:6px}
+  .item .get{justify-self:start}
+  .item .sheets{grid-column:1}
+}
+.empty{padding:24px 18px;color:var(--slate);font-style:italic}
+
+/* ---------- covenant ---------- */
+.cov{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:22px;margin-top:26px}
+.cov div{min-width:0}
+.cov h3{color:var(--water);margin-bottom:7px}
+.cov p{font-size:15.5px}
+
+/* ---------- dedication ---------- */
+.dedication{border-left:4px solid var(--brass);padding:8px 0 8px 24px;
+  font-style:italic;color:var(--slate);max-width:72ch;font-size:16.5px}
+.dedication strong{font-style:normal;color:var(--ink)}
+.dedication .second{display:block;margin-top:12px;color:var(--ink)}
+
+/* ---------- footer ---------- */
+footer{border-top:3px solid var(--ink);padding-block:36px 56px;
+  font-size:15px;color:var(--slate)}
+footer .fgrid{display:flex;flex-wrap:wrap;gap:30px 48px;justify-content:space-between}
+footer .fgrid>div{min-width:0}
+footer .free{font-family:var(--display);font-weight:700;font-size:22px;
+  text-transform:uppercase;letter-spacing:.04em;color:var(--ink)}
+footer .mono{font-family:var(--mono);font-size:12px;line-height:2}
+
+/* ---------- up-directory buttons (site-wide convention) ----------
+   Matches the pair used across pikesperkcoffee.github.io: ".." steps up one
+   directory, "/" goes to the site index. Both resolve to the same root here
+   because this site sits one level down. */
+/* pinned to the bar's top-right rather than sitting in the flex flow — in flow
+   they pushed the longer navs onto a second row. nav .wrap reserves the space. */
+nav .wrap{position:relative;padding-right:112px}
+.updir{position:absolute;right:20px;top:9px;display:inline-flex;gap:6px}
+.updir a{font-family:'IBM Plex Mono',monospace;font-size:13px;line-height:1;
+  color:var(--slate);border:1px solid var(--hair);background:var(--card);
+  padding:7px 9px;text-decoration:none;min-width:36px;text-align:center;
+  transition:border-color .15s,color .15s,background .15s}
+.updir a:hover{border-color:var(--ink);color:var(--ink);background:var(--paper)}
+.updir a:focus-visible{outline:3px solid var(--brass);outline-offset:2px}

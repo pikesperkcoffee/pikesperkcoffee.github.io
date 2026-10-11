@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Acceptance and Code</title>
+<meta name="description" content="What regime this equipment sits in, what it deliberately stays outside, how it integrates with existing construction, and the installation requirements in code-adoption language.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap">
+<link rel="stylesheet" href="css/site.css">
+<style>
+.pagehead{border-bottom:3px solid var(--ink);padding-block:38px 30px}
+.pagehead h1{font-size:clamp(40px,7.4vw,74px)}
+.pagehead .kicker{font-family:var(--mono);font-size:12px;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--slate);margin-bottom:12px}
+.pagehead .standfirst{margin-top:18px;max-width:66ch;font-size:clamp(17px,2vw,20px);line-height:1.5}
+
+.layout{display:grid;grid-template-columns:1fr;gap:34px;padding-block:clamp(34px,5vw,54px)}
+@media(min-width:1020px){.layout{grid-template-columns:230px minmax(0,1fr);gap:48px}}
+.wrap.layout{max-width:1250px}
+.toc{min-width:0}
+@media(min-width:1020px){
+  .toc{position:sticky;top:calc(env(safe-area-inset-top,0px) + 62px);align-self:start;
+       max-height:calc(100vh - 100px);overflow-y:auto}
+}
+.toc .lab{font-family:var(--mono);font-size:11px;letter-spacing:.17em;text-transform:uppercase;
+  color:var(--slate);border-bottom:1px solid var(--hair);padding-bottom:7px;margin-bottom:10px}
+.toc ol{list-style:none;counter-reset:t}
+.toc li{counter-increment:t;margin-bottom:3px}
+.toc a{display:block;text-decoration:none;color:var(--ink);font-size:14.5px;
+  padding:4px 0 4px 26px;position:relative;line-height:1.35}
+.toc a::before{content:counter(t,decimal-leading-zero);position:absolute;left:0;top:6px;
+  font-family:var(--mono);font-size:10.5px;color:var(--brass)}
+.toc a:hover{color:var(--oxide)}
+.body{min-width:0}
+.body section{border-bottom:1px solid var(--hair);padding-block:0 clamp(28px,4vw,42px);
+  margin-bottom:clamp(28px,4vw,42px)}
+.body section:last-of-type{border-bottom:none}
+.body p{max-width:68ch}
+.body h3{margin:26px 0 8px}
+
+/* is / is not */
+.regime{display:grid;grid-template-columns:1fr;gap:1px;background:var(--hair);
+  border:1px solid var(--hair);margin:24px 0}
+@media(min-width:720px){.regime{grid-template-columns:1fr 1fr}}
+.regime > div{background:var(--card);padding:20px 22px;min-width:0}
+.regime h3{margin:0 0 12px;font-size:17px;letter-spacing:.06em}
+.regime.is h3{color:var(--water)}
+.regime ul{list-style:none;margin:0}
+.regime li{padding:8px 0 8px 26px;position:relative;font-size:15.5px;
+  border-bottom:1px dashed var(--hair)}
+.regime li:last-child{border-bottom:none}
+.regime .yes h3{color:var(--water)}
+.regime .no h3{color:var(--oxide)}
+.regime .yes li::before{content:"✓";position:absolute;left:0;top:8px;color:var(--water);
+  font-weight:700}
+.regime .no li::before{content:"✕";position:absolute;left:0;top:8px;color:var(--oxide);
+  font-weight:700}
+.regime li b{display:block;font-weight:600}
+.regime li span{color:var(--slate);font-size:14.5px}
+
+.rule{border-left:4px solid var(--water);padding:4px 0 4px 18px;margin:18px 0;
+  font-size:16px;max-width:66ch}
+.rule b{color:var(--water)}
+.trap{border:1px solid var(--oxide);background:color-mix(in srgb,var(--oxide) 5%,transparent);
+  padding:15px 18px;margin-top:14px}
+.trap .tl{font-family:var(--display);font-weight:700;font-size:15px;letter-spacing:.06em;
+  text-transform:uppercase;color:var(--oxide);margin-bottom:5px}
+.trap p{font-size:15.5px;max-width:64ch}
+
+/* walkthrough */
+.walk{counter-reset:w;list-style:none;margin-top:18px}
+.walk li{counter-increment:w;position:relative;padding:13px 0 13px 46px;
+  border-bottom:1px dashed var(--hair);font-size:16px;max-width:70ch}
+.walk li:last-child{border-bottom:none}
+.walk li::before{content:counter(w,decimal-leading-zero);position:absolute;left:0;top:15px;
+  font-family:var(--mono);font-size:12px;color:var(--brass)}
+.walk li b{display:block;font-family:var(--display);font-weight:600;font-size:17px;
+  text-transform:uppercase;letter-spacing:.03em;margin-bottom:3px}
+
+/* requirement browser */
+.reqs{border:2px solid var(--ink);background:var(--card);padding:20px 22px;margin:24px 0}
+.reqs .vlab{font-family:var(--display);font-weight:700;font-size:19px;text-transform:uppercase;
+  letter-spacing:.04em;margin-bottom:3px}
+.reqs .vsub{font-family:var(--mono);font-size:11.5px;letter-spacing:.07em;text-transform:uppercase;
+  color:var(--slate);margin-bottom:16px}
+.rctl{display:flex;flex-direction:column;gap:10px;margin-bottom:14px}
+.rrow{display:flex;gap:7px;flex-wrap:wrap;align-items:center}
+.rrow .rl{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--slate);min-width:52px}
+.rchip{font-family:var(--mono);font-size:12px;border:1px solid var(--hair);background:var(--paper);
+  color:var(--ink);padding:5px 10px;cursor:pointer;transition:all .15s}
+.rchip:hover{border-color:var(--ink)}
+.rchip[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+.rsearch{font-family:var(--mono);font-size:13.5px;padding:8px 11px;border:2px solid var(--hair);
+  background:var(--paper);color:var(--ink);flex:1 1 200px;min-width:0}
+.rsearch:focus{border-color:var(--brass);outline:none}
+.rlist{max-height:min(66vh,560px);overflow-y:auto;border-top:1px solid var(--hair)}
+.req{display:grid;grid-template-columns:58px minmax(0,1fr);gap:4px 14px;padding:12px 2px;
+  border-bottom:1px solid var(--hair)}
+.req:last-child{border-bottom:none}
+.req .rid{font-family:var(--mono);font-size:12px;color:var(--oxide);font-weight:500;
+  white-space:nowrap;padding-top:2px}
+.req .rt{font-size:15.5px;min-width:0}
+.req .rn{grid-column:2;font-size:14px;color:var(--slate);font-style:italic;margin-top:3px}
+.req .rcl{grid-column:2;font-family:var(--mono);font-size:10.5px;letter-spacing:.09em;
+  text-transform:uppercase;color:var(--brass);margin-top:4px}
+@media(max-width:560px){.req{grid-template-columns:1fr}.req .rn,.req .rcl{grid-column:1}}
+.rcount{font-family:var(--mono);font-size:12px;color:var(--slate);margin-top:12px}
+.rempty{padding:22px 2px;color:var(--slate);font-style:italic}
+
+figure.fig{margin-top:26px;border:1px solid var(--hair);background:var(--card);padding:16px}
+figure.fig img{width:100%;display:block}
+figure.fig figcaption{margin-top:12px;font-size:14.5px;color:var(--slate);
+  font-family:var(--mono);line-height:1.65}
+figure.fig figcaption b{color:var(--brass)}
+.getdoc{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-top:22px}
+.getdoc a{font-family:var(--display);font-weight:600;font-size:16px;letter-spacing:.05em;
+  text-transform:uppercase;text-decoration:none;border:2px solid var(--oxide);color:var(--oxide);padding:8px 16px}
+.getdoc a:hover{background:var(--oxide);color:var(--paper)}
+.getdoc span{font-family:var(--mono);font-size:12.5px;color:var(--slate)}
+</style>
+</head>
+<body>
+
+<div class="statusbar">
+  <div class="wrap">
+    <span>Published <b>October 11, 2026</b></span>
+    <span>Provisional application <b>64/173,890</b> · filed October 10, 2026</span>
+    <span>Open specification · <b>free forever</b></span>
+  </div>
+</div>
+
+<nav>
+  <div class="wrap">
+    <a class="brand" href="index.html">OSF</a>
+    <a href="tactics.html" class="hidesm">Tactics</a>
+    <a href="deadman.html" class="hidesm">Deadman</a>
+    <a href="network.html" class="hidesm">Network</a>
+    <a href="acceptance.html" class="hidesm" style="color:var(--oxide)">Acceptance</a>
+    <a href="adoption.html" class="hidesm">Adoption</a>
+    <a href="ground.html" class="hidesm">Ground</a>
+    <a href="index.html#library" class="hidesm">Documents</a>
+    <a href="docs/osf-as-filed-2026-10-10.pdf" class="cta">The filing</a>
+    <span class="updir"><a href="index.html" title="Back one page (Open Source Firefighter index)" aria-label="Back one page, Open Source Firefighter index">../</a><a href="https://pikesperkcoffee.github.io/index.html" title="Site index (root)" aria-label="Site index, root">/</a></span>
+  </div>
+</nav>
+
+<header class="pagehead">
+  <div class="wrap">
+    <div class="kicker">For code officials, authorities having jurisdiction, and government</div>
+    <h1>Acceptance<br>and Code</h1>
+    <p class="standfirst">What regime this equipment sits in, what it deliberately stays outside, how it meets construction that already exists, and the installation requirements written to be marked up like a submittal.</p>
+  </div>
+</header>
+
+<div class="wrap layout">
+
+  <aside class="toc">
+    <div class="lab">On this page</div>
+    <ol>
+      <li><a href="#regime">What it is and is not</a></li>
+      <li><a href="#reference">Adoption by reference</a></li>
+      <li><a href="#walkthrough">What you see at inspection</a></li>
+      <li><a href="#requirements">The requirements</a></li>
+      <li><a href="#trust">The trust layer</a></li>
+      <li><a href="#construction">Existing construction</a></li>
+      <li><a href="#planreview">For a plan reviewer</a></li>
+    </ol>
+  </aside>
+
+  <main class="body">
+
+    <section id="regime">
+      <h2>What it is and is not</h2>
+      <p>The first question a code official asks about unfamiliar equipment is which regime it belongs to. The answer here is deliberate and narrow, and the specification states it in its own scope clause rather than leaving it to be discovered.</p>
+      <p>The unit is a <strong>supplemental exterior wetting system for ember defense</strong>. It is supplemental to, and replaces no requirement of, the wildland-urban interface provisions a jurisdiction has adopted — commonly the International Wildland-Urban Interface Code, NFPA 1140, or NFPA 1144.</p>
+
+      <div class="regime">
+        <div class="yes">
+          <h3>What it is</h3>
+          <ul>
+            <li><b>Supplemental exterior wetting equipment</b><span>Protective equipment on the outside of a structure, operating on the owner's own water.</span></li>
+            <li><b>Subject to the codes you already enforce</b><span>Building, plumbing, and electrical, at the editions your jurisdiction has adopted.</span></li>
+            <li><b>Permitted work</b><span>Nothing in the specification waives local permitting. It says so in its scope clause.</span></li>
+            <li><b>Owner-operated</b><span>The operator physically present prevails over any automation, by charter.</span></li>
+          </ul>
+        </div>
+        <div class="no">
+          <h3>What it is not, and shall not be represented as</h3>
+          <ul>
+            <li><b>Not a fire alarm system</b><span>Outside the NFPA 72 / UL 864 listing regime. It initiates no alarm and notifies no occupant.</span></li>
+            <li><b>Not a fire suppression system</b><span>Not a sprinkler system as defined by NFPA 13, 13D, or 13R. It makes no suppression claim.</span></li>
+            <li><b>Not a life-safety notification system</b><span>It makes no life-safety claim of any kind.</span></li>
+            <li><b>Not a backflow prevention assembly</b><span>The inlet check valve is not the backflow device. That assembly is whatever your water district requires.</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="rule">The equipment stays <b>deliberately in the open category and out of the regulated-suppression listing regime.</b> That is a design decision, not an oversight, and features that would walk it into that regime are refused on purpose.</div>
+    </section>
+
+    <section id="reference">
+      <h2>Adoption by reference</h2>
+      <p>The specification carries a standing rule that matters more to a code official than almost anything else in it: <strong>external standards are cited to the issuing authority's current edition as amended, and their values are never restated.</strong></p>
+      <p>Where this specification names the National Electrical Code, an enclosure rating, a thread standard, or a wildland-urban interface code, it names it and stops. It does not reproduce a clearance, a conductor size, a pressure, or a rating that belongs to the issuing body. The issuing authority's text always governs.</p>
+      <p>The practical consequence for a jurisdiction: adopting or referencing this document cannot put it in conflict with the codes you enforce, because it asserts no numbers that are theirs to assert. When your adopted edition changes, this specification follows automatically, because it never said the old number out loud.</p>
+    </section>
+
+    <section id="walkthrough">
+      <h2>What you see at inspection</h2>
+      <p>Before the numbered requirements, the plain version. A residential installation presents a short list of physical evidence, and nearly all of it is ordinary.</p>
+
+      <ol class="walk">
+        <li><b>A hinged, lockable enclosure on an exterior wall</b>Rated NEMA 4X or better, roughly the size of a breaker panel, with controls and indicator lamps on the door. Reference placement puts the controls in the 48 to 60 inch service band.</li>
+        <li><b>Wet below, dry above</b>Control electronics mounted above the wet works, no electrical component beneath a mechanical plumbing joint, drip loops on every conductor descending toward the hydraulic zone, and a drainage path from the enclosure low point to the exterior. Two-compartment and dual-enclosure formats are equally compliant and recommended for first builds.</li>
+        <li><b>One inlet, up to three outlets, all NPT</b>A spring check valve and a manual isolation valve on the inlet gallery. A manually valved drain-down port at the manifold low point. Garden-hose-thread adapters permitted as accessories at residential class.</li>
+        <li><b>Cord-and-plug 120 VAC through a strain relief</b>A 24 VDC internal bus from standard DIN-rail power modules. Batteries on a dedicated shelf, commodity form factor, field-replaceable without special tools.</li>
+        <li><b>Two antenna penetrations on the top face</b>Weatherproof RF bulkheads or assembled penetrations evaluated against the enclosure rating as assembled. A GNSS receiver with open sky view.</li>
+        <li><b>A permanent label</b>Specification and annex version built to, supply voltage, battery type and replacement rating, and the drain-down location. Zone outlets individually and permanently identified.</li>
+        <li><b>A document holder inside the door</b>System intent and coverage narrative, zone layout, water supply type and measured delivery, electrical arrangement, self-calibration result, and a functional test of every zone valve, every hardware control, and the audible annunciation.</li>
+      </ol>
+
+      <figure class="fig">
+        <img src="img/fig5-node-schematic.svg" alt="Master schematic of a residential node drawn as the physical enclosure: antenna penetrations on the top face, a dry control section with power supply, battery bank, controller, radio and amplifier above a sloped drip shield, door-mounted operator controls and indicators, and a wet plumbing section below with intake manifold header, pressure transducer, flow meter and three motorized ball valves feeding outlets at the bottom.">
+        <figcaption><b>FIG. 5</b> — The node as a physical enclosure. What is high on the drawing is high in the box. Power enters left, water enters right, and they never cross.</figcaption>
+      </figure>
+
+      <figure class="fig">
+        <img src="img/fig6-terminal-schedule.svg" alt="The terminal strip landing schedule, showing twenty terminal blocks plus two ground blocks, with panel wiring landing on top in NFPA colors and field wiring landing below in factory pigtail colors, organized into valve tracks, sensor blocks and two separate ground blocks.">
+        <figcaption><b>FIG. 6</b> — The terminal schedule. Panel wiring lands on top, field wiring below, two grounds that are never mixed.</figcaption>
+      </figure>
+    </section>
+
+    <section id="requirements">
+      <h2>The requirements</h2>
+      <p>The installation requirements in code-adoption language, filterable by class and by subject. This is the content of the Inspector's Review Draft, which exists to be marked up the way you would mark up a submittal. Comments on anything are welcome — especially anything that would generate a correction notice in the field.</p>
+      <p>Chapter 3 applies to all three classes. Chapters 4 through 6 add class-specific requirements; Chapter 7 covers documentation.</p>
+
+      <div class="reqs">
+        <div class="vlab">Installation requirements</div>
+        <div class="vsub">Inspector's Review Draft · all enclosure classes</div>
+        <div class="rctl">
+          <div class="rrow"><span class="rl">Class</span><span id="classChips"></span></div>
+          <div class="rrow"><span class="rl">Subject</span><span id="topicChips"></span></div>
+          <div class="rrow"><input class="rsearch" id="rsearch" type="search" placeholder="Search requirement text…" autocomplete="off"></div>
+        </div>
+        <div class="rlist" id="rlist"></div>
+        <div class="rcount" id="rcount"></div>
+      </div>
+
+      <div class="trap">
+        <div class="tl">Nothing here waives your authority</div>
+        <p>Backflow prevention complies with local water district requirements. Electrical installation complies with the locally adopted edition of the National Electrical Code or local equivalent. Appliance installation on hydrants or district valves is subject to the utility's or district's approval and standards. The specification says so in its own text, three separate times.</p>
+      </div>
+    </section>
+
+    <section id="trust">
+      <h2>The trust layer</h2>
+      <p>Every unit keeps a local operational log and publishes periodic signed snapshots to a neighborhood ledger. For a government or institutional reader the useful question is narrow: what does that record actually assert, and what does it not?</p>
+
+      <h3>What it asserts</h3>
+      <p><strong>Tamper-evidence, not tamper-proofing.</strong> Snapshots are cryptographically signed at creation and appended to a chain in which each entry references the previous entry's hash. Altering a published entry after the fact breaks the chain and is detectable by anyone holding only the published chain — including someone who does not trust the node that produced it.</p>
+      <p><strong>Distribution, not central custody.</strong> The ledger is distributed across nodes, so no single point of control can rewrite history. Signing keys are held by participating systems and by witnesses appropriate to the neighborhood's trust structure — fire departments, insurance carriers, and community coordinators may participate as witnesses.</p>
+      <p><strong>A record that does not depend on operator credibility.</strong> After-event reports generate from ledger queries rather than from operator narratives: what happened, when, in what sequence, with what system states and what outcomes.</p>
+
+      <h3>What it does not assert</h3>
+      <p>It is <strong>not a legal chain of custody</strong> and is not offered as evidence meeting any evidentiary standard. It is not a certification of performance, and it does not attest that any structure was protected — only what the equipment did and reported. A signed entry proves the record has not been altered since signing; it does not prove the sensor was telling the truth when it was written.</p>
+      <p>That boundary is deliberate, and it is where the specification's own invariant sits: the record must be verifiable without trusting the node. Verifiable, not authoritative.</p>
+
+      <h3>Publication policy is the installation's</h3>
+      <p>Each installation's router enforces what publishes and what stays local, configured at installation and modifiable by the operator without changes to the coordination protocol. A federal facility filters camera feeds, personnel data, and internal operational data and publishes the fire-defense subset. A homeowner publishes according to preference.</p>
+      <p>Minimum publication for meaningful participation is narrow: activation events, aggregate water use, coordination acknowledgment, and a status heartbeat. Everything beyond that is at the participant's discretion.</p>
+      <div class="rule">Categories the message enumeration marks non-transportable <b>have no representation on the mesh regardless of ledger configuration.</b> Video, audio and personal data cannot be sent because the vocabulary has no words for them — not because a policy forbids it.</div>
+    </section>
+
+    <section id="construction">
+      <h2>How it meets existing construction</h2>
+
+      <h3>Electrical</h3>
+      <p>Cord-and-plug 120 VAC at residential class, hardwired or cord-and-plug at commercial, through a strain relief. A 24 VDC internal bus from standard DIN-rail power modules — charging circuitry integrated onto control hardware is not permitted, which keeps the power path inspectable and the battery commodity. A low-voltage disconnect prevents deep discharge. Standby is a minimum 72 hours for controller, radio, and positioning. Installation complies with your adopted NEC edition. A ground bar or bonding terminal is provided on the backplane; antenna bulkheads are bonded per established coax-entry grounding practice. Electrical safety grounding and lightning protection are treated as separate subjects, because they are.</p>
+
+      <h3>Plumbing</h3>
+      <p>All wetted connections NPT. Spring check valve and manual isolation valve on the inlet gallery. A manually valved drain-down port at the manifold low point. In freeze climates the installation supports a winterization procedure — zone valves opened, supply isolated, manifold drained, system depressurized — firmware-assisted and physically completed at the drain valve. The zone manifold is a basic header feeding standalone valves, each individually removable without disturbing the others.</p>
+      <p><strong>Backflow is yours.</strong> Anything connecting to a potable supply sits under plumbing code and cross-connection control. The specification requires compliance with local water district requirements and names no assembly, because the assembly is the district's call.</p>
+
+      <h3>Building and permitting</h3>
+      <p>Wall-mounted exterior enclosure, hinged and lockable, with gasketed or sealed penetrations consistent with the enclosure rating. Recommended mounting places panel controls in the 48 to 60 inch service band, which puts the battery shelf at knee height for correct lifting and the manifold drain at the bottom where gravity serves it. Site conditions govern.</p>
+
+      <h3>Accessibility</h3>
+      <p>Visual and audible indication are each other's required alternative mode: every state announced by voice is also shown by indicator, and every indicator state is available audibly, with a means to increase volume. This follows the Section 508 information and communication technology provisions and the audible-interface lineage, adopted by reference. The commercial class is therefore conformance-report ready for federal procurement, and the residential class inherits the conformance at no added cost.</p>
+
+      <h3>Agency installations</h3>
+      <p>All equipment under this specification resides entirely on the unclassified side of agency red/black infrastructure separation. No classified-side cabling terminates on equipment defined by this specification. Agency-furnished radio and transport equipment integrates via standard Ethernet and installs per the furnishing agency's requirements, under that agency's authority and applicable interagency listings. Units do not transmit on fire voice networks.</p>
+    </section>
+
+    <section id="planreview">
+      <h2>For a plan reviewer</h2>
+      <p>What to ask for, and what a complete submittal contains. All of it is required by Chapter 7 of the requirements above.</p>
+      <ol class="walk">
+        <li><b>A written narrative of system intent and coverage</b>What the installation is for and what it is meant to wet.</li>
+        <li><b>A zone layout identifying coverage areas</b>Which outlet serves which surface.</li>
+        <li><b>Water supply type and measured or rated delivery</b>Measured is better. The unit self-calibrates to actual supply at commissioning and that result is recorded.</li>
+        <li><b>The electrical supply arrangement</b>Circuit, disconnect, and the standby arrangement.</li>
+        <li><b>Completion documentation</b>The self-calibration result as set, plus a functional test of each zone valve, each hardware control, and the audible annunciation.</li>
+        <li><b>Verification that the log is recording</b>The unit's internal event log is the operational record, and the installer verifies at completion that it is running.</li>
+      </ol>
+      <p>A copy of the installation documentation remains with the unit in an interior document holder, and with the owner.</p>
+
+      <div class="getdoc">
+        <a href="docs/osf-inspectors-review.pdf">Inspector's Review Draft</a>
+        <a href="docs/osf-hardware-annex-a.pdf">Hardware Annex A</a>
+        <a href="docs/osf-drawings.pdf">Drawings</a>
+        <span>7, 30 and 7 sheets · mark them up like a submittal</span>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<footer class="sitefoot">
+  <div class="wrap fgrid">
+    <div>
+      <div class="free">Free like a fire code.</div>
+      <p style="margin-top:8px;max-width:42ch">Build one. Improve it. Propose changes.<br>It belongs to everyone it protects.</p>
+    </div>
+    <div class="mono">
+      The Open Source Firefighter<br>
+      Andrew Morton · Palmer Lake, Colorado<br>
+      U.S. Provisional Application 64/173,890<br>
+      Filed October 10, 2026 · published October 11, 2026
+    </div>
+    <div class="mono">
+      External standards named in this family are adopted<br>
+      by reference to their current edition as amended.<br>
+      The issuing authority's text always governs.
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  const A=['1','2','3'];  // applies to all classes
+  const R=[
+    {id:'1.1',t:'general',c:A,x:'This document covers the installation, mounting, power, plumbing, marking, and documentation requirements for units in three enclosure classes: Class 1 Residential, Class 2 Government/Commercial, and Class 3 Tactical/Transportable.'},
+    {id:'1.2',t:'general',c:A,x:'All three classes shall contain identical control, radio, and coordination internals. Class distinctions shall be limited to packaging, connectors, power sourcing, and environmental rating.'},
+    {id:'1.3',t:'general',c:A,x:'Installations shall comply with locally adopted building, plumbing, and electrical codes. Nothing in this document shall be construed to waive local permitting requirements.'},
+    {id:'1.4',t:'general',c:A,x:'The unit is a supplemental exterior wetting system for ember defense. It is not a fire alarm system, not a fire suppression system as defined by the sprinkler codes, and not a life-safety notification system, and shall not be represented as any of these.',n:'Supplemental to, and replacing no requirement of, the wildland-urban interface provisions a jurisdiction has adopted.'},
+
+    {id:'3.1.1',t:'enclosure',c:A,x:'Wall-mounted enclosures shall be rated NEMA 4X or better.'},
+    {id:'3.1.2',t:'enclosure',c:A,x:'Enclosures shall be hinged and lockable.'},
+    {id:'3.1.3',t:'enclosure',c:A,x:'Where a sealed component forms its own enclosure penetration, the penetration shall be evaluated against the enclosure rating as assembled.'},
+    {id:'3.1.4',t:'enclosure',c:A,x:'All penetrations shall be gasketed or otherwise sealed consistent with the enclosure rating.'},
+    {id:'3.1.5',t:'enclosure',c:A,x:'Batteries shall be mounted on a dedicated shelf.'},
+    {id:'3.1.6',t:'enclosure',c:A,x:'Interior hydraulic and electrical cohabitation shall follow established sprinkler valve-enclosure and irrigation-controller practice: control electronics shall be mounted above the wet works, and no electrical component shall be mounted beneath a mechanical plumbing joint.'},
+    {id:'3.1.7',t:'enclosure',c:A,x:'All conductors descending toward the hydraulic zone shall include drip loops.'},
+    {id:'3.1.8',t:'enclosure',c:A,x:'A drainage path shall be provided from the enclosure low point to the exterior.'},
+    {id:'3.1.9',t:'enclosure',c:A,x:'Batteries shall not be placed below the hydraulic zone without a drained tray.'},
+    {id:'3.1.10',t:'enclosure',c:A,x:'Sectioned two-compartment enclosures, or dual-enclosure formats separating electrical and hydraulic equipment, are equally compliant.',n:'Recommended for first-time builds.'},
+
+    {id:'3.2.1',t:'electrical',c:A,x:'The internal bus shall be 24 VDC.'},
+    {id:'3.2.2',t:'electrical',c:A,x:'Power supply and battery charging shall be provided by standard DIN-rail power modules. Charging circuitry integrated onto control hardware shall not be permitted.'},
+    {id:'3.2.3',t:'electrical',c:A,x:'A low-voltage disconnect shall be provided to prevent battery deep discharge.'},
+    {id:'3.2.4',t:'electrical',c:A,x:'Batteries shall be commodity form factor, field-replaceable without special tools, and replaceable without disturbing control wiring.'},
+    {id:'3.2.5',t:'electrical',c:A,x:'Electrical installation shall comply with the locally adopted edition of the National Electrical Code or local equivalent.'},
+    {id:'3.2.6',t:'electrical',c:A,x:'Standby capability shall be a minimum of 72 hours for controller, radio, and positioning functions.'},
+
+    {id:'3.3.1',t:'plumbing',c:A,x:'All wetted connections shall be NPT. Garden-hose-thread adapters are permitted as accessories on Class 1 units.'},
+    {id:'3.3.2',t:'plumbing',c:A,x:'A spring check valve and a manual isolation valve shall be provided on the inlet gallery.'},
+    {id:'3.3.3',t:'plumbing',c:A,x:'Backflow prevention shall comply with local water district requirements.',n:'The inlet gallery check valve is not the backflow prevention device.'},
+    {id:'3.3.4',t:'plumbing',c:A,x:'A manually valved drain-down port shall be provided at the manifold low point.'},
+    {id:'3.3.5',t:'plumbing',c:A,x:'In freeze climates, the installation shall support a winterization procedure: all zone valves opened, supply isolated, manifold drained, system depressurized. The procedure shall be firmware-assisted and physically completed at the drain valve.'},
+    {id:'3.3.6',t:'plumbing',c:A,x:'The zone manifold shall be a basic header feeding standalone valves, each valve individually removable without disturbing the others or the header.'},
+
+    {id:'3.4.1',t:'controls',c:A,x:'A local operator interface shall be provided by which an operator physically present can initiate protection manually, disable or lock out automatic operation, command each zone independently, and signal distress by a deliberate action of approximately three to five seconds. No software configuration shall disable an operator control.',n:'These functions are controller inputs and are not emergency-stop devices; no safety category is claimed. The hardware means of removing power is the disconnect; loss of power drives auto-return valves closed.'},
+    {id:'3.4.1.1',t:'controls',c:A,x:'The interface shall be operable by an operator wearing structural firefighting gloves, in darkness, without instruction, without a personal device, and without any network or account. It shall present its state without requiring the operator to interpret a display.',n:'Reference implementation is discrete panel-mounted pushbuttons with indicator lamps; any implementation meeting 3.4.1 and 3.4.1.1 is compliant.'},
+    {id:'3.4.2',t:'controls',c:A,x:'The unit shall indicate power, radio link, readiness, fault, active operation, and distress in a manner readable at a glance without a display or a connected device.',n:'Panel indicator lamps are the reference implementation.'},
+    {id:'3.4.3',t:'controls',c:A,x:'The unit shall annunciate status audibly in plain language, including specific fault conditions and a periodic maintenance reminder.'},
+    {id:'3.4.4',t:'controls',c:A,x:'Configuration shall be by local direct connection only. No cloud service, remote account, or subscription shall be required for any function of the unit.'},
+    {id:'3.4.5',t:'controls',c:A,x:'Operator hardware controls shall not be subject to automated lockout.'},
+    {id:'3.4.6',t:'controls',c:A,x:'Operator hardware controls shall be sized and spaced for actuation by a gloved hand. Where a lighter wildland or extrication glove is the design basis, the installation documentation shall state the glove class assumed, and control sizing shall follow from it.',n:'The reference case is a structural firefighting glove.'},
+
+    {id:'3.5.1',t:'antennas',c:A,x:'Radio antennas shall be external via weatherproof RF bulkheads or assembled penetrations.'},
+    {id:'3.5.2',t:'antennas',c:A,x:'Each unit shall carry a GNSS receiver. The antenna shall be placed with open sky view: external active antenna via bulkhead, external sealed puck on data cable, or integrated through-panel unit.'},
+
+    {id:'3.6.1',t:'marking',c:A,x:'Each unit shall bear a permanent label identifying: specification and annex version built to; supply voltage; battery type and replacement rating; and the drain-down location.'},
+    {id:'3.6.2',t:'marking',c:A,x:'The notification button shall be labeled with words to the effect that it signals participating systems and is not a substitute for contacting emergency services.'},
+    {id:'3.6.3',t:'marking',c:A,x:'Zone outlets shall be individually and permanently identified.'},
+
+    {id:'3.7.1',t:'appliances',c:A,x:'Coordination-capable water appliances are accessories, not required equipment. A compliant installation of any class requires none of them.'},
+    {id:'3.7.2',t:'appliances',c:A,x:'All wetted appliance connections shall use national hose thread or NPT as appropriate to the connection point. Proprietary couplings shall not be used.'},
+    {id:'3.7.3',t:'appliances',c:A,x:'Appliances attaching to hydrants, standpipes, or utility fittings shall be clamp-on or thread-on, shall not permanently modify the fitting, and their removal shall restore the fitting to its original condition and operation.'},
+    {id:'3.7.4',t:'appliances',c:A,x:'Every actuated appliance shall preserve manual operation. Failure or de-energization of the actuator shall leave the appliance manually operable by standard tools or standard practice.'},
+    {id:'3.7.5',t:'appliances',c:A,x:'Battery-powered appliances shall use a major open tool-platform battery interface. Appliances requiring proprietary single-source battery systems shall not be permitted.'},
+    {id:'3.7.6',t:'appliances',c:A,x:'Appliance installation on utility infrastructure shall be subject to the utility’s or district’s approval and standards; nothing in this document waives that authority.'},
+
+    {id:'4.1',t:'class',c:['1'],x:'The enclosure shall be NEMA 4X, polycarbonate or stainless. The reference size for a residential node is nominal 16 × 20 × 8 in.; larger enclosures are compliant provided they house the specified internal panel layout and preserve the wet/dry separation.'},
+    {id:'4.2',t:'class',c:['1'],x:'Penetrations shall consist of: one 3/4 in. NPT inlet; three 3/4 in. NPT outlets; one N-type RF bulkhead; one SMA RF bulkhead; and one cord-grip strain relief.'},
+    {id:'4.3',t:'class',c:['1'],x:'Power shall be 120 VAC cord-and-plug through the strain relief.'},
+    {id:'4.4',t:'class',c:['1'],x:'Batteries shall be two 12 V, 7–9 Ah sealed lead-acid units in series, or a drop-in 24 V LiFePO4 equivalent.'},
+    {id:'4.5',t:'class',c:['1'],x:'Zone valves shall be standalone motorized full-port brass ball valves with actuator pads and position feedback, fed by the manifold header, one per independently commanded zone.',n:'Reference node uses three 3/4 in. valves at 24 VDC; zone count and valve size follow from the supply and coverage plan. Solenoid valves are a permitted budget variant where position feedback is deliberately waived.'},
+    {id:'4.6',t:'class',c:['1'],x:'External connections shall use commodity means: cord grips, DIN terminal blocks, NPT and garden-hose thread. Keyed or proprietary connectors shall not be used.'},
+    {id:'4.7',t:'class',c:['1'],x:'The unit shall self-calibrate to available supply by observing inlet pressure under single-zone flow. No hydraulic configuration by the installer or owner shall be required.'},
+    {id:'4.8',t:'class',c:['1'],x:'Default operation shall be sequencing — one zone open at a time on a rotating schedule. Simultaneous zone operation shall not be assumed in design or represented in installation documents.'},
+
+    {id:'5.1',t:'class',c:['2'],x:'Class 2 units shall meet all Chapter 3 and Chapter 4 requirements except as modified by this chapter.'},
+    {id:'5.2',t:'class',c:['2'],x:'External connections shall use sealed circular connectors of an open multi-vendor standard; M12 is the reference class. Deutsch DT and MIL-DTL-38999 are permitted where procurement requires.'},
+    {id:'5.3',t:'class',c:['2'],x:'For marine and coastal exposure, wetted fittings shall be 316 stainless steel and polymer enclosures are preferred.'},
+    {id:'5.4',t:'class',c:['2'],x:'GNSS shall be an integrated through-panel marine-grade unit as standard.'},
+    {id:'5.5',t:'class',c:['2'],x:'An internal DIN-rail unmanaged Ethernet switch, minimum 5 ports, 24 VDC, shall be standard equipment. Managed switches are permitted where agency network policy requires; the reference installation shall not require network configuration to commission.'},
+    {id:'5.6',t:'class',c:['2'],x:'Power shall be hardwired or cord-and-plug per site requirements, on the same DIN and commodity battery architecture as Class 1.'},
+    {id:'5.7',t:'class',c:['2'],x:'Agency-furnished radio and transport equipment shall integrate via standard Ethernet interfaces and shall be installed per the furnishing agency’s requirements. Units shall not transmit on fire voice networks.'},
+
+    {id:'6.1',t:'class',c:['3'],x:'The enclosure shall be a ruggedized transit case. Interior components are not required to be individually sealed; the case provides the environmental boundary in transport and the open lid is the service interface in operation.'},
+    {id:'6.2',t:'class',c:['3'],x:'The case, as shipped ready to commission, shall not exceed 40 lb (18 kg). Kit components carried separately shall each individually not exceed the same limit.'},
+    {id:'6.3',t:'class',c:['3'],x:'Every case shall provide handles sized and positioned for both one-person and two-person carry.'},
+    {id:'6.4',t:'class',c:['3'],x:'Primary power shall be battery or solar: a portable power station of an open commodity class, or internal LiFePO4 with charge controller.'},
+    {id:'6.5',t:'class',c:['3'],x:'An auxiliary power dock shall be provided accepting a major open tool-platform battery pack, selected at order to match the operating department’s existing battery fleet. Proprietary single-source battery systems shall not be permitted at this interface.'},
+    {id:'6.6',t:'class',c:['3'],x:'One or more interior USB Power Delivery outlets, minimum 45 W each, shall be provided. Outlets shall deliver rated power whenever energy is physically present; automated policy shall inform but shall not refuse.'},
+    {id:'6.7',t:'class',c:['3'],x:'Hydraulic sensing shall be by an inline sensor spool with 1.5 in. forestry couplings. Engine sensing shall be by non-contact acoustic means. No baseline sensor shall touch, mount to, or modify pump equipment.'},
+    {id:'6.8',t:'class',c:['3'],x:'Units shall commission by voice-guided setup: each instruction shall gate on a sensor-verified condition, and the unit shall announce readiness on completion.'},
+    {id:'6.9',t:'class',c:['3'],x:'Prepositioned units shall require no external activation, registration, provisioning service, or connectivity to enter service. Warehouse maintenance shall be limited to battery inspection and consumable replacement on standard storage intervals.'},
+    {id:'6.10',t:'class',c:['3'],x:'A dual-constellation satellite emergency module is permitted as the expected configuration; the unit’s fire defense function and local distress signaling shall not depend on satellite service.'},
+
+    {id:'7.1',t:'documentation',c:A,x:'Each installation shall be documented with: a written narrative of system intent and coverage; a zone layout identifying coverage areas; the water supply type and measured or rated delivery; and the electrical supply arrangement.'},
+    {id:'7.2',t:'documentation',c:A,x:'Completion documentation shall record the self-calibration result and a functional test of each zone valve, each hardware control, and the audible annunciation.'},
+    {id:'7.3',t:'documentation',c:A,x:'The unit’s internal event log shall be regarded as the operational record. The installer shall verify at completion that the log is recording.'},
+    {id:'7.4',t:'documentation',c:A,x:'A copy of the installation documentation shall remain with the unit in an interior document holder, and with the owner.'}
+  ];
+
+  const TOPICS=[['all','All subjects'],['general','Scope'],['enclosure','Enclosure'],
+    ['electrical','Electrical'],['plumbing','Plumbing'],['controls','Controls'],
+    ['antennas','Antennas'],['marking','Marking'],['appliances','Appliances'],
+    ['class','Class-specific'],['documentation','Documentation']];
+  const CLASSES=[['all','All classes'],['1','1 · Residential'],['2','2 · Gov/Commercial'],['3','3 · Tactical']];
+  const CNAME={'1':'Residential','2':'Government / Commercial','3':'Tactical'};
+
+  const list=document.getElementById('rlist'), count=document.getElementById('rcount'),
+        search=document.getElementById('rsearch');
+  let cls='all', top='all', q='';
+  function esc(s){return s.replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));}
+
+  function chips(host,defs,get,set){
+    defs.forEach(function(d){
+      const b=document.createElement('button');
+      b.className='rchip'; b.textContent=d[1];
+      b.setAttribute('aria-pressed',String(get()===d[0]));
+      b.addEventListener('click',function(){
+        set(d[0]);
+        [...host.children].forEach(c=>c.setAttribute('aria-pressed',String(c===b)));
+        render();
+      });
+      host.appendChild(b);
+    });
+  }
+
+  function render(){
+    const needle=q.trim().toLowerCase();
+    const out=R.filter(r =>
+      (cls==='all' || r.c.indexOf(cls)>=0) &&
+      (top==='all' || r.t===top) &&
+      (!needle || (r.id+' '+r.x+' '+(r.n||'')).toLowerCase().includes(needle)));
+    list.innerHTML = out.length ? out.map(r =>
+      '<div class="req"><span class="rid">'+esc(r.id)+'</span>'+
+      '<div class="rt">'+esc(r.x)+'</div>'+
+      (r.n?'<div class="rn">'+esc(r.n)+'</div>':'')+
+      (r.c.length===1?'<div class="rcl">Class '+esc(r.c[0])+' — '+esc(CNAME[r.c[0]])+' only</div>':'')+
+      '</div>').join('') : '<div class="rempty">No requirement matches that filter.</div>';
+    count.textContent = out.length+' of '+R.length+
+      ' requirements shown. Chapter 3 applies to all classes; chapters 4 through 6 are class-specific.';
+  }
+
+  chips(document.getElementById('classChips'),CLASSES,()=>cls,v=>cls=v);
+  chips(document.getElementById('topicChips'),TOPICS,()=>top,v=>top=v);
+  search.addEventListener('input',e=>{q=e.target.value;render();});
+  render();
+})();
+</script>
+</body>
+</html>

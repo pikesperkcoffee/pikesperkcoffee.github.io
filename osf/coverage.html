@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Coverage and Spacing</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/site.css">
+<style>
+/* site chrome overrides: the tool keeps its own layout, the page keeps the site shell */
+body.tool .wrap{max-width:1240px}
+body.tool nav .wrap,body.tool .statusbar .wrap,body.tool .sitefoot .wrap{max-width:1080px}
+body.tool header{border-bottom:2px solid var(--ink);padding:26px 0 18px;margin-bottom:22px}
+html.embed .statusbar,html.embed nav,html.embed header,html.embed .sitefoot,
+html.embed .doctrine{display:none!important}
+html.embed body{background:transparent}
+html.embed .wrap{padding:0}
+
+:root{
+  --paper:#f7f5f0; --ink:#20262b; --brass:#b98a2f; --oxide:#9d3226;
+  --slate:#55636e; --water:#2f6e6a; --hair:#d9d4c8; --card:#fffef9; --ember:#c8611f;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:'Source Serif 4',Georgia,serif;font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1240px;margin:0 auto;padding:0 22px}
+h1,h2,h3,.disp{font-family:'Barlow Condensed','Arial Narrow',sans-serif;text-transform:uppercase;letter-spacing:.02em;font-weight:600}
+.mono{font-family:'IBM Plex Mono',monospace}
+
+header{border-bottom:2px solid var(--ink);padding:26px 0 18px;margin-bottom:22px}
+header .eyebrow{font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.19em;text-transform:uppercase;color:var(--slate);margin-bottom:10px}
+header h1{font-size:clamp(32px,5vw,52px);font-weight:700;line-height:.95}
+header h1 .g{color:var(--brass)}
+header p.sub{margin-top:12px;max-width:74ch;color:#39424a}
+
+.layout{display:grid;grid-template-columns:330px 1fr;gap:22px;align-items:start}
+@media (max-width:900px){.layout{grid-template-columns:1fr}}
+
+.panel{background:var(--card);border:1px solid var(--hair);padding:16px 16px 18px}
+.panel h3{font-size:15px;letter-spacing:.09em;color:var(--slate);border-bottom:1px solid var(--hair);padding-bottom:7px;margin-bottom:13px}
+.fld{margin-bottom:14px}
+.fld label{display:flex;justify-content:space-between;align-items:baseline;font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--slate);margin-bottom:5px}
+.fld label b{color:var(--ink);font-weight:600;font-size:13px}
+input[type=range]{width:100%;accent-color:var(--water);height:22px}
+select,input[type=number]{width:100%;font-family:'IBM Plex Mono',monospace;font-size:13px;padding:7px 8px;border:1px solid var(--hair);background:#fff;color:var(--ink)}
+.seg{display:flex;gap:0;border:1px solid var(--ink)}
+.seg button{flex:1;font-family:'Barlow Condensed',sans-serif;text-transform:uppercase;font-size:13.5px;letter-spacing:.04em;font-weight:600;padding:7px 4px;background:transparent;border:0;border-right:1px solid var(--ink);cursor:pointer;color:var(--ink)}
+.seg button:last-child{border-right:0}
+.seg button.on{background:var(--ink);color:var(--paper)}
+.chk{display:flex;align-items:center;gap:8px;font-size:14px;margin-bottom:7px;cursor:pointer}
+.chk input{accent-color:var(--water);width:15px;height:15px}
+
+.stage{background:var(--card);border:1px solid var(--hair);padding:0;overflow:hidden}
+svg#plan{display:block;width:100%;height:auto;background:#fbfaf6}
+
+.readout{display:grid;grid-template-columns:repeat(auto-fit,minmax(132px,1fr));gap:1px;background:var(--hair);border:1px solid var(--hair);margin-top:1px}
+.stat{background:var(--card);padding:11px 12px}
+.stat .k{font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--slate)}
+.stat .v{font-family:'IBM Plex Mono',monospace;font-size:20px;font-weight:600;line-height:1.25;margin-top:2px}
+.stat .u{font-size:12px;color:var(--slate);font-weight:400}
+.stat.warn .v{color:var(--oxide)}
+.stat.good .v{color:var(--water)}
+
+.flags{margin-top:14px;display:flex;flex-direction:column;gap:8px}
+.flag{border-left:4px solid var(--slate);background:var(--card);padding:9px 13px;font-size:14.5px}
+.flag.bad{border-color:var(--oxide)}
+.flag.ok{border-color:var(--water)}
+.flag.note{border-color:var(--brass)}
+.flag b{font-family:'Barlow Condensed',sans-serif;text-transform:uppercase;letter-spacing:.03em;font-size:15px}
+
+.legend{display:flex;flex-wrap:wrap;gap:14px;padding:10px 13px;border:1px solid var(--hair);border-top:0;background:var(--card);font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--slate);align-items:center}
+.sw{display:inline-block;width:13px;height:13px;margin-right:5px;vertical-align:-2px;border:1px solid rgba(0,0,0,.18)}
+
+.doctrine{margin-top:30px;border-top:2px solid var(--ink);padding-top:22px}
+.doctrine h2{font-size:26px;margin-bottom:6px}
+.dgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(285px,1fr));gap:18px;margin-top:16px}
+.dcard{background:var(--card);border:1px solid var(--hair);padding:15px 16px}
+.dcard h4{font-family:'Barlow Condensed',sans-serif;text-transform:uppercase;font-size:17px;letter-spacing:.02em;margin-bottom:7px}
+.dcard p{font-size:14.5px;color:#39424a}
+.dcard .src{font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--brass);margin-top:9px}
+footer{margin-top:34px;border-top:2px solid var(--ink);padding:18px 0 50px;font-family:'IBM Plex Mono',monospace;font-size:11.5px;line-height:1.9;color:var(--slate)}
+footer b{color:var(--brass);font-weight:500}
+</style>
+</head>
+<body class="tool">
+<div class="statusbar">
+  <div class="wrap">
+    <span>Published <b>October 11, 2026</b></span>
+    <span>Provisional application <b>64/173,890</b> · filed October 10, 2026</span>
+    <span>Open specification · <b>free forever</b></span>
+  </div>
+</div>
+<nav>
+  <div class="wrap">
+    <a class="brand" href="index.html">OSF</a>
+    <a href="tactics.html" class="hidesm">Tactics</a>
+    <a href="deadman.html" class="hidesm">Deadman</a>
+    <a href="network.html" class="hidesm">Network</a>
+    <a href="acceptance.html" class="hidesm">Acceptance</a>
+    <a href="adoption.html" class="hidesm">Adoption</a>
+    <a href="ground.html" class="hidesm">Ground</a>
+    <a href="coverage.html" class="hidesm" style="color:var(--oxide)">Coverage tool</a>
+    <a href="index.html#library" class="hidesm">Documents</a>
+    <a href="docs/osf-as-filed-2026-10-10.pdf" class="cta">The filing</a>
+    <span class="updir"><a href="index.html" title="Back one page (Open Source Firefighter index)" aria-label="Back one page, Open Source Firefighter index">../</a><a href="https://pikesperkcoffee.github.io/index.html" title="Site index (root)" aria-label="Site index, root">/</a></span>
+  </div>
+</nav>
+
+<div class="wrap">
+
+<header>
+  <div class="eyebrow">Open Source Firefighter · planning aid</div>
+  <h1>Coverage &amp; <span class="g">Spacing</span></h1>
+  <p class="sub">Wildland structure-protection sprinkler doctrine, drawn with irrigation-industry coverage math. Move the controls and watch what the water actually does — where it lands, how fast it accumulates, how long the supply holds, and where it hits something it should not.</p>
+</header>
+
+<div class="layout">
+
+  <!-- ============ CONTROLS ============ -->
+  <div>
+    <div class="panel">
+      <h3>Head &amp; Supply</h3>
+
+      <div class="fld">
+        <label>Head type</label>
+        <select id="head">
+          <option value="cacheFull">Cache impact — full circle only</option>
+          <option value="cachePart" selected>Cache impact — settable arc</option>
+          <option value="bigGun">High-volume structure head</option>
+          <option value="rotor">Landscape rotor</option>
+          <option value="spray">Landscape spray head</option>
+        </select>
+      </div>
+
+      <div class="fld">
+        <label>Pressure at head <b><span id="psiV">50</span> psi</b></label>
+        <input type="range" id="psi" min="20" max="80" step="1" value="50">
+      </div>
+
+      <div class="fld" id="arcWrap">
+        <label>Arc <b><span id="arcV">180</span>°</b></label>
+        <input type="range" id="arc" min="45" max="360" step="15" value="180">
+      </div>
+
+      <div class="fld">
+        <label>Supply available <b><span id="supV">6</span> gpm</b></label>
+        <input type="range" id="sup" min="3" max="60" step="1" value="6">
+      </div>
+
+      <div class="fld">
+        <label>Stored water <b><span id="tankV">0</span> gal</b></label>
+        <input type="range" id="tank" min="0" max="5000" step="50" value="0">
+      </div>
+    </div>
+
+    <div class="panel" style="margin-top:14px">
+      <h3>Layout</h3>
+
+      <div class="fld">
+        <label>Placement</label>
+        <div class="seg" id="mode">
+          <button data-m="ridge" class="on">Ridge</button>
+          <button data-m="perimeter">Perimeter</button>
+        </div>
+      </div>
+
+      <div class="fld">
+        <label>Heads <b><span id="nV">3</span></b></label>
+        <input type="range" id="n" min="1" max="12" step="1" value="3">
+      </div>
+
+      <div class="fld">
+        <label>Structure</label>
+        <select id="bldg">
+          <option value="70,16" selected>Single-wide — 70 × 16 ft</option>
+          <option value="50,30">Ranch house — 50 × 30 ft</option>
+          <option value="30,24">Cabin / outbuilding — 30 × 24 ft</option>
+          <option value="40,40">Square structure — 40 × 40 ft</option>
+        </select>
+      </div>
+
+      <div class="fld" id="offWrap" style="display:none">
+        <label>Standoff from wall <b><span id="offV">4</span> ft</b></label>
+        <input type="range" id="off" min="2" max="30" step="1" value="4">
+      </div>
+
+      <div class="fld" id="aimWrap" style="display:none">
+        <label>Aim</label>
+        <div class="seg" id="aim">
+          <button data-a="out" class="on">Outward — fuels</button>
+          <button data-a="in">Inward — roof</button>
+        </div>
+      </div>
+
+      <div class="fld">
+        <label>Target depth <b><span id="depV">0.25</span> in</b></label>
+        <input type="range" id="dep" min="0.05" max="1" step="0.05" value="0.25">
+      </div>
+
+      <label class="chk"><input type="checkbox" id="showHIZ" checked> Show 100 ft home ignition zone</label>
+      <label class="chk"><input type="checkbox" id="showRings"> Show pattern outlines</label>
+    </div>
+  </div>
+
+  <!-- ============ STAGE ============ -->
+  <div>
+    <div class="stage">
+      <svg id="plan" viewBox="0 0 900 620" preserveAspectRatio="xMidYMid meet"></svg>
+    </div>
+    <div class="legend">
+      <span><span class="sw" style="background:rgba(47,110,106,.30)"></span>Wetted</span>
+      <span><span class="sw" style="background:rgba(47,110,106,.62)"></span>Overlap</span>
+      <span><span class="sw" style="background:#e8e2d4;border-color:#20262b"></span>Structure</span>
+      <span><span class="sw" style="background:rgba(157,50,38,.5)"></span>Water on structure</span>
+      <span><span class="sw" style="background:#b98a2f"></span>Head</span>
+    </div>
+
+    <div class="readout" id="stats"></div>
+    <div class="flags" id="flags"></div>
+  </div>
+</div>
+
+<!-- ============ DOCTRINE ============ -->
+<div class="doctrine">
+  <h2>What the forestry side knows</h2>
+  <p style="max-width:78ch;color:#39424a">The numbers above come from landscape irrigation, which has spent decades measuring how water lands. The judgment below comes from wildland structure protection, which has spent decades watching what happens when it lands in the wrong place.</p>
+
+  <div class="dgrid">
+    <div class="dcard">
+      <h4>The objective is damp fuel, not a wet house</h4>
+      <p>The purpose of structure-protection sprinklers is to wet the receptive fuels next to the structure and raise humidity in the air around it — not to hose down the building. Stated plainly in the doctrine: it does not require a lot of water.</p>
+      <div class="src">Structure Protection Guide · App. I</div>
+    </div>
+
+    <div class="dcard">
+      <h4>Houses shed falling water, not driven water</h4>
+      <p>A roof and wall assembly is designed for rain arriving from the sky. An impact head drives water sideways with force, past siding and into the wall cavity. The damage may show immediately in a log wall — or surface months later as black mold behind sheetrock.</p>
+      <div class="src">Structure Protection Guide · App. I</div>
+    </div>
+
+    <div class="dcard">
+      <h4>A settable arc is the preferred head</h4>
+      <p>Two kits are common in the national cache: a full-circle-only impact head, and a part-circle head on a tripod. The part-circle is preferred because it allows close-in placement without throwing water onto the structure. Set the arc outward and the wall stays dry.</p>
+      <div class="src">Structure Protection Guide · App. I</div>
+    </div>
+
+    <div class="dcard">
+      <h4>Close-in, angled, three to four feet off the corner</h4>
+      <p>With a full-circle head, the field fix is placement rather than pattern: stake it angled and leaning toward the value at risk, roughly three to four feet from the corner, so the pattern dampens ground cover without saturating siding.</p>
+      <div class="src">Structure Protection Guide · App. I</div>
+    </div>
+
+    <div class="dcard">
+      <h4>Overlap the patterns</h4>
+      <p>Forestry says to choose placements that let adjacent patterns overlap. Irrigation says the same thing with a number: <span class="mono">head-to-head</span> spacing — each head throwing to the base of the next, which is spacing equal to the radius. Ninety percent of radius is better in wind.</p>
+      <div class="src">Irrigation Association / Rain Bird · head-to-head</div>
+    </div>
+
+    <div class="dcard">
+      <h4>Trunk and laterals, not one long hose</h4>
+      <p>Avoid feeding heads from a single straight run of ¾-inch hose; performance falls off down the line. Run a larger trunk line with laterals branching every hundred feet or so, and pressure at the last head stays closer to the pressure at the first.</p>
+      <div class="src">Structure Protection Guide · pump &amp; water handling</div>
+    </div>
+
+    <div class="dcard">
+      <h4>Fifty psi is the design point</h4>
+      <p>Cache sprinklers are built to run at 50 psi. Below it the radius collapses and the spacing you planned no longer overlaps; above it the droplets shatter and drift. Pressure is the variable that quietly invalidates a layout.</p>
+      <div class="src">Structure Protection Guide · pump &amp; water handling</div>
+    </div>
+
+    <div class="dcard" style="border-color:var(--oxide);border-left-width:4px">
+      <h4>And the reason this system exists</h4>
+      <p>Standard advice given to homeowners before an evacuation includes: <i>do not leave sprinklers running — it affects water pressure.</i> That is the coordination problem stated by the fire service itself. Everyone protecting their own house at once is how a neighborhood loses its supply. Scheduling turns is the whole point.</p>
+      <div class="src">Structure Protection Guide · customer contact</div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <b>THE OPEN SOURCE FIREFIGHTER</b> · Coverage &amp; Spacing planning aid<br>
+  Doctrine from the wildland structure-protection literature; coverage and precipitation math per standard irrigation practice. Figures are planning estimates in zero-wind conditions — field verify.<br>
+  The register governs. This aid does not replace the Supply &amp; Coverage Planning Table (OSF‑2, Appendix A).
+</footer>
+</div>
+
+<script>
+const HEADS={
+  cacheFull:{name:"Cache impact, full circle",r50:32,q50:2.6,fixed:360},
+  cachePart:{name:"Cache impact, settable arc",r50:32,q50:2.6,fixed:null},
+  bigGun:{name:"High-volume structure head",r50:55,q50:10,fixed:360},
+  rotor:{name:"Landscape rotor",r50:30,q50:2.2,fixed:null},
+  spray:{name:"Landscape spray head",r50:15,q50:1.6,fixed:null}
+};
+const S={head:'cachePart',psi:50,arc:180,sup:6,tank:0,mode:'ridge',n:3,bw:70,bl:16,off:4,aim:'out',dep:.25,hiz:true,rings:false};
+
+const $=id=>document.getElementById(id);
+const bind=(id,key,vid,fmt)=>{const el=$(id);el.addEventListener('input',()=>{S[key]=parseFloat(el.value);if(vid)$(vid).textContent=fmt?fmt(S[key]):S[key];draw();});};
+bind('psi','psi','psiV');bind('arc','arc','arcV');bind('sup','sup','supV');
+bind('tank','tank','tankV');bind('n','n','nV');bind('off','off','offV');
+bind('dep','dep','depV',v=>v.toFixed(2));
+$('head').addEventListener('change',e=>{S.head=e.target.value;syncArc();draw();});
+$('bldg').addEventListener('change',e=>{const[a,b]=e.target.value.split(',').map(Number);S.bw=a;S.bl=b;draw();});
+$('showHIZ').addEventListener('change',e=>{S.hiz=e.target.checked;draw();});
+$('showRings').addEventListener('change',e=>{S.rings=e.target.checked;draw();});
+document.querySelectorAll('#mode button').forEach(b=>b.addEventListener('click',()=>{
+  document.querySelectorAll('#mode button').forEach(x=>x.classList.remove('on'));b.classList.add('on');
+  S.mode=b.dataset.m;$('offWrap').style.display=S.mode==='perimeter'?'block':'none';
+  $('aimWrap').style.display=S.mode==='perimeter'?'block':'none';draw();}));
+document.querySelectorAll('#aim button').forEach(b=>b.addEventListener('click',()=>{
+  document.querySelectorAll('#aim button').forEach(x=>x.classList.remove('on'));b.classList.add('on');
+  S.aim=b.dataset.a;draw();}));
+
+function syncArc(){const h=HEADS[S.head];const w=$('arcWrap');
+  if(h.fixed){w.style.opacity=.35;$('arc').disabled=true;$('arcV').textContent=h.fixed;}
+  else{w.style.opacity=1;$('arc').disabled=false;$('arcV').textContent=S.arc;}}
+syncArc();
+
+// geometry -----------------------------------------------------------------
+function heads(){
+  const h=HEADS[S.head],eff=h.fixed?360:S.arc;
+  const r=h.r50*Math.sqrt(S.psi/50);
+  const q=h.q50*Math.sqrt(S.psi/50)*(eff/360);
+  const out=[];
+  if(S.mode==='ridge'){
+    const span=S.bw, step=S.n>1?span/(S.n-1):0, x0=S.n>1?-span/2:0;
+    for(let i=0;i<S.n;i++){
+      const x=S.n>1?x0+i*step:0;
+      out.push({x,y:0,dir:S.aim==='in'?90:270,r,q,arc:eff});
+    }
+  }else{
+    const w=S.bw/2+S.off,l=S.bl/2+S.off,per=2*(2*w+2*l);
+    for(let i=0;i<S.n;i++){
+      let t=(i/S.n)*per,x,y,dir;
+      if(t< 2*w){x=-w+t;y=-l;dir=270;}
+      else if(t<2*w+2*l){x=w;y=-l+(t-2*w);dir=0;}
+      else if(t<4*w+2*l){x=w-(t-2*w-2*l);y=l;dir=90;}
+      else{x=-w;y=l-(t-4*w-2*l);dir=180;}
+      if(S.aim==='in')dir=(dir+180)%360;
+      out.push({x,y,dir,r,q,arc:eff});
+    }
+  }
+  return out;
+}
+const norm=a=>((a%360)+360)%360;
+function covers(hd,px,py){
+  const dx=px-hd.x,dy=py-hd.y,d=Math.hypot(dx,dy);
+  if(d>hd.r)return false;
+  if(hd.arc>=360)return true;
+  let ang=norm(Math.atan2(dy,dx)*180/Math.PI);
+  let diff=Math.abs(norm(ang-hd.dir+180)-180);
+  return diff<=hd.arc/2;
+}
+function analyse(H){
+  const step=1.5,ext=Math.max(...H.map(h=>h.r))+15;
+  const xs=S.bw/2+ext,ys=S.bl/2+ext;
+  let wet=0,onBldg=0,cells=0,ov=0;
+  for(let x=-xs;x<=xs;x+=step)for(let y=-ys;y<=ys;y+=step){
+    cells++;let c=0;
+    for(const h of H)if(covers(h,x,y))c++;
+    if(c>0){wet++;ov+=c;
+      if(Math.abs(x)<=S.bw/2&&Math.abs(y)<=S.bl/2)onBldg++;}
+  }
+  const a=step*step;
+  // roof coverage: sample the structure footprint only
+  let rc=0,rt=0;
+  for(let x=-S.bw/2;x<=S.bw/2;x+=step)for(let y=-S.bl/2;y<=S.bl/2;y+=step){
+    rt++;for(const h of H)if(covers(h,x,y)){rc++;break;}}
+  return{wetArea:wet*a,bldgWet:onBldg*a,meanOv:wet?ov/wet:0,
+         roofFrac:rt?rc/rt:0};
+}
+
+// render -------------------------------------------------------------------
+function draw(){
+  const H=heads(),svg=$('plan');
+  const W=900,Ht=620,maxR=Math.max(...H.map(h=>h.r));
+  const half=Math.max(S.bw/2+maxR+18,S.hiz?S.bw/2+100:0);
+  const sc=Math.min(W/(half*2.05),Ht/((half*0.78)*2.05));
+  const cx=W/2,cy=Ht/2;
+  const X=v=>cx+v*sc, Y=v=>cy+v*sc, L=v=>v*sc;
+
+  let s=`<rect width="${W}" height="${Ht}" fill="#fbfaf6"/>`;
+  for(let g=-400;g<=400;g+=20){
+    s+=`<line x1="${X(g)}" y1="0" x2="${X(g)}" y2="${Ht}" stroke="#e9e4d8" stroke-width="1"/>`;
+    s+=`<line x1="0" y1="${Y(g)}" x2="${W}" y2="${Y(g)}" stroke="#e9e4d8" stroke-width="1"/>`;}
+
+  if(S.hiz){
+    s+=`<rect x="${X(-S.bw/2-100)}" y="${Y(-S.bl/2-100)}" width="${L(S.bw+200)}" height="${L(S.bl+200)}"
+        fill="none" stroke="#b98a2f" stroke-width="1.5" stroke-dasharray="9 7" rx="${L(60)}"/>`;
+    s+=`<text x="${X(-S.bw/2-100)+8}" y="${Y(-S.bl/2-100)-7}" font-family="IBM Plex Mono" font-size="11" fill="#b98a2f">HOME IGNITION ZONE · 100 FT</text>`;}
+
+  // wetted pattern
+  H.forEach(h=>{
+    const R=L(h.r);
+    if(h.arc>=360){
+      s+=`<circle cx="${X(h.x)}" cy="${Y(h.y)}" r="${R}" fill="rgba(47,110,106,.30)"/>`;
+      if(S.rings)s+=`<circle cx="${X(h.x)}" cy="${Y(h.y)}" r="${R}" fill="none" stroke="#2f6e6a" stroke-width="1.2" stroke-dasharray="4 4"/>`;
+    }else{
+      const a0=(h.dir-h.arc/2)*Math.PI/180,a1=(h.dir+h.arc/2)*Math.PI/180;
+      const p0x=X(h.x)+R*Math.cos(a0),p0y=Y(h.y)+R*Math.sin(a0);
+      const p1x=X(h.x)+R*Math.cos(a1),p1y=Y(h.y)+R*Math.sin(a1);
+      const big=h.arc>180?1:0;
+      const d=`M${X(h.x)} ${Y(h.y)} L${p0x} ${p0y} A${R} ${R} 0 ${big} 1 ${p1x} ${p1y} Z`;
+      s+=`<path d="${d}" fill="rgba(47,110,106,.30)"/>`;
+      if(S.rings)s+=`<path d="${d}" fill="none" stroke="#2f6e6a" stroke-width="1.2" stroke-dasharray="4 4"/>`;
+    }
+  });
+
+  // structure
+  s+=`<rect x="${X(-S.bw/2)}" y="${Y(-S.bl/2)}" width="${L(S.bw)}" height="${L(S.bl)}"
+      fill="#e8e2d4" stroke="#20262b" stroke-width="2"/>`;
+  if(S.mode==='ridge')
+    s+=`<line x1="${X(-S.bw/2)}" y1="${Y(0)}" x2="${X(S.bw/2)}" y2="${Y(0)}" stroke="#20262b" stroke-width="1.2" stroke-dasharray="7 5"/>`;
+
+  // structure wetting overlay
+  const A=analyse(H);
+  if(A.bldgWet>0.5){
+    s+=`<rect x="${X(-S.bw/2)}" y="${Y(-S.bl/2)}" width="${L(S.bw)}" height="${L(S.bl)}"
+        fill="${S.mode==='ridge'?'rgba(47,110,106,.22)':'rgba(157,50,38,.20)'}" stroke="${S.mode==='ridge'||S.aim==='in'?'#2f6e6a':'#9d3226'}" stroke-width="2.5"/>`;}
+
+  // heads
+  H.forEach((h,i)=>{
+    s+=`<circle cx="${X(h.x)}" cy="${Y(h.y)}" r="6" fill="#b98a2f" stroke="#20262b" stroke-width="1.6"/>`;
+    s+=`<text x="${X(h.x)}" y="${Y(h.y)-11}" text-anchor="middle" font-family="IBM Plex Mono" font-size="10.5" fill="#20262b">${i+1}</text>`;});
+
+  // scale bar
+  const sb=50*sc;
+  s+=`<line x1="26" y1="${Ht-26}" x2="${26+sb}" y2="${Ht-26}" stroke="#20262b" stroke-width="2.5"/>
+      <line x1="26" y1="${Ht-32}" x2="26" y2="${Ht-20}" stroke="#20262b" stroke-width="2.5"/>
+      <line x1="${26+sb}" y1="${Ht-32}" x2="${26+sb}" y2="${Ht-20}" stroke="#20262b" stroke-width="2.5"/>
+      <text x="${26+sb/2}" y="${Ht-34}" text-anchor="middle" font-family="IBM Plex Mono" font-size="11" fill="#20262b">50 FT</text>`;
+  svg.innerHTML=s;
+  stats(H,A);
+}
+
+function stats(H,A){
+  const h=H[0],r=h.r,total=H.reduce((a,b)=>a+b.q,0);
+  const spacing=r, spacing90=r*0.9;
+  const pr=A.wetArea>0?(96.25*total)/A.wetArea:0;
+  const mins=pr>0?(S.dep/pr)*60:Infinity;
+  const dur=S.tank>0&&total>0?S.tank/total:0;
+  const over=total>S.sup;
+
+  const st=[
+    ['Radius',r.toFixed(0),'ft'],
+    ['Head-to-head',spacing.toFixed(0),'ft'],
+    ['Wind spacing',spacing90.toFixed(0),'ft'],
+    ['Zone demand',total.toFixed(1),'gpm',over?'warn':'good'],
+    ['Wetted area',Math.round(A.wetArea).toLocaleString(),'ft²'],
+    ['Precip rate',pr.toFixed(2),'in/hr'],
+    ['Time to depth',isFinite(mins)?Math.round(mins):'—','min'],
+    ['Mean overlap',A.meanOv.toFixed(2),'×']
+  ];
+  if(S.mode==='ridge')st.splice(5,0,['Roof wetted',Math.round(A.roofFrac*100),'%',A.roofFrac<.6?'warn':'good']);
+  if(S.tank>0)st.push(['Stored duration',Math.round(dur),'min',dur<45?'warn':'good']);
+  $('stats').innerHTML=st.map(x=>
+    `<div class="stat ${x[3]||''}"><div class="k">${x[0]}</div><div class="v">${x[1]} <span class="u">${x[2]}</span></div></div>`).join('');
+
+  const f=[];
+  if(over)f.push(['bad','Supply exceeded',
+    `This layout asks for ${total.toFixed(1)} gpm from a ${S.sup} gpm supply. Heads will not reach their rated radius, the pattern shrinks, and the spacing you planned stops overlapping. Reduce heads, reduce arc, or find more water.`]);
+  if(S.psi<40)f.push(['bad','Below design pressure',
+    `Cache sprinklers are built around 50 psi. At ${S.psi} psi the radius has fallen to ${r.toFixed(0)} ft and any spacing table written for 50 psi is now wrong.`]);
+  if(S.psi>65)f.push(['note','High pressure',
+    'Above roughly 65 psi the stream begins to shatter into fine droplets that drift and evaporate rather than landing where they were aimed.']);
+  if(S.mode==='ridge'){
+    if(A.roofFrac<0.6)f.push(['bad','Roof not covered',
+      `Only ${Math.round(A.roofFrac*100)}% of the roof plane is inside a pattern. The dry portion is where embers land and stay lit. Add heads, widen the arc, or raise pressure.`]);
+    else f.push(['ok','Roof deck wetted',
+      `${Math.round(A.roofFrac*100)}% of the roof is in the pattern. Loft the water onto the deck rather than driving it at the surface — a head angled up keeps the stream from lifting shingles and off the siding below.`]);
+  }else{
+    if(A.bldgWet>0.5&&S.aim==='out')f.push(['bad','Water on the structure',
+      'The pattern is landing on the building while aimed at the fuels. On a wall assembly this drives water past the siding — damage now, or mold behind the sheetrock later. Narrow the arc, increase the standoff, or use a settable-arc head.']);
+    if(A.bldgWet>0.5&&S.aim==='in')f.push(['note','Water on the walls',
+      'Water is reaching the structure from the perimeter. Wall assemblies are built to shed falling rain, not driven spray — if the intent is the roof, place on the ridge instead and loft it onto the deck.']);
+  }
+  if(A.meanOv<1.15&&H.length>1)f.push(['note','Thin overlap',
+    `Mean overlap is ${A.meanOv.toFixed(2)}×. Forestry doctrine and irrigation practice agree that adjacent patterns should overlap; head-to-head spacing here would be about ${spacing.toFixed(0)} ft between heads.`]);
+  if(A.meanOv>2.2)f.push(['note','Heavy overlap',
+    `Mean overlap is ${A.meanOv.toFixed(2)}×. Water is being applied several times over in the same footprint — defensible if you want depth fast, wasteful if the supply is finite.`]);
+  if(S.tank>0&&total>0){
+    const d=S.tank/total,rot=d*Math.max(1,Math.round(S.sup/Math.max(total,.1)));
+    f.push(['note','Coordinated rotation',
+      `Running continuously, ${S.tank} gallons lasts about ${Math.round(d)} minutes. Rotating turns with neighbours on the same supply is what turns a short burst into coverage that spans the ember window — the reason the coordination protocol exists.`]);}
+  if(!f.length)f.push(['ok','Layout is coherent','Supply, pressure, spacing, and aim are consistent. Verify in the field: these figures assume zero wind.']);
+
+  $('flags').innerHTML=f.map(x=>`<div class="flag ${x[0]}"><b>${x[1]}</b> — ${x[2]}</div>`).join('');
+}
+draw();
+</script>
+<footer class="sitefoot">
+  <div class="wrap fgrid">
+    <div>
+      <div class="free">Free like a fire code.</div>
+      <p style="margin-top:8px;max-width:42ch">Build one. Improve it. Propose changes.<br>It belongs to everyone it protects.</p>
+    </div>
+    <div class="mono">
+      The Open Source Firefighter<br>
+      Andrew Morton · Palmer Lake, Colorado<br>
+      U.S. Provisional Application 64/173,890<br>
+      Filed October 10, 2026 · published October 11, 2026
+    </div>
+  </div>
+</footer>
+<script>
+/* #embed strips the site chrome so this same file can be framed inside Tactics */
+if (location.hash === '#embed') {
+  document.documentElement.classList.add('embed');
+  // measure the CONTENT, not the document: the document grows to fill whatever
+  // height the host sets, which would feed back into itself forever
+  // .wrap also matches the hidden status bar, so target the tool's own layout
+  var content = document.querySelector('.layout');
+  var post = function(){
+    if (!content) return;
+    var h = Math.ceil(content.getBoundingClientRect().height) + 24;
+    try { parent.postMessage({ osfToolHeight: h }, '*'); } catch(e){}
+  };
+  addEventListener('load', post);
+  addEventListener('resize', post);
+  if (window.ResizeObserver && content) new ResizeObserver(post).observe(content);
+  setTimeout(post, 300);
+}
+</script>
+</body>
+</html>

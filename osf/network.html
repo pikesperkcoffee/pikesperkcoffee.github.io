@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>The Network</title>
+<meta name="description" content="How the nodes talk: unlicensed spectrum, LoRa, mesh without a hub, a closed verb vocabulary in a 200-byte envelope, and everything needed to start building.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap">
+<link rel="stylesheet" href="css/site.css">
+<style>
+.pagehead{border-bottom:3px solid var(--ink);padding-block:38px 30px}
+.pagehead h1{font-size:clamp(42px,8vw,78px)}
+.pagehead .kicker{font-family:var(--mono);font-size:12px;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--water);margin-bottom:12px}
+.pagehead .standfirst{margin-top:18px;max-width:66ch;font-size:clamp(17px,2vw,20px);line-height:1.5}
+
+.layout{display:grid;grid-template-columns:1fr;gap:34px;padding-block:clamp(34px,5vw,54px)}
+@media(min-width:1020px){.layout{grid-template-columns:230px minmax(0,1fr);gap:48px}}
+.wrap.layout{max-width:1250px}
+.toc{min-width:0}
+@media(min-width:1020px){
+  .toc{position:sticky;top:calc(env(safe-area-inset-top,0px) + 62px);align-self:start;
+       max-height:calc(100vh - 100px);overflow-y:auto}
+}
+.toc .lab{font-family:var(--mono);font-size:11px;letter-spacing:.17em;text-transform:uppercase;
+  color:var(--slate);border-bottom:1px solid var(--hair);padding-bottom:7px;margin-bottom:10px}
+.toc ol{list-style:none;counter-reset:t}
+.toc li{counter-increment:t;margin-bottom:3px}
+.toc a{display:block;text-decoration:none;color:var(--ink);font-size:14.5px;
+  padding:4px 0 4px 26px;position:relative;line-height:1.35}
+.toc a::before{content:counter(t,decimal-leading-zero);position:absolute;left:0;top:6px;
+  font-family:var(--mono);font-size:10.5px;color:var(--brass)}
+.toc a:hover{color:var(--oxide)}
+.body{min-width:0}
+.body section{border-bottom:1px solid var(--hair);padding-block:0 clamp(28px,4vw,42px);
+  margin-bottom:clamp(28px,4vw,42px)}
+.body section:last-of-type{border-bottom:none}
+.body p{max-width:68ch}
+.body h3{margin:26px 0 8px}
+
+/* zero-knowledge primer blocks */
+.step{border-left:3px solid var(--hair);padding-left:22px;margin-top:26px}
+.step h3{margin-top:0;color:var(--ink)}
+.step .q{font-family:var(--mono);font-size:11px;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--water);margin-bottom:5px}
+.step.key{border-left-color:var(--water)}
+
+/* tables */
+.tbl{overflow-x:auto;margin:16px 0 8px;border:1px solid var(--hair)}
+.tbl table{width:100%;border-collapse:collapse;font-size:14.5px;background:var(--card);min-width:560px}
+.tbl th{font-family:var(--display);font-weight:600;font-size:14px;text-transform:uppercase;
+  letter-spacing:.06em;text-align:left;border-bottom:2px solid var(--ink);padding:9px 11px;white-space:nowrap}
+.tbl td{border-bottom:1px solid var(--hair);padding:9px 11px;vertical-align:top}
+.tbl tr:last-child td{border-bottom:none}
+.tbl code,code{font-family:var(--mono);font-size:.88em;background:color-mix(in srgb,var(--brass) 12%,transparent);
+  padding:1px 5px;color:var(--ink)}
+.tbl .id{font-family:var(--mono);font-size:12px;color:var(--oxide);white-space:nowrap;font-weight:500}
+
+/* the envelope budget */
+.env{border:2px solid var(--ink);background:var(--card);padding:22px;margin:26px 0}
+.env .vlab{font-family:var(--display);font-weight:700;font-size:19px;text-transform:uppercase;
+  letter-spacing:.04em;margin-bottom:3px}
+.env .vsub{font-family:var(--mono);font-size:11.5px;letter-spacing:.07em;text-transform:uppercase;
+  color:var(--slate);margin-bottom:18px}
+.bar{display:flex;height:48px;border:2px solid var(--ink);overflow:hidden;
+  font-family:var(--mono);font-size:11px;letter-spacing:.04em}
+.seg{display:flex;align-items:center;justify-content:center;text-align:center;
+  padding:0 4px;min-width:0;overflow:hidden;white-space:nowrap;transition:flex-basis .4s ease}
+.seg.hdr{background:var(--slate);color:var(--card);flex:0 0 12%}
+.seg.sig{background:var(--oxide);color:#fff;flex:0 0 32%}
+.seg.body{background:var(--water);color:#fff;flex:1 1 auto}
+.seg.over{background:repeating-linear-gradient(45deg,var(--hair),var(--hair) 6px,var(--card) 6px,var(--card) 12px);
+  color:var(--ink);flex:0 0 0%;padding:0}  /* padding would leave a sliver at zero width */
+.envkey{display:flex;flex-wrap:wrap;gap:8px 22px;margin-top:12px;font-family:var(--mono);
+  font-size:11.5px;color:var(--slate)}
+.envkey span{display:flex;align-items:center;gap:7px}
+.envkey i{width:13px;height:13px;display:inline-block}
+.envkey i.hdr{background:var(--slate)} .envkey i.sig{background:var(--oxide)}
+.envkey i.body{background:var(--water)}
+.envnote{margin-top:16px;font-size:15.5px;max-width:64ch}
+.envctl{margin-top:14px;display:flex;gap:10px;flex-wrap:wrap}
+.btn{font-family:var(--display);font-weight:600;font-size:15px;letter-spacing:.06em;
+  text-transform:uppercase;border:2px solid var(--ink);background:transparent;color:var(--ink);
+  padding:6px 14px;cursor:pointer;transition:all .15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn[aria-pressed="true"]{background:var(--oxide);border-color:var(--oxide);color:#fff}
+
+/* verb browser */
+.vocab{border:1px solid var(--hair);background:var(--card);padding:20px 22px;margin:26px 0}
+.vocab .vlab{font-family:var(--display);font-weight:700;font-size:19px;text-transform:uppercase;
+  letter-spacing:.04em;margin-bottom:3px}
+.vocab .vsub{font-family:var(--mono);font-size:11.5px;letter-spacing:.07em;text-transform:uppercase;
+  color:var(--slate);margin-bottom:16px}
+.vchips{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:16px}
+.vchip{font-family:var(--mono);font-size:12px;border:1px solid var(--hair);background:var(--paper);
+  color:var(--ink);padding:5px 10px;cursor:pointer;transition:all .15s}
+.vchip:hover{border-color:var(--ink)}
+.vchip[aria-pressed="true"]{background:var(--water);border-color:var(--water);color:#fff}
+.vgroups{display:grid;gap:14px}
+.vgroup{border-top:1px solid var(--hair);padding-top:12px}
+.vgroup h4{font-family:var(--display);font-weight:700;font-size:15px;text-transform:uppercase;
+  letter-spacing:.07em;color:var(--brass);margin-bottom:7px}
+.verbs{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:7px}
+.verb{font-family:var(--mono);font-size:12.5px;background:color-mix(in srgb,var(--water) 13%,transparent);
+  border:1px solid color-mix(in srgb,var(--water) 35%,transparent);padding:3px 8px;color:var(--ink)}
+.vgroup p{font-size:14.5px;color:var(--slate);max-width:62ch;margin:0}
+.vcount{font-family:var(--mono);font-size:12px;color:var(--slate);margin-top:14px}
+
+/* boundary warnings */
+.trap{border:1px solid var(--oxide);background:color-mix(in srgb,var(--oxide) 5%,transparent);
+  padding:15px 18px;margin-top:14px}
+.trap .tl{font-family:var(--display);font-weight:700;font-size:15px;letter-spacing:.06em;
+  text-transform:uppercase;color:var(--oxide);margin-bottom:5px}
+.trap p{font-size:15.5px;max-width:64ch}
+
+figure.fig{margin-top:28px;border:1px solid var(--hair);background:var(--card);padding:16px}
+figure.fig img{width:100%;display:block}
+figure.fig figcaption{margin-top:12px;font-size:14.5px;color:var(--slate);
+  font-family:var(--mono);line-height:1.65}
+figure.fig figcaption b{color:var(--brass);font-weight:500}
+
+.rule{border-left:4px solid var(--water);padding:4px 0 4px 18px;margin:18px 0;
+  font-size:16px;max-width:66ch}
+.rule b{color:var(--water)}
+.start{counter-reset:s;list-style:none;margin-top:16px}
+.start li{counter-increment:s;position:relative;padding:11px 0 11px 42px;
+  border-bottom:1px dashed var(--hair);font-size:16px;max-width:70ch}
+.start li:last-child{border-bottom:none}
+.start li::before{content:counter(s);position:absolute;left:0;top:11px;font-family:var(--display);
+  font-weight:700;font-size:19px;color:var(--brass);width:28px;text-align:right}
+.getdoc{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-top:22px}
+.getdoc a{font-family:var(--display);font-weight:600;font-size:16px;letter-spacing:.05em;
+  text-transform:uppercase;text-decoration:none;border:2px solid var(--oxide);color:var(--oxide);padding:8px 16px}
+.getdoc a:hover{background:var(--oxide);color:var(--paper)}
+.getdoc span{font-family:var(--mono);font-size:12.5px;color:var(--slate)}
+</style>
+</head>
+<body>
+
+<div class="statusbar">
+  <div class="wrap">
+    <span>Published <b>October 11, 2026</b></span>
+    <span>Provisional application <b>64/173,890</b> · filed October 10, 2026</span>
+    <span>Open specification · <b>free forever</b></span>
+  </div>
+</div>
+
+<nav>
+  <div class="wrap">
+    <a class="brand" href="index.html">OSF</a>
+    <a href="tactics.html" class="hidesm">Tactics</a>
+    <a href="deadman.html" class="hidesm">Deadman</a>
+    <a href="network.html" class="hidesm" style="color:var(--oxide)">Network</a>
+    <a href="acceptance.html" class="hidesm">Acceptance</a>
+    <a href="adoption.html" class="hidesm">Adoption</a>
+    <a href="ground.html" class="hidesm">Ground</a>
+    <a href="index.html#library" class="hidesm">Documents</a>
+    <a href="docs/osf-as-filed-2026-10-10.pdf" class="cta">The filing</a>
+    <span class="updir"><a href="index.html" title="Back one page (Open Source Firefighter index)" aria-label="Back one page, Open Source Firefighter index">../</a><a href="https://pikesperkcoffee.github.io/index.html" title="Site index (root)" aria-label="Site index, root">/</a></span>
+  </div>
+</nav>
+
+<header class="pagehead">
+  <div class="wrap">
+    <div class="kicker">For network, software, and hardware people — and for machines reading this</div>
+    <h1>The Network</h1>
+    <p class="standfirst">Coordination is the whole invention. Without it you have sprinklers. This page starts from nothing — what a radio link is, why this one is unlicensed, what LoRa gives up — and ends with enough to start building.</p>
+  </div>
+</header>
+
+<div class="wrap layout">
+
+  <aside class="toc">
+    <div class="lab">On this page</div>
+    <ol>
+      <li><a href="#zero">Start at zero</a></li>
+      <li><a href="#spectrum">Which spectrum, and why</a></li>
+      <li><a href="#lora">What LoRa trades away</a></li>
+      <li><a href="#mesh">Why there is no hub</a></li>
+      <li><a href="#layers">The layer model</a></li>
+      <li><a href="#envelope">The envelope budget</a></li>
+      <li><a href="#vocabulary">The vocabulary</a></li>
+      <li><a href="#invariants">Eight invariants</a></li>
+      <li><a href="#states">The state machine</a></li>
+      <li><a href="#degrade">The degradation ladder</a></li>
+      <li><a href="#boundaries">Boundaries to design against</a></li>
+      <li><a href="#start">Getting started</a></li>
+    </ol>
+  </aside>
+
+  <main class="body">
+
+    <section id="zero">
+      <h2>Start at zero</h2>
+      <p>If you already know what a LoRa mesh is, skip to the layer model. This section assumes nothing.</p>
+
+      <div class="step">
+        <div class="q">First question</div>
+        <h3>Why do the nodes need to talk at all?</h3>
+        <p>A box on a wall that waters its own roof is useful and needs no network. The moment there are ten boxes on one water main, they have a problem no individual box can see: if they all draw at once the pressure collapses and nobody gets water. Somebody has to take turns.</p>
+        <p>You could solve that with a central controller, and that is the obvious engineering answer. It is also the wrong one here, for reasons that are about fire rather than about computers — covered below. So the boxes solve it among themselves, which means they have to talk. That conversation is the invention. Everything on this page exists to carry it.</p>
+      </div>
+
+      <div class="step">
+        <div class="q">Second question</div>
+        <h3>What is a radio link, in one paragraph?</h3>
+        <p>A transmitter turns a message into a pattern of radio waves at some frequency; a receiver tuned to that frequency turns the pattern back into the message. Everything else is tradeoffs. Higher power and lower frequency generally travel further. More data per second generally costs range. And the frequency you are allowed to use at all is decided by your national regulator, not by you.</p>
+      </div>
+    </section>
+
+    <section id="spectrum">
+      <h2>Which spectrum, and why</h2>
+      <p>Radio spectrum is allocated. Most of it requires a licence, and the licence comes with obligations about who may operate, what may be sent, and when. A system meant to be installed by a homeowner on a Saturday cannot carry any of that.</p>
+
+      <div class="step key">
+        <div class="q">The choice</div>
+        <h3>Unlicensed ISM, and only that</h3>
+        <p>Every jurisdiction reserves bands that anyone may use without a licence, subject to power limits and an obligation to tolerate interference. In North America the reference band is <strong>902–928 MHz</strong>; in Europe it is <strong>863–870 MHz</strong>; elsewhere it is whatever the regulator says. Transmit power is bounded by the certification of the module as installed, not by the theoretical ceiling of the allocation.</p>
+        <p><strong>Band and power are properties of the jurisdiction, not of the specification.</strong> Build them as configuration with enforced ceilings, not as constants scattered through the code. Some regions impose duty-cycle limits that materially affect protocol design — a heartbeat cadence that is legal in one place is not legal in another.</p>
+      </div>
+
+      <div class="step">
+        <div class="q">The question everyone asks</div>
+        <h3>Why not amateur radio?</h3>
+        <p>Because the amateur service is built around a licensed human operator, and this system is built around an unattended box on a wall. The two are structurally incompatible, and the reasons are regulatory rather than technical:</p>
+        <ul style="margin:12px 0 12px 24px;max-width:66ch">
+          <li style="margin-bottom:7px">Amateur stations require a <strong>licensed control operator</strong>. A node on a rented lot does not have one.</li>
+          <li style="margin-bottom:7px">Stations must <strong>identify by call sign</strong> at intervals. A coordination heartbeat is not a station identification.</li>
+          <li style="margin-bottom:7px">Unattended automatic operation is <strong>restricted</strong>. Continuous unattended operation is exactly what a node does.</li>
+          <li style="margin-bottom:7px">The service <strong>bars communications that could reasonably be furnished through another radio service</strong> on a regular basis. Unlicensed ISM is that other service, and it is sitting right there.</li>
+          <li>Use is prohibited where the operator holds a <strong>pecuniary interest</strong>, which complicates any commercial or contracted installation.</li>
+        </ul>
+        <p>An amateur-band mode is therefore not a feature to be added later. It is a different regulatory world, and a node operating in it would not be a node built to this specification.</p>
+      </div>
+
+      <div class="trap">
+        <div class="tl">Stay off public-safety spectrum</div>
+        <p>Interoperating with agency radio happens at the <em>network interface</em> — Ethernet or IP at a gateway — never by transmitting on public-safety frequencies. This system's coordination traffic rides its own unlicensed or agency-furnished data layers and never the fire voice nets.</p>
+      </div>
+    </section>
+
+    <section id="lora">
+      <h2>What LoRa trades away</h2>
+      <p>LoRa is a modulation scheme — a particular way of encoding bits into radio waves — designed around one trade: it gives up data rate to buy range and power efficiency. A LoRa link might carry a few hundred bits per second where WiFi carries tens of millions. In exchange it reaches kilometres at a hundred milliwatts and can run for years on a battery.</p>
+      <div class="rule">That trade is <b>exactly right here and would be wrong almost anywhere else.</b> The messages are tiny — "my pressure is sagging," "I am yielding my turn," "zone two has a fault." The distances are suburban to rural. The power budget is a battery in a box on a wall that must survive seventy-two hours with no grid.</div>
+      <p>It is also why the vocabulary has to be small and the envelope has to be tight. A protocol designed for a fat pipe does not survive contact with a few hundred bits per second shared across a neighborhood. The constraint shapes everything above it, which is the subject of the envelope section below.</p>
+      <p>Above residential class, agency-furnished tactical mesh radios — the hardened interagency class — carry substantially more throughput and are integrated at the data interface rather than embedded. The class is defined by capability, never by vendor: self-forming mesh, IP presentation, environmental qualification.</p>
+    </section>
+
+    <section id="mesh">
+      <h2>Why there is no hub</h2>
+      <p>A mesh network is one where every node relays for its neighbors. There is no base station, no router everyone depends on, no single box whose loss takes the network down. A message hops node to node until it arrives, routing around whatever is missing.</p>
+      <p>The reason this matters here is not elegance. It is that <strong>a fire removes things</strong>. A hub is a single point of failure, and single points of failure are precisely what a fire finds first — the pole, the shed, the one house with the antenna on it. A mesh degrades by losing nodes; a hub-and-spoke network degrades by losing everything at once.</p>
+      <p>It also means a node that loses the whole mesh is not broken. It drops to an isolated state and protects its own structure on a conservative cycle. Coordination makes it better. Nothing makes it stop.</p>
+
+      <div class="step key">
+        <div class="q">The implementation</div>
+        <h3>Why Meshtastic</h3>
+        <p>Meshtastic is an existing, proven, open-source LoRa mesh firmware with a real community behind it and hardware you can buy today. Reimplementing a mesh routing layer to carry a few dozen tiny messages would be a year of work to arrive somewhere worse. The network layer is a solved problem, so this specification solves the layers above it instead.</p>
+        <p><strong>The licence travels with the dependency.</strong> Meshtastic firmware is GPLv3. Building on it means inheriting GPLv3 obligations for the firmware that links against it. That is a deliberate acceptance, not an oversight, and it is consistent with the project's intent — but it is a real constraint on anyone planning a proprietary derivative, and it should be understood before the first line is written.</p>
+      </div>
+    </section>
+
+    <section id="layers">
+      <h2>The layer model</h2>
+      <p>The build follows a rough OSI layering, deliberately. This is not academic tidiness; it is the mechanism that makes the central architectural promise enforceable. The coordination protocol must remain transport-independent — no revision may bind it to a specific radio. Layering keeps that promise structurally rather than by good intentions: <strong>if coordination logic cannot name a radio, it cannot depend on one.</strong></p>
+
+      <div class="tbl"><table>
+        <thead><tr><th>OSI</th><th>OSF layer</th><th>What lives here</th><th>Module</th></tr></thead>
+        <tbody>
+          <tr><td class="id">1–2</td><td><strong>Physical &amp; link</strong></td><td>Radio hardware, framing, the wire itself. LoRa today; anything tomorrow.</td><td><code>hal/</code> <code>link/</code></td></tr>
+          <tr><td class="id">3</td><td><strong>Network</strong></td><td>Mesh addressing and relay. Meshtastic at residential class; agency MANET at tactical class.</td><td><code>link/</code></td></tr>
+          <tr><td class="id">4</td><td><strong>Envelope</strong></td><td>The compact binary envelope, fragmentation discipline, best-effort delivery semantics.</td><td><code>proto/</code></td></tr>
+          <tr><td class="id">5–6</td><td><strong>Vocabulary &amp; trust</strong></td><td>The closed verb enumeration, quantized field encoding, signing and verification, publication policy.</td><td><code>proto/</code> <code>policy/</code></td></tr>
+          <tr><td class="id">7</td><td><strong>Coordination &amp; operation</strong></td><td>Schedule negotiation, node state machine, degradation behavior, operator interface, ledger.</td><td><code>coord/</code> <code>state/</code> <code>ui/</code> <code>ledger/</code> <code>app/</code></td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="rule">Swapping LoRa for a different radio should touch layers 1–3 and nothing above. <b>If a radio change requires editing <code>coord/</code>, the layering has been violated and the violation is the bug</b> — not the radio.</div>
+
+      <h3>Two departures from textbook OSI, both intentional</h3>
+      <p><strong>The trust layer sits at 5–6, above transport, not bolted to the application.</strong> Signing and publication policy are properties of the <em>boundary</em>, so they belong where every message must pass regardless of which application feature produced it. That is why <code>policy/</code> is a chokepoint with no bypass path.</p>
+      <p><strong>There is no session state in the usual sense.</strong> Delivery is best-effort by design; nodes exchange soft-state announcements with expiry rather than maintaining connections. A missed message is a normal event, not an error — and supply-pressure physics is the fallback coordination mechanism when messages do not arrive. A pressure sag is an order every node obeys without being told.</p>
+
+      <figure class="fig">
+        <img src="img/fig2-layers.svg" alt="The layer model drawn as five stacked bands from physical and link at the bottom to application at the top, with a substitution line marked below which transport may be replaced without effect above it, and a publication-policy chokepoint through which every outbound message passes, with the inbound verification sequence shown alongside.">
+        <figcaption><b>FIG. 2</b> — The layer model and the trust boundary. The substitution line and the publication chokepoint are the two properties the layering exists to guarantee.</figcaption>
+      </figure>
+    </section>
+
+    <section id="envelope">
+      <h2>The envelope budget</h2>
+      <p>The wire format is a compact binary envelope sized to the most constrained transport in the family. LoRa mesh payloads live in the two-hundred-byte range. The signature is the large field and it is non-negotiable, because the trust layer rides in the envelope rather than beside it.</p>
+
+      <div class="env">
+        <div class="vlab">What fits in one message</div>
+        <div class="vsub">Approximately 200 bytes total · the signature is not optional</div>
+        <div class="bar" id="bar" aria-hidden="true">
+          <div class="seg hdr" id="segHdr">HEADER</div>
+          <div class="seg sig" id="segSig">SIGNATURE · 64 BYTES</div>
+          <div class="seg body" id="segBody">BODY · 60–100 BYTES</div>
+          <div class="seg over" id="segOver"></div>
+        </div>
+        <div class="envkey">
+          <span><i class="hdr"></i> Header and routing</span>
+          <span><i class="sig"></i> Ed25519-class signature — fixed, required</span>
+          <span><i class="body"></i> Everything the message actually says</span>
+        </div>
+        <p class="envnote" id="envNote">Realistic body budget after header and signature: <strong>sixty to a hundred bytes</strong>. That number is the discipline. Every verb must fit it, and the test suite should fail the build when one does not.</p>
+        <div class="envctl">
+          <button class="btn" id="richBtn" aria-pressed="false">Show what a rich format costs</button>
+        </div>
+      </div>
+
+      <p>Readings on the wire are <strong>single-byte quantized classes</strong>, not precise values. Coordination needs "pressure sagging," not 47.3 psi. Full-resolution values stay in the local log, where there is room for them and nobody is paying airtime.</p>
+    </section>
+
+    <section id="vocabulary">
+      <h2>The vocabulary</h2>
+      <p>The inbound command vocabulary is <strong>closed and enumerated</strong>. A verb outside the enumeration has no representation: it cannot be constructed, transported, or acted on. This is enforced at the type level, not by validating after parsing.</p>
+      <p>Roughly two dozen verbs, in eight groups. Smallness is a protected property of the protocol, not a version-one limitation — additions go through charter governance.</p>
+
+      <div class="vocab">
+        <div class="vlab">The V1 verb list</div>
+        <div class="vsub">The data dictionary, the dispatch switch, and most of the software design</div>
+        <div class="vchips" id="vchips"></div>
+        <div class="vgroups" id="vgroups"></div>
+        <div class="vcount" id="vcount"></div>
+      </div>
+
+      <div class="rule"><b>Generate, do not transcribe.</b> The specification's Appendix C enum table should compile to the header mechanically. Hand-copying a wire vocabulary is how two implementations silently diverge.</div>
+
+      <h3>Four implementation requirements</h3>
+      <p><strong>The verb enum is the dispatch switch.</strong> A <code>default:</code> case doing anything but count-and-drop is a bug.</p>
+      <p><strong>Assert the byte budget in tests.</strong> A verb exceeding its maximum encoded size must fail at build or test time, not on a congested mesh at three in the morning.</p>
+      <p><strong>Round-trip fuzz everything.</strong> Encode and decode identity for all verbs, plus decode-arbitrary-bytes-without-crashing. The radio will deliver corrupt frames; the parser must be boring about it.</p>
+      <p><strong>Golden vectors.</strong> Appendix C specifies byte-level examples for <code>HEARTBEAT</code>, <code>ZONE_OPEN</code>, <code>CEASE_OPS</code>, and <code>DISTRESS</code>. These are the conformance fixtures a second implementation tests against first.</p>
+      <p>Capability bits ride in the heartbeat — supply class, stored water, pump control, detection payload, gateway role. This is how the domain knows what each node is without a registry, and how directive scope filters resolve locally. Get it right early; much depends on it.</p>
+    </section>
+
+    <section id="invariants">
+      <h2>Eight invariants</h2>
+      <p>These are not implementation preferences. They are properties an implementation must preserve to be called compliant. <strong>Breaking one is a fork, not a contribution.</strong></p>
+      <div class="tbl"><table>
+        <thead><tr><th>#</th><th>Invariant</th><th>Software consequence</th></tr></thead>
+        <tbody>
+          <tr><td class="id">I-1</td><td><strong>The system operates when fully isolated.</strong> No mandatory external network, cloud, account, subscription, or licence server for any core function.</td><td>No boot-time network dependency. No feature behind a remote call. Provisioning is local. A node that has never seen the internet is fully functional.</td></tr>
+          <tr><td class="id">I-2</td><td><strong>The inbound command vocabulary is closed and enumerated.</strong></td><td>A verb outside the enum cannot be constructed, transported, or acted on. Enforced at the type level, not by validation-after-parse.</td></tr>
+          <tr><td class="id">I-3</td><td><strong>Translation is outbound-only, at the boundary.</strong></td><td>The mesh never carries a rich external format. Rendering to external standards happens at a gateway, above coordination, never between nodes.</td></tr>
+          <tr><td class="id">I-4</td><td><strong>The operator physically present prevails.</strong></td><td>No software configuration may disable an operator control. No automated lockout of an operator's own resources. Conflicts resolve to the operator — in code, not in documentation.</td></tr>
+          <tr><td class="id">I-5</td><td><strong>No autonomous suppression or targeting.</strong></td><td>The software never decides what to attack. It decides when it is this node's turn to wet its own assigned coverage.</td></tr>
+          <tr><td class="id">I-6</td><td><strong>Transport independence.</strong></td><td>Coordination imports an interface, never a radio.</td></tr>
+          <tr><td class="id">I-7</td><td><strong>Failure degrades to baseline, never to worse-than-nothing.</strong></td><td>Every failure path has a defined, tested destination. Loss of power drives auto-return valves closed by physics; software must not fight it or assume it can prevent it.</td></tr>
+          <tr><td class="id">I-8</td><td><strong>The record is verifiable without trusting the node.</strong></td><td>Ledger entries signed and chained. A node that lies must be detectable by someone holding only the published chain.</td></tr>
+        </tbody>
+      </table></div>
+    </section>
+
+    <section id="states">
+      <h2>The state machine</h2>
+      <p>Every failure has a defined destination, and every destination has a way back. The same behavior is drawn twice below — once as a state diagram, once as a linear sequence, because people read these differently.</p>
+      <figure class="fig">
+        <img src="img/fig3-state-machine.svg" alt="The node state machine drawn as labelled states connected by transition arrows, including boot, self-test, armed, active, yielded, isolated, degraded, repeater and fault, with a return path from every degraded state.">
+        <figcaption><b>FIG. 3</b> — The node state machine. Every failure has a defined destination; every destination has a way back.</figcaption>
+      </figure>
+      <figure class="fig">
+        <img src="img/fig4-control-flow.svg" alt="The same node behavior expressed as a vertical sequence of decision points and their failure destinations, with asynchronous operator interrupts shown entering from the side.">
+        <figcaption><b>FIG. 4</b> — The same machine read as sequence, with decision points, failure destinations, and the asynchronous operator interrupts.</figcaption>
+      </figure>
+    </section>
+
+    <section id="degrade">
+      <h2>The degradation ladder</h2>
+      <p>Each rung is a defined behavior with a test. This table <em>is</em> the graceful-degradation architecture in software terms.</p>
+      <div class="tbl"><table>
+        <thead><tr><th>Failure</th><th>Node behavior</th><th>Domain behavior</th></tr></thead>
+        <tbody>
+          <tr><td>Mesh lost</td><td>→ <code>ISOLATED</code>; conservative autonomous cycle</td><td>Remaining nodes reschedule around the absence</td></tr>
+          <tr><td>Neighbor vanishes</td><td>Drop from neighbor table after timeout</td><td>Reschedule; no stall waiting for the missing</td></tr>
+          <tr><td>Supply pressure sags</td><td>Yield draw; report <code>PRESSURE</code></td><td>Others sense the same and back off; physics coordinates</td></tr>
+          <tr><td>Water supply fails</td><td>→ <code>DEGRADED</code>, then <code>REPEATER</code></td><td>Node keeps carrying traffic; coverage gap reported</td></tr>
+          <tr><td>One zone fails — clog, kink, seized valve</td><td>Report <code>FAULT</code> with code; continue on remaining zones</td><td>Coverage map updates; neighbors may compensate</td></tr>
+          <tr><td>Valve feedback disagrees with command</td><td>Trust feedback, report fault</td><td>Never report protection that is not physically happening</td></tr>
+          <tr><td>Battery low</td><td>Shed load: reduce cycle, prioritize reporting over wetting</td><td>Domain sees reduced capability in heartbeat</td></tr>
+          <tr><td>Power lost</td><td>Auto-return valves close by physics; nothing to do</td><td>Node disappears; domain reschedules</td></tr>
+          <tr><td>Directive missed</td><td>Continue local operation, yield via pressure</td><td>Best-effort delivery is the design, not a defect</td></tr>
+          <tr><td>Controller crash</td><td>Watchdog reset → <code>BOOT</code> → self-test</td><td>Brief absence, then rejoin</td></tr>
+        </tbody>
+      </table></div>
+      <div class="rule"><b>Design rule:</b> every one of these degrades to the unprotected baseline the world already accepts, and preferably a bit better. No failure may produce a state worse than having no system at all. A proposed feature that can fail into worse-than-nothing does not belong in the node.</div>
+    </section>
+
+    <section id="boundaries">
+      <h2>Boundaries to design against</h2>
+      <p>These are cheap to respect early and expensive to retrofit. Read them before designing anything.</p>
+
+      <div class="trap">
+        <div class="tl">Do not become a fire alarm system</div>
+        <p>Life-safety alarm equipment lives inside a listing and certification regime with its own standards and testing bodies. This system deliberately stays outside it: it is protective equipment, not detection-and-notification equipment, and it makes no life-safety claim. Adding features that look like alarm initiation or occupant notification walks the whole project into that regime.</p>
+      </div>
+
+      <div class="trap">
+        <div class="tl">Do not become a backflow device</div>
+        <p>Anything connecting to a potable supply sits under plumbing code and cross-connection control. The inlet gallery check valve is <em>not</em> the backflow prevention device. The required assembly is whatever the authority having jurisdiction requires, installed and tested as that authority requires.</p>
+      </div>
+
+      <div class="trap">
+        <div class="tl">Do not authorize radio operation</div>
+        <p>The specification does not and cannot grant anyone permission to transmit. Band, power, duty cycle, and module certification are matters for the installing jurisdiction and the equipment's own certification. Build region parameters as enforced configuration ceilings.</p>
+      </div>
+
+      <h3>Privacy is architectural, not a policy</h3>
+      <p>The radio carries only short, defined messages about fire defense. Video, audio, and personal data have no representation in the vocabulary at all, which means the system is incapable of transmitting them rather than merely forbidden from doing so. That distinction is the whole point: a policy can be revised, and an absent message type cannot.</p>
+
+      <h3>Licence inheritance</h3>
+      <p>Hardware designs are published under the CERN Open Hardware Licence family; documentation under Creative Commons; software under an OSI-approved licence with a patent grant. Firmware that links against Meshtastic inherits GPLv3. Know which obligation applies to which artifact before you distribute anything.</p>
+    </section>
+
+    <section id="start">
+      <h2>Getting started</h2>
+      <p>A contributor who owns nothing can still work productively on the host build alone. When you do buy hardware, buy two radios — a mesh cannot be tested with one.</p>
+
+      <div class="tbl"><table>
+        <thead><tr><th>Purpose</th><th>Item</th><th>Note</th></tr></thead>
+        <tbody>
+          <tr><td>Node compute</td><td>Any ESP32 development board</td><td>Two is meaningfully better than one.</td></tr>
+          <tr><td>Radio</td><td>LoRa module for the local ISM allocation</td><td>Combined ESP32 + LoRa boards are ideal. Band and power follow the jurisdiction.</td></tr>
+          <tr><td>Everything else</td><td>Nothing</td><td>Valves, sensors, pumps, enclosure, plumbing: simulated.</td></tr>
+        </tbody>
+      </table></div>
+      <p>Boards in common use for this class of work include the LILYGO T-Beam, the Heltec Wireless Stick Lite series, and the RAK4631. The specification names classes, not products; any certified module for your allocation qualifies.</p>
+
+      <h3>Six rules that will save you a month</h3>
+      <ol class="start">
+        <li><strong>Read the software requirements, then the specification's vocabulary appendix.</strong> Together they are enough to get through the first several milestones.</li>
+        <li><strong>Skim the boundaries above before you design anything.</strong> Cheap to respect early, expensive to retrofit.</li>
+        <li><strong>Do not start with the radio.</strong> Start with the hardware abstraction layer and the state machine on the host build. Radio-first is the most common way embedded projects stall.</li>
+        <li><strong>Do not start by optimizing.</strong> The node has enormous time budgets by software standards — a valve takes seconds to travel, a schedule slot is minutes. Clarity beats cleverness everywhere in this codebase.</li>
+        <li><strong>Write the decision down when you make one.</strong> Language, scheduling algorithm, key handling, snapshot cadence. The next implementer's ability to work depends on knowing why, not just what.</li>
+        <li><strong>The language is not chosen yet, deliberately.</strong> That should be decided and defended by the first serious implementer, not inherited from a document. C or C++ with ESP-IDF is the conservative answer; Rust is credible and buys real safety. Pick one, write the reasoning down, make it a decision of record.</li>
+      </ol>
+
+      <div class="getdoc">
+        <a href="docs/osf-software-requirements.pdf">Software Requirements</a>
+        <a href="docs/osf-main-specification.pdf">Main Specification</a>
+        <a href="docs/osf-hardware-annex-a.pdf">Hardware Annex A</a>
+        <span>22, 28 and 30 sheets · the vocabulary appendix rides inside the main specification</span>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<footer class="sitefoot">
+  <div class="wrap fgrid">
+    <div>
+      <div class="free">Free like a fire code.</div>
+      <p style="margin-top:8px;max-width:42ch">Build one. Improve it. Propose changes.<br>It belongs to everyone it protects.</p>
+    </div>
+    <div class="mono">
+      The Open Source Firefighter<br>
+      Andrew Morton · Palmer Lake, Colorado<br>
+      U.S. Provisional Application 64/173,890<br>
+      Filed October 10, 2026 · published October 11, 2026
+    </div>
+    <div class="mono">
+      External standards named in this family are adopted<br>
+      by reference to their current edition as amended.<br>
+      The issuing authority's text always governs.
+    </div>
+  </div>
+</footer>
+
+<script>
+/* ---------- envelope budget ---------- */
+(function(){
+  const btn=document.getElementById('richBtn');
+  const body=document.getElementById('segBody'), over=document.getElementById('segOver');
+  const note=document.getElementById('envNote');
+  if(!btn) return;
+  const plain=note.innerHTML;
+  let rich=false;
+  btn.addEventListener('click',function(){
+    rich=!rich;
+    btn.setAttribute('aria-pressed',String(rich));
+    btn.textContent = rich ? 'Show the real envelope' : 'Show what a rich format costs';
+    if(rich){
+      body.style.flex='0 0 16%'; body.textContent='BODY';
+      over.style.flex='1 1 auto'; over.textContent="DOESN'T FIT";
+      note.innerHTML='A single JSON status object of the kind an ordinary web service sends runs to '+
+        'several hundred bytes before it says anything useful. It does not fit in one frame, '+
+        'so it fragments across several — multiplying airtime, collision risk, and battery drain '+
+        'on a shared channel that every node in the neighborhood is also trying to use. '+
+        '<strong>This is why the vocabulary is closed, the fields are quantized, and the verbs are short.</strong>';
+    } else {
+      body.style.flex='1 1 auto'; body.textContent='BODY · 60–100 BYTES';
+      over.style.flex='0 0 0%'; over.textContent='';
+      note.innerHTML=plain;
+    }
+  });
+})();
+
+/* ---------- the verb vocabulary ---------- */
+(function(){
+  const GROUPS=[
+    {g:'Presence', verbs:['HEARTBEAT'],
+     n:'Status flags, battery class, supply class, capability bits, coarse position. The capability bits are how the domain knows what each node is without a registry.'},
+    {g:'State', verbs:['ARM','DISARM','ACTIVATE','DEACTIVATE','ZONE_OPEN','ZONE_CLOSE','FAULT','MAINT_REQ'],
+     n:'What the node is doing and what has gone wrong with it. FAULT carries a fault-code enumeration.'},
+    {g:'Supply', verbs:['PRESSURE','FLOW','LEVEL'],
+     n:'Quantized single-byte classes. Coordination needs "sagging", not 47.3 psi.'},
+    {g:'Coordination', verbs:['SCHED_STATE','SCHED_PROPOSE','YIELD','RESUME'],
+     n:'Schedule negotiation. This is the conversation the whole network exists to carry.'},
+    {g:'Command', verbs:['CEASE_OPS','RESUME_OPS','PRIORITY_PROTECT','BROADCAST_ALERT'],
+     n:'Scope filter, authority, expiry. Short and audited by design — this is the vocabulary an incident commander reaches through.'},
+    {g:'Safety', verbs:['DISTRESS'],
+     n:'Node, position, timestamp. Deliberately minimal, and it travels by every path available at once.'},
+    {g:'Events', verbs:['DETECT','ENGINE_STATE','ENERGY'],
+     n:'Detection events as source, bearing class and confidence class; acoustic-derived machinery state; power transitions.'},
+    {g:'Ledger', verbs:['SNAPSHOT_COMMIT'],
+     n:'A hash-chain link. The payload is the commitment itself.'}
+  ];
+  const chips=document.getElementById('vchips'), out=document.getElementById('vgroups'),
+        count=document.getElementById('vcount');
+  if(!out) return;
+  const TOTAL=GROUPS.reduce((a,g)=>a+g.verbs.length,0);
+  let active='all';
+
+  function esc(s){return s.replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));}
+  function render(){
+    const list = active==='all' ? GROUPS : GROUPS.filter(g=>g.g===active);
+    out.innerHTML = list.map(g =>
+      '<div class="vgroup"><h4>'+esc(g.g)+'</h4><div class="verbs">'+
+      g.verbs.map(v=>'<span class="verb">'+esc(v)+'</span>').join('')+
+      '</div><p>'+esc(g.n)+'</p></div>').join('');
+    const shown = list.reduce((a,g)=>a+g.verbs.length,0);
+    count.textContent = shown+' of '+TOTAL+' verbs shown, in '+list.length+
+      ' of '+GROUPS.length+' groups. Every one must encode inside the body budget.';
+  }
+  ['all'].concat(GROUPS.map(g=>g.g)).forEach(function(name){
+    const b=document.createElement('button');
+    b.className='vchip'; b.textContent = name==='all' ? 'All groups' : name;
+    b.setAttribute('aria-pressed', String(name==='all'));
+    b.addEventListener('click',function(){
+      active=name;
+      [...chips.children].forEach(c=>c.setAttribute('aria-pressed',String(c===b)));
+      render();
+    });
+    chips.appendChild(b);
+  });
+  render();
+})();
+</script>
+</body>
+</html>
