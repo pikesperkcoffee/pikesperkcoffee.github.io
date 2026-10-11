@@ -7,7 +7,7 @@
 <meta name="description" content="A one-page broadsheet indexing the active work of Andrew Morton — Morkat Coffee LLC, Pikes Perk Coffee Roasters, Morton Millworks.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,400..900,50..100;1,9..144,400..900,50..100&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=IBM+Plex+Mono:wght@400;500;700&family=Cinzel:wght@500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Oswald:wght@400;500;600;700&family=Public+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Space+Mono:wght@400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,400..900,50..100;1,9..144,400..900,50..100&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=IBM+Plex+Mono:wght@400;500;700&family=Cinzel:wght@500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Oswald:wght@400;500;600;700&family=Public+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Space+Mono:wght@400&family=Barlow+Condensed:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
 /* ================================================================
    THE MORTON REGISTER
@@ -72,10 +72,11 @@ body{
   padding:3px 10px;margin-bottom:14px;font-weight:700;
 }
 .nameplate h1{
-  font-family:'Cinzel',Georgia,serif;
+  font-family:'Barlow Condensed','Oswald',system-ui,sans-serif;
   font-weight:700;
-  font-size:clamp(44px, 7.6vw, 82px);
-  line-height:1;letter-spacing:.02em;
+  font-size:clamp(54px, 11vw, 112px);
+  line-height:.92;letter-spacing:.03em;
+  text-transform:uppercase;
   color:var(--ink);
 }
 .nameplate .subflag a{
@@ -188,6 +189,29 @@ body{
   text-align:center;line-height:1.15;
 }
 .lead-veil:not(.wip) .wip-stamp{display:none}
+
+/* --- Released OSF lead (veil off) — now a live door into osf/.
+   Amber top rule echoes the OSF gold; the panel is a full link. --- */
+a.lead-veil.released{
+  display:block;text-decoration:none;color:inherit;
+  border-top:3px solid var(--amber);
+  transition:background .15s ease;
+}
+a.lead-veil.released:hover{background:#ece4d3}
+a.lead-veil.released .eyebrow{color:var(--amber)}
+.lead-veil .veil-cta{
+  margin-top:14px;display:inline-block;
+  font-family:'IBM Plex Mono',monospace;
+  font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--red);border-bottom:1px solid var(--red);padding-bottom:2px;
+}
+a.lead-veil.released:hover .veil-cta{color:var(--ink);border-bottom-color:var(--ink)}
+.lead-veil .veil-status{
+  margin-top:14px;
+  font-family:'IBM Plex Mono',monospace;
+  font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--muted);
+}
 
 /* --- Right two-thirds: PDF register (accordion) --- */
 .pdf-register{padding:0}
@@ -1036,7 +1060,7 @@ body{
 }
 @media (max-width:520px){
   .paper{padding:0 16px 60px}
-  .nameplate h1{font-size:46px}
+  .nameplate h1{font-size:60px}
   .grid{grid-template-columns:1fr}
   .wire-empty{grid-template-columns:1fr}
   .lead-veil .wip-stamp{font-size:15px;padding:7px 14px;letter-spacing:.10em}
@@ -1056,7 +1080,7 @@ body{
   <div class="flag">
     <span>Palmer Lake, Colorado</span>
     <!-- DATELINE — bump this to the current date on every index update. -->
-    <span>Saturday, October 10, 2026</span>
+    <span>Sunday, October 11, 2026</span>
   </div>
 
   <!-- ============================================================
@@ -1090,16 +1114,20 @@ body{
        ============================================================ -->
   <section class="lead" aria-label="Split lead — OSF veil and PDF register">
 
-    <!-- Left third — OSF veil (WIP-sealed) -->
-    <div class="lead-veil wip">
-      <div class="eyebrow">Above the Fold &middot; Work in Progress</div>
+    <!-- Left third — OSF lead (RELEASED). The veil is off: this now
+         links into the published OSF specification family at osf/.
+         To re-seal, swap the <a> back to <div class="lead-veil wip">
+         with the wip-stamp and remove the released content. -->
+    <a class="lead-veil released" href="osf/index.html">
+      <div class="eyebrow">Above the Fold &middot; Now Open</div>
       <div class="lead-veil-body">
-        <h2>An Open Standard for Coordinated Ember &amp; Terrain Defense.</h2>
-        <div class="deck">A sixteen-document specification family in first review.</div>
-        <div class="lede">A stamped specification family &mdash; doctrine, hardware, protocol, tactics, strategy &mdash; for neighborhood-scale ember defense. Speaks ICS on the front end. Speaks Meshtastic and MANET on the back.</div>
+        <h2>The Open Source Firefighter</h2>
+        <div class="deck">An open specification for coordinated ember &amp; terrain defense &mdash; free forever, built from commodity parts.</div>
+        <div class="lede">Filed as a provisional application and published in full on October 11, 2026, so the coordination primitive for ember defense stays open &mdash; nobody can fence it off and sell it back. Doctrine, hardware, protocol, and the complete filing.</div>
+        <div class="veil-cta">Open the specification &rarr;</div>
+        <div class="veil-status">Provisional 64/173,890 &middot; Free forever</div>
       </div>
-      <div class="wip-stamp">Work<br>in Progress</div>
-    </div>
+    </a>
 
     <!-- Right two-thirds — PDF register -->
     <div class="pdf-register" aria-label="PDF register">
@@ -1407,7 +1435,7 @@ body{
 
   <div class="footline">
     <div>&copy; Andrew Morton &middot; Morkat Coffee LLC</div>
-    <div>Set in Cinzel, Fraunces &amp; Source Serif</div>
+    <div>Set in Barlow Condensed, Fraunces &amp; Source Serif</div>
   </div>
 
 </div>
